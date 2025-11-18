@@ -1,0 +1,40 @@
+% Arquivo gerado automaticamente por generate_sebentas.py
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\geometry{a4paper,margin=2.5cm}
+\title{Sebenta - Generalidades acerca de Funções}
+\date{}
+\begin{document}
+\maketitle
+
+% --- Início macros mínimas para exibição de exercícios ---
+\newcounter{exerciciocount}
+\newcounter{subexerciciocount}
+\newcounter{optioncount}
+\newcommand{\exercicio}[1]{%
+    \par\vspace{1.2em}%
+    \refstepcounter{exerciciocount}%
+    \setcounter{subexerciciocount}{0}%
+    \setcounter{optioncount}{0}%
+    \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+}
+\newcommand{\subexercicio}[1]{%
+    \par\vspace{0.8em}%
+    \refstepcounter{subexerciciocount}%
+    \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+}
+\newcommand{\option}[1]{%
+    \par
+    \refstepcounter{optioncount}%
+    \noindent(\alph{optioncount}) #1%
+}
+% --- Fim macros ---
+
+% ---- Inclui: MAT_P4FUNCOE_1GEN_001.tex
+\input{MAT_P4FUNCOE_1GEN_001.tex}
+
+\end{document}

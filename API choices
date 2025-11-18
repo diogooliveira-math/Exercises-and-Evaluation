@@ -1,0 +1,75 @@
+# AI API Choices — Quick Reference
+
+A concise guide to popular AI APIs you can integrate into your applications. Links go to official docs or curated lists.
+
+---
+
+## 1. OpenAI
+- Models: GPT (chat/text), DALL·E (images), Whisper (speech-to-text).
+- SDKs: JavaScript, Python, .NET, Java, Go, and more.
+- Docs: https://platform.openai.com/docs/overview • Quickstart: https://platform.openai.com/docs/quickstart
+
+---
+
+## 2. Azure OpenAI Service
+- Hosted OpenAI models inside Azure with enterprise-grade security.
+- Supports REST endpoints (completions, chat, images) and Azure AD authentication.
+- Docs: https://learn.microsoft.com/en-us/azure/ai-foundry/openai/reference
+
+---
+
+## 3. Google Gemini
+- Multimodal LLM for text, images, audio, video, and structured output.
+- Supports REST, SSE streaming, WebSocket, and batch endpoints.
+- Docs: https://ai.google.dev/gemini-api/docs
+
+---
+
+## 4. Hugging Face Inference API
+- Access thousands of open-source models (NLP, vision, code, audio).
+- Good for open-source flexibility and experimentation; free tier available.
+- Browse: https://aicurator.io/free-ai-apis/
+
+---
+
+## 5. Anthropic (Claude)
+- Focused on safety, alignment, and reliable conversational behavior.
+- Competitive for chat, coding, and reasoning tasks.
+- Overview: https://dev.to/akshaymittal143/14-ai-apis-every-developer-should-know-in-2025-k96
+
+---
+
+## 6. AssemblyAI (Speech-to-Text)
+- High-accuracy transcription, speaker diarization, sentiment insight.
+- Best for audio analytics and transcription workflows.
+
+---
+
+## 7. Google Cloud AI & Vertex AI
+- Full-stack services: vision, translation, speech, TTS, AutoML.
+- Free trial credits available for new users.
+- Listing: https://topbusinesssoftware.com/categories/artificial-intelligence-ai-apis/
+
+---
+
+## 8. Free / Low-cost Options
+- OpenRouter, Replicate, Mistral, Ollama, Together AI, RunPod — good free tiers or local deploys.
+- Curated list: https://aicurator.io/free-ai-apis/
+
+---
+
+## Choosing the Right API
+- For advanced chat or text generation → OpenAI / Azure OpenAI  
+- For multimodal & enterprise needs → Google Gemini  
+- For open-source models & customization → Hugging Face  
+- For voice-to-text → AssemblyAI or Google Speech-to-Text  
+- For low-cost experimentation → OpenRouter, Replicate, Mistral, Ollama, Together AI
+
+---
+
+## Next steps
+1. Open the docs for APIs you like.
+2. Sign up to obtain keys and review pricing.
+3. Try quickstart examples in your preferred stack.
+
+Which API should I expand into a quickstart example for your stack?

@@ -1,0 +1,110 @@
+=== pdflatex pass 1 stdout ===
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(sebenta_1-generalidades_funcoes.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/base\size12.clo))
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def)
+*************************************
+* Local config file bblopts.cfg used
+*
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/arabi\bblopts.cfg)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/babel-portuges\portugue
+se.ldf))
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/babel/locale/pt\babel
+-portuguese.tex)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty))
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
+ (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty))
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
+
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
+tex.def)
+No file sebenta_1-generalidades_funcoes.aux.
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
+
+LaTeX Warning: No \author given.
+
+(MAT_P4FUNCOE_1GEN_001.tex) [1{C:/Users/diogo/AppData/Local/MiKTeX/fonts/map/pd
+ftex/pdftex.map}] (sebenta_1-generalidades_funcoes.aux) ) <C:\Users\diogo\AppDa
+ta\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\diogo
+\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users
+\diogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk>
+Output written on sebenta_1-generalidades_funcoes.pdf (1 page, 21638 bytes).
+Transcript written on sebenta_1-generalidades_funcoes.log.
+
+=== pdflatex pass 1 stderr ===
+
+=== pdflatex pass 2 stdout ===
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(sebenta_1-generalidades_funcoes.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/base\size12.clo))
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def)
+*************************************
+* Local config file bblopts.cfg used
+*
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/arabi\bblopts.cfg)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/babel-portuges\portugue
+se.ldf))
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/babel/locale/pt\babel
+-portuguese.tex)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty))
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
+ (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty))
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
+
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
+tex.def) (sebenta_1-generalidades_funcoes.aux)
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
+(C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
+
+LaTeX Warning: No \author given.
+
+(MAT_P4FUNCOE_1GEN_001.tex) [1{C:/Users/diogo/AppData/Local/MiKTeX/fonts/map/pd
+ftex/pdftex.map}] (sebenta_1-generalidades_funcoes.aux) ) <C:\Users\diogo\AppDa
+ta\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\diogo
+\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users
+\diogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk>
+Output written on sebenta_1-generalidades_funcoes.pdf (1 page, 21638 bytes).
+Transcript written on sebenta_1-generalidades_funcoes.log.
+
+=== pdflatex pass 2 stderr ===

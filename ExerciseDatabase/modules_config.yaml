@@ -1,0 +1,308 @@
+matematica:
+  A10_funcoes:
+    name: Módulo A10 - Funções
+    description: Funções reais de variável real
+    duration_hours: 30
+    concepts:
+    - id: conceito_funcao
+      name: Conceito de Função
+      tags:
+      - dominio
+      - contradominio
+      - definicao
+    - id: grafico_funcao
+      name: Gráfico de Função
+      tags:
+      - representacao
+      - grafico
+      - analise_grafica
+    - id: monotonia
+      name: Monotonia de Funções
+      tags:
+      - crescente
+      - decrescente
+      - intervalos
+    - id: extremos
+      name: Extremos Relativos e Absolutos
+      tags:
+      - maximos
+      - minimos
+      - extremos
+    - id: funcao_quadratica
+      name: Função Quadrática
+      tags:
+      - parabola
+      - vertice
+      - concavidade
+    - id: funcao_modulo
+      name: Função Módulo
+      tags:
+      - valor_absoluto
+      - modulo
+    - id: funcao_composta
+      name: Função Composta
+      tags:
+      - composicao
+      - fog
+      - gof
+    - id: funcao_inversa
+      name: Função Inversa
+      tags:
+      - inversa
+      - injetividade
+      - sobrejetividade
+  A11_derivadas:
+    name: Módulo A11 - Derivadas
+    description: Cálculo diferencial
+    duration_hours: 28
+    concepts:
+    - id: taxa_variacao
+      name: Taxa de Variação
+      tags:
+      - tvm
+      - taxa_variacao_media
+      - taxa_variacao_instantanea
+    - id: definicao_derivada
+      name: Definição de Derivada
+      tags:
+      - limite
+      - definicao
+      - derivada_ponto
+    - id: regras_derivacao
+      name: Regras de Derivação
+      tags:
+      - regra_potencia
+      - regra_soma
+      - regra_produto
+      - regra_quociente
+    - id: derivada_funcao_composta
+      name: Derivada de Função Composta (Regra da Cadeia)
+      tags:
+      - regra_cadeia
+      - funcao_composta
+    - id: derivadas_ordem_superior
+      name: Derivadas de Ordem Superior
+      tags:
+      - segunda_derivada
+      - terceira_derivada
+    - id: aplicacoes_derivadas
+      name: Aplicações das Derivadas
+      tags:
+      - reta_tangente
+      - velocidade
+      - aceleracao
+  A12_otimizacao:
+    name: Módulo A12 - Otimização
+    description: Problemas de otimização
+    duration_hours: 25
+    concepts:
+    - id: estudo_monotonia
+      name: Estudo da Monotonia com Derivadas
+      tags:
+      - sinal_derivada
+      - crescente
+      - decrescente
+    - id: extremos_derivadas
+      name: Extremos Usando Derivadas
+      tags:
+      - derivada_primeira
+      - derivada_segunda
+      - teste_segunda_derivada
+    - id: problemas_otimizacao
+      name: Problemas de Otimização
+      tags:
+      - maximizar
+      - minimizar
+      - problemas_aplicados
+    - id: modelacao_matematica
+      name: Modelação Matemática
+      tags:
+      - modelar
+      - funcao_objetivo
+      - restricoes
+  A13_limites:
+    name: Módulo A13 - Limites e Continuidade
+    description: Conceito de limite e continuidade
+    duration_hours: 22
+    concepts:
+    - id: conceito_limite
+      name: Conceito de Limite
+      tags:
+      - limite
+      - aproximacao
+      - vizinhanca
+    - id: calculo_limites
+      name: Cálculo de Limites
+      tags:
+      - propriedades_limites
+      - algebra_limites
+    - id: limites_laterais
+      name: Limites Laterais
+      tags:
+      - limite_esquerda
+      - limite_direita
+    - id: limites_infinito
+      name: Limites no Infinito e Infinitos
+      tags:
+      - limite_infinito
+      - assintotas
+    - id: indeterminacoes
+      name: Indeterminações
+      tags:
+      - zero_sobre_zero
+      - infinito_sobre_infinito
+      - levantamento_indeterminacao
+    - id: continuidade
+      name: Continuidade
+      tags:
+      - funcao_continua
+      - descontinuidade
+      - tipos_descontinuidade
+  A14_integrais:
+    name: Módulo A14 - Integrais
+    description: Cálculo integral
+    duration_hours: 30
+    concepts:
+    - id: primitiva
+      name: Conceito de Primitiva
+      tags:
+      - primitiva
+      - antiderivada
+      - constante_integracao
+    - id: integral_indefinido
+      name: Integral Indefinido
+      tags:
+      - integracao_direta
+      - tabela_primitivas
+    - id: integral_definido
+      name: Integral Definido
+      tags:
+      - teorema_fundamental
+      - calculo_areas
+    - id: metodos_integracao
+      name: Métodos de Integração
+      tags:
+      - substituicao
+      - por_partes
+    - id: aplicacoes_integrais
+      name: Aplicações de Integrais
+      tags:
+      - areas
+      - volumes
+      - distancias
+  P4_funcoes:
+    name: MÓDULO P4 - Funções
+    description: Introdução às funções e funções polinomiais
+    duration_hours: 20
+    concepts:
+    - id: "1-generalidades_funcoes"
+      name: Generalidades acerca de Funções
+      tags:
+      - definicao
+      - dominio
+      - contradominio
+    - id: "2-funcoes_polinomiais"
+      name: Funções Polinomiais
+      tags:
+      - polinomio
+      - coeficientes
+      - grau
+    - id: "3-funcoes_polinomiais_grau_nao_superior_3"
+      name: Funções polinomiais de grau não superior a 3
+      tags:
+      - grau_ate_3
+      - linear
+      - quadratica
+      - cubica
+difficulty_levels:
+  1:
+    label: Muito Fácil
+    description: Aplicação direta de conceitos básicos
+    color: '#4CAF50'
+  2:
+    label: Fácil
+    description: Exercícios de consolidação simples
+    color: '#8BC34A'
+  3:
+    label: Médio
+    description: Requer compreensão sólida dos conceitos
+    color: '#FFC107'
+  4:
+    label: Difícil
+    description: Problemas complexos, múltiplos conceitos
+    color: '#FF9800'
+  5:
+    label: Muito Difícil
+    description: Desafios avançados, pensamento crítico
+    color: '#F44336'
+exercise_types:
+  desenvolvimento:
+    name: Desenvolvimento
+    description: Resposta aberta com resolução completa
+    latex_macro: \exercicioDesenvolvimento
+  escolha_multipla:
+    name: Escolha Múltipla
+    description: 4 opções com uma correta
+    latex_macro: \exercicioEscolha
+  verdadeiro_falso:
+    name: Verdadeiro ou Falso
+    description: Afirmações para classificar
+    latex_macro: \exercicioVerdadeiroFalso
+  resposta_curta:
+    name: Resposta Curta
+    description: Resposta breve ou valor numérico
+    latex_macro: \exercicioRespostaCurta
+bloom_taxonomy:
+  conhecimento:
+    level: 1
+    description: Recordar factos, termos, conceitos básicos
+  compreensao:
+    level: 2
+    description: Explicar ideias ou conceitos
+  aplicacao:
+    level: 3
+    description: Usar informação em novas situações
+  analise:
+    level: 4
+    description: Estabelecer conexões entre ideias
+  sintese:
+    level: 5
+    description: Criar ou gerar novos padrões
+  avaliacao:
+    level: 6
+    description: Julgar valor de ideias ou materiais
+quick_presets:
+  questao_aula:
+    name: Questão de Aula (10 min)
+    type: desenvolvimento
+    difficulty: 2
+    points: 10
+    time_minutes: 10
+    parts: 2
+  exercicio_ficha:
+    name: Exercício de Ficha (15 min)
+    type: desenvolvimento
+    difficulty: 3
+    points: 15
+    time_minutes: 15
+    parts: 3
+  teste_rapido:
+    name: Teste Rápido - Escolha Múltipla
+    type: escolha_multipla
+    difficulty: 2
+    points: 5
+    time_minutes: 3
+    parts: 1
+  desafio:
+    name: Desafio Avançado (30 min)
+    type: desenvolvimento
+    difficulty: 5
+    points: 20
+    time_minutes: 30
+    parts: 4
+teste:
+  _meta:
+    name: Teste
+    description: Exercícios de Teste
+    created: '2025-11-14'
+    total_modules: 0

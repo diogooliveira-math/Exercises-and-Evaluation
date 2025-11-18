@@ -1,0 +1,46 @@
+% Sistema de exercícios com contadores automáticos
+\newcounter{exerciciocount}          % Contador principal dos exercícios
+\newcounter{subexerciciocount}       % Contador dos subexercícios
+\newcounter{optioncount}             % Contador das opções
+
+% Macro para exercício principal
+\newcommand{\exercicio}[1]{%
+    \par\vspace{1.5em}% Espaçamento antes
+    \refstepcounter{exerciciocount}% Incrementa contador principal
+    \setcounter{subexerciciocount}{0}% Reseta contador de subexercícios
+    \setcounter{optioncount}{0}% Reseta contador de opções
+    \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+}
+
+% Macro para subexercício
+\newcommand{\subexercicio}[1]{%
+    \par\vspace{0.8em}% Espaçamento menor para subexercícios
+    \refstepcounter{subexerciciocount}% Incrementa contador de subexercícios
+    \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+}
+
+% Macro para opção
+\newcommand{\option}[1]{%
+    \par
+    \refstepcounter{optioncount}%
+    \noindent(\alph{optioncount}) #1%
+}
+
+% Título e informações do exame
+\title{1ª Questão de aula do Módulo A10: Otimização}
+\author{EPRALIMA - Escola Profissional Alto Lima}
+
+\date{}
+
+% Cabeçalho completo do teste dentro de uma caixa simples
+\newcommand{\espacoAluno}{%
+    \vspace{0.5cm}
+    \fbox{%
+        \parbox{\textwidth}{%
+            \noindent\textbf{Nome do Aluno:} \underline{\hspace{7cm}} \textbf{Turma:} \underline{\hspace{1cm}}\\[0.5cm]
+            \noindent\textbf{Assinatura do Professor:} \underline{\hspace{3cm}} \hfill \textbf{Nota:} \underline{\hspace{2cm}}\\[0.5cm]
+            \noindent\textbf{Assinatura do Encarregado de Educação:} \underline{\hspace{3cm}}
+        }%
+    }
+    \vspace{1cm}
+}
