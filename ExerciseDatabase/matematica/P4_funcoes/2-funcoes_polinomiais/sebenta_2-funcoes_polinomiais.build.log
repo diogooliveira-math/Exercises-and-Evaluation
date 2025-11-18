@@ -33,23 +33,21 @@ For additional information on amsmath, use the `?' option.
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty))
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
-
+(../../../../Teste_modelo/config/style.tex)
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
-tex.def)
-No file sebenta_2-funcoes_polinomiais.aux.
+tex.def) (sebenta_2-funcoes_polinomiais.aux)
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
-
-LaTeX Warning: No \author given.
-
 (MAT_P4FUNCOE_2FUN_001.tex) [1{C:/Users/diogo/AppData/Local/MiKTeX/fonts/map/pd
 ftex/pdftex.map}] (sebenta_2-funcoes_polinomiais.aux) ) <C:\Users\diogo\AppData
 \Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\diogo\A
 ppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\d
-iogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk>
-Output written on sebenta_2-funcoes_polinomiais.pdf (1 page, 21651 bytes).
+iogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\U
+sers\diogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk>
+
+Output written on sebenta_2-funcoes_polinomiais.pdf (1 page, 28528 bytes).
 Transcript written on sebenta_2-funcoes_polinomiais.log.
 
 === pdflatex pass 1 stderr ===
@@ -89,22 +87,21 @@ For additional information on amsmath, use the `?' option.
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty))
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
-
+(../../../../Teste_modelo/config/style.tex)
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def) (sebenta_2-funcoes_polinomiais.aux)
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
-
-LaTeX Warning: No \author given.
-
 (MAT_P4FUNCOE_2FUN_001.tex) [1{C:/Users/diogo/AppData/Local/MiKTeX/fonts/map/pd
 ftex/pdftex.map}] (sebenta_2-funcoes_polinomiais.aux) ) <C:\Users\diogo\AppData
 \Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\diogo\A
 ppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\d
-iogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk>
-Output written on sebenta_2-funcoes_polinomiais.pdf (1 page, 21651 bytes).
+iogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\U
+sers\diogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk>
+
+Output written on sebenta_2-funcoes_polinomiais.pdf (1 page, 28528 bytes).
 Transcript written on sebenta_2-funcoes_polinomiais.log.
 
 === pdflatex pass 2 stderr ===

@@ -1,0 +1,56 @@
+{
+  "id": "MAT_P4FUNCOE_4FIN_003",
+  "version": "1.0",
+  "created": "2025-11-18",
+  "modified": "2025-11-18",
+  "author": "Professor",
+  "module": {
+    "id": "P4_funcoes",
+    "name": "MÓDULO P4 - Funções"
+  },
+  "concept": {
+    "id": "4-funcao_inversa",
+    "name": "Função Inversa"
+  },
+  "classification": {
+    "discipline": "matematica",
+    "module": "P4_funcoes",
+    "concept": "4-funcao_inversa",
+    "tags": [
+      "inversa",
+      "injetividade",
+      "teste_reta_horizontal",
+      "grafico"
+    ],
+    "difficulty": 2,
+    "difficulty_label": "Fácil"
+  },
+  "exercise_type": "desenvolvimento",
+  "content": {
+    "has_multiple_parts": false,
+    "parts_count": 1,
+    "has_graphics": true,
+    "requires_packages": [
+      "amsmath",
+      "amssymb",
+      "enumitem",
+      "tikz",
+      "pgfplots"
+    ]
+  },
+  "evaluation": {
+    "points": 10,
+    "time_estimate_minutes": 10,
+    "bloom_level": "aplicacao"
+  },
+  "solution": {
+    "available": false,
+    "file": ""
+  },
+  "usage": {
+    "times_used": 0,
+    "last_used": "",
+    "contexts": []
+  },
+  "status": "active"
+}

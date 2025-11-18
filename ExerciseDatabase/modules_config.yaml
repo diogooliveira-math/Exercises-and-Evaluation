@@ -195,6 +195,11 @@ matematica:
     description: Introdução às funções e funções polinomiais
     duration_hours: 20
     concepts:
+    - id: "0-revisoes"
+      name: Revisões
+      tags:
+      - revisao
+      - consolidacao
     - id: "1-generalidades_funcoes"
       name: Generalidades acerca de Funções
       tags:
@@ -214,6 +219,13 @@ matematica:
       - linear
       - quadratica
       - cubica
+    - id: "4-funcao_inversa"
+      name: Função Inversa
+      tags:
+      - inversa
+      - injetividade
+      - sobrejetividade
+      - simetria
 difficulty_levels:
   1:
     label: Muito Fácil

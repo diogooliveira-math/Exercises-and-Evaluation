@@ -355,3 +355,108 @@ python run_tests.py
 **Versão:** 2.0  
 **Status:** Testado e Funcional  
 **Manutenção:** Consulte `run_tests.py` para validação
+
+---
+
+## 🧩 Gestão de Módulos, Conceitos e Sebentas (Fluxo Atualizado)
+
+### 1. Convenção de IDs de Conceitos
+
+- Prefixo numérico natural para ordenar: `1-`, `2-`, `3-`, ...
+- `0-` reservado para revisões (pasta `0-revisoes`).
+- Exemplo: `1-generalidades_funcoes`, `2-funcoes_polinomiais`, `3-funcoes_polinomiais_grau_nao_superior_3`.
+
+### 2. Adicionar Disciplina / Módulo / Conceito
+
+```powershell
+python manage_modules.py
+```
+
+Opções interativas:
+
+- Criar disciplina
+- Criar módulo
+- Adicionar conceito
+
+Quando adicionar conceito:
+
+- Pergunta "Número do conceito" ⇒ respostas:
+  - `auto` (default) atribui próximo número livre.
+  - Número explícito (ex.: `5`).
+  - Vazio ⇒ sem prefixo (evitar se quiser ordenação consistente).
+  - `0` ⇒ conceito de revisão (aviso mostrado).
+
+### 3. Estrutura de Pastas do Módulo
+
+```text
+matematica/P4_funcoes/
+  0-revisoes/                ← revisões gerais
+  1-generalidades_funcoes/
+  2-funcoes_polinomiais/
+  3-funcoes_polinomiais_grau_nao_superior_3/
+```
+
+### 4. Geração de Exercícios de Exemplo
+
+```powershell
+python _tools/create_example_exercises_p4.py
+```
+
+Cria `.tex` + `.json` em cada conceito e atualiza `index.json`.
+
+### 5. Gerar Sebentas (Compilar PDF por Conceito)
+
+```powershell
+python _tools/generate_sebentas.py
+```
+
+Funcionalidades:
+
+- Cria `sebenta_<conceito>.tex` em cada pasta de conceito.
+- Usa `Teste_modelo/config/style.tex` (preâmbulo centralizado).
+- Compila automaticamente (se `pdflatex` disponível).
+- Move ficheiros temporários e o `.tex` gerado para subpasta `build/` (mantém só o PDF limpo).
+
+Resultado esperado em cada pasta de conceito:
+
+```text
+sebenta_<conceito>.pdf
+build/ (logs, .aux, .tex, etc.)
+```
+
+### 6. Correções Comuns
+
+- Erro "File style.tex not found" ⇒ caminho relativo incorreto: confirme que o script usa `../../../../Teste_modelo/config/style.tex`.
+- Erros `Missing $ inserted` ⇒ expressão matemática sem `$...$`; editar conteúdo do exercício.
+- Falha de compilação total ⇒ verificar log em `build/sebenta_<conceito>.build.log`.
+
+### 7. Exemplo de Fluxo Completo
+
+```powershell
+# 1. Criar módulo e conceitos numerados
+python manage_modules.py
+
+# 2. Criar exercícios de exemplo
+python _tools/create_example_exercises_p4.py
+
+# 3. Gerar sebentas (PDFs limpos)
+python _tools/generate_sebentas.py
+
+# 4. Verificar PDFs
+explorer ExerciseDatabase\matematica\P4_funcoes\1-generalidades_funcoes
+```
+
+### 8. Boas Práticas
+
+- Usar sempre numeração para ordem didática previsível.
+- Manter revisão transversal em `0-revisoes` (resumos, fichas de consolidação).
+- Reexecutar `generate_sebentas.py` após alterar exercícios para atualizar PDFs.
+- Evitar editar manualmente os ficheiros dentro de `build/` (gerados automaticamente).
+
+### 9. Próximos Melhoramentos (Sugestões)
+
+- Argumento CLI `--module <id>` para gerar sebentas só de um módulo.
+- Argumento `--no-compile` para gerar `.tex` sem PDF.
+- Integração com task VS Code para atalho "Gerar Sebentas".
+
+---

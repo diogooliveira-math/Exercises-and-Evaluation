@@ -11,6 +11,14 @@ Criar um sistema completo de gestão e geração de materiais educativos em LaTe
 ### Finetuning
 - [ ] Limpar os tex e temp files da pasta após a geração de exames
 - [ ] Adicionar mais exemplos de exercícios no modelo
+- [ ] tornar a 4-funcao_inversa por tipos de exercícios (determinacao analítica, gráfica, teste da reta horizontal)
+
+### Incorporação COPILOT IA
+- [ ] Adicionar validação automática de metadados ao criar novo exercício
+- [ ] Criar snippets VS Code para diferentes tipos de exercício
+- [ ] https://code.visualstudio.com/docs/copilot/getting-started LER E ADICIONAR.
+- [ ] Add a VS Code task “Gerar variante (ficheiro atual)” so you can run it with one click?
+- [ ] Register a companion agent YAML (like the one I added earlier) to invoke the tool automatically from inputs?
 
 ---
 

@@ -1,24 +1,25 @@
 {
   "database_version": "2.0",
-  "last_updated": "2025-11-15T12:44:33.204750",
-  "total_exercises": 3,
+  "last_updated": "2025-11-18T21:55:57.051027",
+  "total_exercises": 8,
   "statistics": {
     "by_module": {
-      "P4_funcoes": 3
+      "P4_funcoes": 8
     },
     "by_concept": {
       "Generalidades acerca de Funções": 1,
       "Funções Polinomiais": 1,
-      "Funções polinomiais de grau não superior a 3": 1
+      "Funções polinomiais de grau não superior a 3": 1,
+      "Função Inversa": 5
     },
     "by_difficulty": {
-      "Fácil": 3
+      "Fácil": 8
     },
     "by_type": {
-      "desenvolvimento": 3
+      "desenvolvimento": 8
     },
     "by_discipline": {
-      "matematica": 3
+      "matematica": 8
     }
   },
   "exercises": [
@@ -62,6 +63,100 @@
       "type": "desenvolvimento",
       "tags": [],
       "points": 0,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_001",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/MAT_P4FUNCOE_4FIN_001.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "funcao_linear",
+        "grafico",
+        "expressao_analitica"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_002",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/MAT_P4FUNCOE_4FIN_002.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "grafico",
+        "simetria",
+        "funcao_quadratica"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_003",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/MAT_P4FUNCOE_4FIN_003.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "injetividade",
+        "teste_reta_horizontal",
+        "grafico"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_004",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/MAT_P4FUNCOE_4FIN_004.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "expressao_analitica",
+        "calculo"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_005",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/MAT_P4FUNCOE_4FIN_005.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "funcao_linear",
+        "grafico",
+        "expressao_analitica"
+      ],
+      "points": 10,
       "status": "active"
     }
   ]

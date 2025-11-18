@@ -33,47 +33,26 @@ For additional information on amsmath, use the `?' option.
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty))
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
-
+(../../../../Teste_modelo/config/style.tex)
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
-tex.def)
-No file sebenta_3-funcoes_polinomiais_grau_nao_superior_3.aux.
+tex.def) (sebenta_3-funcoes_polinomiais_grau_nao_superior_3.aux)
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
-
-LaTeX Warning: No \author given.
-
-(MAT_P4FUNCOE_3FUN_001.tex
-! Missing $ inserted.
-<inserted text> 
-                $
-l.7 ... seu grau e identifique termos principais.}
-                                                  
-! Missing $ inserted.
-<inserted text> 
-                $
-l.7 ... seu grau e identifique termos principais.}
-                                                  
-
-Overfull \hbox (87.12315pt too wide) in paragraph at lines 7--7
-\T1/cmr/bx/n/12 Exercício 1. \T1/cmr/m/n/12 Con-si-dere a fun-ção p(x)=x$[] \OM
-S/cmsy/m/n/12 ^^@ \OT1/cmr/m/n/12 2\OML/cmm/m/it/12 x[] \OT1/cmr/m/n/12 + 3\OML
-/cmm/m/it/12 x \OMS/cmsy/m/n/12 ^^@ \OT1/cmr/m/n/12 1\OML/cmm/m/it/12 :Determin
-eoseugraueidentifiquetermosprincipais:$ 
-) [1{C:/Users/diogo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-(sebenta_3-funcoes_polinomiais_grau_nao_superior_3.aux) )
-(see the transcript file for additional information) <C:\Users\diogo\AppData\Lo
-cal\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\diogo\AppD
-ata\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\diog
-o\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk><C:/Users
-/diogo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
-<C:/Users/diogo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
-r12.pfb><C:/Users/diogo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
-ts/cm/cmr8.pfb><C:/Users/diogo/AppData/Local/Programs/MiKTeX/fonts/type1/public
-/amsfonts/cm/cmsy10.pfb>
+(MAT_P4FUNCOE_3FUN_001.tex) [1{C:/Users/diogo/AppData/Local/MiKTeX/fonts/map/pd
+ftex/pdftex.map}] (sebenta_3-funcoes_polinomiais_grau_nao_superior_3.aux) ) <C:
+\Users\diogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.p
+k> <C:\Users\diogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx
+1200.pk> <C:\Users\diogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
+0\ecrm1440.pk> <C:\Users\diogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
+/dpi600\ecrm2074.pk><C:/Users/diogo/AppData/Local/Programs/MiKTeX/fonts/type1/p
+ublic/amsfonts/cm/cmmi12.pfb><C:/Users/diogo/AppData/Local/Programs/MiKTeX/font
+s/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/diogo/AppData/Local/Programs/MiK
+TeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/diogo/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
 Output written on sebenta_3-funcoes_polinomiais_grau_nao_superior_3.pdf (1 page
-, 61517 bytes).
+, 65712 bytes).
 Transcript written on sebenta_3-funcoes_polinomiais_grau_nao_superior_3.log.
 
 === pdflatex pass 1 stderr ===
@@ -113,46 +92,26 @@ For additional information on amsmath, use the `?' option.
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty))
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
-
+(../../../../Teste_modelo/config/style.tex)
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def) (sebenta_3-funcoes_polinomiais_grau_nao_superior_3.aux)
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
 (C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
-
-LaTeX Warning: No \author given.
-
-(MAT_P4FUNCOE_3FUN_001.tex
-! Missing $ inserted.
-<inserted text> 
-                $
-l.7 ... seu grau e identifique termos principais.}
-                                                  
-! Missing $ inserted.
-<inserted text> 
-                $
-l.7 ... seu grau e identifique termos principais.}
-                                                  
-
-Overfull \hbox (87.12315pt too wide) in paragraph at lines 7--7
-\T1/cmr/bx/n/12 Exercício 1. \T1/cmr/m/n/12 Con-si-dere a fun-ção p(x)=x$[] \OM
-S/cmsy/m/n/12 ^^@ \OT1/cmr/m/n/12 2\OML/cmm/m/it/12 x[] \OT1/cmr/m/n/12 + 3\OML
-/cmm/m/it/12 x \OMS/cmsy/m/n/12 ^^@ \OT1/cmr/m/n/12 1\OML/cmm/m/it/12 :Determin
-eoseugraueidentifiquetermosprincipais:$ 
-) [1{C:/Users/diogo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-(sebenta_3-funcoes_polinomiais_grau_nao_superior_3.aux) )
-(see the transcript file for additional information) <C:\Users\diogo\AppData\Lo
-cal\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\diogo\AppD
-ata\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\diog
-o\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk><C:/Users
-/diogo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
-<C:/Users/diogo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
-r12.pfb><C:/Users/diogo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
-ts/cm/cmr8.pfb><C:/Users/diogo/AppData/Local/Programs/MiKTeX/fonts/type1/public
-/amsfonts/cm/cmsy10.pfb>
+(MAT_P4FUNCOE_3FUN_001.tex) [1{C:/Users/diogo/AppData/Local/MiKTeX/fonts/map/pd
+ftex/pdftex.map}] (sebenta_3-funcoes_polinomiais_grau_nao_superior_3.aux) ) <C:
+\Users\diogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.p
+k> <C:\Users\diogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx
+1200.pk> <C:\Users\diogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
+0\ecrm1440.pk> <C:\Users\diogo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
+/dpi600\ecrm2074.pk><C:/Users/diogo/AppData/Local/Programs/MiKTeX/fonts/type1/p
+ublic/amsfonts/cm/cmmi12.pfb><C:/Users/diogo/AppData/Local/Programs/MiKTeX/font
+s/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/diogo/AppData/Local/Programs/MiK
+TeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/diogo/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
 Output written on sebenta_3-funcoes_polinomiais_grau_nao_superior_3.pdf (1 page
-, 61517 bytes).
+, 65712 bytes).
 Transcript written on sebenta_3-funcoes_polinomiais_grau_nao_superior_3.log.
 
 === pdflatex pass 2 stderr ===

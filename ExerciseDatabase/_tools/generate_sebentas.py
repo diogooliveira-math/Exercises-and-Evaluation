@@ -59,31 +59,8 @@ def find_concept_name_from_yaml(cfg_path, module_name, concept_id):
                 return None
     return None
 
-# Minimal macros adapted from Teste_modelo/config/style.tex
-MACROS = r"""
-% --- Início macros mínimas para exibição de exercícios ---
-\newcounter{exerciciocount}
-\newcounter{subexerciciocount}
-\newcounter{optioncount}
-\newcommand{\exercicio}[1]{%
-    \par\vspace{1.2em}%
-    \refstepcounter{exerciciocount}%
-    \setcounter{subexerciciocount}{0}%
-    \setcounter{optioncount}{0}%
-    \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
-}
-\newcommand{\subexercicio}[1]{%
-    \par\vspace{0.8em}%
-    \refstepcounter{subexerciciocount}%
-    \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
-}
-\newcommand{\option}[1]{%
-    \par
-    \refstepcounter{optioncount}%
-    \noindent(\alph{optioncount}) #1%
-}
-% --- Fim macros ---
-"""
+# Caminho relativo do style.tex a partir de cada pasta de conceito (subir 4 níveis até raiz do workspace)
+STYLE_REL = '../../../../Teste_modelo/config/style.tex'
 
 COUNT = 0
 for concept_dir in sorted([p for p in MODULE_PATH.iterdir() if p.is_dir()]):
@@ -115,11 +92,13 @@ for concept_dir in sorted([p for p in MODULE_PATH.iterdir() if p.is_dir()]):
         out.write('\\usepackage{amsmath,amssymb}\n')
         out.write('\\usepackage{geometry}\n')
         out.write('\\geometry{a4paper,margin=2.5cm}\n')
+        out.write('% Inclui macros e formatação centralizadas\n')
+        out.write('\\input{' + STYLE_REL + '}\n')
+        # sobrescrever título do style.tex com o título da sebenta
         out.write('\\title{Sebenta - ' + concept_name + '}\n')
         out.write('\\date{}\n')
         out.write('\\begin{document}\n')
         out.write('\\maketitle\n')
-        out.write(MACROS + '\n')
 
         # Include each .tex file (exclui os sebenta_ gerados)
         for f in tex_files:

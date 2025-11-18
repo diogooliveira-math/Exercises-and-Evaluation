@@ -1,0 +1,28 @@
+name: Exercise Variant Generator
+description: Gera uma nova versão de um exercício a partir de um ficheiro existente, mantendo módulo/conceito e metadados consistentes.
+instructions: |
+  - Idioma: respostas em Português (pt-PT).
+  - Objetivo: criar uma nova versão de um exercício (variante) usando um exercício existente como contexto.
+  - Regras:
+    - Preservar disciplina, módulo e conceito.
+    - Gerar um novo ID sequencial na mesma pasta (XXX → próximo número livre).
+    - Atualizar datas, versão do metadado (ex.: 1.0 → 1.1) e `index.json`.
+    - Se possível, variar parâmetros numéricos simples no enunciado (ex.: coeficientes em f(x) = ax + b), evitando quebrar LaTeX.
+  - Não alterar ficheiros fora do conceito selecionado.
+capabilities:
+  - read
+  - write
+  - pull-requests
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+entrypoints:
+  - name: gerar-variante
+    description: Gerar nova versão a partir de um exercício existente
+    command: |
+      python ExerciseDatabase/_tools/generate_variant.py --source "${input_path}" --strategy auto
+    inputs:
+      - name: input_path
+        description: Caminho do ficheiro .tex do exercício de origem
+        required: true
