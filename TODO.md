@@ -11,7 +11,7 @@ Criar um sistema completo de gestão e geração de materiais educativos em LaTe
 ### Finetuning
 - [ ] Limpar os tex e temp files da pasta após a geração de exames
 - [ ] Adicionar mais exemplos de exercícios no modelo
-- [ ] tornar a 4-funcao_inversa por tipos de exercícios (determinacao analítica, gráfica, teste da reta horizontal)
+- [x] tornar a 4-funcao_inversa por tipos de exercícios (determinacao analítica, gráfica, teste da reta horizontal) ✅ v3.0 implementada!
 
 ### Incorporação COPILOT IA
 - [ ] Adicionar validação automática de metadados ao criar novo exercício
@@ -30,10 +30,10 @@ Criar um sistema completo de gestão e geração de materiais educativos em LaTe
 - [x] Atualizar README.md com informação detalhada
 
 ### 1.2 Definir Arquitetura do Sistema
-- [ ] Definir estrutura de pastas para a base de exercícios
-- [ ] Criar esquema de categorização/tags para exercícios
-- [ ] Definir formato padrão para metadados dos exercícios
-- [ ] Desenhar fluxo de trabalho: criação → armazenamento → seleção → geração
+- [x] Definir estrutura de pastas para a base de exercícios ✅ v3.0: disciplina/tema/conceito/tipo/exercicio
+- [x] Criar esquema de categorização/tags para exercícios ✅ Tags automáticas por tipo + conceito
+- [x] Definir formato padrão para metadados dos exercícios ✅ JSON por diretório (Opção A)
+- [x] Desenhar fluxo de trabalho: criação → armazenamento → seleção → geração ✅ Scripts add_exercise_with_types.py
 
 ---
 

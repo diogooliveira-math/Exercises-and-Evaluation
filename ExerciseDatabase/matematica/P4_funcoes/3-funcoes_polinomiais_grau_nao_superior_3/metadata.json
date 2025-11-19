@@ -1,0 +1,20 @@
+{
+  "id": "3-funcoes_polinomiais_grau_nao_superior_3",
+  "name": "Funções Polinomiais de Grau não Superior a 3",
+  "description": "Estudo detalhado de funções lineares, quadráticas e cúbicas, incluindo representação gráfica, zeros e análise de propriedades.",
+  "module": "P4_funcoes",
+  "module_name": "MÓDULO P4 - Funções",
+  "order": 3,
+  "tags": [
+    "grau_ate_3",
+    "linear",
+    "quadratica",
+    "cubica",
+    "grafico"
+  ],
+  "difficulty_range": {
+    "min": 2,
+    "max": 4
+  },
+  "estimated_hours": 6
+}

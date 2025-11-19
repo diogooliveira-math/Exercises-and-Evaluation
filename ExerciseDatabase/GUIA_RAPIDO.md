@@ -1,6 +1,17 @@
-# 🚀 Guia Rápido - Sistema de Gestão de Exercícios v2.0
+# 🚀 Guia Rápido - Sistema de Gestão de Exercícios v3.0.1
 
-**Sistema Modular para Ensino Modular de Matemática**
+**Sistema Modular com TIPOS de Exercícios - Ensino Modular de Matemática**
+
+---
+
+## 🆕 NOVO: Estrutura com Tipos (v3.0)
+
+Hierarquia: `disciplina → tema → conceito → **TIPO** → exercício`
+
+**Exemplo**: Função Inversa tem 3 tipos:
+- `determinacao_analitica` (cálculo algébrico) - 5 exercícios
+- `determinacao_grafica` (gráfico por simetria) - 5 exercícios
+- `teste_reta_horizontal` (verificar injetividade) - 5 exercícios
 
 ---
 
@@ -8,31 +19,37 @@
 
 **8/8 testes passaram com sucesso!**
 
-- ✓ Criação de exercícios
+- ✓ Criação de exercícios **com tipos**
 - ✓ Validação de índice
-- ✓ Pesquisa por módulo, conceito, dificuldade, tags
+- ✓ Pesquisa por módulo, conceito, **tipo**, dificuldade, tags
 - ✓ Pesquisa complexa com múltiplos filtros
-- ✓ Integridade de metadados
+- ✓ Integridade de metadados **consolidados**
 
 ---
 
 ## 📋 Início Rápido
 
-### 1. Adicionar Novo Exercício
+### 1. Adicionar Novo Exercício (COM TIPOS)
 
 ```powershell
 cd ExerciseDatabase\_tools
-python add_exercise.py
+python add_exercise_with_types.py  # ← USE ESTE!
 ```
 
 **Fluxo simplificado:**
 1. Escolher preset rápido (questão de aula, exercício de ficha, etc.) **OU** configuração manual
 2. Selecionar módulo (A10, A11, A12, A13, A14)
 3. Selecionar conceito específico
-4. Digite enunciado e alíneas
-5. Confirmar criação
+4. **🆕 Selecionar ou criar TIPO de exercício**
+5. Digite enunciado e alíneas
+6. Confirmar criação
 
 **Tempo estimado:** 2-3 minutos por exercício
+
+**Script antigo** (sem tipos, evitar):
+```powershell
+python add_exercise.py  # ⚠️ NÃO usar para novos exercícios
+```
 
 ### 2. Pesquisar Exercícios
 
@@ -82,7 +99,7 @@ Valida todo o sistema e cria exercícios de exemplo.
 
 ---
 
-## 📂 Estrutura de Ficheiros
+## 📂 Estrutura de Ficheiros (v3.0 com TIPOS)
 
 ```
 ExerciseDatabase/
@@ -90,17 +107,26 @@ ExerciseDatabase/
 ├── index.json                   # Índice central (gerado automaticamente)
 │
 ├── matematica/                  # Disciplina
-│   ├── A10_funcoes/            # Módulo
-│   │   ├── funcao_quadratica/  # Conceito
-│   │   │   ├── MAT_A10_FUNCOES_FQX_001.tex
-│   │   │   └── MAT_A10_FUNCOES_FQX_001.json
+│   ├── P4_funcoes/             # Módulo
+│   │   ├── 4-funcao_inversa/   # Conceito
+│   │   │   ├── determinacao_analitica/     # 🆕 TIPO
+│   │   │   │   ├── metadata.json          # Lista de IDs do tipo
+│   │   │   │   ├── MAT_P4_..._ANA_001.tex # Exercício
+│   │   │   │   └── MAT_P4_..._ANA_005.tex
+│   │   │   ├── determinacao_grafica/
+│   │   │   │   ├── metadata.json
+│   │   │   │   └── [5 .tex files]
+│   │   │   └── teste_reta_horizontal/
+│   │   │       ├── metadata.json
+│   │   │       └── [5 .tex files]
 │   │   └── ...
 │   └── ...
 │
 └── _tools/                      # Ferramentas
-    ├── add_exercise.py         # ⭐ Adicionar exercícios
+    ├── add_exercise_with_types.py  # ⭐ Adicionar (COM TIPOS)
+    ├── generate_variant.py     # 🔄 Gerar variantes
+    ├── consolidate_type_metadata.py # 🔧 Consolidar metadados
     ├── search_exercises.py     # 🔍 Pesquisar
-    ├── create_test_exercises.py
     └── run_tests.py            # ✓ Testes
 ```
 
@@ -154,31 +180,33 @@ results = search_exercises(
 
 ---
 
-## 📊 Metadados dos Exercícios
+## 📊 Metadados dos Exercícios (v3.0.1 Consolidado)
 
-Cada exercício tem ficheiro `.json` com:
+### Metadata do Tipo (`tipo/metadata.json`)
 
 ```json
 {
-  "id": "MAT_A10_FUNCOES_FQX_001",
-  "module": {"id": "A10_funcoes", "name": "Módulo A10 - Funções"},
-  "concept": {"id": "funcao_quadratica", "name": "Função Quadrática"},
-  "classification": {
-    "difficulty": 2,
-    "difficulty_label": "Fácil",
-    "tags": ["parabola", "vertice", "raizes"]
+  "tipo": "determinacao_analitica",
+  "tipo_nome": "Determinação Analítica",
+  "conceito": "4-funcao_inversa",
+  "tema": "P4_funcoes",
+  "disciplina": "matematica",
+  "descricao": "Exercícios focados no cálculo algébrico...",
+  "tags_tipo": ["calculo_analitico", "expressao_analitica"],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": false
   },
-  "exercise_type": "desenvolvimento",
-  "evaluation": {
-    "points": 10,
-    "time_estimate_minutes": 15
-  },
-  "usage": {
-    "times_used": 0,
-    "contexts": []
-  }
+  "dificuldade_sugerida": {"min": 2, "max": 4},
+  "exercicios": [
+    "MAT_P4FUNCOE_4FIN_ANA_001",
+    "MAT_P4FUNCOE_4FIN_ANA_002",
+    "MAT_P4FUNCOE_4FIN_ANA_005"
+  ]
 }
 ```
+
+**IMPORTANTE**: Apenas o `metadata.json` do tipo existe. Não há ficheiros `.json` individuais por exercício (apenas `.tex`).
 
 ---
 
@@ -285,6 +313,12 @@ Após executar `run_tests.py`:
 
 ---
 
-**Versão:** 2.0  
+**Versão:** 3.0.1 (Tipos + Metadados Consolidados)  
 **Status:** ✅ Testado e Funcional (8/8 testes)  
-**Data:** 2025-11-14
+**Data:** 2025-11-19  
+
+**Mudanças v3.0 → v3.0.1:**
+- 🆕 Tipos de exercícios por conceito
+- 📦 Metadados consolidados (`metadata.json` por tipo)
+- 🔄 Scripts atualizados (`generate_variant.py`, `import_qa2_exercises.py`)
+- 🔧 Novo utilitário: `consolidate_type_metadata.py`

@@ -1,26 +1,26 @@
 {
-  "id": "MAT_P4FUNCOE_4FIN_001",
+  "id": "MAT_A10FUNCO_FQX_001",
   "version": "1.0",
-  "created": "2025-11-18",
-  "modified": "2025-11-18",
-  "author": "Professor",
+  "created": "2025-11-19",
+  "modified": "2025-11-19",
+  "author": "Sistema de Testes",
   "module": {
-    "id": "P4_funcoes",
-    "name": "MÓDULO P4 - Funções"
+    "id": "A10_funcoes",
+    "name": "Módulo A10 - Funções"
   },
   "concept": {
-    "id": "4-funcao_inversa",
-    "name": "Função Inversa"
+    "id": "funcao_quadratica",
+    "name": "Função Quadrática"
   },
   "classification": {
     "discipline": "matematica",
-    "module": "P4_funcoes",
-    "concept": "4-funcao_inversa",
+    "module": "A10_funcoes",
+    "concept": "funcao_quadratica",
     "tags": [
-      "inversa",
-      "funcao_linear",
-      "grafico",
-      "expressao_analitica"
+      "concavidade",
+      "vertice",
+      "parabola",
+      "raizes"
     ],
     "difficulty": 2,
     "difficulty_label": "Fácil"
@@ -28,19 +28,16 @@
   "exercise_type": "desenvolvimento",
   "content": {
     "has_multiple_parts": true,
-    "parts_count": 2,
-    "has_graphics": true,
+    "parts_count": 3,
+    "has_graphics": false,
     "requires_packages": [
       "amsmath",
-      "amssymb",
-      "enumitem",
-      "tikz",
-      "pgfplots"
+      "amssymb"
     ]
   },
   "evaluation": {
     "points": 10,
-    "time_estimate_minutes": 10,
+    "time_estimate_minutes": 15,
     "bloom_level": "aplicacao"
   },
   "solution": {

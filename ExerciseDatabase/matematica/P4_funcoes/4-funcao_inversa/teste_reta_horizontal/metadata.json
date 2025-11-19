@@ -1,0 +1,32 @@
+{
+  "tipo": "teste_reta_horizontal",
+  "tipo_nome": "Teste da Reta Horizontal",
+  "conceito": "4-funcao_inversa",
+  "conceito_nome": "Função Inversa",
+  "tema": "P4_funcoes",
+  "tema_nome": "MÓDULO P4 - Funções",
+  "disciplina": "matematica",
+  "descricao": "Exercícios sobre análise da existência de função inversa usando o teste da reta horizontal (verificação de injetividade).",
+  "tags_tipo": [
+    "injetividade",
+    "teste_reta_horizontal",
+    "analise_grafica",
+    "condicao_existencia"
+  ],
+  "caracteristicas": {
+    "requer_calculo": false,
+    "requer_grafico": true,
+    "complexidade_algebrica": "baixa"
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 3
+  },
+  "exercicios": [
+    "MAT_P4FUNCOE_4FIN_003",
+    "MAT_P4FUNCOE_4FIN_TRH_002",
+    "MAT_P4FUNCOE_4FIN_TRH_003",
+    "MAT_P4FUNCOE_4FIN_TRH_004",
+    "MAT_P4FUNCOE_4FIN_TRH_005"
+  ]
+}

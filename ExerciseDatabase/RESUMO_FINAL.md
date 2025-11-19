@@ -1,6 +1,19 @@
-# 📦 Estado Atual do ExerciseDatabase
+# 📦 Estado Atual do ExerciseDatabase (v3.0.1)
 
-## ✅ Limpeza concluída
+## 🆕 IMPORTANTE: Sistema Atualizado para Tipos (v3.0)
+
+**Hierarquia**: `disciplina/tema/conceito/TIPO/exercicio.tex`
+
+**Exemplo atual**:
+- `matematica/P4_funcoes/4-funcao_inversa/` tem 3 tipos
+- Cada tipo tem 5 exercícios mínimo
+- Total: 15 exercícios (5×3 tipos)
+
+**Metadados**: Apenas `metadata.json` por tipo (lista de IDs), sem `.json` individuais.
+
+---
+
+## ✅ Limpeza concluída (v2.0 - arquivo)
 
 - Base de dados limpa: `matematica/` sem exercícios (pastas vazias mantidas).
 - Índice reiniciado: `index.json` sem entradas.

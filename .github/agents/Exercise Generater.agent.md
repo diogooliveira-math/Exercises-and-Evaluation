@@ -24,15 +24,17 @@ Este agente cria uma nova versão de um exercício a partir de um ficheiro exist
 ## Entradas Ideais
 
 - `source_path` (variante): caminho do `.tex` existente.
-- `module_id`/`concept_id` (novo): conforme `ExerciseDatabase/modules_config.yaml`.
+- `module_id`/`concept_id`/`tipo_id` (novo): conforme `ExerciseDatabase/modules_config.yaml` e tipos existentes.
 - Metadados (novo): `difficulty`, `type`, `tags`, `points`, `time_minutes`, `parts`, `author`.
 
 ## Saídas Esperadas
 
-- `.tex` com cabeçalho de meta (ID, dificuldade, tags, data) e LaTeX válido.
-- `.json` com metadados mínimos válidos (ver esquema do projeto).
+- `.tex` com cabeçalho de meta (ID, dificuldade, tags, data) e LaTeX válido **no diretório do tipo**.
+- **Atualização do `metadata.json` do tipo** com novo ID na lista `exercicios[]`.
 - `index.json` atualizado e estatísticas recalculadas.
 - (Opcional) PDF da sebenta do conceito atualizado (ficheiro `sebenta_*.pdf`).
+
+**IMPORTANTE**: Não cria ficheiro `.json` individual por exercício. Apenas o `metadata.json` do tipo é mantido.
 
 ## Fluxos de Trabalho
 
@@ -49,14 +51,26 @@ python ExerciseDatabase/_tools/generate_variant.py --source "<source_path>" --st
 python ExerciseDatabase/_tools/generate_sebentas.py
 ```
 
-### B) Criar Novo Exercício (assistido)
+### B) Criar Novo Exercício com Tipos (assistido - RECOMENDADO)
 
 1. Correr assistente:
 ```powershell
+python ExerciseDatabase/_tools/add_exercise_with_types.py
+```
+2. Escolher módulo/conceito/**tipo**, preset e preencher campos.
+3. **Permite criar novo tipo** se necessário.
+4. Confirmar criação; verificar:
+   - Ficheiro `.tex` em `conceito/tipo/`
+   - ID adicionado ao `metadata.json` do tipo
+   - `index.json` atualizado
+
+### C) Criar Exercício (modo antigo - sem tipos)
+
+```powershell
 python ExerciseDatabase/_tools/add_exercise.py
 ```
-2. Escolher módulo/conceito, preset e preencher campos.
-3. Confirmar criação; verificar atualização em `index.json`.
+
+**NOTA**: Evitar usar este script. Usar `add_exercise_with_types.py` para consistência.
 
 ## Restrições e Limites
 
@@ -77,10 +91,15 @@ python ExerciseDatabase/_tools/add_exercise.py
 
 ## Exemplos Rápidos
 
-- Variante do exercício atual:
+- Variante do exercício atual (v3.0 com tipos):
 ```powershell
-python ExerciseDatabase/_tools/generate_variant.py --source "ExerciseDatabase/matematica/P4_funcoes/4-funcao_inversa/MAT_P4FUNCOE_4FIN_001.tex" --strategy auto
+python ExerciseDatabase/_tools/generate_variant.py --source "ExerciseDatabase/matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_001.tex" --strategy auto
 ```
+
+**O que faz**:
+- Gera novo ID sequencial no mesmo tipo (ex: `_ANA_002`)
+- Atualiza `metadata.json` do tipo automaticamente
+- Aplica variações simples ao conteúdo (números, expressões)
 
 - Gerar PDFs de todas as sebentas:
 ```powershell

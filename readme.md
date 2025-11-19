@@ -85,12 +85,24 @@ Exercises and Evaluation/
 │   │
 │   └── Base/                   # Materiais fonte
 │
-├── ExerciseDatabase/           # [A CRIAR] Base de dados de exercícios
-│   ├── matematica/
-│   │   ├── funcoes/
-│   │   ├── derivadas/
+├── ExerciseDatabase/           # ✅ Base de dados de exercícios (v3.0.1)
+│   ├── modules_config.yaml     # Configuração de módulos
+│   ├── index.json              # Índice global automatizado
+│   ├── matematica/             # Disciplina
+│   │   ├── P4_funcoes/         # Módulo
+│   │   │   ├── 4-funcao_inversa/ # Conceito
+│   │   │   │   ├── determinacao_analitica/ # TIPO
+│   │   │   │   │   ├── metadata.json (lista IDs)
+│   │   │   │   │   └── [exercícios .tex]
+│   │   │   │   ├── determinacao_grafica/
+│   │   │   │   └── teste_reta_horizontal/
+│   │   │   └── ...
 │   │   └── ...
-│   └── index.json              # Índice de metadados
+│   └── _tools/                 # Scripts Python
+│       ├── add_exercise_with_types.py
+│       ├── generate_variant.py
+│       ├── search_exercises.py
+│       └── run_tests.py
 │
 ├── TheoryDatabase/             # [A CRIAR] Base de conteúdo teórico
 │   ├── definicoes/
@@ -123,6 +135,39 @@ Exercises and Evaluation/
 2. **Python 3.8+** (para scripts de automação - a implementar)
 
 3. **Editor** (recomendado: VS Code com LaTeX Workshop)
+
+### Base de Dados de Exercícios (ExerciseDatabase)
+
+**NOVO**: Sistema completo com hierarquia de 5 níveis implementado!
+
+```powershell
+# Adicionar novo exercício (com tipos)
+cd ExerciseDatabase\_tools
+python add_exercise_with_types.py
+
+# Gerar variante de exercício
+python generate_variant.py --source "path/to/exercise.tex" --strategy auto
+
+# Pesquisar exercícios
+python search_exercises.py
+
+# Executar testes
+python run_tests.py
+```
+
+**Características**:
+- 🆕 Tipos de exercícios por conceito
+- 📦 Metadados consolidados (um `metadata.json` por tipo)
+- 🔍 Pesquisa avançada (módulo, conceito, tipo, dificuldade, tags)
+- 🔄 Geração automática de variantes
+- ✅ 8/8 testes passando
+
+Consulte:
+- `ExerciseDatabase/START_HERE.md` - Guia visual rápido
+- `ExerciseDatabase/GUIA_TIPOS_EXERCICIOS.md` - Documentação completa
+- `ExerciseDatabase/README_TIPOS.md` - Quick start
+
+---
 
 ### Uso Atual (Teste_modelo)
 
@@ -253,9 +298,12 @@ Pressione `Ctrl+Shift+P` → "Tasks: Run Build Task" → "Build LaTeX Document"
 
 Consulte **[TODO.md](TODO.md)** para o roadmap completo do projeto, incluindo:
 
-- ✅ Fase 1: Análise e Estruturação (em progresso)
-- 🔄 Fase 2: Sistema de Base de Dados de Exercícios
-- 🔄 Fase 3: Gerador Automático de Exames
+- ✅ Fase 1: Análise e Estruturação (CONCLUÍDA)
+- ✅ Fase 2: Sistema de Base de Dados de Exercícios (IMPLEMENTADO v3.0.1)
+  - Hierarquia com TIPOS: `disciplina/tema/conceito/TIPO/exercicio`
+  - Metadados consolidados por tipo
+  - Scripts de gestão e automação
+- 🔄 Fase 3: Gerador Automático de Exames (EM PROGRESSO)
 - 📅 Fase 4: Gerador de Material Didático
 - 📅 Fase 5-10: Ferramentas, automação e funcionalidades avançadas
 
@@ -350,5 +398,11 @@ Para questões, sugestões ou reportar bugs:
 
 ---
 
-**Versão**: 0.1.0 (em desenvolvimento)  
-**Última atualização**: Novembro 2025
+**Versão**: 0.3.1 (ExerciseDatabase v3.0.1 implementado)  
+**Última atualização**: 19 Novembro 2025
+
+**Mudanças recentes**:
+- ✅ ExerciseDatabase completo com tipos de exercícios
+- ✅ Metadados consolidados (metadata.json por tipo)
+- ✅ Scripts de automação (add, search, generate, consolidate)
+- ✅ Sistema totalmente testado (8/8 testes)

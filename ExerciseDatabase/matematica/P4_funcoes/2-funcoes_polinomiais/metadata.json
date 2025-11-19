@@ -1,0 +1,19 @@
+{
+  "id": "2-funcoes_polinomiais",
+  "name": "Funções Polinomiais",
+  "description": "Estudo das funções polinomiais, suas propriedades, coeficientes, grau e operações básicas.",
+  "module": "P4_funcoes",
+  "module_name": "MÓDULO P4 - Funções",
+  "order": 2,
+  "tags": [
+    "polinomio",
+    "coeficientes",
+    "grau",
+    "funcao_polinomial"
+  ],
+  "difficulty_range": {
+    "min": 2,
+    "max": 3
+  },
+  "estimated_hours": 4
+}

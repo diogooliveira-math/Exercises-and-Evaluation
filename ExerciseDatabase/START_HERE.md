@@ -1,22 +1,44 @@
-# 🚀 START HERE - Guia Rápido Visual
+# 🚀 START HERE - Guia Rápido Visual (v3.0 com TIPOS)
+
+## 🎉 NOVO: Sistema de Tipos de Exercícios
+
+A versão 3.0 adiciona **tipos** para melhor organização!
+
+```
+Antes: disciplina/tema/conceito/exercicio
+Agora:  disciplina/tema/conceito/TIPO/exercicio
+```
+
+**Exemplo:** Função Inversa tem 3 tipos:
+- `determinacao_analitica` (cálculo algébrico)
+- `determinacao_grafica` (gráfico por simetria)
+- `teste_reta_horizontal` (verificar injetividade)
 
 ## ⚡ 3 Passos para Começar
 
 ### 1️⃣ Abrir Terminal
 ```powershell
 # Windows PowerShell
-cd "c:\Users\diogo\OneDrive\AAA\Projects\Exercises and Evaluation\ExerciseDatabase\_tools"
+cd "ExerciseDatabase\_tools"
 ```
 
 ### 2️⃣ Escolher Ação
 
-#### 🆕 Adicionar Exercício Novo
+#### 🆕 Adicionar Exercício Novo (COM TIPOS)
+```powershell
+python add_exercise_with_types.py
+```
+→ Wizard interativo abre  
+→ Escolhe módulo → conceito → **TIPO**  
+→ Cria novo tipo se necessário  
+→ 2-3 minutos = exercício pronto!
+
+#### 📜 Adicionar Exercício (modo antigo - sem tipos)
 ```powershell
 python add_exercise.py
 ```
-→ Wizard interativo abre  
-→ Escolhe preset ou manual  
-→ 2-3 minutos = exercício pronto!
+→ Wizard sem tipos  
+→ Para compatibilidade
 
 #### 🔍 Pesquisar Exercícios
 ```powershell
@@ -42,12 +64,12 @@ Apenas responda às perguntas.
 
 ---
 
-## 📋 Fluxo Visual de Criação
+## 📋 Fluxo Visual de Criação (v3.0 com TIPOS)
 
 ```
 START
   ↓
-python add_exercise.py
+python add_exercise_with_types.py  ← USE ESTE!
   ↓
 ┌─────────────────────────────────┐
 │ Modo de Criação:                │

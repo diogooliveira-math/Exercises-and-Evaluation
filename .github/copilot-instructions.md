@@ -192,3 +192,254 @@ Notas:
 
 # Versão do copilot_instructions
 - v1.1 — adicionada secção "Use case" para integração com VS Code
+
+---
+
+# 🆕 VERSÃO 3.0 - ESTRUTURA COM TIPOS DE EXERCÍCIOS
+
+## Nova Hierarquia: `disciplina/tema/conceito/tipo/exercicio`
+
+A partir da **versão 3.0**, o sistema implementa uma camada adicional de organização: **tipos de exercícios**.
+
+### Estrutura Atualizada
+
+```
+ExerciseDatabase/
+├── modules_config.yaml          # Configuração central
+├── index.json                    # Índice global (agora com campo "tipo")
+├── matematica/                   # Disciplina
+│   ├── P4_funcoes/              # Tema/Módulo
+│   │   ├── 4-funcao_inversa/    # Conceito
+│   │   │   ├── determinacao_analitica/     # 🆕 TIPO de exercício
+│   │   │   │   ├── metadata.json           # Metadados do TIPO (Opção A)
+│   │   │   │   ├── MAT_P4_..._ANA_001.json # Metadados exercício
+│   │   │   │   └── MAT_P4_..._ANA_001.tex  # Exercício LaTeX
+│   │   │   ├── determinacao_grafica/       # 🆕 TIPO de exercício
+│   │   │   │   ├── metadata.json
+│   │   │   │   └── [exercícios...]
+│   │   │   └── teste_reta_horizontal/      # 🆕 TIPO de exercício
+│   │   │       ├── metadata.json
+│   │   │       └── [exercícios...]
+└── _tools/
+    ├── add_exercise_with_types.py  # 🆕 SCRIPT PRINCIPAL (USE ESTE!)
+    ├── add_exercise.py              # Script antigo (deprecated)
+    └── [outros scripts...]
+```
+
+### Metadata do Tipo (JSON por Diretório - Opção A)
+
+Cada **tipo** de exercício tem um `metadata.json`:
+
+```json
+{
+  "tipo": "determinacao_analitica",
+  "tipo_nome": "Determinação Analítica da Função Inversa",
+  "conceito": "4-funcao_inversa",
+  "conceito_nome": "Função Inversa",
+  "tema": "P4_funcoes",
+  "tema_nome": "MÓDULO P4 - Funções",
+  "disciplina": "matematica",
+  "descricao": "Exercícios focados no cálculo da expressão analítica da função inversa através de manipulação algébrica.",
+  "tags_tipo": [
+    "calculo_analitico",
+    "expressao_analitica",
+    "algebra",
+    "resolucao_equacao"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": false,
+    "complexidade_algebrica": "media"
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 4
+  },
+  "exercicios": [
+    "MAT_P4FUNCOE_4FIN_ANA_001",
+    "MAT_P4FUNCOE_4FIN_ANA_002"
+  ]
+}
+```
+
+### Formato Atualizado de IDs de Exercícios
+
+Novo formato **com tipo**:
+
+```
+MAT_P4FUNCOE_4FIN_ANA_001
+│   │        │    │   └── Número sequencial (001-999)
+│   │        │    └────── Abreviação do TIPO (3 letras: ANA, GRA, TRH)
+│   │        └─────────── Abreviação do conceito (3-4 letras: 4FIN)
+│   └──────────────────── Abreviação do módulo (até 8 letras: P4FUNCOE)
+└──────────────────────── Disciplina (3 letras: MAT)
+```
+
+### Metadados de Exercício Atualizados
+
+Ficheiro `.json` do exercício agora inclui:
+
+```json
+{
+  "id": "MAT_P4FUNCOE_4FIN_ANA_001",
+  "classification": {
+    "discipline": "matematica",
+    "module": "P4_funcoes",
+    "concept": "4-funcao_inversa",
+    "tipo": "determinacao_analitica",       // 🆕 Campo TIPO
+    "tipo_nome": "Determinação Analítica",  // 🆕 Nome do tipo
+    "tags": [...],
+    "difficulty": 3
+  }
+}
+```
+
+### Índice Global Atualizado
+
+O `index.json` agora rastreia tipos:
+
+```json
+{
+  "database_version": "3.0",
+  "statistics": {
+    "by_type": {                              // 🆕 Estatísticas por tipo
+      "Determinação Analítica": 5,
+      "Determinação Gráfica": 3,
+      "Teste da Reta Horizontal": 2
+    }
+  },
+  "exercises": [
+    {
+      "id": "MAT_P4FUNCOE_4FIN_ANA_001",
+      "tipo": "determinacao_analitica",       // 🆕 Campo tipo
+      "tipo_nome": "Determinação Analítica"
+    }
+  ]
+}
+```
+
+## 🛠️ Scripts Atualizados
+
+### Script Principal: `add_exercise_with_types.py`
+
+**SEMPRE use este script** para criar novos exercícios na v3.0:
+
+```bash
+python ExerciseDatabase/_tools/add_exercise_with_types.py
+```
+
+Funcionalidades:
+- ✅ Solicita: disciplina → tema → conceito → **tipo**
+- ✅ Permite criar novo tipo interativamente
+- ✅ Gera ID com componente de tipo
+- ✅ Tags automáticas do tipo + conceito
+- ✅ Atualiza `metadata.json` do tipo
+- ✅ Atualiza `index.json` global
+
+### Criar Novo Tipo de Exercício
+
+Interativamente via `add_exercise_with_types.py` ou manualmente:
+
+1. Criar diretório: `conceito/novo_tipo/`
+2. Criar `metadata.json` do tipo com estrutura acima
+3. Adicionar exercícios dentro deste diretório
+
+## 🎯 Comportamento do Agente Copilot (v3.0)
+
+### Ao criar exercício:
+
+```
+Utilizador: "Cria um exercício sobre determinar f^(-1)(x)"
+
+Agente:
+1. Identifico: matematica/P4_funcoes/4-funcao_inversa
+2. Tipo apropriado: determinacao_analitica
+3. Verifico se tipo existe (metadata.json)
+4. Se não existe, pergunto se crio
+5. Uso add_exercise_with_types.py
+6. Atualizo metadata do tipo
+```
+
+### Ao reorganizar:
+
+```
+Utilizador: "Organiza os exercícios de função inversa por tipos"
+
+Agente:
+1. Leio exercícios em 4-funcao_inversa/
+2. Analiso tags para determinar tipo
+3. Crio estrutura de tipos
+4. Movo ficheiros .tex e .json
+5. Crio/atualizo metadata.json de cada tipo
+6. Atualizo index.json
+```
+
+### Ao pesquisar:
+
+```
+Utilizador: "Lista exercícios de determinação gráfica"
+
+Agente:
+1. Pesquiso em index.json por "tipo": "determinacao_grafica"
+2. OU navego para matematica/.../determinacao_grafica/
+3. Leio metadata.json do tipo
+4. Listo exercícios
+```
+
+## ⚠️ Regras Importantes v3.0
+
+1. **SEMPRE use tipos**: Novos exercícios DEVEM ir em `conceito/tipo/`
+2. **Não misture**: Não coloque exercícios diretamente em `conceito/` (usar tipo)
+3. **Metadata do tipo**: Sempre atualizar `exercicios[]` no `metadata.json` do tipo
+4. **IDs únicos**: Incluir componente de tipo no ID
+5. **Tags automáticas**: Combinar tags do conceito + tags do tipo
+6. **Script correto**: Use `add_exercise_with_types.py`, NÃO `add_exercise.py`
+
+## 🔄 Migração de Exercícios Antigos
+
+Para migrar exercícios da estrutura antiga (sem tipos):
+
+1. Identificar tipos naturais pelos metadados/tags
+2. Criar estrutura de tipos
+3. Mover ficheiros para tipos apropriados
+4. Renomear IDs (adicionar componente de tipo)
+5. Atualizar todos os metadados
+6. Regenerar `index.json`
+
+Exemplo:
+```
+Antes: matematica/P4_funcoes/4-funcao_inversa/MAT_P4_4FIN_001.tex
+
+Depois: matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4_4FIN_ANA_001.tex
+```
+
+## 📊 Estatísticas e Análise
+
+Com tipos, agora é possível:
+- Contar exercícios por tipo
+- Gerar sebentas por tipo específico
+- Criar exames balanceados por tipo
+- Analisar cobertura de tipos por conceito
+
+## 🎓 Exemplos de Tipos Comuns
+
+### Função Inversa
+- `determinacao_analitica`: Cálculo algébrico de f⁻¹(x)
+- `determinacao_grafica`: Obter gráfico por simetria
+- `teste_reta_horizontal`: Verificar injetividade
+
+### Derivadas (futuro)
+- `aplicacao_regras`: Usar regras de derivação
+- `derivada_composta`: Regra da cadeia
+- `interpretacao_geometrica`: Reta tangente
+
+### Limites (futuro)
+- `calculo_direto`: Substituição direta
+- `levantamento_indeterminacao`: Resolver 0/0
+- `limites_laterais`: Esquerda e direita
+
+---
+
+**Versão**: 3.0 (com suporte a tipos de exercícios)  
+**Data**: 2025-11-19  
+**Filosofia**: Organização hierárquica, metadados ricos, automação inteligente

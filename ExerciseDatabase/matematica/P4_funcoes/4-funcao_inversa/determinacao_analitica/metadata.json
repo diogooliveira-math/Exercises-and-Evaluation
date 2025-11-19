@@ -1,0 +1,32 @@
+{
+  "tipo": "determinacao_analitica",
+  "tipo_nome": "Determinação Analítica da Função Inversa",
+  "conceito": "4-funcao_inversa",
+  "conceito_nome": "Função Inversa",
+  "tema": "P4_funcoes",
+  "tema_nome": "MÓDULO P4 - Funções",
+  "disciplina": "matematica",
+  "descricao": "Exercícios focados no cálculo da expressão analítica da função inversa através de manipulação algébrica.",
+  "tags_tipo": [
+    "calculo_analitico",
+    "expressao_analitica",
+    "algebra",
+    "resolucao_equacao"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": false,
+    "complexidade_algebrica": "media"
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 4
+  },
+  "exercicios": [
+    "MAT_P4FUNCOE_4FIN_001",
+    "MAT_P4FUNCOE_4FIN_004",
+    "MAT_P4FUNCOE_4FIN_005",
+    "MAT_P4FUNCOE_4FIN_ANA_004",
+    "MAT_P4FUNCOE_4FIN_ANA_005"
+  ]
+}

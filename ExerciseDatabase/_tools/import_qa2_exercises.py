@@ -99,70 +99,52 @@ def create_exercise_files(ex_data: dict):
 
 """
     
-    # Write .tex file
-    tex_path = DB_BASE / f"{ex_id}.tex"
+    # Determinar tipo (diretório) com base em tags e criar se necessário
+    def suggest_type(tags: list) -> str:
+        if any(tag in tags for tag in ['calculo_analitico', 'expressao_analitica', 'calculo']):
+            return 'determinacao_analitica'
+        if any(tag in tags for tag in ['grafico', 'simetria', 'bissectriz']):
+            return 'determinacao_grafica'
+        if any(tag in tags for tag in ['injetividade', 'teste_reta_horizontal']):
+            return 'teste_reta_horizontal'
+        return 'outros'
+
+    tipo_id = suggest_type(ex_data["tags"])
+    tipo_path = DB_BASE / tipo_id
+    tipo_path.mkdir(parents=True, exist_ok=True)
+
+    # Write .tex file inside the type folder
+    tex_path = tipo_path / f"{ex_id}.tex"
     tex_path.write_text(header + clean_content, encoding="utf-8")
-    
-    # Create metadata JSON
-    metadata = {
-        "id": ex_id,
-        "version": "1.0",
-        "created": datetime.now().strftime("%Y-%m-%d"),
-        "modified": datetime.now().strftime("%Y-%m-%d"),
-        "author": "Professor",
-        "module": {
-            "id": "P4_funcoes",
-            "name": "MÓDULO P4 - Funções"
-        },
-        "concept": {
-            "id": "4-funcao_inversa",
-            "name": "Função Inversa"
-        },
-        "classification": {
-            "discipline": "matematica",
-            "module": "P4_funcoes",
-            "concept": "4-funcao_inversa",
-            "tags": ex_data["tags"],
-            "difficulty": ex_data["difficulty"],
-            "difficulty_label": "Fácil"
-        },
-        "exercise_type": "desenvolvimento",
-        "content": {
-            "has_multiple_parts": ex_data["parts"] > 1,
-            "parts_count": ex_data["parts"],
-            "has_graphics": "grafico" in ex_data["tags"] or "exercise2" in ex_data["source"] or "exercise3" in ex_data["source"],
-            "requires_packages": ["amsmath", "amssymb", "enumitem", "tikz", "pgfplots"] if "grafico" in ex_data["tags"] else ["amsmath", "amssymb", "enumitem"]
-        },
-        "evaluation": {
-            "points": ex_data["points"],
-            "time_estimate_minutes": ex_data["time_minutes"],
-            "bloom_level": "aplicacao"
-        },
-        "solution": {
-            "available": False,
-            "file": ""
-        },
-        "usage": {
-            "times_used": 0,
-            "last_used": "",
-            "contexts": []
-        },
-        "status": "active"
-    }
-    
-    json_path = DB_BASE / f"{ex_id}.json"
-    json_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding="utf-8")
-    
+
+    # Atualizar metadata do tipo (um único metadata.json por tipo)
+    tipo_metadata_file = tipo_path / "metadata.json"
+    if tipo_metadata_file.exists():
+        try:
+            tipo_meta = json.loads(tipo_metadata_file.read_text(encoding="utf-8"))
+        except Exception:
+            tipo_meta = {"tipo": tipo_id, "tipo_nome": tipo_id.replace('_', ' ').title(), "exercicios": []}
+    else:
+        tipo_meta = {"tipo": tipo_id, "tipo_nome": tipo_id.replace('_', ' ').title(), "exercicios": []}
+
+    if not isinstance(tipo_meta.get("exercicios"), list):
+        tipo_meta["exercicios"] = []
+
+    if ex_id not in tipo_meta["exercicios"]:
+        tipo_meta["exercicios"].append(ex_id)
+
+    tipo_metadata_file.write_text(json.dumps(tipo_meta, indent=2, ensure_ascii=False), encoding="utf-8")
+
     return {
         "id": ex_id,
-        "path": f"matematica/P4_funcoes/4-funcao_inversa/{ex_id}.tex",
+        "path": f"matematica/P4_funcoes/4-funcao_inversa/{tipo_id}/{ex_id}.tex",
         "discipline": "matematica",
         "module": "P4_funcoes",
         "module_name": "MÓDULO P4 - Funções",
         "concept": "4-funcao_inversa",
         "concept_name": "Função Inversa",
         "difficulty": ex_data["difficulty"],
-        "type": "desenvolvimento",
+        "type": tipo_id,
         "tags": ex_data["tags"],
         "points": ex_data["points"],
         "status": "active"

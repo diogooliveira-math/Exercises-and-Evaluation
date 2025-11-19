@@ -1,25 +1,25 @@
 {
-  "database_version": "2.0",
-  "last_updated": "2025-11-18T21:55:57.051027",
-  "total_exercises": 8,
+  "database_version": "3.0",
+  "last_updated": "2025-11-19T10:20:26.844338",
+  "total_exercises": 18,
   "statistics": {
     "by_module": {
-      "P4_funcoes": 8
+      "P4_funcoes": 18
     },
     "by_concept": {
       "Generalidades acerca de Funções": 1,
       "Funções Polinomiais": 1,
       "Funções polinomiais de grau não superior a 3": 1,
-      "Função Inversa": 5
+      "Função Inversa": 15
     },
     "by_difficulty": {
-      "Fácil": 8
+      "Fácil": 18
     },
     "by_type": {
-      "desenvolvimento": 8
+      "desenvolvimento": 18
     },
     "by_discipline": {
-      "matematica": 8
+      "matematica": 18
     }
   },
   "exercises": [
@@ -66,13 +66,15 @@
       "status": "active"
     },
     {
-      "id": "MAT_P4FUNCOE_4FIN_001",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/MAT_P4FUNCOE_4FIN_001.tex",
+      "id": "MAT_P4FUNCOE_4FIN_ANA_001",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_001.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
       "concept": "4-funcao_inversa",
       "concept_name": "Função Inversa",
+      "tipo": "determinacao_analitica",
+      "tipo_nome": "Determinação Analítica da Função Inversa",
       "difficulty": 2,
       "type": "desenvolvimento",
       "tags": [
@@ -85,13 +87,56 @@
       "status": "active"
     },
     {
-      "id": "MAT_P4FUNCOE_4FIN_002",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/MAT_P4FUNCOE_4FIN_002.tex",
+      "id": "MAT_P4FUNCOE_4FIN_ANA_002",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_002.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
       "concept": "4-funcao_inversa",
       "concept_name": "Função Inversa",
+      "tipo": "determinacao_analitica",
+      "tipo_nome": "Determinação Analítica da Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "expressao_analitica",
+        "calculo"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_ANA_003",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_003.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "determinacao_analitica",
+      "tipo_nome": "Determinação Analítica da Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "funcao_linear",
+        "grafico",
+        "expressao_analitica"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_GRA_001",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_grafica/MAT_P4FUNCOE_4FIN_GRA_001.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "determinacao_grafica",
+      "tipo_nome": "Determinação Gráfica da Função Inversa",
       "difficulty": 2,
       "type": "desenvolvimento",
       "tags": [
@@ -104,13 +149,15 @@
       "status": "active"
     },
     {
-      "id": "MAT_P4FUNCOE_4FIN_003",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/MAT_P4FUNCOE_4FIN_003.tex",
+      "id": "MAT_P4FUNCOE_4FIN_TRH_001",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/teste_reta_horizontal/MAT_P4FUNCOE_4FIN_TRH_001.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
       "concept": "4-funcao_inversa",
       "concept_name": "Função Inversa",
+      "tipo": "teste_reta_horizontal",
+      "tipo_nome": "Teste da Reta Horizontal",
       "difficulty": 2,
       "type": "desenvolvimento",
       "tags": [
@@ -123,31 +170,15 @@
       "status": "active"
     },
     {
-      "id": "MAT_P4FUNCOE_4FIN_004",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/MAT_P4FUNCOE_4FIN_004.tex",
+      "id": "MAT_P4FUNCOE_4FIN_ANA_004",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_004.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
       "concept": "4-funcao_inversa",
       "concept_name": "Função Inversa",
-      "difficulty": 2,
-      "type": "desenvolvimento",
-      "tags": [
-        "inversa",
-        "expressao_analitica",
-        "calculo"
-      ],
-      "points": 10,
-      "status": "active"
-    },
-    {
-      "id": "MAT_P4FUNCOE_4FIN_005",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/MAT_P4FUNCOE_4FIN_005.tex",
-      "discipline": "matematica",
-      "module": "P4_funcoes",
-      "module_name": "MÓDULO P4 - Funções",
-      "concept": "4-funcao_inversa",
-      "concept_name": "Função Inversa",
+      "tipo": "determinacao_analitica",
+      "tipo_nome": "Determinação Analítica da Função Inversa",
       "difficulty": 2,
       "type": "desenvolvimento",
       "tags": [
@@ -155,6 +186,195 @@
         "funcao_linear",
         "grafico",
         "expressao_analitica"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_ANA_005",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_005.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "determinacao_analitica",
+      "tipo_nome": "Determinação Analítica da Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "funcao_linear",
+        "grafico",
+        "expressao_analitica"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_GRA_002",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_grafica/MAT_P4FUNCOE_4FIN_GRA_002.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "determinacao_grafica",
+      "tipo_nome": "Determinação Gráfica da Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "grafico",
+        "simetria",
+        "funcao_quadratica"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_GRA_003",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_grafica/MAT_P4FUNCOE_4FIN_GRA_003.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "determinacao_grafica",
+      "tipo_nome": "Determinação Gráfica da Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "grafico",
+        "simetria",
+        "funcao_quadratica"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_GRA_004",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_grafica/MAT_P4FUNCOE_4FIN_GRA_004.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "determinacao_grafica",
+      "tipo_nome": "Determinação Gráfica da Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "grafico",
+        "simetria",
+        "funcao_quadratica"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_GRA_005",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_grafica/MAT_P4FUNCOE_4FIN_GRA_005.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "determinacao_grafica",
+      "tipo_nome": "Determinação Gráfica da Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "grafico",
+        "simetria",
+        "funcao_quadratica"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_TRH_002",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/teste_reta_horizontal/MAT_P4FUNCOE_4FIN_TRH_002.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "teste_reta_horizontal",
+      "tipo_nome": "Teste da Reta Horizontal",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "injetividade",
+        "teste_reta_horizontal",
+        "grafico"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_TRH_003",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/teste_reta_horizontal/MAT_P4FUNCOE_4FIN_TRH_003.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "teste_reta_horizontal",
+      "tipo_nome": "Teste da Reta Horizontal",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "injetividade",
+        "teste_reta_horizontal",
+        "grafico"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_TRH_004",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/teste_reta_horizontal/MAT_P4FUNCOE_4FIN_TRH_004.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "teste_reta_horizontal",
+      "tipo_nome": "Teste da Reta Horizontal",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "injetividade",
+        "teste_reta_horizontal",
+        "grafico"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_TRH_005",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/teste_reta_horizontal/MAT_P4FUNCOE_4FIN_TRH_005.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "teste_reta_horizontal",
+      "tipo_nome": "Teste da Reta Horizontal",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "injetividade",
+        "teste_reta_horizontal",
+        "grafico"
       ],
       "points": 10,
       "status": "active"

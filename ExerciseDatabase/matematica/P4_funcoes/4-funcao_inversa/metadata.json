@@ -1,0 +1,37 @@
+{
+  "id": "4-funcao_inversa",
+  "name": "Função Inversa",
+  "description": "Conceito de função inversa, condições de existência (injetividade), determinação analítica e gráfica, simetria e propriedades.",
+  "module": "P4_funcoes",
+  "module_name": "MÓDULO P4 - Funções",
+  "order": 4,
+  "tags": [
+    "inversa",
+    "injetividade",
+    "sobrejetividade",
+    "simetria",
+    "bijecao"
+  ],
+  "difficulty_range": {
+    "min": 3,
+    "max": 5
+  },
+  "estimated_hours": 5,
+  "tipos": [
+    {
+      "id": "determinacao_analitica",
+      "name": "Determinação Analítica",
+      "description": "Cálculo da expressão analítica da função inversa através de manipulação algébrica"
+    },
+    {
+      "id": "determinacao_grafica",
+      "name": "Determinação Gráfica",
+      "description": "Obtenção do gráfico da função inversa por simetria relativamente à bissetriz dos quadrantes ímpares"
+    },
+    {
+      "id": "teste_reta_horizontal",
+      "name": "Teste da Reta Horizontal",
+      "description": "Verificação da injetividade de uma função através do teste da reta horizontal"
+    }
+  ]
+}

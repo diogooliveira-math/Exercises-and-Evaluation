@@ -165,17 +165,37 @@ def main() -> None:
     new_tex_path = dest_dir / f"{new_id}.tex"
     new_tex_path.write_text(varied, encoding="utf-8")
 
-    # Metadados .json
-    meta = load_json_metadata(src_tex) or {}
-    # Atualizar metadados mínimos
-    meta["id"] = new_id
-    meta["created"] = meta.get("created", today)
-    meta["modified"] = today
-    meta["version"] = bump_version(meta.get("version", "1.0"))
-    # Ajustar paths no JSON caso exista (opcional)
-    # Persistir json
-    new_json_path = new_tex_path.with_suffix(".json")
-    new_json_path.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding="utf-8")
+    # Metadados: atualizar o metadata do TIPO (um único metadata.json por diretório de tipo)
+    tipo_metadata_file = dest_dir / "metadata.json"
+    # Tentativa de carregar metadados do exercício original caso existam (para campos auxiliares)
+    exercise_meta = load_json_metadata(src_tex) or {}
+
+    # Construir entrada mínima para registo no metadata do tipo
+    entry = {
+        "id": new_id,
+        "created": exercise_meta.get("created", today),
+        "modified": today,
+        "author": exercise_meta.get("author", "Sistema")
+    }
+
+    if tipo_metadata_file.exists():
+        try:
+            tipo_meta = json.loads(tipo_metadata_file.read_text(encoding="utf-8"))
+        except Exception:
+            tipo_meta = {"exercicios": []}
+    else:
+        tipo_meta = {"exercicios": []}
+
+    # Garantir lista
+    if not isinstance(tipo_meta.get("exercicios"), list):
+        tipo_meta["exercicios"] = []
+
+    # Adicionar novo id se ainda não existir
+    if new_id not in tipo_meta["exercicios"]:
+        tipo_meta["exercicios"].append(new_id)
+
+    # Guardar metadata do tipo
+    tipo_metadata_file.write_text(json.dumps(tipo_meta, indent=2, ensure_ascii=False), encoding="utf-8")
 
     # Atualizar index.json
     if INDEX_FILE.exists():
