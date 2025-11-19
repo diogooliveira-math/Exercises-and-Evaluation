@@ -90,6 +90,31 @@ def generate_exam(index: dict, criteria: dict) -> str:
 - Não incluir credenciais em ficheiros (API keys, tokens).
 - Para operações que alteram Base/ ou ExerciseDatabase/ pedir confirmação.
 
+# ⚠️ ESTRUTURA DE DIRETÓRIOS CRÍTICA
+## ExerciseDatabase vs SebentasDatabase
+
+**NUNCA misturar as duas estruturas!**
+
+### ExerciseDatabase/
+- **Propósito**: Armazenamento de exercícios fonte (.tex e .json)
+- **Estrutura**: `disciplina/módulo/conceito/tipo/exercicio.tex`
+- **Conteúdo**: Exercícios individuais, metadados, configurações
+- **NÃO CRIAR**: Sebentas, PDFs compilados, ficheiros temporários LaTeX
+
+### SebentasDatabase/
+- **Propósito**: Geração e armazenamento de sebentas compiladas (PDFs)
+- **Estrutura**: `disciplina/módulo/conceito/pdfs/sebenta_X.pdf`
+- **Conteúdo**: Templates, PDFs finais organizados
+- **Geração**: Usar `SebentasDatabase/_tools/generate_sebentas.py`
+
+### Regras de Ouro:
+1. ✅ Exercícios fonte → **ExerciseDatabase/**
+2. ✅ Sebentas compiladas → **SebentasDatabase/**
+3. ❌ NUNCA criar `sebenta_*.tex` ou `sebenta_*.pdf` em ExerciseDatabase
+4. ❌ NUNCA criar exercícios individuais em SebentasDatabase
+5. ✅ Para gerar sebentas: `python SebentasDatabase/_tools/generate_sebentas.py`
+6. ✅ Ficheiros temporários LaTeX (.aux, .log) devem ser limpos automaticamente
+
 # Estilo de respostas do Copilot
 - Preferência por snippets minimalistas e comentados.
 - Quando gerar LaTeX: incluir bloco completo pronto a compilar (preamble mínimo se necessário).
@@ -192,6 +217,51 @@ Notas:
 
 # Versão do copilot_instructions
 - v1.1 — adicionada secção "Use case" para integração com VS Code
+- v1.2 — adicionada distinção crítica entre ExerciseDatabase e SebentasDatabase
+
+# 🔄 WORKFLOW COMPLETO: Do Exercício ao PDF
+
+## 1. Criar Exercício (em ExerciseDatabase)
+```bash
+# Usar script de adição com tipos
+python ExerciseDatabase/_tools/add_exercise_with_types.py
+```
+- Cria `.tex` e `.json` em `ExerciseDatabase/disciplina/módulo/conceito/tipo/`
+- Atualiza `index.json` global
+- Atualiza `metadata.json` do tipo
+
+## 2. Diversificar Exercícios (quando necessário)
+- Manter exercícios do mesmo tipo com variações significativas
+- Diferentes funções, valores, desafios pedagógicos
+- Evitar repetições ou cópias com mudanças mínimas
+
+## 3. Gerar Sebenta (em SebentasDatabase)
+```bash
+# Gerar sebenta de um conceito específico
+python SebentasDatabase/_tools/generate_sebentas.py --module P4_funcoes --concept 4-funcao_inversa
+
+# Gerar sebentas de todo o módulo
+python SebentasDatabase/_tools/generate_sebentas.py --module P4_funcoes
+
+# Gerar tudo
+python SebentasDatabase/_tools/generate_sebentas.py
+```
+- Cria `.tex` temporário em `SebentasDatabase/disciplina/módulo/conceito/`
+- Compila para PDF
+- Move PDF para `SebentasDatabase/disciplina/módulo/conceito/pdfs/`
+- Limpa ficheiros temporários automaticamente
+
+## 4. Verificar Resultado
+- ✅ PDF em: `SebentasDatabase/disciplina/módulo/conceito/pdfs/sebenta_X.pdf`
+- ✅ ExerciseDatabase/ limpo (sem PDFs ou sebentas)
+- ✅ SebentasDatabase/ organizado (PDFs em pdfs/, sem temporários)
+
+## ⚠️ ERROS COMUNS A EVITAR
+1. ❌ Criar sebenta diretamente em ExerciseDatabase
+2. ❌ Compilar PDFs manualmente sem usar o script de geração
+3. ❌ Deixar ficheiros temporários (.aux, .log) sem limpar
+4. ❌ Misturar estruturas ou criar PDFs em locais errados
+5. ❌ Exercícios muito semelhantes/repetidos dentro do mesmo tipo
 
 ---
 

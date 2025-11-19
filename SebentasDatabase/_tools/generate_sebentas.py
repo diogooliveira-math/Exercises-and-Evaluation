@@ -28,10 +28,14 @@ import json
 import shutil
 import subprocess
 import argparse
-import yaml
 from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Optional, Set
+
+try:
+    import yaml
+except ImportError:
+    yaml = None
 
 # Paths principais
 PROJECT_ROOT = Path(__file__).parent.parent.parent
@@ -68,7 +72,7 @@ class SebentaGenerator:
         
     def load_modules_config(self) -> Dict:
         """Carrega configuração dos módulos."""
-        if not MODULES_CONFIG.exists():
+        if not MODULES_CONFIG.exists() or yaml is None:
             return {}
         try:
             with open(MODULES_CONFIG, 'r', encoding='utf-8') as f:
@@ -230,6 +234,8 @@ class SebentaGenerator:
                     with open(tex_file, 'r', encoding='utf-8') as f:
                         exercise_content = f.read().strip()
                     content_lines.append(exercise_content)
+                    # Force floats (figures) to be placed before continuing
+                    content_lines.append("\\FloatBarrier")
                 except Exception as e:
                     content_lines.append(f"% ERRO ao ler {tex_file.name}: {e}")
                     content_lines.append(f"\\textbf{{Erro ao carregar exercício: {tex_file.name}}}")
@@ -359,6 +365,8 @@ class SebentaGenerator:
                         with open(tex_file, 'r', encoding='utf-8') as f:
                             exercise_content = f.read()
                         content_lines.append(exercise_content)
+                        # Force floats after each exercise when building module sebenta
+                        content_lines.append("\\FloatBarrier")
                         content_lines.append("")
                     except Exception as e:
                         content_lines.append(f"% ERRO ao ler {tex_file.name}: {e}")

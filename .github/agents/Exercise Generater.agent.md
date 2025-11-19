@@ -7,6 +7,22 @@ tools: []
 
 Este agente cria uma nova versão de um exercício a partir de um ficheiro existente (variante) ou ajuda a criar exercícios novos, garantindo consistência com as convenções do repositório.
 
+## ⚠️ REGRA CRÍTICA: Separação de Estruturas
+
+**NUNCA misturar ExerciseDatabase com SebentasDatabase!**
+
+### ExerciseDatabase/
+- ✅ Apenas ficheiros `.tex` e `.json` de exercícios individuais
+- ✅ Estrutura: `disciplina/módulo/conceito/tipo/exercicio.tex`
+- ❌ NUNCA criar `sebenta_*.tex` ou `sebenta_*.pdf` aqui
+- ❌ NUNCA compilar PDFs aqui
+
+### SebentasDatabase/
+- ✅ Apenas sebentas compiladas (PDFs)
+- ✅ Estrutura: `disciplina/módulo/conceito/pdfs/sebenta_X.pdf`
+- ✅ Usar `SebentasDatabase/_tools/generate_sebentas.py`
+- ❌ NUNCA criar exercícios individuais aqui
+
 ## Filosofia e Regras (resumo do projeto)
 
 - Idioma: Português (pt-PT); termos técnicos em inglês quando apropriado (LaTeX, TikZ, API, CLI, JSON, Python).
@@ -60,11 +76,30 @@ python ExerciseDatabase/_tools/add_exercise_with_types.py
 2. Escolher módulo/conceito/**tipo**, preset e preencher campos.
 3. **Permite criar novo tipo** se necessário.
 4. Confirmar criação; verificar:
-   - Ficheiro `.tex` em `conceito/tipo/`
+   - Ficheiro `.tex` em `ExerciseDatabase/conceito/tipo/`
    - ID adicionado ao `metadata.json` do tipo
    - `index.json` atualizado
+   - ❌ **Nenhum PDF criado em ExerciseDatabase** (correto!)
 
-### C) Criar Exercício (modo antigo - sem tipos)
+### C) Gerar Sebenta PDF (depois de criar exercícios)
+
+```powershell
+# Para um conceito específico
+python SebentasDatabase/_tools/generate_sebentas.py --module P4_funcoes --concept 4-funcao_inversa
+
+# Para todo um módulo
+python SebentasDatabase/_tools/generate_sebentas.py --module P4_funcoes
+
+# Para tudo
+python SebentasDatabase/_tools/generate_sebentas.py
+```
+
+**Resultado**:
+- PDF gerado em `SebentasDatabase/disciplina/módulo/conceito/pdfs/sebenta_X.pdf`
+- Ficheiros temporários limpos automaticamente
+- ExerciseDatabase permanece sem PDFs ✅
+
+### D) Criar Exercício (modo antigo - sem tipos - DEPRECATED)
 
 ```powershell
 python ExerciseDatabase/_tools/add_exercise.py
@@ -101,7 +136,9 @@ python ExerciseDatabase/_tools/generate_variant.py --source "ExerciseDatabase/ma
 - Atualiza `metadata.json` do tipo automaticamente
 - Aplica variações simples ao conteúdo (números, expressões)
 
-- Gerar PDFs de todas as sebentas:
+- Gerar PDFs de todas as sebentas (em SebentasDatabase):
 ```powershell
-python ExerciseDatabase/_tools/generate_sebentas.py
+python SebentasDatabase/_tools/generate_sebentas.py
 ```
+
+**⚠️ LEMBRETE**: Sebentas vão para `SebentasDatabase/`, NUNCA para `ExerciseDatabase/`!

@@ -1,0 +1,104 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\geometry{margin=2.5cm}
+
+
+\pgfplotsset{compat=1.17}
+
+\title{Desafio de Investigação Matemática}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Tema}
+Crescimento exponencial em contextos reais!
+
+\section*{Objetivos}
+
+Cada grupo deverá apresentar um relatório que demonstre:
+
+\begin{itemize}
+  \item Compreensão do comportamento das funções exponenciais.
+  \item Capacidade de aplicar modelos matemáticos a situações reais.
+  \item Interpretação gráfica de fenómenos de crescimento.
+\end{itemize}
+
+\textbf{Nota:} O relatório deve incluir os \textbf{nomes dos participantes do grupo}.
+
+\section*{Contexto do Problema}
+
+Foi administrado um medicamento a um paciente. A concentração \( C \) desse medicamento no sangue, em miligramas por cm³, ao fim de \( t \) minutos após a administração, é dada pela função:
+
+
+
+\[
+C(t) = 500 \times 0{,}99^t
+\]
+
+\section*{Tarefa 1: Desenhar o Gráfico}
+
+Representa graficamente a função \( C(t) \).
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  axis lines = middle,
+  xlabel = {},
+  ylabel = {},
+  xtick = \empty,
+  ytick = \empty,
+  xmin = -10, xmax = 10,
+  ymin = -10, ymax = 10,
+  grid = none,
+  enlargelimits = true,
+  axis line style = {->, thick},
+]
+% Aqui podes adicionar uma função, se quiseres:
+% \addplot[domain=-10:10, thick, blue]{2^x};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+
+\section*{Tarefa 2: Interpretar o Gráfico}
+
+\begin{itemize}
+  \item O gráfico é crescente ou decrescente?
+  \item O que significa esse comportamento no contexto da população de coelhos?
+\end{itemize}
+
+
+\section*{Tarefa 3: Interpretar Pontos}
+
+Escolhe três pontos do gráfico e explica o seu significado.
+
+\section*{Tarefa 4: Resolver Problemas}
+
+\begin{enumerate}
+ \item Qual a concentração do medicamento no sangue do paciente duas horas depois de lhe ter sido administrado pela primeira vez?
+
+  \item Quanto tempo decorreu até que a concentração de medicamento no sangue fosse a quarta parte da inicial? Apresente o resultado em horas e minutos.
+
+  \item Segundo indicação médica, quando a concentração do medicamento no sangue fosse inferior a 50 mg/cmº, deveria ser administrada nova dose ao
+paciente. Quanto tempo depois da administração do medicamento pela primeira vez é que tal terá ocorrido?
+
+  Apresente o resultado em horas e minutos.
+\end{enumerate}
+
+
+\section*{Tarefa 5: Criar o Teu Próprio Problema}
+
+Inventa um problema relacionado com crescimento exponencial e apresenta a sua resolução. Podes usar outro contexto (população, dinheiro, tecnologia, etc.) — sê criativo!
+
+
+
+\end{document}

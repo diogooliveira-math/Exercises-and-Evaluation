@@ -1,0 +1,91 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\geometry{margin=2.5cm}
+
+
+\pgfplotsset{compat=1.17}
+
+\title{Desafio de Investigação Matemática}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Tema}
+Crescimento exponencial em contextos reais!
+
+\section*{Objetivos}
+
+Cada grupo deverá apresentar um relatório que demonstre:
+
+\begin{itemize}
+  \item Compreensão do comportamento das funções exponenciais.
+  \item Capacidade de aplicar modelos matemáticos a situações reais.
+  \item Interpretação gráfica de fenómenos de crescimento.
+\end{itemize}
+
+\textbf{Nota:} O relatório deve incluir os \textbf{nomes dos participantes do grupo}.
+
+\section*{Contexto do Problema}
+O número de bactérias existente numa determinada cultura é dado por:
+\[
+n(t)= n_o \times  e^{kt},
+\]
+em que t representa o número de horas decorridas após o momento inicial.
+
+\section*{Tarefa 1: Desenhar o Gráfico}
+
+Representa graficamente a função \( n(t) \).
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  axis lines = middle,
+  xlabel = {},
+  ylabel = {},
+  xtick = \empty,
+  ytick = \empty,
+  xmin = -10, xmax = 10,
+  ymin = -10, ymax = 10,
+  grid = none,
+  enlargelimits = true,
+  axis line style = {->, thick},
+]
+% Aqui podes adicionar uma função, se quiseres:
+% \addplot[domain=-10:10, thick, blue]{2^x};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+
+\section*{Tarefa 2: Interpretar o Gráfico}
+
+\begin{itemize}
+  \item O gráfico é crescente ou decrescente?
+  \item O que significa esse comportamento no contexto da população de coelhos?
+\end{itemize}
+
+\section*{Tarefa 3: Interpretar Pontos}
+
+Escolhe três pontos do gráfico e explica o seu significado.
+
+\section*{Tarefa 4: Resolver Problemas}
+
+\begin{enumerate}
+\item Sabendo que inicialmente havia 500 bactérias e que ao fim de três horas esse número duplicou, determine os valores de $n_0$ e de $k$.
+
+ \item Para os valores obtidos na alínea anterior, determine um valor aproximado do número de bactérias ao fim de cinco horas.
+\end{enumerate}
+
+\section*{Tarefa 5: Criar o Teu Próprio Problema}
+
+Inventa um problema relacionado com crescimento exponencial e apresenta a sua resolução. Podes usar outro contexto (população, dinheiro, tecnologia, etc.) — sê criativo!
+
+\end{document}
