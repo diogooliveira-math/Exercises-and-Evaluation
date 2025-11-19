@@ -85,9 +85,37 @@ class SebentaGenerator:
         """Obtém o nome completo do módulo a partir do config."""
         try:
             module_info = self.modules_config.get(discipline, {}).get(module, {})
-            return module_info.get('name', module)
+            # If explicit name available in config, prefer it
+            if module_info.get('name'):
+                return module_info.get('name')
         except:
-            return module
+            pass
+
+        # Derive a friendly display name when config entry is missing.
+        # Example: 'P4_funcoes' -> 'P4: Funções'
+        if '_' in module:
+            left, right = module.split('_', 1)
+            # replace remaining underscores with spaces
+            right_display = right.replace('_', ' ')
+
+            # small mapping of common Portuguese words to proper accents/capitalization
+            accent_map = {
+                'funcoes': 'Funções',
+                'função': 'Função',
+                'funcoes_polinomiais': 'Funções Polinomiais',
+                'matematica': 'Matemática',
+                'revisoes': 'Revisões',
+                'generalidades': 'Generalidades'
+            }
+
+            words = right_display.split()
+            words = [accent_map.get(w.lower(), w.capitalize()) for w in words]
+            right_display = ' '.join(words)
+
+            return f"Módulo {left}: {right_display}"
+
+        # Fallback: nicer title-cased form
+        return module.replace('_', ' ').title()
         
     def clean_temp_files(self, directory: Path, recursive: bool = True) -> int:
         """Remove ficheiros temporários do LaTeX."""
@@ -381,7 +409,8 @@ class SebentaGenerator:
         
         # Preencher template (sem título, autor e data)
         module_name = self.get_module_name(discipline, module)
-        header_left = f"{discipline.title()}"
+        # Usar o nome amigável do módulo no cabeçalho esquerdo
+        header_left = module_name
         header_right = module_name
         
         latex_content = template.replace("%%TITLE%%", "")

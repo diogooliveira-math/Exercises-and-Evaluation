@@ -1,0 +1,14 @@
+{
+  "name": "teste_rapido",
+  "title_template": "Teste - {module} - {concept}",
+  "per_tipo": {
+    "determinacao_grafica": 2,
+    "determinacao_analitica": 1
+  },
+  "count": null,
+  "shuffle": true,
+  "include_answers": false,
+  "output_subdir": "tests",
+  "pdfs_subdir": "pdfs",
+  "notes": "Config padrão: seleciona 2 questões por 'determinacao_grafica' e 1 por 'determinacao_analitica' quando possível."
+}

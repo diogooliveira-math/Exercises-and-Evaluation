@@ -1,0 +1,14 @@
+{
+  "name": "teste_balanceado",
+  "title_template": "Teste de Avaliação - {concept_name}",
+  "per_tipo": {
+    "determinacao_analitica": 2,
+    "determinacao_grafica": 2,
+    "teste_reta_horizontal": 1
+  },
+  "shuffle": true,
+  "include_answers": false,
+  "output_subdir": "tests",
+  "pdfs_subdir": "pdfs",
+  "notes": "Teste balanceado: 2 questões de determinação analítica, 2 de determinação gráfica, e 1 de teste da reta horizontal."
+}

@@ -1,0 +1,87 @@
+% Template para geração automática de testes
+% Gerado automaticamente - NÃO EDITAR MANUALMENTE
+\documentclass[12pt,a4paper]{article}
+
+% Encoding e idioma
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+
+% Matemática
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Gráficos e figuras
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,angles,quotes}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{placeins}
+\usepackage{float}
+
+% Layout e formatação
+\usepackage{geometry}
+\geometry{a4paper,margin=2.5cm,top=3cm,bottom=3cm}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{multicol}
+
+% Hyperlinks e referências
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+% Sistema de exercícios - macros completas (igual às sebentas)
+\newcounter{exerciciocount}
+\newcounter{subexerciciocount}
+\newcounter{optioncount}
+
+\newcommand{\exercicio}[1][]{%
+    \par\vspace{1.5em}%
+    \refstepcounter{exerciciocount}%
+    \setcounter{subexerciciocount}{0}%
+    \setcounter{optioncount}{0}%
+    \noindent\textbf{Exercício~\theexerciciocount.}%
+    \ifx&#1&%
+        % Argumento vazio - o conteúdo vem depois
+        \par\vspace{0.3em}%
+    \else%
+        % Argumento fornecido - incluir inline
+        \ #1\par\vspace{0.5em}%
+    \fi%
+}
+
+\newcommand{\subexercicio}[1]{%
+    \par\vspace{0.8em}%
+    \refstepcounter{subexerciciocount}%
+    \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+}
+
+\newcommand{\option}[1]{%
+    \par
+    \refstepcounter{optioncount}%
+    \noindent(\alph{optioncount}) #1%
+}
+
+% Cabeçalho e rodapé
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{%%HEADER_LEFT%%}
+\fancyhead[R]{%%HEADER_RIGHT%%}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+\thispagestyle{fancy}
+
+\section*{%%TITLE%%}
+
+%%CONTENT%%
+
+\end{document}
