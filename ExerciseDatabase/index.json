@@ -1,22 +1,22 @@
 {
   "database_version": "3.0",
-  "last_updated": "2025-11-19T11:15:00",
-  "total_exercises": 24,
+  "last_updated": "2025-11-19T11:30:00",
+  "total_exercises": 27,
   "statistics": {
     "by_module": {
       "P4_funcoes": 18,
-      "A9_funcoes_crescimento": 6
+      "A9_funcoes_crescimento": 9
     },
     "by_concept": {
       "Generalidades acerca de Funções": 1,
       "Funções Polinomiais": 1,
       "Funções polinomiais de grau não superior a 3": 1,
       "Função Inversa": 15,
-      "Revisões de Crescimento": 1,
+      "Revisões de Crescimento": 4,
       "Funções Exponenciais": 5
     },
     "by_difficulty": {
-      "Fácil": 19,
+      "Fácil": 22,
       "Médio": 5
     },
     "by_type": {
@@ -393,8 +393,50 @@
       "concept_name": "Revisões de Crescimento",
       "difficulty": 2,
       "type": "desenvolvimento",
-      "tags": ["revisao","crescimento","funcoes"],
+      "tags": ["revisao","funcoes","conceito_funcao"],
       "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_A9FUNCRES_0REV_002",
+      "path": "matematica/A9_funcoes_crescimento/0-revisoes/MAT_A9FUNCRES_0REV_002.tex",
+      "discipline": "matematica",
+      "module": "A9_funcoes_crescimento",
+      "module_name": "Módulo A9 - Funções e Crescimento",
+      "concept": "0-revisoes",
+      "concept_name": "Revisões de Crescimento",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": ["revisao","funcoes","calculo_imagens"],
+      "points": 8,
+      "status": "active"
+    },
+    {
+      "id": "MAT_A9FUNCRES_0REV_003",
+      "path": "matematica/A9_funcoes_crescimento/0-revisoes/MAT_A9FUNCRES_0REV_003.tex",
+      "discipline": "matematica",
+      "module": "A9_funcoes_crescimento",
+      "module_name": "Módulo A9 - Funções e Crescimento",
+      "concept": "0-revisoes",
+      "concept_name": "Revisões de Crescimento",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": ["revisao","proporcionalidade","aplicacao_pratica"],
+      "points": 8,
+      "status": "active"
+    },
+    {
+      "id": "MAT_A9FUNCRES_0REV_004",
+      "path": "matematica/A9_funcoes_crescimento/0-revisoes/MAT_A9FUNCRES_0REV_004.tex",
+      "discipline": "matematica",
+      "module": "A9_funcoes_crescimento",
+      "module_name": "Módulo A9 - Funções e Crescimento",
+      "concept": "0-revisoes",
+      "concept_name": "Revisões de Crescimento",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": ["revisao","percentagens","aplicacao_pratica"],
+      "points": 8,
       "status": "active"
     },
     {
