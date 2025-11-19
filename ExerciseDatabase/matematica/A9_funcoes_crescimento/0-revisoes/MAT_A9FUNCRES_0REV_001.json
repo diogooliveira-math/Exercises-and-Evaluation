@@ -1,0 +1,41 @@
+{
+  "id": "MAT_A9FUNCRES_0REV_001",
+  "classification": {
+    "discipline": "matematica",
+    "module": "A9_funcoes_crescimento",
+    "module_name": "Módulo A9 - Funções e Crescimento",
+    "concept": "0-revisoes",
+    "concept_name": "Revisões de Crescimento",
+    "tags": [
+      "revisao",
+      "crescimento",
+      "funcoes",
+      "conceito_funcao",
+      "proporcionalidade",
+      "percentagens"
+    ],
+    "difficulty": 2,
+    "difficulty_label": "Fácil"
+  },
+  "metadata": {
+    "type": "desenvolvimento",
+    "points": 10,
+    "estimated_time_minutes": 15,
+    "source": "questao_aula",
+    "status": "active",
+    "bloom_level": "compreensao",
+    "pedagogical_notes": "Questão de aula com múltiplos exercícios de consolidação sobre conceitos básicos de funções e proporcionalidade"
+  },
+  "content": {
+    "parts": 4,
+    "requires_graph": false,
+    "requires_calculation": true,
+    "context": "real_world"
+  },
+  "history": {
+    "created_at": "2025-11-19T11:15:00",
+    "updated_at": "2025-11-19T11:15:00",
+    "version": 1,
+    "author": "sistema"
+  }
+}

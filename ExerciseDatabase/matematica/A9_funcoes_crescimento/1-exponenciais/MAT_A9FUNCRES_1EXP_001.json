@@ -1,0 +1,41 @@
+{
+  "id": "MAT_A9FUNCRES_1EXP_001",
+  "classification": {
+    "discipline": "matematica",
+    "module": "A9_funcoes_crescimento",
+    "module_name": "Módulo A9 - Funções e Crescimento",
+    "concept": "1-exponenciais",
+    "concept_name": "Funções Exponenciais",
+    "tags": [
+      "crescimento_exponencial",
+      "modelacao",
+      "exponenciais",
+      "populacao",
+      "interpretacao_grafica"
+    ],
+    "difficulty": 3,
+    "difficulty_label": "Médio"
+  },
+  "metadata": {
+    "type": "desenvolvimento",
+    "points": 15,
+    "estimated_time_minutes": 30,
+    "source": "projeto_investigacao",
+    "status": "active",
+    "bloom_level": "aplicacao",
+    "pedagogical_notes": "Projeto de investigação sobre crescimento populacional exponencial com múltiplas tarefas integradas"
+  },
+  "content": {
+    "parts": 5,
+    "requires_graph": true,
+    "requires_calculation": true,
+    "context": "real_world",
+    "mathematical_model": "C(t)=500×1.1^t"
+  },
+  "history": {
+    "created_at": "2025-11-19T11:15:00",
+    "updated_at": "2025-11-19T11:15:00",
+    "version": 1,
+    "author": "sistema"
+  }
+}

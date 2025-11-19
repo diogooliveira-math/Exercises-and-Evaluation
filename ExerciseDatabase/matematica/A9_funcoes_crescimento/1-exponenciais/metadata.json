@@ -1,0 +1,34 @@
+{
+  "conceito": "1-exponenciais",
+  "conceito_nome": "Funções Exponenciais",
+  "tema": "A9_funcoes_crescimento",
+  "tema_nome": "Módulo A9 - Funções e Crescimento",
+  "disciplina": "matematica",
+  "descricao": "Exercícios de modelação e interpretação de fenómenos reais através de funções exponenciais de crescimento e decaimento. Inclui análise gráfica, resolução de problemas aplicados e desenvolvimento de pensamento crítico.",
+  "tags_conceito": [
+    "exponencial",
+    "crescimento_exponencial",
+    "decaimento_exponencial",
+    "modelacao",
+    "contextos_reais",
+    "interpretacao_grafica"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": true,
+    "requer_interpretacao": true,
+    "foco_modelacao": true,
+    "complexidade_algebrica": "media"
+  },
+  "dificuldade_sugerida": {
+    "min": 3,
+    "max": 4
+  },
+  "exercicios": [
+    "MAT_A9FUNCRES_1EXP_001",
+    "MAT_A9FUNCRES_1EXP_002",
+    "MAT_A9FUNCRES_1EXP_003",
+    "MAT_A9FUNCRES_1EXP_004",
+    "MAT_A9FUNCRES_1EXP_005"
+  ]
+}

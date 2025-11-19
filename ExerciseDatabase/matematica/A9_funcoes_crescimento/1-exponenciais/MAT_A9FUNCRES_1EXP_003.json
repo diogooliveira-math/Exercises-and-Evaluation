@@ -1,0 +1,41 @@
+{
+  "id": "MAT_A9FUNCRES_1EXP_003",
+  "classification": {
+    "discipline": "matematica",
+    "module": "A9_funcoes_crescimento",
+    "module_name": "Módulo A9 - Funções e Crescimento",
+    "concept": "1-exponenciais",
+    "concept_name": "Funções Exponenciais",
+    "tags": [
+      "crescimento_exponencial",
+      "bacterias",
+      "modelo_continuo",
+      "exponenciais",
+      "numero_euler"
+    ],
+    "difficulty": 3,
+    "difficulty_label": "Médio"
+  },
+  "metadata": {
+    "type": "desenvolvimento",
+    "points": 15,
+    "estimated_time_minutes": 30,
+    "source": "projeto_investigacao",
+    "status": "active",
+    "bloom_level": "aplicacao",
+    "pedagogical_notes": "Modelação com base e^kt, determinação de parâmetros a partir de condições iniciais"
+  },
+  "content": {
+    "parts": 4,
+    "requires_graph": true,
+    "requires_calculation": true,
+    "context": "real_world",
+    "mathematical_model": "n(t)=n₀×e^(kt)"
+  },
+  "history": {
+    "created_at": "2025-11-19T11:15:00",
+    "updated_at": "2025-11-19T11:15:00",
+    "version": 1,
+    "author": "sistema"
+  }
+}

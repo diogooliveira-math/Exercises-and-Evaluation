@@ -1,4 +1,22 @@
 matematica:
+  A9_funcoes_crescimento:
+    name: Módulo A9 - Funções e Crescimento
+    description: Revisões iniciais e estudo de funções exponenciais de crescimento e decaimento
+    duration_hours: 18
+    concepts:
+    - id: "0-revisoes"
+      name: Revisões de Crescimento
+      tags:
+      - revisao
+      - consolidacao
+      - crescimento
+    - id: "1-exponenciais"
+      name: Funções Exponenciais
+      tags:
+      - exponencial
+      - crescimento
+      - decaimento
+      - modelacao
   A10_funcoes:
     name: Módulo A10 - Funções
     description: Funções reais de variável real

@@ -1,19 +1,23 @@
 {
   "database_version": "3.0",
-  "last_updated": "2025-11-19T10:20:26.844338",
-  "total_exercises": 18,
+  "last_updated": "2025-11-19T11:15:00",
+  "total_exercises": 24,
   "statistics": {
     "by_module": {
-      "P4_funcoes": 18
+      "P4_funcoes": 18,
+      "A9_funcoes_crescimento": 6
     },
     "by_concept": {
       "Generalidades acerca de Funções": 1,
       "Funções Polinomiais": 1,
       "Funções polinomiais de grau não superior a 3": 1,
-      "Função Inversa": 15
+      "Função Inversa": 15,
+      "Revisões de Crescimento": 1,
+      "Funções Exponenciais": 5
     },
     "by_difficulty": {
-      "Fácil": 18
+      "Fácil": 19,
+      "Médio": 5
     },
     "by_type": {
       "desenvolvimento": 18
@@ -377,6 +381,90 @@
         "grafico"
       ],
       "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_A9FUNCRES_0REV_001",
+      "path": "matematica/A9_funcoes_crescimento/0-revisoes/MAT_A9FUNCRES_0REV_001.tex",
+      "discipline": "matematica",
+      "module": "A9_funcoes_crescimento",
+      "module_name": "Módulo A9 - Funções e Crescimento",
+      "concept": "0-revisoes",
+      "concept_name": "Revisões de Crescimento",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": ["revisao","crescimento","funcoes"],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_A9FUNCRES_1EXP_001",
+      "path": "matematica/A9_funcoes_crescimento/1-exponenciais/MAT_A9FUNCRES_1EXP_001.tex",
+      "discipline": "matematica",
+      "module": "A9_funcoes_crescimento",
+      "module_name": "Módulo A9 - Funções e Crescimento",
+      "concept": "1-exponenciais",
+      "concept_name": "Funções Exponenciais",
+      "difficulty": 3,
+      "type": "desenvolvimento",
+      "tags": ["crescimento_exponencial","modelacao","exponenciais"],
+      "points": 15,
+      "status": "active"
+    },
+    {
+      "id": "MAT_A9FUNCRES_1EXP_002",
+      "path": "matematica/A9_funcoes_crescimento/1-exponenciais/MAT_A9FUNCRES_1EXP_002.tex",
+      "discipline": "matematica",
+      "module": "A9_funcoes_crescimento",
+      "module_name": "Módulo A9 - Funções e Crescimento",
+      "concept": "1-exponenciais",
+      "concept_name": "Funções Exponenciais",
+      "difficulty": 3,
+      "type": "desenvolvimento",
+      "tags": ["decaimento_exponencial","medicamento","exponenciais","modelacao"],
+      "points": 15,
+      "status": "active"
+    },
+    {
+      "id": "MAT_A9FUNCRES_1EXP_003",
+      "path": "matematica/A9_funcoes_crescimento/1-exponenciais/MAT_A9FUNCRES_1EXP_003.tex",
+      "discipline": "matematica",
+      "module": "A9_funcoes_crescimento",
+      "module_name": "Módulo A9 - Funções e Crescimento",
+      "concept": "1-exponenciais",
+      "concept_name": "Funções Exponenciais",
+      "difficulty": 3,
+      "type": "desenvolvimento",
+      "tags": ["crescimento_exponencial","bacterias","modelo_continuo","exponenciais"],
+      "points": 15,
+      "status": "active"
+    },
+    {
+      "id": "MAT_A9FUNCRES_1EXP_004",
+      "path": "matematica/A9_funcoes_crescimento/1-exponenciais/MAT_A9FUNCRES_1EXP_004.tex",
+      "discipline": "matematica",
+      "module": "A9_funcoes_crescimento",
+      "module_name": "Módulo A9 - Funções e Crescimento",
+      "concept": "1-exponenciais",
+      "concept_name": "Funções Exponenciais",
+      "difficulty": 3,
+      "type": "desenvolvimento",
+      "tags": ["decaimento_exponencial","valor_comercial","financeiro","exponenciais"],
+      "points": 15,
+      "status": "active"
+    },
+    {
+      "id": "MAT_A9FUNCRES_1EXP_005",
+      "path": "matematica/A9_funcoes_crescimento/1-exponenciais/MAT_A9FUNCRES_1EXP_005.tex",
+      "discipline": "matematica",
+      "module": "A9_funcoes_crescimento",
+      "module_name": "Módulo A9 - Funções e Crescimento",
+      "concept": "1-exponenciais",
+      "concept_name": "Funções Exponenciais",
+      "difficulty": 3,
+      "type": "desenvolvimento",
+      "tags": ["crescimento_exponencial","bacterias","exponenciais","modelacao"],
+      "points": 15,
       "status": "active"
     }
   ]

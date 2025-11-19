@@ -1,0 +1,27 @@
+{
+  "conceito": "0-revisoes",
+  "conceito_nome": "Revisões de Crescimento",
+  "tema": "A9_funcoes_crescimento",
+  "tema_nome": "Módulo A9 - Funções e Crescimento",
+  "disciplina": "matematica",
+  "descricao": "Exercícios de revisão e consolidação sobre conceitos básicos de funções, crescimento proporcional e aplicações práticas em contexto real.",
+  "tags_conceito": [
+    "revisao",
+    "consolidacao",
+    "crescimento",
+    "funcoes_basicas",
+    "proporcionalidade"
+  ],
+  "caracteristicas": {
+    "nivel_introducao": true,
+    "requer_prerequisitos": false,
+    "foco_pedagogico": "consolidacao"
+  },
+  "dificuldade_sugerida": {
+    "min": 1,
+    "max": 2
+  },
+  "exercicios": [
+    "MAT_A9FUNCRES_0REV_001"
+  ]
+}
