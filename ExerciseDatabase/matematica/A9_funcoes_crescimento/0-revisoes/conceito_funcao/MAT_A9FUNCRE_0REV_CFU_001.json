@@ -1,11 +1,13 @@
 {
-  "id": "MAT_A9FUNCRES_0REV_001",
+  "id": "MAT_A9FUNCRE_0REV_CFU_001",
   "classification": {
     "discipline": "matematica",
     "module": "A9_funcoes_crescimento",
     "module_name": "Módulo A9 - Funções e Crescimento",
     "concept": "0-revisoes",
     "concept_name": "Revisões de Crescimento",
+    "tipo": "conceito_funcao",
+    "tipo_nome": "Conceito de Função",
     "tags": [
       "revisao",
       "crescimento",

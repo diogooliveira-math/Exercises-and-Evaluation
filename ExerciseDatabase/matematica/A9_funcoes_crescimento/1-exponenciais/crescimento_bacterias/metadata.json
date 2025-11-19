@@ -1,0 +1,31 @@
+{
+  "tipo": "crescimento_bacterias",
+  "tipo_nome": "Crescimento de Bactérias",
+  "conceito": "1-exponenciais",
+  "conceito_nome": "Funções Exponenciais",
+  "tema": "A9_funcoes_crescimento",
+  "tema_nome": "Módulo A9 - Funções e Crescimento",
+  "disciplina": "matematica",
+  "descricao": "Modelação de crescimento bacteriano usando funções exponenciais, incluindo modelos com base e e expoentes fracionários.",
+  "tags_tipo": [
+    "crescimento_exponencial",
+    "bacterias",
+    "biologia",
+    "modelo_continuo"
+  ],
+  "caracteristicas": {
+    "requer_grafico": true,
+    "requer_modelacao": true,
+    "contexto": "biologico",
+    "base_exponencial": "variavel",
+    "usa_numero_e": true
+  },
+  "dificuldade_sugerida": {
+    "min": 3,
+    "max": 4
+  },
+  "exercicios": [
+    "MAT_A9FUNCRE_1EXP_CBA_001",
+    "MAT_A9FUNCRE_1EXP_CBA_002"
+  ]
+}

@@ -1,11 +1,13 @@
 {
-  "id": "MAT_A9FUNCRES_1EXP_001",
+  "id": "MAT_A9FUNCRE_1EXP_CPO_001",
   "classification": {
     "discipline": "matematica",
     "module": "A9_funcoes_crescimento",
     "module_name": "Módulo A9 - Funções e Crescimento",
     "concept": "1-exponenciais",
     "concept_name": "Funções Exponenciais",
+    "tipo": "crescimento_populacional",
+    "tipo_nome": "Crescimento Populacional",
     "tags": [
       "crescimento_exponencial",
       "modelacao",

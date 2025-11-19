@@ -1,0 +1,29 @@
+{
+  "tipo": "aplicacoes_praticas",
+  "tipo_nome": "Aplicações Práticas",
+  "conceito": "0-revisoes",
+  "conceito_nome": "Revisões de Crescimento",
+  "tema": "A9_funcoes_crescimento",
+  "tema_nome": "Módulo A9 - Funções e Crescimento",
+  "disciplina": "matematica",
+  "descricao": "Exercícios de aplicação de conceitos matemáticos básicos (proporcionalidade, percentagens) em contextos práticos do quotidiano.",
+  "tags_tipo": [
+    "aplicacao_pratica",
+    "proporcionalidade",
+    "percentagens",
+    "contexto_real"
+  ],
+  "caracteristicas": {
+    "requer_interpretacao": true,
+    "contexto_real": true,
+    "tipo_resposta": "desenvolvimento"
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 3
+  },
+  "exercicios": [
+    "MAT_A9FUNCRE_0REV_APL_001",
+    "MAT_A9FUNCRE_0REV_APL_002"
+  ]
+}

@@ -1,16 +1,18 @@
 {
-  "id": "MAT_A9FUNCRES_0REV_004",
+  "id": "MAT_A9FUNCRE_0REV_APL_001",
   "classification": {
     "discipline": "matematica",
     "module": "A9_funcoes_crescimento",
     "module_name": "Módulo A9 - Funções e Crescimento",
     "concept": "0-revisoes",
     "concept_name": "Revisões de Crescimento",
+    "tipo": "aplicacoes_praticas",
+    "tipo_nome": "Aplicações Práticas",
     "tags": [
       "revisao",
-      "percentagens",
+      "proporcionalidade",
       "aplicacao_pratica",
-      "financas"
+      "razao"
     ],
     "difficulty": 2,
     "difficulty_label": "Fácil"
@@ -22,7 +24,7 @@
     "source": "questao_aula",
     "status": "active",
     "bloom_level": "aplicacao",
-    "pedagogical_notes": "Cálculo de percentagens em contexto financeiro desportivo"
+    "pedagogical_notes": "Aplicação de proporcionalidade direta em contexto de receita culinária"
   },
   "content": {
     "parts": 1,

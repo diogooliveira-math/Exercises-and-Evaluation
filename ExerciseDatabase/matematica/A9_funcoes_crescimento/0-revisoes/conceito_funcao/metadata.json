@@ -1,0 +1,27 @@
+{
+  "tipo": "conceito_funcao",
+  "tipo_nome": "Conceito de Função",
+  "conceito": "0-revisoes",
+  "conceito_nome": "Revisões de Crescimento",
+  "tema": "A9_funcoes_crescimento",
+  "tema_nome": "Módulo A9 - Funções e Crescimento",
+  "disciplina": "matematica",
+  "descricao": "Exercícios sobre o conceito fundamental de função, verificação de correspondências e identificação de funções.",
+  "tags_tipo": [
+    "conceito_funcao",
+    "definicao",
+    "correspondencia",
+    "verificacao"
+  ],
+  "caracteristicas": {
+    "requer_definicoes": true,
+    "tipo_resposta": "escolha_multipla_justificada"
+  },
+  "dificuldade_sugerida": {
+    "min": 1,
+    "max": 2
+  },
+  "exercicios": [
+    "MAT_A9FUNCRE_0REV_CFU_001"
+  ]
+}

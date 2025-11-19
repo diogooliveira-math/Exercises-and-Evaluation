@@ -1,0 +1,29 @@
+{
+  "tipo": "crescimento_populacional",
+  "tipo_nome": "Crescimento Populacional",
+  "conceito": "1-exponenciais",
+  "conceito_nome": "Funções Exponenciais",
+  "tema": "A9_funcoes_crescimento",
+  "tema_nome": "Módulo A9 - Funções e Crescimento",
+  "disciplina": "matematica",
+  "descricao": "Modelação de crescimento de populações através de funções exponenciais. Inclui interpretação gráfica e resolução de problemas contextualizados.",
+  "tags_tipo": [
+    "crescimento_exponencial",
+    "populacao",
+    "modelacao",
+    "interpretacao"
+  ],
+  "caracteristicas": {
+    "requer_grafico": true,
+    "requer_modelacao": true,
+    "contexto": "biologico",
+    "base_exponencial": "maior_que_1"
+  },
+  "dificuldade_sugerida": {
+    "min": 3,
+    "max": 4
+  },
+  "exercicios": [
+    "MAT_A9FUNCRE_1EXP_CPO_001"
+  ]
+}

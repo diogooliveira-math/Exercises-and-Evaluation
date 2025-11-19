@@ -1,16 +1,18 @@
 {
-  "id": "MAT_A9FUNCRES_0REV_003",
+  "id": "MAT_A9FUNCRE_0REV_CAL_001",
   "classification": {
     "discipline": "matematica",
     "module": "A9_funcoes_crescimento",
     "module_name": "Módulo A9 - Funções e Crescimento",
     "concept": "0-revisoes",
     "concept_name": "Revisões de Crescimento",
+    "tipo": "calculo_funcoes",
+    "tipo_nome": "Cálculo com Funções",
     "tags": [
       "revisao",
-      "proporcionalidade",
-      "aplicacao_pratica",
-      "razao"
+      "funcoes",
+      "calculo_imagens",
+      "equacoes"
     ],
     "difficulty": 2,
     "difficulty_label": "Fácil"
@@ -22,13 +24,13 @@
     "source": "questao_aula",
     "status": "active",
     "bloom_level": "aplicacao",
-    "pedagogical_notes": "Aplicação de proporcionalidade direta em contexto de receita culinária"
+    "pedagogical_notes": "Cálculo de imagens e determinação de objeto por uma função linear"
   },
   "content": {
-    "parts": 1,
+    "parts": 2,
     "requires_graph": false,
     "requires_calculation": true,
-    "context": "real_world"
+    "context": "abstract"
   },
   "history": {
     "created_at": "2025-11-19T11:30:00",

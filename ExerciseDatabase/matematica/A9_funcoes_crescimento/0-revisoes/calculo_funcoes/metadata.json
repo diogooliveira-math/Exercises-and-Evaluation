@@ -1,0 +1,27 @@
+{
+  "tipo": "calculo_funcoes",
+  "tipo_nome": "Cálculo com Funções",
+  "conceito": "0-revisoes",
+  "conceito_nome": "Revisões de Crescimento",
+  "tema": "A9_funcoes_crescimento",
+  "tema_nome": "Módulo A9 - Funções e Crescimento",
+  "disciplina": "matematica",
+  "descricao": "Exercícios de cálculo de imagens, objetos e manipulação algébrica básica de funções.",
+  "tags_tipo": [
+    "calculo_imagens",
+    "calculo_objetos",
+    "algebra",
+    "funcoes_lineares"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "tipo_resposta": "desenvolvimento"
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 3
+  },
+  "exercicios": [
+    "MAT_A9FUNCRE_0REV_CAL_001"
+  ]
+}
