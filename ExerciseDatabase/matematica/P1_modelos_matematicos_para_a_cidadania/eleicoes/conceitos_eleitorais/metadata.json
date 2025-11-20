@@ -1,0 +1,17 @@
+{
+  "tipo": "conceitos_eleitorais",
+  "tipo_nome": "Conceitos Eleitorais Básicos",
+  "conceito": "eleicoes",
+  "tags_tipo": ["maioria","abstenção","votos","definições"],
+  "caracteristicas": {
+    "requer_calculo": false,
+    "requer_dados": false
+  },
+  "dificuldade_sugerida": {
+    "min": 1,
+    "max": 2
+  },
+  "exercicios": [
+    "MAT_P1MODELO_ELE_CONC_001"
+  ]
+}

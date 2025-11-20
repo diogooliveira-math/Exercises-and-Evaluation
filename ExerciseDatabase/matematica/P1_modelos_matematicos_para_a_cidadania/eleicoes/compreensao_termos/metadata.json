@@ -1,0 +1,17 @@
+{
+  "tipo": "compreensao_termos",
+  "tipo_nome": "Compreensão de Termos Eleitorais",
+  "conceito": "eleicoes",
+  "tags_tipo": ["definições","leitura","associação"],
+  "caracteristicas": {
+    "requer_calculo": false,
+    "requer_dados": false
+  },
+  "dificuldade_sugerida": {
+    "min": 1,
+    "max": 2
+  },
+  "exercicios": [
+    "MAT_P1MODELO_ELE_MATCH_001"
+  ]
+}

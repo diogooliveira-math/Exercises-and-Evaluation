@@ -1,0 +1,27 @@
+{
+  "id": "MAT_P1MODELO_FIN_CALC_001",
+  "classification": {
+    "discipline": "matematica",
+    "module": "P1_modelos_matematicos_para_a_cidadania",
+    "concept": "financas_pessoais",
+    "tipo": "calculo_percentagens_financeiras",
+    "tipo_nome": "Cálculo de Percentagens em Finanças Pessoais/Familiares",
+    "tags": [
+      "percentagens",
+      "financas_pessoais",
+      "juros",
+      "impostos",
+      "orcamento_familiar",
+      "investimentos"
+    ],
+    "difficulty": 2
+  },
+  "metadata": {
+    "title": "Percentagens em Finanças Pessoais: juros, impostos e orçamentos",
+    "author": "Auto-generated",
+    "created_at": "2025-11-20T11:30:00Z",
+    "updated_at": "2025-11-20T11:30:00Z",
+    "version": 1,
+    "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/financas_pessoais/calculo_percentagens_financeiras/MAT_P1MODELO_FIN_CALC_001.tex"
+  }
+}

@@ -1,11 +1,12 @@
 {
   "database_version": "3.0",
-  "last_updated": "2025-11-19T11:30:00",
-  "total_exercises": 27,
+  "last_updated": "2025-11-20T15:51:49",
+  "total_exercises": 36,
   "statistics": {
     "by_module": {
       "P4_funcoes": 18,
-      "A9_funcoes_crescimento": 9
+      "A9_funcoes_crescimento": 9,
+      "P1_modelos_matematicos_para_a_cidadania": 8
     },
     "by_concept": {
       "Generalidades acerca de Funções": 1,
@@ -13,7 +14,8 @@
       "Funções polinomiais de grau não superior a 3": 1,
       "Função Inversa": 15,
       "Revisões de Crescimento": 4,
-      "Funções Exponenciais": 5
+      "Funções Exponenciais": 5,
+      "Finanças Pessoais e Familiares": 1
     },
     "by_difficulty": {
       "Fácil": 22,
@@ -27,10 +29,14 @@
       "Crescimento Populacional": 1,
       "Decaimento de Medicamento": 1,
       "Crescimento de Bactérias": 2,
-      "Depreciação de Valor": 1
+      "Depreciação de Valor": 1,
+      "Cálculo de Percentagens em Finanças Pessoais/Familiares": 1
+    },
+    "by_format": {
+      "desenvolvimento": 27
     },
     "by_discipline": {
-      "matematica": 18
+      "matematica": 26
     }
   },
   "exercises": [
@@ -402,7 +408,11 @@
       "tipo_nome": "Conceito de Função",
       "difficulty": 2,
       "type": "desenvolvimento",
-      "tags": ["revisao","funcoes","conceito_funcao"],
+      "tags": [
+        "revisao",
+        "funcoes",
+        "conceito_funcao"
+      ],
       "points": 10,
       "status": "active"
     },
@@ -418,7 +428,11 @@
       "tipo_nome": "Cálculo com Funções",
       "difficulty": 2,
       "type": "desenvolvimento",
-      "tags": ["revisao","funcoes","calculo_imagens"],
+      "tags": [
+        "revisao",
+        "funcoes",
+        "calculo_imagens"
+      ],
       "points": 8,
       "status": "active"
     },
@@ -434,7 +448,11 @@
       "tipo_nome": "Aplicações Práticas",
       "difficulty": 2,
       "type": "desenvolvimento",
-      "tags": ["revisao","proporcionalidade","aplicacao_pratica"],
+      "tags": [
+        "revisao",
+        "proporcionalidade",
+        "aplicacao_pratica"
+      ],
       "points": 8,
       "status": "active"
     },
@@ -450,7 +468,11 @@
       "tipo_nome": "Aplicações Práticas",
       "difficulty": 2,
       "type": "desenvolvimento",
-      "tags": ["revisao","percentagens","aplicacao_pratica"],
+      "tags": [
+        "revisao",
+        "percentagens",
+        "aplicacao_pratica"
+      ],
       "points": 8,
       "status": "active"
     },
@@ -466,7 +488,12 @@
       "tipo_nome": "Crescimento Populacional",
       "difficulty": 3,
       "type": "desenvolvimento",
-      "tags": ["crescimento_exponencial","modelacao","exponenciais","populacao"],
+      "tags": [
+        "crescimento_exponencial",
+        "modelacao",
+        "exponenciais",
+        "populacao"
+      ],
       "points": 15,
       "status": "active"
     },
@@ -482,7 +509,12 @@
       "tipo_nome": "Decaimento de Medicamento",
       "difficulty": 3,
       "type": "desenvolvimento",
-      "tags": ["decaimento_exponencial","medicamento","exponenciais","modelacao"],
+      "tags": [
+        "decaimento_exponencial",
+        "medicamento",
+        "exponenciais",
+        "modelacao"
+      ],
       "points": 15,
       "status": "active"
     },
@@ -498,7 +530,12 @@
       "tipo_nome": "Crescimento de Bactérias",
       "difficulty": 3,
       "type": "desenvolvimento",
-      "tags": ["crescimento_exponencial","bacterias","modelo_continuo","exponenciais"],
+      "tags": [
+        "crescimento_exponencial",
+        "bacterias",
+        "modelo_continuo",
+        "exponenciais"
+      ],
       "points": 15,
       "status": "active"
     },
@@ -514,7 +551,12 @@
       "tipo_nome": "Depreciação de Valor",
       "difficulty": 3,
       "type": "desenvolvimento",
-      "tags": ["decaimento_exponencial","valor_comercial","financeiro","exponenciais"],
+      "tags": [
+        "decaimento_exponencial",
+        "valor_comercial",
+        "financeiro",
+        "exponenciais"
+      ],
       "points": 15,
       "status": "active"
     },
@@ -530,9 +572,68 @@
       "tipo_nome": "Crescimento de Bactérias",
       "difficulty": 3,
       "type": "desenvolvimento",
-      "tags": ["crescimento_exponencial","bacterias","exponenciais","modelacao"],
+      "tags": [
+        "crescimento_exponencial",
+        "bacterias",
+        "exponenciais",
+        "modelacao"
+      ],
       "points": 15,
       "status": "active"
+    },
+    {
+      "id": "MAT_P1MODELO_ELE_CONC_001",
+      "tipo": "conceitos_eleitorais",
+      "tipo_nome": "Conceitos Eleitorais Básicos",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/conceitos_eleitorais/MAT_P1MODELO_ELE_CONC_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_ELE_MATCH_001",
+      "tipo": "compreensao_termos",
+      "tipo_nome": "Compreensão de Termos Eleitorais",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/compreensao_termos/MAT_P1MODELO_ELE_MATCH_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_PERC_CALC_001",
+      "tipo": "calculo_percentagens",
+      "tipo_nome": "Cálculo de Percentagens",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/percentagens/calculo_percentagens/MAT_P1MODELO_PERC_CALC_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_ELE_TAB1_001",
+      "tipo": "analise_tabelas_eleitorais",
+      "tipo_nome": "Análise de Tabelas Eleitorais",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/analise_tabelas_eleitorais/MAT_P1MODELO_ELE_TAB1_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_ELE_TAB2_001",
+      "tipo": "analise_tabelas_eleitorais",
+      "tipo_nome": "Análise de Tabelas Eleitorais",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/analise_tabelas_eleitorais/MAT_P1MODELO_ELE_TAB2_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_ELE_TAB3_001",
+      "tipo": "analise_tabelas_eleitorais",
+      "tipo_nome": "Análise de Tabelas Eleitorais",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/analise_tabelas_eleitorais/MAT_P1MODELO_ELE_TAB3_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_ELE_PERC_001",
+      "tipo": "analise_tabelas_eleitorais",
+      "tipo_nome": "Análise de Tabelas Eleitorais",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/analise_tabelas_eleitorais/MAT_P1MODELO_ELE_PERC_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_FIN_CALC_001",
+      "tipo": "calculo_percentagens_financeiras",
+      "tipo_nome": "Cálculo de Percentagens em Finanças Pessoais/Familiares",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/financas_pessoais/calculo_percentagens_financeiras/MAT_P1MODELO_FIN_CALC_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_FINA_CAL_001",
+      "tipo": "calculo_percentagens_financeiras",
+      "tipo_nome": "Tipo: Calculo Percentagens Financeiras",
+      "source_file": "ExerciseDatabase\\matematica\\P1_modelos_matematicos_para_a_cidadania\\financas_pessoais\\calculo_percentagens_financeiras\\MAT_P1MODELO_FINA_CAL_001.tex"
     }
   ]
 }

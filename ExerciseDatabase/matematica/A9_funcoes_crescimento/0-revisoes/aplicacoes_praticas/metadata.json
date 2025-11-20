@@ -4,7 +4,7 @@
   "conceito": "0-revisoes",
   "conceito_nome": "Revisões de Crescimento",
   "tema": "A9_funcoes_crescimento",
-  "tema_nome": "Módulo A9 - Funções e Crescimento",
+  "tema_nome": "Módulo A9 - Funções de Crescimento",
   "disciplina": "matematica",
   "descricao": "Exercícios de aplicação de conceitos matemáticos básicos (proporcionalidade, percentagens) em contextos práticos do quotidiano.",
   "tags_tipo": [
@@ -22,8 +22,26 @@
     "min": 2,
     "max": 3
   },
-  "exercicios": [
-    "MAT_A9FUNCRE_0REV_APL_001",
-    "MAT_A9FUNCRE_0REV_APL_002"
-  ]
+  "exercicios": {
+    "MAT_A9FUNCOE_0RX_APX_001": {
+      "created": "2025-11-20",
+      "modified": "2025-11-20",
+      "author": "Professor",
+      "difficulty": 1,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "crescimento",
+        "aplicacao_pratica",
+        "contexto_real",
+        "consolidacao",
+        "revisao",
+        "proporcionalidade",
+        "percentagens"
+      ],
+      "status": "active"
+    }
+  }
 }

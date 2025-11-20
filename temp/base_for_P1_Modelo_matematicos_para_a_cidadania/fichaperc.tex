@@ -1,0 +1,402 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage[portuguese]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage{enumitem} % carregado depois de babel
+
+\usepackage{array}
+\usepackage{booktabs}
+
+\usepackage{fancyhdr}   % <-- Adicionado para suportar \pagestyle{fancy}
+
+% Comando para campo de resposta
+\newcommand{\campoLetra}[1][1.2cm]{\makebox[#1]{\hrulefill}}
+
+% Comando para caixa (marcar com X)
+\newcommand{\caixa}[1][0.8cm]{\fbox{\rule{0pt}{0.6em}\hspace{#1}}}
+
+\newcommand{\campo}[1][2.0cm]{\makebox[#1]{\hrulefill}}
+\newcommand{\campoCents}[1][3.0cm]{\makebox[#1]{\hrulefill}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Matemática, Módulo P1: Modelos matemáticos para a cidadania}
+\lhead{Ficha de exercícios nº1}
+\cfoot{\thepage}
+\thispagestyle{fancy}
+
+
+\usepackage{fourier}    % Utopia + math support
+\everymath{\displaystyle}
+
+\newcounter{exercicio} % creates a new counter
+\setcounter{exercicio}{0} % optional: start from 0
+
+\newcommand{\exercicio}{%
+    \refstepcounter{exercicio}% increment counter
+    \section*{Exercício \theexercicio}%
+}
+
+% Define keys and defaults
+\pgfkeys{
+  /referencial/.is family, /referencial,
+  xmin/.initial=-1,
+  xmax/.initial=5,
+  ymin/.initial=-1,
+  ymax/.initial=5,
+  xstep/.initial=1,
+  ystep/.initial=1,
+}
+
+\tikzset{every picture/.style={scale=1.2, line width=1.7pt}} %Sets globally the personal configurations for drawns that is perfect for printing
+
+
+% Command with key–value options
+% Example: \drawReferencial[xmin=-2, xmax=6, ymin=-1, ymax=4, xstep=2, ystep=1]
+\newcommand{\drawReferencial}[1][]{%
+  \pgfkeys{/referencial, #1} % load defaults + user options
+
+  % Draw axes
+  \draw[->] (\pgfkeysvalueof{/referencial/xmin},0) --
+            (\pgfkeysvalueof{/referencial/xmax},0) node[right] {$x$};
+  \draw[->] (0,\pgfkeysvalueof{/referencial/ymin}) --
+            (0,\pgfkeysvalueof{/referencial/ymax}) node[above] {$y$};
+
+  % Ticks on x-axis
+  \foreach \x in {\pgfkeysvalueof{/referencial/xmin},
+                  \pgfkeysvalueof{/referencial/xstep},...,
+                  \pgfkeysvalueof{/referencial/xmax}}
+    \draw (\x,0.1) -- (\x,-0.1) node[below] {\x};
+
+  % Ticks on y-axis
+  \foreach \y in {\pgfkeysvalueof{/referencial/ymin},
+                  \pgfkeysvalueof{/referencial/ystep},...,
+                  \pgfkeysvalueof{/referencial/ymax}}
+    \draw (0.1,\y) -- (-0.1,\y) node[left] {\y};
+}
+
+% Comando para um campo de resposta sublinhado
+\newcommand{\respostaCampo}[1][2.0cm]{\underline{\hspace{#1}}}
+
+% Comando para caixa de escolha (marcar com X)
+\newcommand{\caixaV}[1][0.6cm]{\fbox{\rule{0pt}{0.6em}\hspace{#1}}}
+\newcommand{\caixaF}[1][0.6cm]{\fbox{\rule{0pt}{0.6em}\hspace{#1}}}
+
+
+\date{}
+\begin{document}
+
+\exercicio
+Instrucções: Para cada afirmação, escreve ``V'' se considerares a afirmação verdadeira ou ``F'' se considerares falsa.
+
+\begin{enumerate}[label=\textbf{(\arabic*)}, leftmargin=*, itemsep=1.0\baselineskip]
+  \item A maioria simples exige que um candidato obtenha mais votos do que qualquer outro, independentemente do número total de votos válidos.\\
+\textbf{V} \ \ \caixaV \quad \textbf{F} \ \ \caixaF
+
+  \item A maioria absoluta significa obter mais de metade dos votos válidos.\\
+\textbf{V} \ \ \caixaV \quad \textbf{F} \ \ \caixaF
+
+  \item Votos nulos não entram na contagem dos votos válidos.\\
+\textbf{V} \ \ \caixaV \quad \textbf{F} \ \ \caixaF
+
+  \item A abstenção corresponde a eleitores que se registaram mas não compareceram à votação.\\
+\textbf{V} \ \ \caixaV \quad \textbf{F} \ \ \caixaF
+
+  \item Para uma eleição que exige maioria absoluta, se nenhum candidato obtiver mais de metade dos votos válidos, realiza-se um segundo turno entre os dois mais votados.\\
+\textbf{V} \ \ \caixaV \quad \textbf{F} \ \ \caixaF
+
+  \item Se um eleitor deposita uma folha de voto em que não marca nenhum candidato, esse voto é considerado voto em branco.\\
+\textbf{V} \ \ \caixaV \quad \textbf{F} \ \ \caixaF
+\end{enumerate}
+
+\exercicio
+\begin{minipage}[t]{0.58\textwidth}
+\begin{enumerate}[label=\textbf{(\arabic*)}, leftmargin=*, itemsep=10pt]
+  \item Maioria simples
+  \item Maioria absoluta
+  \item Voto nulo
+  \item Voto em branco
+  \item Abstenção
+\end{enumerate}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.38\textwidth}
+\begin{enumerate}[label=\textbf{\Alph*}, leftmargin=*, itemsep=8pt]
+  \item Votos expressos sem contar abstenções; maioria superior a metade dos votos válidos.
+  \item Voto depositado que não assinala qualquer opção; em muitos sistemas é contabilizado separadamente dos nulos.
+  \item Exige mais votos que qualquer outro concorrente; não precisa de exceder metade dos votos válidos.
+  \item Voto inválido por irregularidade na folha (marcações contraditórias, sinais identificadores, etc.).
+  \item Eleitor inscrito que não comparece à mesa de voto no dia da eleição.
+\end{enumerate}
+\end{minipage}
+
+\vspace{8pt}
+\noindent Respostas: 1. \campoLetra \quad 2. \campoLetra \quad 3. \campoLetra \quad 4. \campoLetra \quad 5. \campoLetra
+
+
+\exercicio
+
+Instruções: resolve cada exercício e escreve a resposta nos campos indicados. Usa cêntimos quando for pedido.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=12pt]
+
+\item O salário base é \,870\,€. Vai aumentar 6{,}1\%. Quanto ficará o salário?\\
+Resposta: \campoCents
+
+Regra de três (interpretação: \(6{,}1\%\) de \(870\) é quanto):
+
+
+\[
+\begin{array}{rcl}
+100\% &\longleftrightarrow& 870\\
+
+6{,}1\% &\longleftrightarrow& x
+\end{array}
+\]
+
+
+Resolução:
+
+
+\[
+x=\dfrac{6{,}1\times 870}{100}=\dfrac{6{,}1\times870}{100}=53{,}07\ \text{€}.
+\]
+
+
+Valor final \(=870+53{,}07=\mathbf{923{,}07\ \text{€}}\).
+
+\item O salário base é \,1\,245\,€. Aumenta 4{,}75\%. Quanto ficará o salário (arredonda a cêntimos)?\\
+
+\vspace{3cm}
+
+Resposta: \campoCents
+
+\item Um produto custa \,320\,€. Aplica-se um desconto de 12{,}5\%. Qual é o preço depois do desconto?\\
+
+\vspace{3cm}
+
+Resposta: \campoCents
+
+\item O valor da Netflix passou de \,5{,}00\,€ para \,7{,}50\,€. Qual foi a percentagem do aumento?\\
+Resposta: \campo[2.5cm]
+
+Regra de três (interpretação: \(2,5€\) de \(5\) é quanto):
+
+
+\[
+\begin{array}{rcl}
+100\% &\longleftrightarrow& 5€\\
+
+x &\longleftrightarrow& 2,5€
+\end{array}
+\]
+
+
+Resolução:
+
+
+\[
+x=\dfrac{6{,}1\cdot 870}{100}=\dfrac{6{,}1\times870}{100}=53{,}07\ \text{€}.
+\]
+
+
+Valor final \(=870+53{,}07=\mathbf{923{,}07\ \text{€}}\).
+
+\item Um passe mensal custa \,60\,€ e passou a custar \,51\,€. Qual foi a percentagem de redução?\\
+
+\vspace{3cm}
+
+Resposta: \campo[2.5cm]
+
+\item Um salário de \,900\,€ aumenta 3\% no mês 1 e mais 2{,}5\% no mês 2. Qual é o salário final (arredonda a cêntimos)?\\
+
+\vspace{3cm}
+
+Resposta: \campoCents
+
+\item Depois de um aumento de 20\% um produto custa \,180\,€. Quanto custava antes do aumento?\\
+
+\vspace{3cm}
+
+Resposta: \campoCents
+
+
+\end{enumerate}
+
+\bigskip
+
+\section*{Eleições}
+
+Instruções: para cada tabela responde às perguntas escritas. Escreve as contas breves e a resposta nos campos indicados.
+
+\exercicio
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Candidato} & \textbf{Votos} & \textbf{\% (para preencher)} \\
+\midrule
+A & 420 & \\
+B & 310 & \\
+C & 170 & \\
+\midrule
+\textbf{Total votos válidos} & 900 & \\
+Votos em branco & 25 & \\
+Votos nulos & 10 & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+1. Alguém obteve maioria simples? Resposta e cálculo: \campo[6.0cm]  
+
+2. Alguém obteve maioria absoluta? Resposta e cálculo: \campo[6.0cm]
+
+\exercicio
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Candidato} & \textbf{Votos} & \textbf{\% (para preencher)} \\
+\midrule
+D & 1\,150 & \\
+E & 980 & \\
+F & 720 & \\
+G & 150 & \\
+\midrule
+\textbf{Total votos válidos} & 3\,000 &  \\
+Votos em branco & 60 & \\
+Votos nulos & 40 & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+1. Alguém obteve maioria simples? Resposta e cálculo: \campo[6.0cm]  
+
+2. Alguém obteve maioria absoluta? Resposta e cálculo: \campo[6.0cm]
+
+3. Qual foi a percentagem de votos brancos? E nulos? \campo[6.0cm]
+
+\exercicio
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Candidato} & \textbf{Votos} & \textbf{\% (para preencher)} \\
+\midrule
+H & 2\,300 & \\
+I & 1\,900 & \\
+\midrule
+\textbf{Total votos válidos} & 4\,200 & \\
+Votos em branco & 150 & \\
+Votos nulos & 50 & \\
+Eleitores inscritos & 6\,000 & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+1. Alguém obteve maioria simples? Resposta e cálculo: \campo[6.0cm]  
+
+2. Alguém obteve maioria absoluta? Resposta e cálculo: \campo[6.0cm]  
+
+3. Qual é a taxa de abstenção (em percentagem)? Resposta e cálculo: \campo[6.0cm]
+
+4. Qual foi a percentagem de votos brancos? E nulos? \campo[6.0cm]
+
+\exercicio
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Candidato} & \textbf{Votos} & \textbf{\% (para preencher)}\\
+\midrule
+J & 340 & \\
+K & 330 & \\
+L & 310 & \\
+M & 20 & \\
+\midrule
+\textbf{Total votos válidos} & 1\,000 & \\
+Votos em branco & 5 & \\
+Votos nulos & 0 & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+1. Alguém obteve maioria simples? Resposta e cálculo: \campo[6.0cm]  
+
+2. Alguém obteve maioria absoluta? Resposta e cálculo: \campo[6.0cm]
+
+3. Qual foi a percentagem de votos brancos? E nulos? \campo[6.0cm]
+\exercicio
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Candidato} & \textbf{\%} & \textbf{Votos (para preencher)}\\
+\midrule
+A & 38\% & \\
+B & 34\% & \\
+C & 25\% & \\
+D & 3\% & \\
+\midrule
+\textbf{Total votos válidos} & & 1\,200\\
+Votos em branco & & 10\\
+Votos nulos & & 5\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+1. Alguém obteve maioria simples? Resposta e cálculo: \campo[6.0cm]
+
+2. Alguém obteve maioria absoluta? Resposta e cálculo: \campo[6.0cm]
+
+3. Qual foi a percentagem de votos brancos? E nulos? \campo[6.0cm]
+
+\vspace{1cm}
+
+\exercicio
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Candidato} & \textbf{\%} & \textbf{Votos (para preencher)}\\
+\midrule
+E & 40\% & \\
+F & 30\% & \\
+G & 20\% & \\
+H & 10\% & \\
+\midrule
+\textbf{Total votos válidos} & & 2\,000\\
+Votos em branco & & 15\\
+Votos nulos & & 5\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+1. Alguém obteve maioria simples? Resposta e cálculo: \campo[6.0cm]
+
+2. Alguém obteve maioria absoluta? Resposta e cálculo: \campo[6.0cm]
+
+3. Qual foi a percentagem de votos brancos? E nulos? \campo[6.0cm]
+\vspace{1cm}
+
+\exercicio
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Candidato} & \textbf{\%} & \textbf{Votos (para preencher)}\\
+\midrule
+I & 45\% & \\
+J & 35\% & \\
+K & 15\% & \\
+L & 5\% & \\
+\midrule
+\textbf{Total votos válidos} & & 800\\
+Votos em branco & & 20\\
+Votos nulos & & 0\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+1. Alguém obteve maioria simples? Resposta e cálculo: \campo[6.0cm]
+
+2. Alguém obteve maioria absoluta? Resposta e cálculo: \campo[6.0cm]
+
+3. Qual foi a percentagem de votos brancos? E nulos? \campo[6.0cm]
+
+\end{document}

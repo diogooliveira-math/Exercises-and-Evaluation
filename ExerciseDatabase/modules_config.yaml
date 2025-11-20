@@ -1,6 +1,6 @@
 matematica:
   A9_funcoes_crescimento:
-    name: Módulo A9 - Funções e Crescimento
+    name: Módulo A9 - Funções de Crescimento
     description: Revisões iniciais e estudo de funções exponenciais de crescimento e decaimento
     duration_hours: 18
     concepts:
@@ -244,6 +244,23 @@ matematica:
       - injetividade
       - sobrejetividade
       - simetria
+  P1_modelos_matematicos_para_a_cidadania:
+    name: Módulo P1 - Modelos Matemáticos para a Cidadania
+    description: Aplicações práticas de matemática em contextos sociais e cívicos
+    duration_hours: 15
+    concepts:
+    - id: "eleicoes"
+      name: Eleições
+      tags:
+      - democracia
+      - votacao
+      - percentagens
+    - id: "percentagens"
+      name: Percentagens
+      tags:
+      - percentagens
+      - proporcionalidade
+      - financa_pessoal
 difficulty_levels:
   1:
     label: Muito Fácil

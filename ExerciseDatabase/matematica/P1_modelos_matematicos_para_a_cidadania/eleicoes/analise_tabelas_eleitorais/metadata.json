@@ -1,0 +1,20 @@
+{
+  "tipo": "analise_tabelas_eleitorais",
+  "tipo_nome": "Análise de Tabelas Eleitorais",
+  "conceito": "eleicoes",
+  "tags_tipo": ["tabelas","percentagens","maioria","abstenção","brancos","nulos"],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_dados": true
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 3
+  },
+  "exercicios": [
+    "MAT_P1MODELO_ELE_TAB1_001",
+    "MAT_P1MODELO_ELE_TAB2_001",
+    "MAT_P1MODELO_ELE_TAB3_001",
+    "MAT_P1MODELO_ELE_PERC_001"
+  ]
+}

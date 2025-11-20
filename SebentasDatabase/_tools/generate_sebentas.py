@@ -203,11 +203,49 @@ class SebentaGenerator:
                         print(f"  ⚠️ Erro ao ler metadata do tipo {tipo_dir.name}: {e}")
         
         # Coletar exercícios .tex
-        for tex_file in sorted(concept_path.rglob("*.tex")):
+        exercises = []
+        for tex_file in concept_path.rglob("*.tex"):
             # Ignorar templates e sebentas geradas
             if tex_file.name.startswith(('sebenta_', 'template_')):
                 continue
-            metadata['exercises'].append(tex_file)
+            exercises.append(tex_file)
+        
+        # Ordenação customizada para exercícios de eleições
+        def custom_sort_key(tex_file: Path) -> tuple:
+            """Chave de ordenação customizada para exercícios de eleições."""
+            name = tex_file.name
+            parent_dir = tex_file.parent.name
+            
+            # Ordem preferida por diretório
+            dir_order = {
+                'compreensao_termos': 0,        # Associação primeiro
+                'conceitos_eleitorais': 1,      # Conceitos segundo
+                'analise_tabelas_eleitorais': 2 # Análise de tabelas por último
+            }
+            
+            # Ordem preferida por tipo de arquivo dentro de analise_tabelas_eleitorais
+            file_order = {
+                'MAT_P1MODELO_ELE_PERC_001.tex': 0,  # Percentagens primeiro
+                'MAT_P1MODELO_ELE_TAB1_001.tex': 1,
+                'MAT_P1MODELO_ELE_TAB2_001.tex': 2,
+                'MAT_P1MODELO_ELE_TAB3_001.tex': 3,
+                'MAT_P1MODELO_ELE_CONC_001.tex': 0,  # Conceitos primeiro
+                'MAT_P1MODELO_ELE_MATCH_001.tex': 0  # Associação único
+            }
+            
+            dir_priority = dir_order.get(parent_dir, 999)
+            file_priority = file_order.get(name, 999)
+            
+            return (dir_priority, file_priority, name)
+        
+        # Aplicar ordenação customizada apenas para eleições
+        concept_name = concept_path.name
+        if concept_name == 'eleicoes':
+            exercises.sort(key=custom_sort_key)
+        else:
+            exercises.sort()  # Ordenação alfabética padrão para outros conceitos
+        
+        metadata['exercises'] = exercises
         
         return metadata
     
@@ -382,7 +420,7 @@ class SebentaGenerator:
             
             # Ler conteúdo do PDF gerado (ou usar o .tex)
             concept_tex = concept_info['tex']
-            concept_path = concept_tex.parent
+            concept_path = concept_info['path']
             
             # Buscar exercícios do conceito
             metadata = self.get_concept_metadata(concept_path)
@@ -411,7 +449,7 @@ class SebentaGenerator:
         module_name = self.get_module_name(discipline, module)
         # Usar o nome amigável do módulo no cabeçalho esquerdo
         header_left = module_name
-        header_right = module_name
+        header_right = ""
         
         latex_content = template.replace("%%TITLE%%", "")
         latex_content = latex_content.replace("%%AUTHOR%%", "")
@@ -594,6 +632,7 @@ class SebentaGenerator:
                         if success:
                             module_concepts.append({
                                 'name': conc_dir.name,
+                                'path': conc_dir,
                                 'tex': tex_file,
                                 'pdf': tex_file.with_suffix('.pdf')
                             })

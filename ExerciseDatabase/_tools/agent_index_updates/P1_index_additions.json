@@ -1,0 +1,48 @@
+{
+  "module": "P1_modelos_matematicos_para_a_cidadania",
+  "added_at": "2025-11-20T00:00:00Z",
+  "exercises": [
+    {
+      "id": "MAT_P1MODELO_ELE_CONC_001",
+      "tipo": "conceitos_eleitorais",
+      "tipo_nome": "Conceitos Eleitorais Básicos",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/conceitos_eleitorais/MAT_P1MODELO_ELE_CONC_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_ELE_MATCH_001",
+      "tipo": "compreensao_termos",
+      "tipo_nome": "Compreensão de Termos Eleitorais",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/compreensao_termos/MAT_P1MODELO_ELE_MATCH_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_PERC_CALC_001",
+      "tipo": "calculo_percentagens",
+      "tipo_nome": "Cálculo de Percentagens",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/percentagens/calculo_percentagens/MAT_P1MODELO_PERC_CALC_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_ELE_TAB1_001",
+      "tipo": "analise_tabelas_eleitorais",
+      "tipo_nome": "Análise de Tabelas Eleitorais",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/analise_tabelas_eleitorais/MAT_P1MODELO_ELE_TAB1_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_ELE_TAB2_001",
+      "tipo": "analise_tabelas_eleitorais",
+      "tipo_nome": "Análise de Tabelas Eleitorais",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/analise_tabelas_eleitorais/MAT_P1MODELO_ELE_TAB2_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_ELE_TAB3_001",
+      "tipo": "analise_tabelas_eleitorais",
+      "tipo_nome": "Análise de Tabelas Eleitorais",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/analise_tabelas_eleitorais/MAT_P1MODELO_ELE_TAB3_001.tex"
+    },
+    {
+      "id": "MAT_P1MODELO_ELE_PERC_001",
+      "tipo": "analise_tabelas_eleitorais",
+      "tipo_nome": "Análise de Tabelas Eleitorais",
+      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/analise_tabelas_eleitorais/MAT_P1MODELO_ELE_PERC_001.tex"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "tipo": "calculo_percentagens",
+  "tipo_nome": "Cálculo de Percentagens",
+  "conceito": "percentagens",
+  "tags_tipo": ["percentagens","aumentos","descontos","regra_de_três"],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_dados": false
+  },
+  "dificuldade_sugerida": {
+    "min": 1,
+    "max": 2
+  },
+  "exercicios": [
+    "MAT_P1MODELO_PERC_CALC_001"
+  ]
+}

@@ -71,24 +71,33 @@ Cria 5 exercícios de exemplo:
 
 ---
 
-### 4. `run_tests.py` ✅
-**Suite completa de testes do sistema**
+### 5. `generate_exercise_auto.py` 🤖 ⭐ **NOVO**
+**Gerador automatizado de exercícios (agente melhorado)**
 
 ```powershell
-python run_tests.py
+python generate_exercise_auto.py --tipo "calculo_percentagens_financeiras" --conceito "financas_pessoais" --module "P1_modelos_matematicos_para_a_cidadania"
 ```
 
-**8 Testes Executados:**
-1. ✓ Criar Exercícios
-2. ✓ Validar Índice
-3. ✓ Pesquisa por Módulo
-4. ✓ Pesquisa por Conceito
-5. ✓ Pesquisa por Dificuldade
-6. ✓ Pesquisa por Tags
-7. ✓ Pesquisa Complexa
-8. ✓ Validar Metadados
+**Funcionalidades:**
+- Geração automática de IDs únicos (evita duplicatas)
+- Criação direta de arquivos `.tex` e `.json`
+- Atualização automática do `index.json` com backup
+- Validação integrada (executa testes)
+- Suporte opcional para gerar sebentas automaticamente
+- Metadados completos para tipos de exercício
 
-**Resultado:** Todos os testes passam (8/8) ✅
+**Parâmetros:**
+- `--tipo`: Tipo do exercício (ex.: calculo_percentagens_financeiras)
+- `--conceito`: Conceito (ex.: financas_pessoais)
+- `--module`: Módulo (ex.: P1_modelos_matematicos_para_a_cidadania)
+- `--generate_sebenta`: Gera PDF após criar exercício
+
+**Exemplo:**
+```powershell
+python generate_exercise_auto.py --tipo "determinacao_analitica" --conceito "4-funcao_inversa" --module "P4_funcoes" --generate_sebenta
+```
+
+**Resultado:** Exercício criado, index atualizado, validação OK, sebenta gerada se solicitado.
 
 ---
 

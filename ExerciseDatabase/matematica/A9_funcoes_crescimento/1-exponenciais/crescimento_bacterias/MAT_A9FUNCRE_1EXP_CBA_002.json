@@ -32,11 +32,11 @@
     "requires_graph": true,
     "requires_calculation": true,
     "context": "real_world",
-    "mathematical_model": "f(t)=400×3^(t/2)"
+    "mathematical_model": "f(t)=300×4^(t/3)"
   },
   "history": {
     "created_at": "2025-11-19T11:15:00",
-    "updated_at": "2025-11-19T11:15:00",
+    "updated_at": "2025-11-20T12:00:00",
     "version": 1,
     "author": "sistema"
   }
