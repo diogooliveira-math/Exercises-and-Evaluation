@@ -406,3 +406,6 @@ Para questões, sugestões ou reportar bugs:
 - ✅ Metadados consolidados (metadata.json por tipo)
 - ✅ Scripts de automação (add, search, generate, consolidate)
 - ✅ Sistema totalmente testado (8/8 testes)
+ - ✅ SebentasDatabase: gerador de sebentas automatizado e templates (PDFs organizados em `SebentasDatabase/.../pdfs/`)
+ - ✅ Ferramentas de geração de testes/exames: geração de variantes, folhas de resposta e integração com compilação de PDFs
+ - ✅ Documentação e agents atualizados: novos agentes `Sebenta Generater.agent.md` e `Test generater.agent.md` para operações automatizadas e guias de uso
