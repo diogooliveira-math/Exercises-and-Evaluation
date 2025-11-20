@@ -1,0 +1,14 @@
+{
+  "name": "exame_A9",
+  "title_template": "Exame A9 — {module_name}",
+  "count": 6,
+  "shuffle": true,
+  "include_answers": false,
+  "output_subdir": "tests",
+  "pdfs_subdir": "pdfs",
+  "versions": 1,
+  "embed_version_in_title": false,
+  "embed_version_in_header": true,
+  "version_label_template": "Versão {label}",
+  "notes": "Exame do módulo A9: seleciona aleatoriamente 6 exercícios do módulo."
+}
