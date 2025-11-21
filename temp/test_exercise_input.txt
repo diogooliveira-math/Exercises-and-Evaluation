@@ -1,0 +1,60 @@
+TESTE: Exercício que o sistema deveria aceitar
+==============================================
+
+ENTRADA ESPERADA NO TEMPLATE:
+------------------------------
+Módulo: P2_estatistica
+Conceito: 0-revisoes
+Enunciado:
+\exercicio{
+Uma loja vendeu 50 maçãs e 30 peras.
+}
+
+\subexercicio{Calcula o total de frutas vendidas.}
+
+\subexercicio{Que percentagem do total representam as maçãs?}
+
+
+SAÍDA ESPERADA (.tex):
+----------------------
+% Exercise ID: MAT_P2ESTATI_REVI_D_XXX
+% Module: P2_estatistica | Concept: 0-revisoes
+% Type: desenvolvimento | Difficulty: 2/5
+% Tags: revisoes, calculo
+% Author: Professor | Date: 2025-11-21
+
+\exercicio{
+Uma loja vendeu 50 maçãs e 30 peras.
+}
+
+\subexercicio{Calcula o total de frutas vendidas.}
+
+\subexercicio{Que percentagem do total representam as maçãs?}
+
+
+PROBLEMA NO MAT_P2ESTATI_REVI_D_002:
+-------------------------------------
+O utilizador introduziu no template:
+\exercicio{
+    Uma mercearia registou...
+    
+    \begin{enumerate}
+    \item Calcula a percentagem de vendas correspondente a cada tipo de fruta. Apresenta cada valor com uma casa decimal e mostra o cálculo (por exemplo: $120/300 \times 100 = 40{.}0\%$). Organiza os resultados numa pequena tabela.
+
+    \medskip
+    \begin{tabular}{lrr}
+    Fruta & Peças & Percentagem \\
+    \hline
+    Maçãs    & 120 & $\dfrac{120}{300}\times100=40{.}0\%$ \\
+    Bananas  & 90  & $\dfrac{90}{300}\times100=30{.}0\%$  \\
+    Laranjas & 60  & $\dfrac{60}{300}\times100=20{.}0\%$  \\
+    Peras    & 30  & $\dfrac{30}{300}\times100=10{.}0\%$  \\
+    \hline
+    Total    & 300 & $100{.}0\%$ \\
+    \end{tabular    ← FALTA FECHAR ">}"!
+}
+
+Indica qual a fruta...  ← ISTO ESTÁ FORA DO \exercicio{}!
+
+O parser fechou o \exercicio{} na linha do "\end{tabular}" 
+porque encontrou o "}" e parou aí!

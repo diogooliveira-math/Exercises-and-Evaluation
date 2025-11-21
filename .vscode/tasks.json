@@ -1,0 +1,182 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // ====================================================================
+    // 🎯 TASKS ESSENCIAIS (8 total - 95% dos casos de uso)
+    // ====================================================================
+    
+    // 📝 EXERCÍCIOS
+    {
+      "label": "⚡ Novo Exercício (Mínimo - RECOMENDADO)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "ExerciseDatabase/_tools/add_exercise_minimal.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "📝 Novo Exercício (Template Completo)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "ExerciseDatabase/_tools/add_exercise_template.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 📚 SEBENTAS
+    {
+      "label": "📚 Gerar Sebenta",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "SebentasDatabase/_tools/generate_sebenta_template.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 📝 TESTES
+    {
+      "label": "📝 Gerar Teste",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "SebentasDatabase/_tools/generate_test_template.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    
+    // 🔍 PESQUISA
+    {
+      "label": "🔍 Pesquisar Exercícios",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "ExerciseDatabase/_tools/search_exercises.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 🛠️ MANUTENÇÃO
+    {
+      "label": "🛠️ Validar Base de Dados",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "tests/quick_validation.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 📊 ESTATÍSTICAS
+    {
+      "label": "📊 Ver Estatísticas",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "tests/show_stats.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 🛠️ GESTÃO DE MÓDULOS
+    {
+      "label": "🛠️ Gerir Módulos",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "ExerciseDatabase/_tools/manage_modules.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 🛠️ CONSOLIDAR METADADOS
+    {
+      "label": "🛠️ Consolidar Metadados",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "ExerciseDatabase/_tools/consolidate_type_metadata.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 🔄 GERAR VARIANTE
+    {
+      "label": "🔄 Gerar Variante de Exercício",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "ExerciseDatabase/_tools/generate_variant.py",
+        "--source",
+        "${file}"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

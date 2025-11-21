@@ -11,6 +11,11 @@ Características:
 - Remove ficheiros temporários (.aux, .log, .fls, etc.)
 - Cria estrutura organizada em SebentasDatabase/
 
+NOVO v3.1: Sistema de Preview e Curadoria
+- Pré-visualização do conteúdo LaTeX antes de compilar
+- Aprovação manual do utilizador
+- Abertura automática em VS Code para revisão
+
 Uso:
     python generate_sebentas.py [opções]
     
@@ -21,6 +26,8 @@ Opções:
     --tipo          Filtrar por tipo de exercício
     --clean-only    Apenas limpar ficheiros temporários existentes
     --no-compile    Gerar .tex mas não compilar
+    --no-preview    Não mostrar preview antes de compilar
+    --auto-approve  Aprovar automaticamente sem pedir confirmação
 """
 
 import sys
@@ -36,6 +43,15 @@ try:
     import yaml
 except ImportError:
     yaml = None
+
+# Importar sistema de preview
+try:
+    sys.path.insert(0, str(Path(__file__).parent.parent / "ExerciseDatabase" / "_tools"))
+    from preview_system import PreviewManager, create_sebenta_preview
+except ImportError:
+    PreviewManager = None
+    create_sebenta_preview = None
+    print("⚠️ Sistema de preview não disponível - a continuar sem pré-visualização")
 
 # Paths principais
 PROJECT_ROOT = Path(__file__).parent.parent.parent
@@ -57,18 +73,24 @@ class SebentaGenerator:
     """Gerador principal de sebentas."""
     
     def __init__(self, clean_only: bool = False, no_compile: bool = False, 
-                 no_module_sebenta: bool = False):
+                 no_module_sebenta: bool = False, no_preview: bool = False,
+                 auto_approve: bool = False):
         self.clean_only = clean_only
         self.no_compile = no_compile
         self.no_module_sebenta = no_module_sebenta
+        self.no_preview = no_preview
+        self.auto_approve = auto_approve
         self.stats = {
             'generated': 0,
             'compiled': 0,
             'cleaned': 0,
-            'errors': 0
+            'errors': 0,
+            'cancelled': 0
         }
         # Carregar configuração dos módulos
         self.modules_config = self.load_modules_config()
+        # Inicializar preview manager se disponível
+        self.preview_manager = PreviewManager(auto_open=True) if PreviewManager and not no_preview else None
         
     def load_modules_config(self) -> Dict:
         """Carrega configuração dos módulos."""
@@ -360,7 +382,33 @@ class SebentaGenerator:
         latex_content = latex_content.replace("%%HEADER_RIGHT%%", header_right)
         latex_content = latex_content.replace("%%CONTENT%%", content)
         
-        # Salvar .tex
+        # PREVIEW E CONFIRMAÇÃO (se habilitado)
+        if self.preview_manager and not self.auto_approve:
+            preview_metadata = {
+                "discipline": discipline,
+                "module": module,
+                "module_name": module_name,
+                "concept": concept,
+                "concept_name": metadata['concept_name'],
+                "total_exercises": len(metadata['exercises']),
+                "tipos": [t['name'] for t in metadata['tipos']]
+            }
+            
+            preview_content = create_sebenta_preview(
+                f"sebenta_{concept}",
+                latex_content,
+                preview_metadata
+            )
+            
+            if not self.preview_manager.show_and_confirm(
+                preview_content, 
+                f"Sebenta: {metadata['concept_name']}"
+            ):
+                print(f"  ❌ Cancelado pelo utilizador")
+                self.stats['cancelled'] += 1
+                return None
+        
+        # Salvar .tex (só após confirmação)
         tex_file = output_dir / f"sebenta_{concept}.tex"
         with open(tex_file, 'w', encoding='utf-8') as f:
             f.write(latex_content)
@@ -458,7 +506,32 @@ class SebentaGenerator:
         latex_content = latex_content.replace("%%HEADER_RIGHT%%", header_right)
         latex_content = latex_content.replace("%%CONTENT%%", content)
         
-        # Salvar .tex
+        # PREVIEW E CONFIRMAÇÃO para sebenta de módulo (se habilitado)
+        if self.preview_manager and not self.auto_approve:
+            preview_metadata = {
+                "discipline": discipline,
+                "module": module,
+                "module_name": module_name,
+                "type": "module_compilation",
+                "total_concepts": len(concepts),
+                "concepts": [c['name'] for c in concepts]
+            }
+            
+            preview_content = create_sebenta_preview(
+                f"sebenta_modulo_{module}",
+                latex_content,
+                preview_metadata
+            )
+            
+            if not self.preview_manager.show_and_confirm(
+                preview_content,
+                f"Sebenta Módulo: {module_name}"
+            ):
+                print(f"  ❌ Cancelado pelo utilizador")
+                self.stats['cancelled'] += 1
+                return None
+        
+        # Salvar .tex (só após confirmação)
         tex_file = output_dir / f"sebenta_modulo_{module}.tex"
         with open(tex_file, 'w', encoding='utf-8') as f:
             f.write(latex_content)
@@ -648,6 +721,8 @@ class SebentaGenerator:
         print(f"Sebentas geradas: {self.stats['generated']}")
         print(f"PDFs compilados:  {self.stats['compiled']}")
         print(f"Ficheiros limpos: {self.stats['cleaned']}")
+        if self.stats['cancelled'] > 0:
+            print(f"Canceladas:       {self.stats['cancelled']}")
         if self.stats['errors'] > 0:
             print(f"Erros:            {self.stats['errors']}")
         print("="*60)
@@ -690,6 +765,16 @@ def main():
         action='store_true',
         help='Não gerar sebenta consolidada do módulo'
     )
+    parser.add_argument(
+        '--no-preview',
+        action='store_true',
+        help='Não mostrar preview antes de compilar'
+    )
+    parser.add_argument(
+        '--auto-approve',
+        action='store_true',
+        help='Aprovar automaticamente sem pedir confirmação'
+    )
     
     args = parser.parse_args()
     
@@ -705,7 +790,9 @@ def main():
     generator = SebentaGenerator(
         clean_only=args.clean_only,
         no_compile=args.no_compile,
-        no_module_sebenta=args.no_module_sebenta
+        no_module_sebenta=args.no_module_sebenta,
+        no_preview=args.no_preview,
+        auto_approve=args.auto_approve
     )
     
     generator.scan_and_generate(

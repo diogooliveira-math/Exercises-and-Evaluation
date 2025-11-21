@@ -2,6 +2,11 @@
 Sistema de Gestão de Exercícios com TIPOS - Versão 3.0
 Hierarquia: disciplina/tema/conceito/tipo/exercicio.tex
 Usa JSON por diretório (Opção A)
+
+NOVO: Sistema de Preview e Curadoria
+- Pré-visualização do conteúdo antes de adicionar
+- Aprovação manual do utilizador
+- Abertura automática em VS Code
 """
 
 import json
@@ -11,6 +16,9 @@ from datetime import datetime
 from pathlib import Path
 import re
 from typing import Dict, List, Optional
+
+# Importar sistema de preview
+from preview_system import PreviewManager, create_exercise_preview
 
 # Cores para terminal
 class Colors:
@@ -458,7 +466,7 @@ def create_exercise_with_types():
     if has_solution:
         solution_text = input_multiline("Digite a SOLUÇÃO completa:")
     
-    # 13. Confirmar
+    # 13. Preparar conteúdo para preview
     print("\n" + "─" * 70)
     print_header("📋 RESUMO DO EXERCÍCIO")
     print(f"ID: {exercise_id}")
@@ -472,12 +480,7 @@ def create_exercise_with_types():
     print(f"Alíneas: {parts_count if has_parts else 'Não'}")
     print(f"Solução: {'Sim' if has_solution else 'Não'}")
     
-    confirm = input_with_default("\nConfirmar criação? (s/n)", "s").lower()
-    if confirm != 's':
-        print_error("Operação cancelada!")
-        return
-    
-    # 14. Criar ficheiros
+    # 14. Gerar conteúdo (mas ainda não salvar)
     today = datetime.now().strftime("%Y-%m-%d")
     
     module_name = config.get_module_name(discipline, module_id)
@@ -542,6 +545,44 @@ def create_exercise_with_types():
     
     if has_solution:
         latex_content += f"\n% Solution:\n% \\begin{{solucao}}\n% {solution_text.replace(chr(10), chr(10) + '% ')}\n% \\end{{solucao}}\n"
+    
+    # 15. PRÉ-VISUALIZAÇÃO E CONFIRMAÇÃO
+    print("\n" + "─" * 70)
+    
+    # Carregar metadata do tipo atualizado (simulado)
+    tipo_metadata_updated = None
+    tipo_metadata_file = tipo_path / "metadata.json"
+    if tipo_metadata_file.exists():
+        with open(tipo_metadata_file, 'r', encoding='utf-8') as f:
+            tipo_metadata_updated = json.load(f)
+            # Simular adição à lista de exercícios
+            if not isinstance(tipo_metadata_updated.get('exercicios'), dict):
+                tipo_metadata_updated['exercicios'] = {}
+            tipo_metadata_updated['exercicios'][exercise_id] = {
+                "created": metadata.get('created', today),
+                "modified": today,
+                "author": author,
+                "difficulty": difficulty,
+                "tags": tags,
+                "status": "active"
+            }
+    
+    # Criar preview
+    preview_content = create_exercise_preview(
+        exercise_id,
+        latex_content,
+        metadata,
+        tipo_metadata_updated
+    )
+    
+    # Mostrar preview e pedir confirmação
+    preview = PreviewManager(auto_open=True)
+    if not preview.show_and_confirm(preview_content, f"Novo Exercício: {exercise_id}"):
+        print_error("Operação cancelada pelo utilizador!")
+        return
+    
+    # 16. SALVAR FICHEIROS (só após confirmação)
+    print_header("💾 A GUARDAR FICHEIROS...")
     
     # Salvar ficheiro .tex NO DIRETÓRIO DO TIPO
     tex_file = tipo_path / f"{exercise_id}.tex"

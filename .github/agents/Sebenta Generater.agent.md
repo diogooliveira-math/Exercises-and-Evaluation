@@ -32,20 +32,54 @@ Este agente gere a criação de sebentas (colecções/compilações) em PDF a pa
 - Logs de build em `SebentasDatabase/_tools/logs/` (quando aplicável).
 - Relatório resumo com caminhos criados e tempos de compilação.
 
-## Ferramentas e comandos
+## 🆕 Sistema de Preview v3.1
+
+**CRÍTICO**: Geração de sebentas agora inclui preview antes de compilar.
+
+### Fluxo com Preview (Padrão)
+
+1. Script gera LaTeX da sebenta
+2. **Preview automático**:
+   - Mostra estrutura no terminal
+   - Abre `.tex` em VS Code
+   - Lista exercícios incluídos
+3. Utilizador revê e confirma: `[S]im / [N]ão / [R]ever`
+4. Só compila PDF se confirmado
+
+### Ferramentas e comandos
 
 O agente usa os scripts existentes no repositório quando apropriado. Exemplos de uso (PowerShell):
 
 ```powershell
-# Gerar sebenta de um conceito específico
+# Gerar sebenta COM PREVIEW (padrão)
 python SebentasDatabase/_tools/generate_sebentas.py --module P4_funcoes --concept 4-funcao_inversa
+# → Preview automático
+# → Pede confirmação
+# → Compila se aprovado
 
-# Gerar sebentas de um módulo inteiro
-python SebentasDatabase/_tools/generate_sebentas.py --module P4_funcoes
+# Gerar sebenta SEM PREVIEW (modo rápido)
+python SebentasDatabase/_tools/generate_sebentas.py --module P4_funcoes --no-preview
 
-# Gerar todas as sebentas
-python SebentasDatabase/_tools/generate_sebentas.py --all
+# Auto-aprovar (CI/CD)
+python SebentasDatabase/_tools/generate_sebentas.py --module P4_funcoes --auto-approve
+
+# Totalmente automático (comportamento v3.0)
+python SebentasDatabase/_tools/generate_sebentas.py --module P4_funcoes --no-preview --auto-approve
 ```
+
+### Flags Disponíveis
+
+- `--no-preview` - Desabilita pré-visualização
+- `--auto-approve` - Aprova automaticamente sem confirmação
+- Combinar ambas para modo totalmente automático
+
+### Responsabilidades do Agente
+
+- ✅ SEMPRE usar comando padrão (com preview)
+- ✅ INFORMAR utilizador que preview aparecerá
+- ✅ EXPLICAR que pode cancelar após rever
+- ❌ Só usar `--no-preview` ou `--auto-approve` com permissão explícita
+- 📚 Ver [PREVIEW_SYSTEM.md](../../PREVIEW_SYSTEM.md)
 
 ## Fluxos de trabalho
 

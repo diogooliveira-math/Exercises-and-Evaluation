@@ -23,6 +23,7 @@ import argparse
 import json
 import re
 from datetime import datetime
+import os
 from pathlib import Path
 from typing import Optional, Tuple
 
@@ -131,12 +132,19 @@ def update_index(index: dict, record: dict) -> dict:
     }
     diff_labels = {1: "Muito Fácil", 2: "Fácil", 3: "Médio", 4: "Difícil", 5: "Muito Difícil"}
     for ex in index["exercises"]:
-        stats["by_module"][ex["module"]] = stats["by_module"].get(ex["module"], 0) + 1
-        stats["by_concept"][ex["concept_name"]] = stats["by_concept"].get(ex["concept_name"], 0) + 1
-        dl = diff_labels.get(ex.get("difficulty", 0), "Desconhecido")
+        # Usar .get() para evitar KeyError
+        module = ex.get("module", "unknown")
+        concept = ex.get("concept_name", ex.get("concept", "unknown"))
+        difficulty = ex.get("difficulty", 0)
+        ex_type = ex.get("type", "unknown")
+        discipline = ex.get("discipline", "unknown")
+        
+        stats["by_module"][module] = stats["by_module"].get(module, 0) + 1
+        stats["by_concept"][concept] = stats["by_concept"].get(concept, 0) + 1
+        dl = diff_labels.get(difficulty, "Desconhecido")
         stats["by_difficulty"][dl] = stats["by_difficulty"].get(dl, 0) + 1
-        stats["by_type"][ex.get("type", "")] = stats["by_type"].get(ex.get("type", ""), 0) + 1
-        stats["by_discipline"][ex.get("discipline", "")] = stats["by_discipline"].get(ex.get("discipline", ""), 0) + 1
+        stats["by_type"][ex_type] = stats["by_type"].get(ex_type, 0) + 1
+        stats["by_discipline"][discipline] = stats["by_discipline"].get(discipline, 0) + 1
     index["statistics"] = stats
     return index
 
@@ -147,12 +155,38 @@ def main() -> None:
     if not src_tex.exists():
         raise SystemExit(f"❌ Ficheiro não encontrado: {src_tex}")
 
+    print("="*70)
+    print("🔄 GERADOR DE VARIANTES DE EXERCÍCIOS")
+    print("="*70)
+    print(f"\n📄 Exercício original: {src_tex.name}")
+    
     # Pasta de destino (mesmo diretório do .tex)
     dest_dir = src_tex.parent
     src_id = src_tex.stem  # ex.: MAT_P4FUNCOE_4FIN_001
-    prefix, _ = split_id_parts(src_id)
+    
+    try:
+        prefix, old_num = split_id_parts(src_id)
+    except ValueError as e:
+        raise SystemExit(f"❌ {e}")
+    
     next_num = find_next_number(dest_dir, prefix)
     new_id = f"{prefix}{next_num}"
+    
+    print(f"📋 ID original: {src_id}")
+    print(f"🆕 Novo ID: {new_id}")
+    print(f"📂 Destino: {dest_dir.relative_to(ROOT)}")
+    
+    # Confirmar antes de prosseguir
+    print(f"\n⚠️  Estratégia de variação: {args.strategy}")
+    if args.strategy == "auto":
+        print("   (Variação automática de números em expressões matemáticas)")
+    else:
+        print("   (Sem variação - cópia direta)")
+    
+    response = input(f"\n❓ Gerar variante? (s/n): ").strip().lower()
+    if response not in ['s', 'sim', 'y', 'yes']:
+        print("❌ Operação cancelada.")
+        return
 
     today = datetime.now().strftime("%Y-%m-%d")
 
@@ -165,9 +199,39 @@ def main() -> None:
     new_tex_path = dest_dir / f"{new_id}.tex"
     new_tex_path.write_text(varied, encoding="utf-8")
 
-    # Metadados: atualizar o metadata do TIPO (um único metadata.json por diretório de tipo)
+    # Abrir a variante para edição pelo utilizador e só depois registar nos metadados/index
+    try:
+        print(f"\n📄 Variante criada: {new_tex_path.name}")
+        print("Abrindo ficheiro no editor para que edite a variante (salve e feche quando terminar).")
+        try:
+            os.startfile(str(new_tex_path))
+        except Exception:
+            print("Não foi possível abrir automaticamente. Abra manualmente o ficheiro no seu editor.")
+
+        proceed = input("Pressione [Enter] quando terminar de editar a variante (ou digite 'c' para cancelar): ").strip().lower()
+        if proceed == 'c':
+            # Cancelar: apagar ficheiro criado
+            try:
+                new_tex_path.unlink()
+            except Exception:
+                pass
+            print("Operação cancelada. Variante removida.")
+            return
+
+        # Verificar conteúdo mínimo
+        new_content = new_tex_path.read_text(encoding='utf-8')
+        if '\\exercicio{' not in new_content:
+            resp = input("Ficheiro não contém '\\exercicio{'. Continuar e registar? (s/n): ").strip().lower()
+            if resp not in ['s', 'sim', 'y', 'yes']:
+                print("Operação cancelada pelo utilizador. Variante mantida, sem registo.")
+                return
+
+    except KeyboardInterrupt:
+        print("\nOperação interrompida pelo utilizador.")
+        return
+
+    # Agora atualizar metadata do tipo e index.json
     tipo_metadata_file = dest_dir / "metadata.json"
-    # Tentativa de carregar metadados do exercício original caso existam (para campos auxiliares)
     exercise_meta = load_json_metadata(src_tex) or {}
 
     # Construir entrada mínima para registo no metadata do tipo
@@ -245,10 +309,27 @@ def main() -> None:
     index = update_index(index, record)
     INDEX_FILE.write_text(json.dumps(index, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    print("✅ Variante criada")
-    print(f"   ▶ Origem: {src_tex}")
-    print(f"   ▶ Novo:   {new_tex_path}")
-    print(f"   ▶ ID:     {new_id}")
+    print("\n" + "="*70)
+    print("✅ VARIANTE REGISTADA COM SUCESSO!")
+    print("="*70)
+    print(f"\n📄 Ficheiros:")
+    print(f"   • Original: {src_tex.name}")
+    print(f"   • Variante: {new_tex_path.name}")
+    print(f"\n🆔 IDs:")
+    print(f"   • Original: {src_id}")
+    print(f"   • Variante: {new_id}")
+    print(f"\n📍 Localização:")
+    print(f"   {new_tex_path.relative_to(ROOT)}")
+    print(f"\n📊 Base de dados atualizada:")
+    print(f"   • Total de exercícios: {index['total_exercises']}")
+    print(f"   • Metadata do tipo atualizado")
+    print(f"   • index.json atualizado")
+    
+    # Sugestão de próximo passo
+    print(f"\n💡 Próximos passos:")
+    print(f"   1. Verificar a variante em {new_tex_path.name}")
+    print(f"   2. Compilar/testar se necessário")
+    print("\n" + "="*70)
 
 
 if __name__ == "__main__":

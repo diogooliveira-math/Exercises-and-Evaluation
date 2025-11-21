@@ -57,6 +57,49 @@ Este projeto resolve o problema comum de professores que mantêm exercícios dis
 
 ---
 
+## 🚀 INÍCIO RÁPIDO - TASKS VS CODE (v3.2)
+
+### Como Executar Tasks
+1. **Pressione**: `Ctrl+Shift+P`
+2. **Digite**: "Tasks: Run Task"
+3. **Escolha** a task desejada
+
+### Tasks Disponíveis (8 essenciais)
+
+| Ação | Task | Atalho |
+|------|------|--------|
+| Criar exercício | `📝 Novo Exercício` | `Ctrl+Shift+B` |
+| Gerar sebenta/PDF | `📚 Gerar Sebenta` | - |
+| Criar teste/exame | `📝 Gerar Teste` | `Ctrl+Shift+T` |
+| Pesquisar exercícios | `🔍 Pesquisar Exercícios` | - |
+| Validar base | `🛠️ Validar Base de Dados` | - |
+| Ver estatísticas | `📊 Ver Estatísticas` | - |
+| Gerir módulos | `🛠️ Gerir Módulos` | - |
+| Consolidar metadados | `🛠️ Consolidar Metadados` | - |
+
+**📖 Guia Completo**: [`VSCODE_TASKS_GUIDE.md`](VSCODE_TASKS_GUIDE.md)
+
+### Linha de Comandos (Alternativa)
+
+```bash
+# Criar exercício (template)
+python ExerciseDatabase/_tools/add_exercise_template.py
+
+# Criar exercício (wizard)
+python ExerciseDatabase/_tools/add_exercise_with_types.py
+
+# Gerar sebenta
+python SebentasDatabase/_tools/generate_sebenta_template.py
+
+# Gerar teste
+python SebentasDatabase/_tools/generate_test_template.py --questions 10
+
+# Pesquisar
+python ExerciseDatabase/_tools/search_exercises.py
+```
+
+---
+
 ## 📁 Estrutura do Projeto
 
 ```
@@ -99,10 +142,20 @@ Exercises and Evaluation/
 │   │   │   └── ...
 │   │   └── ...
 │   └── _tools/                 # Scripts Python
-│       ├── add_exercise_with_types.py
+│       ├── add_exercise_template.py      # 🆕 Template editável
+│       ├── add_exercise_with_types.py    # Wizard interativo
 │       ├── generate_variant.py
-│       ├── search_exercises.py
+│       ├── search_exercises.py           # Pesquisa avançada
 │       └── run_tests.py
+│
+├── SebentasDatabase/           # ✅ Sebentas e testes (v3.2)
+│   ├── _templates/
+│   │   ├── sebenta_template.tex
+│   │   └── test_template.tex
+│   └── _tools/
+│       ├── generate_sebenta_template.py  # 🆕 Sebenta editável
+│       ├── generate_test_template.py     # 🆕 Teste editável
+│       └── generate_sebentas.py          # Automático
 │
 ├── TheoryDatabase/             # [A CRIAR] Base de conteúdo teórico
 │   ├── definicoes/
@@ -138,34 +191,41 @@ Exercises and Evaluation/
 
 ### Base de Dados de Exercícios (ExerciseDatabase)
 
-**NOVO**: Sistema completo com hierarquia de 5 níveis implementado!
+**NOVO v3.1**: Sistema completo com **Preview e Curadoria**!
 
 ```powershell
-# Adicionar novo exercício (com tipos)
+# Adicionar novo exercício (COM PREVIEW)
 cd ExerciseDatabase\_tools
 python add_exercise_with_types.py
+# → Wizard interactivo
+# → Preview automático em VS Code
+# → Confirmação antes de salvar
 
-# Gerar variante de exercício
-python generate_variant.py --source "path/to/exercise.tex" --strategy auto
+# Gerar sebenta (COM PREVIEW)
+cd ..\SebentasDatabase\_tools
+python generate_sebentas.py --module P4_funcoes
+# → Preview do LaTeX
+# → Confirmar antes de compilar
 
-# Pesquisar exercícios
-python search_exercises.py
-
-# Executar testes
-python run_tests.py
+# Gerar teste (COM PREVIEW)
+python generate_tests.py --config test.json
+# → Preview com lista de exercícios
+# → Confirmar para cada versão
 ```
 
 **Características**:
-- 🆕 Tipos de exercícios por conceito
-- 📦 Metadados consolidados (um `metadata.json` por tipo)
-- 🔍 Pesquisa avançada (módulo, conceito, tipo, dificuldade, tags)
-- 🔄 Geração automática de variantes
-- ✅ 8/8 testes passando
+- 🆕 **Preview visual** antes de adicionar conteúdo
+- 🎨 **Abertura automática** em VS Code para revisão
+- ✅ **Confirmação explícita** - controlo total
+- 🔄 Opção de rever múltiplas vezes antes de confirmar
+- 📊 Tracking completo (incluindo canceladas)
+- 🔧 Flags `--no-preview` e `--auto-approve` para automação
 
-Consulte:
-- `ExerciseDatabase/START_HERE.md` - Guia visual rápido
-- `ExerciseDatabase/GUIA_TIPOS_EXERCICIOS.md` - Documentação completa
-- `ExerciseDatabase/README_TIPOS.md` - Quick start
+**Quick Start**:
+- 📖 [PREVIEW_QUICKSTART.md](PREVIEW_QUICKSTART.md) - Começar em 5 minutos
+- 📚 [PREVIEW_SYSTEM.md](PREVIEW_SYSTEM.md) - Documentação completa
+- 🎯 `ExerciseDatabase/START_HERE.md` - Guia visual
+- 📘 `ExerciseDatabase/GUIA_TIPOS_EXERCICIOS.md` - Sistema de tipos
 
 ---
 
@@ -398,14 +458,19 @@ Para questões, sugestões ou reportar bugs:
 
 ---
 
-**Versão**: 0.3.1 (ExerciseDatabase v3.0.1 implementado)  
-**Última atualização**: 19 Novembro 2025
+**Versão**: 3.1 (Sistema de Preview e Curadoria)  
+**Última atualização**: 21 Novembro 2025
 
-**Mudanças recentes**:
-- ✅ ExerciseDatabase completo com tipos de exercícios
-- ✅ Metadados consolidados (metadata.json por tipo)
-- ✅ Scripts de automação (add, search, generate, consolidate)
-- ✅ Sistema totalmente testado (8/8 testes)
- - ✅ SebentasDatabase: gerador de sebentas automatizado e templates (PDFs organizados em `SebentasDatabase/.../pdfs/`)
- - ✅ Ferramentas de geração de testes/exames: geração de variantes, folhas de resposta e integração com compilação de PDFs
- - ✅ Documentação e agents atualizados: novos agentes `Sebenta Generater.agent.md` e `Test generater.agent.md` para operações automatizadas e guias de uso
+**Mudanças recentes v3.1**:
+- 🆕 **Sistema de Preview e Curadoria** - Revisão antes de adicionar à base
+- 🎨 Interface visual com abertura automática em VS Code
+- ✅ Confirmação explícita antes de salvar conteúdo
+- 📊 Tracking de operações canceladas
+- 🔧 Flags `--no-preview` e `--auto-approve` para automação
+- 📚 Documentação completa: [PREVIEW_SYSTEM.md](PREVIEW_SYSTEM.md) e [PREVIEW_QUICKSTART.md](PREVIEW_QUICKSTART.md)
+
+**Versões anteriores**:
+- v3.0.1: ExerciseDatabase completo com tipos de exercícios
+- v3.0: Metadados consolidados (metadata.json por tipo)
+- v2.x: Scripts de automação (add, search, generate, consolidate)
+- v1.x: SebentasDatabase e ferramentas de geração de testes

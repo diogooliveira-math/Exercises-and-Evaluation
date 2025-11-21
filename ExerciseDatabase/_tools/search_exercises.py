@@ -6,8 +6,13 @@ Versão: 2.0
 
 import json
 import yaml
+import sys
+import io
 from pathlib import Path
 from typing import List, Dict, Optional
+
+# Note: avoid rewrapping std streams at import-time (interferes with pytest). If
+# needed, apply platform-specific fixes when running as script.
 
 # Cores para terminal
 class Colors:
@@ -54,21 +59,22 @@ def search_exercises(
     results = []
     
     for exercise in index["exercises"]:
-        # Aplicar filtros
-        if module and exercise["module"] != module:
+        # Aplicar filtros (suporta estruturas antigas e novas)
+        if module and exercise.get("module") != module:
             continue
-        if concept and exercise["concept"] != concept:
+        if concept and exercise.get("concept") != concept:
             continue
-        if difficulty and exercise["difficulty"] != difficulty:
+        if difficulty and exercise.get("difficulty") != difficulty:
             continue
-        if exercise_type and exercise["type"] != exercise_type:
+        if exercise_type and exercise.get("type") != exercise_type:
             continue
-        if min_points and exercise["points"] < min_points:
+        if min_points and exercise.get("points", 0) < min_points:
             continue
-        if max_points and exercise["points"] > max_points:
+        if max_points and exercise.get("points", 0) > max_points:
             continue
         if tags:
-            if not any(tag in exercise["tags"] for tag in tags):
+            exercise_tags = exercise.get("tags", [])
+            if not any(tag in exercise_tags for tag in tags):
                 continue
         
         results.append(exercise)
@@ -86,17 +92,18 @@ def display_results(results: List[Dict], config: Dict):
     print(f"{Colors.BOLD}{Colors.CYAN}{'='*80}{Colors.END}\n")
     
     for i, ex in enumerate(results, 1):
-        # Obter label de dificuldade
-        diff_label = config['difficulty_levels'][ex['difficulty']]['label']
+        # Obter label de dificuldade (com fallback se não existir)
+        difficulty = ex.get('difficulty', 2)  # Default 2 se não existir
+        diff_label = config['difficulty_levels'].get(difficulty, {}).get('label', 'Desconhecido')
         
-        print(f"{Colors.GREEN}{Colors.BOLD}{i}. {ex['id']}{Colors.END}")
-        print(f"   {Colors.BOLD}Módulo:{Colors.END} {ex['module_name']}")
-        print(f"   {Colors.BOLD}Conceito:{Colors.END} {ex['concept_name']}")
-        print(f"   {Colors.BOLD}Dificuldade:{Colors.END} {ex['difficulty']}/5 ({diff_label}) | "
-              f"{Colors.BOLD}Tipo:{Colors.END} {ex['type']}")
-        print(f"   {Colors.BOLD}Pontos:{Colors.END} {ex['points']} | "
-              f"{Colors.BOLD}Tags:{Colors.END} {', '.join(ex['tags'])}")
-        print(f"   {Colors.BLUE}📄 {ex['path']}{Colors.END}")
+        print(f"{Colors.GREEN}{Colors.BOLD}{i}. {ex.get('id', 'ID_DESCONHECIDO')}{Colors.END}")
+        print(f"   {Colors.BOLD}Módulo:{Colors.END} {ex.get('module_name', 'Desconhecido')}")
+        print(f"   {Colors.BOLD}Conceito:{Colors.END} {ex.get('concept_name', 'Desconhecido')}")
+        print(f"   {Colors.BOLD}Dificuldade:{Colors.END} {difficulty}/5 ({diff_label}) | "
+              f"{Colors.BOLD}Tipo:{Colors.END} {ex.get('type', 'desenvolvimento')}")
+        print(f"   {Colors.BOLD}Pontos:{Colors.END} {ex.get('points', 0)} | "
+              f"{Colors.BOLD}Tags:{Colors.END} {', '.join(ex.get('tags', []))}")
+        print(f"   {Colors.BLUE}📄 {ex.get('path', 'Caminho desconhecido')}{Colors.END}")
         print()
 
 def display_statistics(index: Dict, config: Dict):
@@ -141,7 +148,11 @@ def display_statistics(index: Dict, config: Dict):
     # Por tipo
     print(f"\n{Colors.BOLD}{Colors.YELLOW}📝 Por Tipo:{Colors.END}")
     for ex_type, count in index["statistics"]["by_type"].items():
-        type_name = config['exercise_types'][ex_type]['name']
+        # Tentar obter nome do tipo do config, se não existir usar o próprio tipo
+        if ex_type in config.get('exercise_types', {}):
+            type_name = config['exercise_types'][ex_type]['name']
+        else:
+            type_name = ex_type  # Usar o nome do tipo como está no index
         print(f"   • {type_name}: {count} exercícios")
     
     print()
@@ -298,6 +309,14 @@ def interactive_search():
 
 def main():
     """Função principal"""
+    # Windows PowerShell: ensure UTF-8 output when running as script
+    if sys.platform == 'win32':
+        try:
+            sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+            sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+        except Exception:
+            pass
+
     try:
         interactive_search()
     except KeyboardInterrupt:

@@ -1,0 +1,27 @@
+{
+  "tipo": "problema_real_monotonia",
+  "tipo_nome": "Problema Real Monotonia",
+  "conceito": "estudo_monotonia",
+  "conceito_nome": "",
+  "tema": "A12_otimizacao",
+  "tema_nome": "",
+  "disciplina": "matematica",
+  "descricao": "Exercícios de problema real monotonia",
+  "tags_tipo": [
+    "problema_real",
+    "otimização",
+    "monotonia"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": false
+  },
+  "dificuldade_sugerida": {
+    "min": 1,
+    "max": 3
+  },
+  "exercicios": [
+    "MAT_A12OTIMI_ESTU_PRM_002",
+    "MAT_A12OTIMI_ESTU_PRM_003"
+  ]
+}
