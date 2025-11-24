@@ -61,6 +61,13 @@ python SebentasDatabase\_tools\generate_sebentas.py --module P4_funcoes
 python SebentasDatabase\_tools\generate_sebentas.py --module P4_funcoes --no-preview
 ```
 
+> **Atenção importante — destino das sebentas geradas**
+>
+> - As sebentas (ficheiros `.tex` e `.pdf`) geradas por este sistema são guardadas em `SebentasDatabase/`.
+> - Evite executar `ExerciseDatabase/_tools/generate_sebentas.py` — use `SebentasDatabase/_tools/generate_sebentas.py` para saídas oficiais.
+> - O script legacy requer `ALLOW_EXERCISE_DB_SEBENTA=1` ou `--allow-exercise-output` para ser executado (proteção intencional).
+
+
 ### Gerar Teste
 
 ```bash

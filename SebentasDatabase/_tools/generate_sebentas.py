@@ -44,14 +44,42 @@ try:
 except ImportError:
     yaml = None
 
+# Logging setup
+import logging
+import os
+from logging.handlers import RotatingFileHandler
+
+# Ensure logs directory exists in SebentasDatabase/logs
+LOG_DIR = Path(__file__).parent.parent.parent / "SebentasDatabase" / "logs"
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+# Create timestamped logfile
+_log_filename = LOG_DIR / f"generate_sebentas_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+
+logger = logging.getLogger("generate_sebentas")
+if not logger.handlers:
+    logger.setLevel(logging.DEBUG)
+    fh = RotatingFileHandler(str(_log_filename), maxBytes=5 * 1024 * 1024, backupCount=5, encoding='utf-8')
+    fh.setLevel(logging.DEBUG)
+    formatter = logging.Formatter("%(asctime)s %(levelname)s %(name)s - %(message)s")
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+    # console handler for user-facing messages
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(logging.INFO)
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+
 # Importar sistema de preview
 try:
-    sys.path.insert(0, str(Path(__file__).parent.parent / "ExerciseDatabase" / "_tools"))
+    # garantir que apontamos para a pasta correta do ExerciseDatabase/_tools
+    sys.path.insert(0, str(Path(__file__).parent.parent.parent / "ExerciseDatabase" / "_tools"))
     from preview_system import PreviewManager, create_sebenta_preview
 except ImportError:
     PreviewManager = None
     create_sebenta_preview = None
-    print("⚠️ Sistema de preview não disponível - a continuar sem pré-visualização")
+    logger.warning("⚠️ Sistema de preview não disponível - a continuar sem pré-visualização")
 
 # Paths principais
 PROJECT_ROOT = Path(__file__).parent.parent.parent
@@ -100,7 +128,7 @@ class SebentaGenerator:
             with open(MODULES_CONFIG, 'r', encoding='utf-8') as f:
                 return yaml.safe_load(f) or {}
         except Exception as e:
-            print(f"⚠️ Erro ao carregar modules_config.yaml: {e}")
+            logger.exception(f"⚠️ Erro ao carregar modules_config.yaml: {e}")
             return {}
     
     def get_module_name(self, discipline: str, module: str) -> str:
@@ -202,7 +230,7 @@ class SebentaGenerator:
                                     'path': tipo_dir
                                 })
             except Exception as e:
-                print(f"  ⚠️ Erro ao ler metadata do conceito: {e}")
+                logger.exception(f"  ⚠️ Erro ao ler metadata do conceito: {e}")
         
         # Procurar por tipos (subdiretórios) se não estiverem no metadata
         if not metadata['tipos']:
@@ -222,7 +250,7 @@ class SebentaGenerator:
                                 'path': tipo_dir
                             })
                     except Exception as e:
-                        print(f"  ⚠️ Erro ao ler metadata do tipo {tipo_dir.name}: {e}")
+                        logger.exception(f"  ⚠️ Erro ao ler metadata do tipo {tipo_dir.name}: {e}")
         
         # Coletar exercícios .tex
         exercises = []
@@ -327,16 +355,17 @@ class SebentaGenerator:
                 except Exception as e:
                     content_lines.append(f"% ERRO ao ler {tex_file.name}: {e}")
                     content_lines.append(f"\\textbf{{Erro ao carregar exercício: {tex_file.name}}}")
+                    logger.exception(f"Erro ao ler exercício {tex_file}: {e}")
                 
                 content_lines.append("")
         
         return "\n".join(content_lines)
     
     def generate_sebenta(self, discipline: str, module: str, concept: str, 
-                        concept_path: Path) -> Optional[Path]:
+                        concept_path: Path, tipo: Optional[str] = None) -> Optional[Path]:
         """Gera uma sebenta para um conceito específico."""
         
-        print(f"\n📚 Gerando sebenta: {discipline}/{module}/{concept}")
+        logger.info(f"\n📚 Gerando sebenta: {discipline}/{module}/{concept}")
         
         # Criar estrutura de output
         output_dir = SEBENTAS_DB / discipline / module / concept
@@ -352,13 +381,33 @@ class SebentaGenerator:
                 except Exception:
                     pass
         if cleaned > 0:
-            print(f"  🧹 Limpou {cleaned} ficheiros temporários antigos")
+            logger.info(f"  🧹 Limpou {cleaned} ficheiros temporários antigos")
         
         # Obter metadados
         metadata = self.get_concept_metadata(concept_path)
+
+        # Se foi solicitado um filtro por tipo, filtrar a lista de exercícios
+        if tipo:
+            # Normalizar nome do tipo
+            tipo_id = str(tipo)
+            # Filtrar exercícios que vivem dentro da subpasta do tipo
+            filtered = [p for p in metadata['exercises'] if tipo_id in [a.name for a in p.parents if a.parent == concept_path or a == concept_path]]
+            if not filtered:
+                # Tentar também encontrar por diretório direto: concept_path/tipo_id
+                tipo_dir = concept_path / tipo_id
+                if tipo_dir.exists() and tipo_dir.is_dir():
+                    filtered = [p for p in metadata['exercises'] if tipo_dir in list(p.parents)]
+
+            if not filtered:
+                logger.warning(f"  ⚠️ Nenhum exercício encontrado para tipo '{tipo_id}' em {concept_path}")
+                return None
+
+            metadata['exercises'] = filtered
+            # Reduzir lista de tipos mostrada no preview para o tipo solicitado
+            metadata['tipos'] = [t for t in metadata.get('tipos', []) if t.get('id') == tipo_id or t.get('name') == tipo_id]
         
         if not metadata['exercises']:
-            print(f"  ⚠️ Nenhum exercício encontrado")
+            logger.warning(f"  ⚠️ Nenhum exercício encontrado em {concept_path}")
             return None
         
         # Carregar template
@@ -404,7 +453,7 @@ class SebentaGenerator:
                 preview_content, 
                 f"Sebenta: {metadata['concept_name']}"
             ):
-                print(f"  ❌ Cancelado pelo utilizador")
+                logger.info(f"  ❌ Cancelado pelo utilizador")
                 self.stats['cancelled'] += 1
                 return None
         
@@ -413,7 +462,7 @@ class SebentaGenerator:
         with open(tex_file, 'w', encoding='utf-8') as f:
             f.write(latex_content)
         
-        print(f"  ✅ Gerado: {tex_file.relative_to(PROJECT_ROOT)}")
+        logger.info(f"  ✅ Gerado: {tex_file.relative_to(PROJECT_ROOT)}")
         self.stats['generated'] += 1
         
         return tex_file
@@ -422,7 +471,7 @@ class SebentaGenerator:
                                concepts: List[Dict]) -> Optional[Path]:
         """Gera uma sebenta consolidada de todo o módulo."""
         
-        print(f"\n📚 Gerando sebenta consolidada do módulo: {discipline}/{module}")
+        logger.info(f"\n📚 Gerando sebenta consolidada do módulo: {discipline}/{module}")
         
         # Criar estrutura de output
         output_dir = SEBENTAS_DB / discipline / module
@@ -527,7 +576,7 @@ class SebentaGenerator:
                 preview_content,
                 f"Sebenta Módulo: {module_name}"
             ):
-                print(f"  ❌ Cancelado pelo utilizador")
+                logger.info(f"  ❌ Cancelado pelo utilizador")
                 self.stats['cancelled'] += 1
                 return None
         
@@ -536,7 +585,7 @@ class SebentaGenerator:
         with open(tex_file, 'w', encoding='utf-8') as f:
             f.write(latex_content)
         
-        print(f"  ✅ Gerado: {tex_file.relative_to(PROJECT_ROOT)}")
+        logger.info(f"  ✅ Gerado: {tex_file.relative_to(PROJECT_ROOT)}")
         self.stats['generated'] += 1
         
         # Compilar (PDFs vão para pdfs_dir)
@@ -548,15 +597,16 @@ class SebentaGenerator:
         """Compila um ficheiro .tex para PDF."""
         
         if self.no_compile:
+            logger.info("  ⚠️ no_compile set - pulando compilação")
             return True
         
         # Verificar se pdflatex está disponível
         pdflatex = shutil.which('pdflatex')
         if not pdflatex:
-            print(f"  ⚠️ pdflatex não encontrado no PATH - compilação ignorada")
+            logger.warning(f"  ⚠️ pdflatex não encontrado no PATH - compilação ignorada")
             return False
         
-        print(f"  🔨 Compilando PDF...")
+        logger.info(f"  🔨 Compilando PDF...")
         
         output_dir = tex_file.parent
         tex_name = tex_file.name
@@ -601,7 +651,7 @@ class SebentaGenerator:
                     pdf_dest.unlink()
                 pdf_file.rename(pdf_dest)
                 
-                print(f"  ✅ PDF gerado: {pdf_dest.relative_to(PROJECT_ROOT)}")
+                logger.info(f"  ✅ PDF gerado: {pdf_dest.relative_to(PROJECT_ROOT)}")
                 self.stats['compiled'] += 1
                 
                 # Limpar TODOS os ficheiros temporários incluindo .tex
@@ -624,12 +674,12 @@ class SebentaGenerator:
                         pass
                 
                 if cleaned > 0:
-                    print(f"  🧹 Limpou {cleaned} ficheiros")
+                    logger.info(f"  🧹 Limpou {cleaned} ficheiros")
                 self.stats['cleaned'] += cleaned
                 
                 return True
             else:
-                print(f"  ❌ Erro na compilação - PDF não gerado")
+                logger.error(f"  ❌ Erro na compilação - PDF não gerado for {tex_file}")
                 # Salvar log de erro se houver output
                 if result and (result.stdout or result.stderr):
                     error_log_file = output_dir / f"{tex_file.stem}_error.log"
@@ -637,16 +687,16 @@ class SebentaGenerator:
                         f.write(result.stdout or "")
                         f.write("\n=== STDERR ===\n")
                         f.write(result.stderr or "")
-                    print(f"  📄 Log salvo em: {error_log_file.name}")
+                    logger.info(f"  📄 Log salvo em: {error_log_file.relative_to(PROJECT_ROOT)}")
                 self.stats['errors'] += 1
                 return False
                 
         except subprocess.TimeoutExpired:
-            print(f"  ⏱️ Timeout na compilação")
+            logger.exception(f"  ⏱️ Timeout na compilação for {tex_file}")
             self.stats['errors'] += 1
             return False
         except Exception as e:
-            print(f"  ❌ Erro na compilação: {e}")
+            logger.exception(f"  ❌ Erro na compilação: {e}")
             self.stats['errors'] += 1
             return False
     
@@ -657,12 +707,12 @@ class SebentaGenerator:
         """Escaneia ExerciseDatabase e gera sebentas."""
         
         if self.clean_only:
-            print("🧹 Modo limpeza apenas - removendo ficheiros temporários...")
+            logger.info("🧹 Modo limpeza apenas - removendo ficheiros temporários...")
             cleaned = self.clean_temp_files(SEBENTAS_DB, recursive=True)
-            print(f"\n✅ Total limpo: {cleaned} ficheiros")
+            logger.info(f"\n✅ Total limpo: {cleaned} ficheiros")
             return
         
-        print("📂 Escaneando ExerciseDatabase...")
+        logger.info("📂 Escaneando ExerciseDatabase...")
         
         # Iterar por disciplinas
         for disc_dir in sorted(EXERCISE_DB.iterdir()):
@@ -680,7 +730,7 @@ class SebentaGenerator:
                 if module and mod_dir.name != module:
                     continue
                 
-                print(f"\n📦 Módulo: {disc_dir.name}/{mod_dir.name}")
+                logger.info(f"\n📦 Módulo: {disc_dir.name}/{mod_dir.name}")
                 module_concepts = []
                 
                 # Iterar por conceitos
@@ -696,7 +746,8 @@ class SebentaGenerator:
                         disc_dir.name,
                         mod_dir.name,
                         conc_dir.name,
-                        conc_dir
+                        conc_dir,
+                        tipo=tipo
                     )
                     
                     # Compilar se gerado
@@ -715,17 +766,17 @@ class SebentaGenerator:
                     self.generate_module_sebenta(disc_dir.name, mod_dir.name, module_concepts)
         
         # Estatísticas finais
-        print("\n" + "="*60)
-        print("📊 RESUMO")
-        print("="*60)
-        print(f"Sebentas geradas: {self.stats['generated']}")
-        print(f"PDFs compilados:  {self.stats['compiled']}")
-        print(f"Ficheiros limpos: {self.stats['cleaned']}")
+        logger.info("\n" + "="*60)
+        logger.info("📊 RESUMO")
+        logger.info("="*60)
+        logger.info(f"Sebentas geradas: {self.stats['generated']}")
+        logger.info(f"PDFs compilados:  {self.stats['compiled']}")
+        logger.info(f"Ficheiros limpos: {self.stats['cleaned']}")
         if self.stats['cancelled'] > 0:
-            print(f"Canceladas:       {self.stats['cancelled']}")
+            logger.info(f"Canceladas:       {self.stats['cancelled']}")
         if self.stats['errors'] > 0:
-            print(f"Erros:            {self.stats['errors']}")
-        print("="*60)
+            logger.info(f"Erros:            {self.stats['errors']}")
+        logger.info("="*60)
 
 
 def main():
@@ -777,6 +828,26 @@ def main():
     )
     
     args = parser.parse_args()
+
+    # Allow controlling flags via environment variables when called from VS Code tasks
+    # Environment variables: SEBENTA_NO_PREVIEW, SEBENTA_NO_COMPILE, SEBENTA_AUTO_APPROVE
+    import os
+    def env_flag(name: str) -> Optional[bool]:
+        v = os.environ.get(name, None)
+        if v is None or v == "":
+            return None
+        return str(v).lower() in ("1", "true", "yes", "s", "sim")
+
+    env_no_preview = env_flag('SEBENTA_NO_PREVIEW')
+    env_no_compile = env_flag('SEBENTA_NO_COMPILE')
+    env_auto_approve = env_flag('SEBENTA_AUTO_APPROVE')
+
+    if env_no_preview is True:
+        args.no_preview = True
+    if env_no_compile is True:
+        args.no_compile = True
+    if env_auto_approve is True:
+        args.auto_approve = True
     
     # Verificar estrutura
     if not EXERCISE_DB.exists():
@@ -804,4 +875,10 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as e:
+        # Log unexpected exception with stacktrace to logfile
+        logger.exception(f"Unhandled exception in generate_sebentas: {e}")
+        # Re-raise to ensure process exits with non-zero code
+        raise

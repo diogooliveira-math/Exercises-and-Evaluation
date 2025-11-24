@@ -98,6 +98,13 @@ python SebentasDatabase/_tools/generate_test_template.py --questions 10
 python ExerciseDatabase/_tools/search_exercises.py
 ```
 
+> **Atenção importante — onde são colocadas as sebentas geradas**
+>
+> - Todas as sebentas (ficheiros `.tex` e/ou `.pdf`) devem ser geradas em `SebentasDatabase/` e nunca diretamente em `ExerciseDatabase/`.
+> - Existe um script legacy em `ExerciseDatabase/_tools/generate_sebentas.py` — ele foi mantido por compatibilidade, mas não deve ser usado para produção. Use sempre `SebentasDatabase/_tools/generate_sebentas.py`.
+> - Para evitar gravações acidentais, o script legacy exige a variável de ambiente `ALLOW_EXERCISE_DB_SEBENTA=1` ou o argumento `--allow-exercise-output` para correr; isto previne sobrescrita de conteúdos fonte.
+
+
 ---
 
 ## 📁 Estrutura do Projeto

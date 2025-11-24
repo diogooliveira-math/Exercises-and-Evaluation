@@ -43,12 +43,23 @@
     
     // 📚 SEBENTAS
     {
-      "label": "📚 Gerar Sebenta",
+      "label": "📚 Gerar Sebenta (Direto)",
       "type": "shell",
       "command": "python",
       "args": [
-        "SebentasDatabase/_tools/generate_sebenta_template.py"
+        "scripts/run_generate_sebenta_task.py"
       ],
+      "options": {
+        "env": {
+          "SEBENTA_DISCIPLINE": "${input:sebenta.discipline}",
+          "SEBENTA_MODULE": "${input:sebenta.module}",
+          "SEBENTA_CONCEPT": "${input:sebenta.concept}",
+          "SEBENTA_TIPO": "${input:sebenta.tipo}",
+          "SEBENTA_NO_PREVIEW": "${input:sebenta.no_preview}",
+          "SEBENTA_AUTO_APPROVE": "${input:sebenta.auto_approve}",
+          "SEBENTA_NO_COMPILE": "${input:sebenta.no_compile}"
+        }
+      },
       "presentation": {
         "reveal": "always",
         "panel": "dedicated",
@@ -57,6 +68,21 @@
       },
       "problemMatcher": []
     },
+    {
+      "label": "📚 Gerar Sebenta (Interativo)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "scripts/generate_sebenta_interactive.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    
     
     // 📝 TESTES
     {
@@ -177,6 +203,55 @@
         "clear": true
       },
       "problemMatcher": []
+    }
+  ]
+  ,
+  "inputs": [
+    {
+      "id": "sebenta.discipline",
+      "type": "promptString",
+      "description": "Disciplina a filtrar (ex: matematica). Deixe vazio para todas.",
+      "default": ""
+    },
+    {
+      "id": "sebenta.module",
+      "type": "promptString",
+      "description": "Módulo a filtrar (ex: P4_funcoes). Deixe vazio para todos.",
+      "default": ""
+    },
+    {
+      "id": "sebenta.concept",
+      "type": "promptString",
+      "description": "Conceito/tema (ex: 4-funcao_inversa). Deixe vazio para todos.",
+      "default": ""
+    },
+    {
+      "id": "sebenta.tipo",
+      "type": "promptString",
+      "description": "Tipo de exercício (ex: determinacao_analitica). Deixe vazio para todos.",
+      "default": ""
+    }
+    ,
+    {
+      "id": "sebenta.no_preview",
+      "type": "pickString",
+      "description": "Desabilitar preview antes de compilar?",
+      "options": ["", "true", "false"],
+      "default": ""
+    },
+    {
+      "id": "sebenta.auto_approve",
+      "type": "pickString",
+      "description": "Aprovar automaticamente?",
+      "options": ["", "true", "false"],
+      "default": ""
+    },
+    {
+      "id": "sebenta.no_compile",
+      "type": "pickString",
+      "description": "Gerar apenas .tex (não compilar PDFs)?",
+      "options": ["", "true", "false"],
+      "default": "true"
     }
   ]
 }

@@ -1,0 +1,114 @@
+% Template para geração automática de sebentas
+% Gerado automaticamente - NÃO EDITAR MANUALMENTE
+\documentclass[12pt,a4paper]{article}
+
+% Encoding e idioma
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+
+% Matemática
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Gráficos e figuras
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,angles,quotes}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+% Force float barriers when needed to keep figures right after exercises
+\usepackage{placeins}
+\usepackage{float}  % Para figure[H] - força figuras exatamente onde definidas
+
+% Layout e formatação
+\usepackage{geometry}
+\geometry{a4paper,margin=2.5cm,top=3cm,bottom=3cm}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{booktabs}
+
+% Hyperlinks e referências
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+% Sistema de exercícios - macros personalizadas
+\newcounter{exerciciocount}
+\newcounter{subexerciciocount}
+\newcounter{optioncount}
+
+\newcommand{\exercicio}[1][]{% 
+    \par\vspace{1.5em}%
+    \refstepcounter{exerciciocount}%
+    \setcounter{subexerciciocount}{0}%
+    \setcounter{optioncount}{0}%
+    \noindent\textbf{Exercício~\theexerciciocount.}%
+    \ifx&#1&%
+        % Argumento vazio - o conteúdo vem depois
+        \par\vspace{0.3em}%
+    \else%
+        % Argumento fornecido - incluir inline
+        \ #1\par\vspace{0.5em}%
+    \fi%
+}
+
+\newcommand{\subexercicio}[1]{%
+    \par\vspace{0.8em}%
+    \refstepcounter{subexerciciocount}%
+    \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+}
+
+\newcommand{\option}[1]{%
+    \par
+    \refstepcounter{optioncount}%
+    \noindent(\alph{optioncount}) #1%
+}
+
+% Campos para respostas
+\newcommand{\campo}[1][2.0cm]{\makebox[#1]{\hrulefill}}
+\newcommand{\campoLetra}[1][1.2cm]{\makebox[#1]{\hrulefill}}
+\newcommand{\campoCents}[1][3.0cm]{\makebox[#1]{\hrulefill}}% Cabeçalho e rodapé
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{MÓDULO P4 - Funções}
+\fancyhead[R]{Generalidades acerca de Funções}
+\fancyfoot[C]{\thepage}
+
+% Metadados do documento
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+
+% Remover título, autor e data - apenas conteúdo
+\thispagestyle{fancy}
+
+\section*{Generalidades acerca de Funções}
+
+\textit{
+Conceitos fundamentais sobre funções reais de variável real, incluindo definição, domínio, contradomínio, imagem e representações.
+}
+
+\vspace{1em}
+
+% Exercício 1: MAT_P4FUNCOE_1GEN_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GEN_001
+% Module: MÓDULO P4 - Funções | Concept: Generalidades acerca de Funções
+% Difficulty: 2/5 (Fácil) | Type: desenvolvimento
+% Author: Exemplo | Date: 2025-11-15
+% Status: active
+
+\exercicio{Defina o conceito de função entre conjuntos e dê dois exemplos simples.}
+\FloatBarrier
+
+
+\end{document}

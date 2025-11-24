@@ -126,6 +126,12 @@ code --list-extensions
 
 ## 📚 TASKS DE SEBENTAS
 
+> **Atenção importante — destino das sebentas geradas**
+>
+> - As sebentas (ficheiros `.tex` e `.pdf`) geradas por estas tasks **são guardadas em `SebentasDatabase/`** e não em `ExerciseDatabase/`.
+> - Não execute o script legacy `ExerciseDatabase/_tools/generate_sebentas.py` para produção: ele gera ficheiros diretamente na árvore `ExerciseDatabase/`. Use sempre `SebentasDatabase/_tools/generate_sebentas.py`.
+> - O script legacy foi protegido no repositório: é necessário definir `ALLOW_EXERCISE_DB_SEBENTA=1` ou passar `--allow-exercise-output` para forçar a sua execução.
+
 ### `📚 Gerar Sebenta (Template Editável)`
 
 **Script:** `SebentasDatabase/_tools/generate_sebenta_template.py`
@@ -164,6 +170,9 @@ code --list-extensions
 **Parâmetros:**
 - `--module`: ID do módulo (ex: `P4_funcoes`)
 - `--concept`: ID do conceito (ex: `4-funcao_inversa`)
+ - `--tipo`: (novo) Filtrar por tipo de exercício dentro do conceito
+
+**Observação:** usar `--tipo` permite gerar uma sebenta contendo apenas os exercícios de um tipo específico (por exemplo `determinacao_analitica`). Isto é útil para criar compilações por categoria sem incluir todo o conceito.
 
 **Descrição:** Geração direta sem interatividade.
 

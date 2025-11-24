@@ -42,6 +42,13 @@ python SebentasDatabase/_tools/generate_sebenta_template.py
 python SebentasDatabase/_tools/generate_test_template.py --questions 10
 ```
 
+> **Atenção importante — destino das sebentas geradas**
+>
+> - As sebentas geradas por estas tasks são guardadas em `SebentasDatabase/` (ficheiros `.tex` e `.pdf`).
+> - NÃO use o script legacy `ExerciseDatabase/_tools/generate_sebentas.py` em produção — ele escreve ficheiros em `ExerciseDatabase/`.
+> - O script legacy exige a variável de ambiente `ALLOW_EXERCISE_DB_SEBENTA=1` ou o argumento `--allow-exercise-output` para correr; isto é intencional para prevenir gravações acidentais.
+
+
 ## 🤖 Para AI Assistants
 
 **Sempre sugerir tasks quando utilizador pede:**
