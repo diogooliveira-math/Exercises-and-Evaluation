@@ -186,7 +186,25 @@
       "problemMatcher": []
     },
     
-    // 🔄 GERAR VARIANTE
+    // 🧪 TESTE DE SUB-VARIANTS
+    {
+      "label": "🧪 Testar Sub-Variants",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "tests/test_subvariant_generation.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "group": "test"
+    },
+    
+    // 🔄 GERAR VARIANTE DE EXERCÍCIO
     {
       "label": "🔄 Gerar Variante de Exercício",
       "type": "shell",
@@ -203,8 +221,7 @@
         "clear": true
       },
       "problemMatcher": []
-    }
-  ]
+    },
   ,
   "inputs": [
     {

@@ -378,7 +378,104 @@ Notas:
 - Não incluir credenciais nem caminhos absolutos no snippet/task.
 - Manter tasks/snippets opcionais; documentar no README CONTRIBUTING.md.
 
-# 🆕 VERSÃO 3.3 - SELEÇÃO MÚLTIPLA DE MÓDULOS/TEMAS/TIPOS
+# 🆕 VERSÃO 3.4 - SUB-VARIANTS COM ESTRUTURA DE PASTAS
+
+## Nova Estrutura para Exercícios com Sub-Variants
+
+A partir da **versão 3.4**, exercícios com `has_subvariants: true` agora usam uma estrutura de pastas organizada:
+
+```
+MAT_P4FUNCOE_4FIN_ANA_001/
+├── main.tex              # Arquivo principal que inclui sub-variants
+├── subvariant_1.tex      # Primeira função: f(x) = x + 4
+├── subvariant_2.tex      # Segunda função: f(x) = 2x - 1
+└── subvariant_3.tex      # Terceira função: f(x) = \frac{1}{x-1}
+```
+
+### Vantagens da Nova Estrutura
+
+- **Modularidade**: Cada sub-variant é um arquivo separado, facilitando edição individual
+- **Reutilização**: Sub-variants podem ser facilmente movidos ou combinados
+- **Manutenção**: Mudanças em uma função não afetam outras
+- **Versionamento**: Melhor controle de versão por componente
+- **Escalabilidade**: Suporte infinito para número de sub-variants
+
+### Como Funciona
+
+1. **main.tex**: Contém o enunciado principal e inclui cada sub-variant via `\input{}`
+2. **subvariant_N.tex**: Cada arquivo contém apenas uma função específica
+3. **Preview System**: Mostra todos os arquivos da pasta antes da confirmação
+4. **Index Global**: Registra o caminho para `main.tex`
+
+### Scripts Atualizados
+
+- `generate_subvariant_exercise.py`: Agora cria estrutura de pastas
+- `add_exercise_with_types.py`: Detecta `has_subvariants` e usa nova estrutura
+- `test_subvariant_generation.py`: Testa validação de pastas
+
+### Exemplo de main.tex Gerado
+
+```latex
+% meta:
+% id: MAT_P4FUNCOE_4FIN_ANA_001
+% title: "Determinação Analítica da Função Inversa"
+% difficulty: 2
+% tags: funcao_inversa, determinacao_analitica
+% author: Professor
+% has_subvariants: true
+% subvariant_count: 3
+
+\section{Determinação Analítica da Função Inversa}
+
+\exercicio{
+Determina analiticamente a função inversa das seguintes expressões:
+}
+
+\begin{enumerate}[label=\alph*)]
+\item \input{subvariant_1}
+\item \input{subvariant_2}
+\item \input{subvariant_3}
+\end{enumerate}
+```
+
+### Exemplo de subvariant_1.tex
+
+```latex
+% Sub-variant 1 for MAT_P4FUNCOE_4FIN_ANA_001
+% Function: f(x) = x + 4
+
+$f(x) = x + 4$
+```
+
+### Comportamento do Agente (v3.4)
+
+Quando criar exercício com sub-variants:
+
+```
+Utilizador: "Cria um exercício sobre determinar f^(-1)(x) para várias funções"
+
+Agente:
+1. ✅ Detecta tipo com has_subvariants: true
+2. ✅ Solicita lista de funções ou usa padrões
+3. ✅ Gera estrutura de pastas com main.tex + subvariant_*.tex
+4. ✅ Preview mostra todos os arquivos
+5. ✅ Só salva após confirmação do usuário
+6. ✅ Atualiza index.json com caminho para main.tex
+```
+
+### Regras para Sub-Variants
+
+1. **Pasta por Exercício**: Cada exercício com sub-variants tem sua própria pasta
+2. **Nomenclatura**: `subvariant_N.tex` onde N é sequencial (1, 2, 3...)
+3. **Conteúdo Simples**: Cada sub-variant contém apenas a expressão da função
+4. **Include no Main**: main.tex usa `\input{subvariant_N}` para incluir cada um
+5. **Preview Completo**: Sistema de preview mostra todos os arquivos da pasta
+
+### Compatibilidade
+
+- Exercícios sem `has_subvariants` continuam usando arquivos únicos
+- Estrutura antiga permanece válida
+- Migração gradual: novos exercícios podem usar nova estrutura
 
 ## Melhorias na Geração de Sebentas
 

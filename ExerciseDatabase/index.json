@@ -1,10 +1,10 @@
 {
   "database_version": "3.0",
-  "last_updated": "2025-11-21T20:51:03.572465",
-  "total_exercises": 48,
+  "last_updated": "2025-11-24T21:15:48.942811",
+  "total_exercises": 52,
   "statistics": {
     "by_module": {
-      "P4_funcoes": 21,
+      "P4_funcoes": 25,
       "A9_funcoes_crescimento": 9,
       "unknown": 9,
       "A8_modelos_discretos": 3,
@@ -15,26 +15,27 @@
       "Generalidades acerca de Funções": 1,
       "Funções Polinomiais": 1,
       "Funções polinomiais de grau não superior a 3": 1,
-      "Função Inversa": 18,
+      "Função Inversa": 22,
       "Revisões de Crescimento": 4,
       "Funções Exponenciais": 5,
       "unknown": 9,
       "Sistemas Numéricos": 3,
       "Revisões Iniciais, inserindo manipulação de dados, tomando partido da regra de três simples e percentagens.": 3,
-      "Estudo da Monotonia com Derivadas": 2
+      "Estudo da Monotonia com Derivadas": 2,
+      "2-Variabilidade": 1
     },
     "by_difficulty": {
-      "Fácil": 32,
+      "Fácil": 36,
       "Médio": 5,
       "Desconhecido": 9,
-      "Muito Fácil": 1
+      "Muito Fácil": 2
     },
     "by_type": {
-      "desenvolvimento": 35,
-      "unknown": 12
+      "desenvolvimento": 39,
+      "unknown": 13
     },
     "by_discipline": {
-      "matematica": 30,
+      "matematica": 35,
       "unknown": 17
     }
   },
@@ -223,6 +224,25 @@
         "funcao_linear",
         "grafico",
         "expressao_analitica"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_ANA_007",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_007/main.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "determinacao_analitica",
+      "tipo_nome": "Determinação Analítica da Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "funcao_inversa",
+        "determinacao_analitica"
       ],
       "points": 10,
       "status": "active"
@@ -850,6 +870,63 @@
         "escolha multipla"
       ],
       "points": 0,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_ANA_001",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_001",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "determinacao_analitica",
+      "tipo_nome": "Determinação Analítica da Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "funcao_inversa",
+        "determinacao_analitica"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_ANA_001",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_001",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "determinacao_analitica",
+      "tipo_nome": "Determinação Analítica da Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "funcao_inversa",
+        "determinacao_analitica"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_ANA_001",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_001",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "determinacao_analitica",
+      "tipo_nome": "Determinação Analítica da Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "funcao_inversa",
+        "determinacao_analitica"
+      ],
+      "points": 10,
       "status": "active"
     }
   ]
