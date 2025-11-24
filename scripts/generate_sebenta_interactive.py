@@ -45,11 +45,19 @@ def pick_from_list(prompt: str, options: list):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--auto', help='Auto choices as CSV: discipline,module,concept,tipo')
+    # Accept either a single CSV string or multiple tokens (PowerShell may split on commas)
+    parser.add_argument('--auto', nargs='*', help='Auto choices as CSV or as separate tokens: discipline,module,concept,tipo')
     args = parser.parse_args()
 
     auto_env = os.environ.get('SEBENTA_AUTO_CHOICES')
-    auto = args.auto or auto_env
+    auto_arg = args.auto
+
+    # Normalize auto choices: prefer CLI args if provided, else env var
+    if auto_arg:
+        # auto_arg can be a list (possibly one item which is a CSV), join with commas
+        auto = ','.join(auto_arg)
+    else:
+        auto = auto_env
 
     if auto:
         parts = (auto.split(',') + [""]*4)[:4]
@@ -72,16 +80,23 @@ def main():
             tipos = list_dirs(concept_path)
         tipo = pick_from_list('Tipo (opcional)', tipos)
 
-    # Confirm
+    # Confirm (skip if auto-mode or explicit auto-approve env var)
     print("\nResumo: ")
     print(f"  Disciplina: {discipline or '(todas)'}")
     print(f"  Módulo:     {module or '(todos)'}")
     print(f"  Conceito:   {concept or '(todos)'}")
     print(f"  Tipo:       {tipo or '(todos)'}")
-    cont = input('Continuar? [s/N]: ').strip().lower()
-    if cont not in ('s','y','sim','yes'):
-        print('Cancelado pelo utilizador')
-        sys.exit(0)
+
+    auto_approve_env = os.environ.get('SEBENTA_AUTO_APPROVE', '')
+    auto_mode_enabled = bool(auto) or str(auto_approve_env).lower() in ('1', 'true', 'yes', 's', 'sim')
+
+    if auto_mode_enabled:
+        print("Auto-mode enabled: prosseguindo sem confirmação (auto-approve).")
+    else:
+        cont = input('Continuar? [s/N]: ').strip().lower()
+        if cont not in ('s','y','sim','yes'):
+            print('Cancelado pelo utilizador')
+            sys.exit(0)
 
     # Prepare env for wrapper
     env = os.environ.copy()
@@ -92,7 +107,11 @@ def main():
     # Preserve preview/compile choices from env if present; otherwise default to interactive-friendly
     env.setdefault('SEBENTA_NO_PREVIEW', env.get('SEBENTA_NO_PREVIEW', '1'))
     env.setdefault('SEBENTA_NO_COMPILE', env.get('SEBENTA_NO_COMPILE', '1'))
-    env.setdefault('SEBENTA_AUTO_APPROVE', env.get('SEBENTA_AUTO_APPROVE', '1'))
+    # If auto-mode (CLI or SEBENTA_AUTO_CHOICES), ensure auto-approve is set
+    if auto_mode_enabled:
+        env['SEBENTA_AUTO_APPROVE'] = '1'
+    else:
+        env.setdefault('SEBENTA_AUTO_APPROVE', env.get('SEBENTA_AUTO_APPROVE', '1'))
 
     # Call wrapper
     wrapper = REPO_ROOT / 'scripts' / 'run_generate_sebenta_task.py'
