@@ -43,7 +43,10 @@ for var, arg in [
 ]:
     v = env.get(var, "")
     if v is not None and v != "":
-        cmd.extend([arg, v])
+        # Split by comma to support multiple values
+        values = [x.strip() for x in v.split(",") if x.strip()]
+        for val in values:
+            cmd.extend([arg, val])
 
 # Validation: require at least one of discipline/module/concept to be provided
 provided_any = any(env.get(x, "") for x in ("SEBENTA_DISCIPLINE", "SEBENTA_MODULE", "SEBENTA_CONCEPT"))

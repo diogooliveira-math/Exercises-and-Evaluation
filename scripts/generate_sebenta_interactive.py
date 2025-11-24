@@ -22,24 +22,52 @@ def list_dirs(p: Path):
     return [d.name for d in sorted(p.iterdir()) if d.is_dir() and not d.name.startswith('_')]
 
 
-def pick_from_list(prompt: str, options: list):
+def pick_from_list(prompt: str, options: list, allow_multiple: bool = False):
     if not options:
         print(f"(Nenhuma opção disponível para {prompt})")
-        return ""
+        return [] if allow_multiple else ""
     print(f"\n{prompt}:")
     for i, opt in enumerate(options, 1):
         print(f"  {i}. {opt}")
-    print("  0. (leave empty / skip)")
+    if allow_multiple:
+        print("  0. (nenhum / skip)")
+        print("  Pode escolher múltiplas opções separadas por vírgula (ex: 1,3,5)")
+    else:
+        print("  0. (leave empty / skip)")
     while True:
-        s = input("Escolha número: ").strip()
+        s = input("Escolha: ").strip()
         if s == "0" or s == "":
-            return ""
-        try:
-            n = int(s)
-            if 1 <= n <= len(options):
-                return options[n-1]
-        except ValueError:
-            pass
+            return [] if allow_multiple else ""
+        
+        if allow_multiple:
+            # Parse multiple choices
+            choices = []
+            parts = s.split(',')
+            for part in parts:
+                part = part.strip()
+                if part == "":
+                    continue
+                try:
+                    n = int(part)
+                    if 1 <= n <= len(options):
+                        choices.append(options[n-1])
+                    else:
+                        print(f"Número {n} inválido")
+                        choices = []
+                        break
+                except ValueError:
+                    print(f"'{part}' não é um número válido")
+                    choices = []
+                    break
+            if choices:
+                return choices
+        else:
+            try:
+                n = int(s)
+                if 1 <= n <= len(options):
+                    return options[n-1]
+            except ValueError:
+                pass
         print("Escolha inválida — tente novamente.")
 
 
@@ -65,53 +93,93 @@ def main():
     else:
         # Interactive picks
         disciplines = list_dirs(EXERCISE_DB)
-        discipline = pick_from_list('Disciplina', disciplines)
+        discipline = pick_from_list('Disciplinas (múltiplas permitidas)', disciplines, allow_multiple=True)
 
-        modules = list_dirs(EXERCISE_DB / discipline) if discipline else []
-        module = pick_from_list('Módulo', modules)
+        modules = []
+        if discipline:
+            # Use first discipline to list modules, but allow selection from all
+            all_modules = set()
+            for disc in discipline:
+                all_modules.update(list_dirs(EXERCISE_DB / disc))
+            modules = sorted(list(all_modules))
+        module = pick_from_list('Módulos (múltiplos permitidos)', modules, allow_multiple=True)
 
-        concepts = list_dirs(EXERCISE_DB / discipline / module) if discipline and module else []
-        concept = pick_from_list('Conceito', concepts)
+        concepts = []
+        if discipline and module:
+            # Use first discipline/module to list concepts, but allow selection from all combinations
+            all_concepts = set()
+            for disc in discipline:
+                for mod in module:
+                    concept_path = EXERCISE_DB / disc / mod
+                    if concept_path.exists():
+                        all_concepts.update(list_dirs(concept_path))
+            concepts = sorted(list(all_concepts))
+        concept = pick_from_list('Conceitos (múltiplos permitidos)', concepts, allow_multiple=True)
 
         tipos = []
         if discipline and module and concept:
-            concept_path = EXERCISE_DB / discipline / module / concept
-            # tipos são subdiretórios do conceito
-            tipos = list_dirs(concept_path)
-        tipo = pick_from_list('Tipo (opcional)', tipos)
+            # Use first path to list tipos, but allow selection from all
+            all_tipos = set()
+            for disc in discipline:
+                for mod in module:
+                    for conc in concept:
+                        tipo_path = EXERCISE_DB / disc / mod / conc
+                        if tipo_path.exists():
+                            all_tipos.update(list_dirs(tipo_path))
+            tipos = sorted(list(all_tipos))
+        tipo = pick_from_list('Tipos (múltiplos permitidos)', tipos, allow_multiple=True)
 
     # Confirm (skip if auto-mode or explicit auto-approve env var)
     print("\nResumo: ")
-    print(f"  Disciplina: {discipline or '(todas)'}")
-    print(f"  Módulo:     {module or '(todos)'}")
-    print(f"  Conceito:   {concept or '(todos)'}")
-    print(f"  Tipo:       {tipo or '(todos)'}")
+    print(f"  Disciplinas: {', '.join(discipline) if discipline else '(todas)'}")
+    print(f"  Módulos:     {', '.join(module) if module else '(todos)'}")
+    print(f"  Conceitos:   {', '.join(concept) if concept else '(todos)'}")
+    print(f"  Tipos:       {', '.join(tipo) if tipo else '(todos)'}")
 
     auto_approve_env = os.environ.get('SEBENTA_AUTO_APPROVE', '')
     auto_mode_enabled = bool(auto) or str(auto_approve_env).lower() in ('1', 'true', 'yes', 's', 'sim')
 
+    no_preview = '1'  # default to no preview
+    no_compile = '1'  # default to no compile
+
     if auto_mode_enabled:
         print("Auto-mode enabled: prosseguindo sem confirmação (auto-approve).")
     else:
+        # Ask for preview preference
+        preview_input = input('Deseja pré-visualização antes de compilar? [S/n]: ').strip().lower()
+        want_preview = preview_input not in ('n', 'no', 'não')
+        
+        # Ask for compile preference
+        compile_input = input('Deseja compilar PDF? [S/n]: ').strip().lower()
+        want_compile = compile_input not in ('n', 'no', 'não')
+        
         cont = input('Continuar? [s/N]: ').strip().lower()
         if cont not in ('s','y','sim','yes'):
             print('Cancelado pelo utilizador')
             sys.exit(0)
+        
+        # Set flags based on user input
+        no_preview = '0' if want_preview else '1'
+        no_compile = '0' if want_compile else '1'
 
     # Prepare env for wrapper
     env = os.environ.copy()
-    env['SEBENTA_DISCIPLINE'] = discipline or ''
-    env['SEBENTA_MODULE'] = module or ''
-    env['SEBENTA_CONCEPT'] = concept or ''
-    env['SEBENTA_TIPO'] = tipo or ''
-    # Preserve preview/compile choices from env if present; otherwise default to interactive-friendly
-    env.setdefault('SEBENTA_NO_PREVIEW', env.get('SEBENTA_NO_PREVIEW', '1'))
-    env.setdefault('SEBENTA_NO_COMPILE', env.get('SEBENTA_NO_COMPILE', '1'))
+    env['SEBENTA_DISCIPLINE'] = ','.join(discipline) if discipline else ''
+    env['SEBENTA_MODULE'] = ','.join(module) if module else ''
+    env['SEBENTA_CONCEPT'] = ','.join(concept) if concept else ''
+    env['SEBENTA_TIPO'] = ','.join(tipo) if tipo else ''
+    # Set preview/compile based on user input or defaults
+    env['SEBENTA_NO_PREVIEW'] = no_preview
+    env['SEBENTA_NO_COMPILE'] = no_compile
     # If auto-mode (CLI or SEBENTA_AUTO_CHOICES), ensure auto-approve is set
     if auto_mode_enabled:
         env['SEBENTA_AUTO_APPROVE'] = '1'
     else:
-        env.setdefault('SEBENTA_AUTO_APPROVE', env.get('SEBENTA_AUTO_APPROVE', '1'))
+        # Only auto-approve if user doesn't want preview or compile
+        if want_preview or want_compile:
+            env['SEBENTA_AUTO_APPROVE'] = '0'
+        else:
+            env['SEBENTA_AUTO_APPROVE'] = '1'
 
     # Call wrapper
     wrapper = REPO_ROOT / 'scripts' / 'run_generate_sebenta_task.py'

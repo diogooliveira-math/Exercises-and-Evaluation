@@ -378,9 +378,57 @@ Notas:
 - Não incluir credenciais nem caminhos absolutos no snippet/task.
 - Manter tasks/snippets opcionais; documentar no README CONTRIBUTING.md.
 
-# Versão do copilot_instructions
-- v1.1 — adicionada secção "Use case" para integração com VS Code
-- v1.2 — adicionada distinção crítica entre ExerciseDatabase e SebentasDatabase
+# 🆕 VERSÃO 3.3 - SELEÇÃO MÚLTIPLA DE MÓDULOS/TEMAS/TIPOS
+
+## Melhorias na Geração de Sebentas
+
+A partir da **versão 3.3**, o sistema de geração de sebentas suporta **seleção múltipla** de disciplinas, módulos, conceitos e tipos de exercício.
+
+### Novos Recursos
+
+#### ✅ Seleção Múltipla
+- **Disciplinas**: `--discipline matematica,test`
+- **Módulos**: `--module P4_funcoes,P1_modelos`  
+- **Conceitos**: `--concept 4-funcao_inversa,2-funcoes_polinomiais`
+- **Tipos**: `--tipo determinacao_analitica,grafica`
+
+#### ✅ Interface Interativa Aprimorada
+O script `generate_sebenta_interactive.py` agora permite:
+- Selecionar múltiplas opções separadas por vírgula (ex: `1,3,5`)
+- Navegação inteligente através de todas as combinações selecionadas
+- Resumo claro das seleções múltiplas
+
+#### ✅ Tasks VS Code Atualizadas
+As tasks do VS Code agora aceitam múltiplos valores separados por vírgula nos inputs.
+
+### Exemplos de Uso
+
+```bash
+# Gerar sebentas para múltiplos módulos
+python generate_sebentas.py --module P4_funcoes,P1_modelos
+
+# Múltiplos conceitos específicos
+python generate_sebentas.py --concept 4-funcao_inversa,2-funcoes_polinomiais
+
+# Combinação: múltiplos módulos e tipos
+python generate_sebentas.py --module P4_funcoes --tipo determinacao_analitica,grafica
+
+# Interface interativa (recomendado para múltiplas seleções)
+python scripts/generate_sebenta_interactive.py
+```
+
+### Comportamento
+
+- **Filtragem OR**: Se múltiplas opções são selecionadas, o sistema inclui todos os exercícios que correspondem a **qualquer** uma das opções
+- **Navegação**: A interface interativa coleta opções de todas as combinações selecionadas
+- **Compatibilidade**: Scripts antigos continuam funcionando (seleção única ainda suportada)
+
+### Benefícios
+
+🎯 **Maior Controle**: Crie sebentas personalizadas combinando diferentes módulos/temas/tipos
+🔄 **Flexibilidade**: Misture conceitos de diferentes módulos em uma única sebenta
+⚡ **Eficiência**: Interface interativa acelera seleção de múltiplas opções
+🔧 **Compatibilidade**: Mantém compatibilidade com workflows existentes
 
 # 🔄 WORKFLOW COMPLETO: Do Exercício ao PDF
 
@@ -718,6 +766,6 @@ Ctrl+Shift+P → "Tasks: Run Task" → Escolher task
 
 ---
 
-**Versão**: 3.2 (tasks VS Code + template system)  
-**Data**: 2025-11-21  
-**Filosofia**: Organização hierárquica, metadados ricos, automação inteligente, interação visual
+**Versão**: 3.3 (seleção múltipla + tasks VS Code + template system)  
+**Data**: 2025-11-24  
+**Filosofia**: Organização hierárquica, metadados ricos, automação inteligente, interação visual, seleção múltipla flexível

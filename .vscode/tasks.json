@@ -210,25 +210,25 @@
     {
       "id": "sebenta.discipline",
       "type": "promptString",
-      "description": "Disciplina a filtrar (ex: matematica). Deixe vazio para todas.",
+      "description": "Disciplinas a filtrar (ex: matematica,test). Separe múltiplas com vírgula. Deixe vazio para todas.",
       "default": ""
     },
     {
       "id": "sebenta.module",
       "type": "promptString",
-      "description": "Módulo a filtrar (ex: P4_funcoes). Deixe vazio para todos.",
+      "description": "Módulos a filtrar (ex: P4_funcoes,P1_modelos). Separe múltiplas com vírgula. Deixe vazio para todos.",
       "default": ""
     },
     {
       "id": "sebenta.concept",
       "type": "promptString",
-      "description": "Conceito/tema (ex: 4-funcao_inversa). Deixe vazio para todos.",
+      "description": "Conceitos/temas (ex: 4-funcao_inversa,2-funcoes_polinomiais). Separe múltiplas com vírgula. Deixe vazio para todos.",
       "default": ""
     },
     {
       "id": "sebenta.tipo",
       "type": "promptString",
-      "description": "Tipo de exercício (ex: determinacao_analitica). Deixe vazio para todos.",
+      "description": "Tipos de exercício (ex: determinacao_analitica,grafica). Separe múltiplas com vírgula. Deixe vazio para todos.",
       "default": ""
     }
     ,

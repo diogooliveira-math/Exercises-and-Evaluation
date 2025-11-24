@@ -264,6 +264,10 @@ Criar um sistema completo de gestão e geração de materiais educativos em LaTe
 - [ ] Manter documentação atualizada
 - [ ] Responder a comunidade
 
+
+### Adicionar IA features
+
+- [ ] Implementar MCP: https://www.youtube.com/watch?v=GuTcle5edjk
 ---
 
 ## Prioridades Imediatas (Próximos Passos)

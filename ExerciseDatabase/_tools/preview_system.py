@@ -398,7 +398,15 @@ ATENÇÃO: Estes ficheiros são temporários e serão removidos após
         # Abrir em VS Code se configurado
         if self.auto_open:
             print(f"{Colors.CYAN}🚀 A abrir ficheiro(s) em VS Code...{Colors.END}")
-            success = self.open_in_vscode(self.temp_files)
+            if self.consolidated_preview:
+                # Quando há preview consolidado, abrir apenas o ficheiro consolidado
+                consolidated_file = next((f for f in self.temp_files if "PREVIEW_CONSOLIDADO" in f.name), None)
+                if consolidated_file:
+                    success = self.open_in_vscode([consolidated_file])
+                else:
+                    success = self.open_in_vscode(self.temp_files)
+            else:
+                success = self.open_in_vscode(self.temp_files)
             if success:
                 print(f"{Colors.GREEN}✓ Ficheiro(s) aberto(s) para revisão{Colors.END}\n")
         else:
@@ -470,7 +478,7 @@ def create_sebenta_preview(sebenta_name: str,
         Dicionário {filename: content} para preview
     """
     preview_content = {
-        f"{sebenta_name}.tex": latex_content
+        f"preview_{sebenta_name}.tex": latex_content
     }
     
     if metadata:
