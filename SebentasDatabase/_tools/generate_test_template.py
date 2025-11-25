@@ -41,6 +41,20 @@ except ImportError:
     GREEN = BLUE = YELLOW = RED = CYAN = RESET = BOLD = ""
 
 
+def check_pdflatex_available() -> bool:
+    """Verifica se pdflatex está disponível no sistema."""
+    try:
+        result = subprocess.run(
+            ['pdflatex', '--version'],
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+        return result.returncode == 0
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return False
+
+
 class TestTemplate:
     """Gera template editável de teste LaTeX"""
     
@@ -646,6 +660,16 @@ class TestTemplate:
         print(f"{BOLD}🔨 COMPILANDO PDF{RESET}")
         print(f"{BLUE}{'='*70}{RESET}\n")
         
+        # Verificar se pdflatex está disponível
+        if not check_pdflatex_available():
+            print(f"{YELLOW}⚠️ pdflatex não encontrado no sistema.{RESET}")
+            print(f"\n{CYAN}💡 Opções para compilar o PDF:{RESET}")
+            print(f"   1. Instale MiKTeX: https://miktex.org/download")
+            print(f"   2. Instale TeX Live: https://tug.org/texlive/")
+            print(f"   3. Use Overleaf online: https://www.overleaf.com/")
+            print(f"\n{CYAN}📄 O ficheiro .tex será guardado para compilar depois.{RESET}")
+            return None
+        
         # Executar pdflatex (2x para referencias)
         for run in range(2):
             try:
@@ -681,6 +705,31 @@ class TestTemplate:
         
         print(f"{GREEN}✓ PDF compilado com sucesso!{RESET}")
         return pdf_file
+    
+    def save_tex_without_compile(self) -> Path:
+        """Guarda o ficheiro .tex numa localização permanente sem compilar."""
+        discipline = 'matematica'  # Default
+        
+        if self.concept:
+            output_dir = (self.sebentas_db / discipline / self.module / 
+                         self.concept / "tests")
+        else:
+            output_dir = (self.sebentas_db / discipline / self.module / 
+                         "tests")
+        
+        output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Nome final
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        final_name = f"teste_{self.module}"
+        if self.concept:
+            final_name += f"_{self.concept}"
+        final_name += f"_{timestamp}.tex"
+        
+        final_path = output_dir / final_name
+        shutil.copy(self.tex_file, final_path)
+        
+        return final_path
     
     def move_to_output(self, pdf_path: Path) -> Path:
         """Move PDF para localização final"""
@@ -719,7 +768,7 @@ class TestTemplate:
         """Executa workflow completo"""
         try:
             print(f"\n{BLUE}{'='*70}{RESET}")
-            print(f"{BOLD}  SISTEMA DE TESTES POR TEMPLATE  {RESET}")
+            print(f"{BOLD}  📝 SISTEMA DE TESTES POR TEMPLATE  {RESET}")
             print(f"{BLUE}{'='*70}{RESET}")
             
             # 1. Criar template
@@ -734,11 +783,28 @@ class TestTemplate:
                 self.cleanup()
                 return
             
-            # 4. Compilar PDF
+            # 4. Tentar compilar PDF
             pdf_path = self.compile_pdf()
             
             if not pdf_path:
-                print(f"\n{RED}❌ Falha na compilação{RESET}")
+                # pdflatex não disponível ou falhou - guardar .tex
+                print(f"\n{YELLOW}📄 Guardando ficheiro .tex...{RESET}")
+                tex_saved_path = self.save_tex_without_compile()
+                
+                print(f"\n{BLUE}{'='*70}{RESET}")
+                print(f"{BOLD}📄 FICHEIRO .TEX GUARDADO{RESET}")
+                print(f"{BLUE}{'='*70}{RESET}\n")
+                
+                print(f"{CYAN}📄 Ficheiro .tex:{RESET} {tex_saved_path}")
+                print(f"{CYAN}📊 Exercícios:{RESET} {len(self.exercises)}")
+                
+                print(f"\n{YELLOW}💡 Para compilar manualmente:{RESET}")
+                print(f"   pdflatex \"{tex_saved_path}\"")
+                print(f"\n{YELLOW}💡 Ou use o Overleaf:{RESET}")
+                print(f"   1. Acesse https://www.overleaf.com/")
+                print(f"   2. Crie um novo projeto")
+                print(f"   3. Cole o conteúdo do ficheiro .tex")
+                
                 self.cleanup()
                 return
             

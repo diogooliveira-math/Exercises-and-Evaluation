@@ -388,6 +388,57 @@ class TestCrossPlatformCompatibility:
                 generator.open_for_editing()
         finally:
             os.unlink(temp_path)
+    
+    def test_pdflatex_availability_check(self):
+        """Test that pdflatex availability check function works."""
+        from generate_test_template import check_pdflatex_available
+        
+        # The function should return a boolean without raising exceptions
+        result = check_pdflatex_available()
+        assert isinstance(result, bool), "check_pdflatex_available should return a boolean"
+    
+    def test_save_tex_without_compile(self):
+        """Test that .tex file can be saved when pdflatex is unavailable."""
+        from generate_test_template import TestTemplate
+        
+        index = load_database()
+        generator = TestTemplate()
+        
+        # Set up module and concept
+        generator.module = "P4_funcoes"
+        generator.concept = "4-funcao_inversa"
+        
+        # Load an exercise
+        exercises = generator.load_exercises_by_ids([index['exercises'][0]['id']])
+        generator.exercises = exercises
+        
+        # Create temp dir and tex file
+        generator.temp_dir = tempfile.mkdtemp(prefix="test_template_")
+        generator.tex_file = Path(generator.temp_dir) / "test.tex"
+        
+        # Generate LaTeX content
+        latex = generator.generate_test_latex(
+            "matematica",
+            "Módulo P4",
+            "Função Inversa",
+            exercises
+        )
+        
+        # Save to temp file
+        generator.tex_file.write_text(latex, encoding='utf-8')
+        
+        try:
+            # Test save_tex_without_compile
+            saved_path = generator.save_tex_without_compile()
+            
+            assert saved_path.exists(), "Saved .tex file should exist"
+            assert saved_path.suffix == '.tex', "Saved file should have .tex extension"
+            assert saved_path.read_text(encoding='utf-8') == latex, "Content should match"
+            
+            # Clean up the saved file
+            saved_path.unlink()
+        finally:
+            generator.cleanup()
 
 
 class TestEnvironmentVariableIntegration:
