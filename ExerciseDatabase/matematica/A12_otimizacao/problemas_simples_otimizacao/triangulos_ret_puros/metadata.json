@@ -1,0 +1,29 @@
+{
+  "tipo": "triangulos_ret_puros",
+  "tipo_nome": "Triângulos Retângulos e Funções",
+  "conceito": "problemas_simples_otimizacao",
+  "conceito_nome": "Problemas Simples de Otimização",
+  "tema": "A12_otimizacao",
+  "tema_nome": "Módulo A12 - Otimização",
+  "disciplina": "matematica",
+  "descricao": "Determinar vértices de um triângulo retângulo sabendo que dois pertencem ao gráfico de uma função específica.",
+  "tags_tipo": [
+    "triangulo_retangulo",
+    "vertices",
+    "funcao",
+    "coordenadas"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": true,
+    "complexidade_algebrica": "media"
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 3
+  },
+  "exercicios": [
+    "MAT_A12OTIMI_PROB_TRI_001",
+    "MAT_A12OTIMI_PROB_TRI_002"
+  ]
+}

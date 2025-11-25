@@ -1,0 +1,29 @@
+{
+  "tipo": "problemas_de_rampas",
+  "tipo_nome": "Problemas de Rampas",
+  "conceito": "problemas_simples_otimizacao",
+  "conceito_nome": "Problemas Simples de Otimização",
+  "tema": "A12_otimizacao",
+  "tema_nome": "Módulo A12 - Otimização",
+  "disciplina": "matematica",
+  "descricao": "Usar trigonometria para calcular ângulo de inclinação de rampas (ex: acessibilidade para cadeira de rodas), dado comprimento e altura.",
+  "tags_tipo": [
+    "trigonometria",
+    "rampas",
+    "acessibilidade",
+    "angulo"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": false,
+    "complexidade_algebrica": "baixa_media"
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 3
+  },
+  "exercicios": [
+    "MAT_A12OTIMI_PROB_RAM_001",
+    "MAT_A12OTIMI_PROB_RAM_002"
+  ]
+}

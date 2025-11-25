@@ -1,0 +1,29 @@
+{
+  "tipo": "medidas_de_variabilidade",
+  "tipo_nome": "Medidas de Variabilidade",
+  "conceito": "2-Variabilidade",
+  "conceito_nome": "Medidas de Variabilidade",
+  "tema": "P2_estatistica",
+  "tema_nome": "Módulo P2 - Estatística",
+  "disciplina": "matematica",
+  "descricao": "Exercícios para calcular medidas de variabilidade como amplitude e desvio absoluto médio, aproveitando contextos de poupança e vida quotidiana.",
+  "tags_tipo": [
+    "amplitude",
+    "desvio_absoluto_medio",
+    "variabilidade",
+    "dispersao"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": false,
+    "complexidade_algebrica": "baixa_media"
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 3
+  },
+  "exercicios": [
+    "MAT_P2ESTATI_2VAR_MDV_001",
+    "MAT_P2ESTATI_2VAR_MDV_002"
+  ]
+}

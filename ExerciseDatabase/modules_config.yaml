@@ -33,13 +33,14 @@ matematica:
       - consolidacao
       - percentagens
       - regra_de_tres_simples
-    - id: "1-Medições_básicas"
-      name: Coleta e Organização de Dados
+    - id: "1-Medicoes_basicas"
+      name: Medições Básicas
       tags:
+      - media
+      - moda
+      - mediana
       - calculos_com_dados
-      - médias
       - tabelas
-      - manipulacao_dados
     - id: "2-Variabilidade"
       name: Medidas de Variabilidade
       tags:
@@ -167,6 +168,13 @@ matematica:
       - modelar
       - funcao_objetivo
       - restricoes
+    - id: problemas_simples_otimizacao
+      name: Problemas Simples de Otimização
+      tags:
+      - modelagem
+      - rampas
+      - trigonometria
+      - triangulos
   P4_funcoes:
     name: MÓDULO P4 - Funções
     description: Introdução às funções e funções polinomiais
