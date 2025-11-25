@@ -600,9 +600,28 @@ class TestTemplate:
         
         print(f"\n{BLUE}{'='*70}{RESET}\n")
         
-        # Abrir ficheiro
-        os.startfile(str(self.tex_file))
-        print(f"{GREEN}✓ Ficheiro aberto para edição{RESET}")
+        # Abrir ficheiro - cross-platform support
+        try:
+            if sys.platform == 'win32':
+                os.startfile(str(self.tex_file))
+            elif sys.platform == 'darwin':
+                subprocess.run(['open', str(self.tex_file)], check=True)
+            else:
+                # Linux - try xdg-open or code
+                try:
+                    subprocess.run(['xdg-open', str(self.tex_file)], check=True)
+                except FileNotFoundError:
+                    # Fallback to VS Code if available
+                    try:
+                        subprocess.run(['code', str(self.tex_file)], check=True)
+                    except FileNotFoundError:
+                        print(f"{YELLOW}⚠️ Não foi possível abrir automaticamente.{RESET}")
+                        print(f"{YELLOW}   Abra o ficheiro manualmente: {self.tex_file}{RESET}")
+                        return
+            print(f"{GREEN}✓ Ficheiro aberto para edição{RESET}")
+        except Exception as e:
+            print(f"{YELLOW}⚠️ Não foi possível abrir automaticamente: {e}{RESET}")
+            print(f"{YELLOW}   Abra o ficheiro manualmente: {self.tex_file}{RESET}")
     
     def wait_for_edit(self) -> bool:
         """Aguarda edição do utilizador"""
@@ -749,10 +768,24 @@ class TestTemplate:
             for concept, count in by_concept.items():
                 print(f"  • {concept}: {count} exercícios")
             
-            # Abrir PDF
+            # Abrir PDF - cross-platform support
             choice = input(f"\nAbrir PDF? (s/n): ").strip().lower()
             if choice == 's':
-                os.startfile(str(final_path))
+                try:
+                    if sys.platform == 'win32':
+                        os.startfile(str(final_path))
+                    elif sys.platform == 'darwin':
+                        subprocess.run(['open', str(final_path)], check=True)
+                    else:
+                        # Linux - try xdg-open
+                        try:
+                            subprocess.run(['xdg-open', str(final_path)], check=True)
+                        except FileNotFoundError:
+                            print(f"{YELLOW}⚠️ Não foi possível abrir automaticamente.{RESET}")
+                            print(f"{YELLOW}   Abra o ficheiro manualmente: {final_path}{RESET}")
+                except Exception as e:
+                    print(f"{YELLOW}⚠️ Não foi possível abrir: {e}{RESET}")
+                    print(f"{YELLOW}   Abra o ficheiro manualmente: {final_path}{RESET}")
             
             # 7. Cleanup
             self.cleanup()
