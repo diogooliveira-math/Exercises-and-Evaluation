@@ -21,6 +21,7 @@ import os
 import sys
 import json
 import yaml
+import re
 import subprocess
 import tempfile
 import shutil
@@ -265,6 +266,40 @@ class TestTemplate:
             print(f"{RED}✗ Erro na seleção: {e}{RESET}")
             sys.exit(1)
     
+    def _process_subvariant_inputs(self, content: str, exercise_dir: Path) -> str:
+        """Processa \\input{} de subvariants e substitui pelo conteúdo dos arquivos.
+        
+        Args:
+            content: Conteúdo do main.tex
+            exercise_dir: Diretório do exercício (que contém os subvariant_*.tex)
+        
+        Returns:
+            Conteúdo processado com subvariants incluídos
+        """
+        def replace_input(match):
+            subvariant_name = match.group(1)
+            subvariant_file = exercise_dir / f"{subvariant_name}.tex"
+            
+            if subvariant_file.exists():
+                try:
+                    with open(subvariant_file, 'r', encoding='utf-8') as f:
+                        subvariant_content = f.read().strip()
+                    # Remove comment lines from subvariant
+                    lines = subvariant_content.split('\n')
+                    clean_lines = [l for l in lines if not l.strip().startswith('%')]
+                    return '\n'.join(clean_lines).strip()
+                except Exception as e:
+                    return f"[Erro ao ler {subvariant_name}: {e}]"
+            else:
+                return f"[Subvariant não encontrado: {subvariant_name}]"
+        
+        # Regex para encontrar \input{subvariant_*}
+        # Matches: \input{subvariant_1}, \input{subvariant_10}, etc.
+        pattern = r'\\input\{(subvariant_\d+)\}'
+        
+        processed = re.sub(pattern, replace_input, content)
+        return processed
+    
     def generate_test_latex(self, discipline: str, module_name: str, 
                            concept_name: Optional[str], selected_exercises: List[Dict]) -> str:
         """Gera conteúdo LaTeX completo do teste"""
@@ -380,13 +415,30 @@ class TestTemplate:
             source_file = ex.get('source_file') or ex.get('path', '')
             tex_path = self.exercise_db / source_file
             
-            # Ensure .tex extension
-            if not str(tex_path).endswith('.tex'):
-                tex_path = tex_path.with_suffix('.tex')
+            # Check if path is a folder with sub-variants (v3.4+ structure)
+            if tex_path.is_dir():
+                # Sub-variant structure: folder with main.tex + subvariant_*.tex
+                main_tex = tex_path / 'main.tex'
+                if main_tex.exists():
+                    tex_path = main_tex
+                else:
+                    # Fallback: try to find any .tex file in the folder
+                    tex_files = list(tex_path.glob('*.tex'))
+                    if tex_files:
+                        tex_path = tex_files[0]
+            else:
+                # Normal structure: single .tex file
+                # Ensure .tex extension
+                if not str(tex_path).endswith('.tex'):
+                    tex_path = tex_path.with_suffix('.tex')
             
             if tex_path.exists():
                 with open(tex_path, 'r', encoding='utf-8') as f:
                     content = f.read()
+                
+                # If this is a main.tex with sub-variants, process \input{} commands
+                if tex_path.name == 'main.tex' and tex_path.parent.is_dir():
+                    content = self._process_subvariant_inputs(content, tex_path.parent)
                 
                 # Extrair apenas o conteúdo dentro de \exercicio{}
                 # (remover metadados comentados)
