@@ -18,6 +18,7 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+import re
 
 # Adicionar diretório _tools ao path para importar preview_system
 TOOLS_DIR = Path(__file__).parent
@@ -127,6 +128,39 @@ class TestTemplate:
             exercises.append(ex)
         
         return exercises
+    
+    def resolve_inputs(self, content: str, base_dir: Path) -> str:
+        """
+        Resolve \\input{...} commands by replacing them with the file contents.
+        
+        This is essential for exercises with sub-variants (main.tex + subvariant_*.tex).
+        
+        Args:
+            content: LaTeX content that may contain \\input{} commands
+            base_dir: Base directory to resolve relative paths
+            
+        Returns:
+            Content with \\input{} commands replaced by actual file contents
+        """
+        pattern = r'\\input\{([^}]+)\}'
+        
+        def replace_input(match):
+            input_file = match.group(1)
+            # Add .tex extension if not present
+            if not input_file.endswith('.tex'):
+                input_file += '.tex'
+            
+            input_path = base_dir / input_file
+            if input_path.exists():
+                try:
+                    with open(input_path, 'r', encoding='utf-8') as f:
+                        return f.read().strip()
+                except Exception as e:
+                    return f'% ERRO ao ler {input_file}: {e}'
+            else:
+                return f'% ERRO: Ficheiro não encontrado: {input_file}'
+        
+        return re.sub(pattern, replace_input, content)
     
     def select_exercises_interactive(self, exercises: List[Dict]) -> List[Dict]:
         """Seleção interativa de exercícios para o teste"""
@@ -356,9 +390,25 @@ class TestTemplate:
             source_file = ex.get('source_file') or ex.get('path', '')
             tex_path = self.exercise_db / source_file
             
+            # Suporte para exercícios com sub-variants (pastas com main.tex)
+            if tex_path.is_dir():
+                # Nova estrutura: pasta com main.tex + subvariant_*.tex
+                main_tex = tex_path / 'main.tex'
+                if main_tex.exists():
+                    tex_path = main_tex
+                else:
+                    # Tentar adicionar .tex à pasta
+                    tex_path = tex_path.with_suffix('.tex')
+            elif not tex_path.exists() and not str(tex_path).endswith('.tex'):
+                # Tentar com extensão .tex
+                tex_path = tex_path.with_suffix('.tex')
+            
             if tex_path.exists():
                 with open(tex_path, 'r', encoding='utf-8') as f:
                     content = f.read()
+                
+                # Resolver \input{} para sub-variants
+                content = self.resolve_inputs(content, tex_path.parent)
                 
                 # Extrair apenas o conteúdo dentro de \exercicio{}
                 # (remover metadados comentados)
