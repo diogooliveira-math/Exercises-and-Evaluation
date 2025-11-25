@@ -413,6 +413,8 @@ class TestTemplate:
             
             # Carregar conteúdo .tex do exercício
             source_file = ex.get('source_file') or ex.get('path', '')
+            # Normalize path separators (Windows uses \, Linux uses /)
+            source_file = source_file.replace('\\', '/')
             tex_path = self.exercise_db / source_file
             
             # Check if path is a folder with sub-variants (v3.4+ structure)
