@@ -35,6 +35,9 @@ except ImportError:
 class TestTemplate:
     """Gera template editável de teste LaTeX"""
     
+    # Regex pattern for resolving \input{} commands (compiled once for performance)
+    INPUT_PATTERN = re.compile(r'\\input\{([^}]+)\}')
+    
     def __init__(self, module: Optional[str] = None, concept: Optional[str] = None, 
                  num_questions: int = 10):
         self.module = module
@@ -142,8 +145,6 @@ class TestTemplate:
         Returns:
             Content with \\input{} commands replaced by actual file contents
         """
-        pattern = r'\\input\{([^}]+)\}'
-        
         def replace_input(match):
             input_file = match.group(1)
             # Add .tex extension if not present
@@ -160,7 +161,7 @@ class TestTemplate:
             else:
                 return f'% ERRO: Ficheiro não encontrado: {input_file}'
         
-        return re.sub(pattern, replace_input, content)
+        return self.INPUT_PATTERN.sub(replace_input, content)
     
     def select_exercises_interactive(self, exercises: List[Dict]) -> List[Dict]:
         """Seleção interativa de exercícios para o teste"""
@@ -396,14 +397,15 @@ class TestTemplate:
                 main_tex = tex_path / 'main.tex'
                 if main_tex.exists():
                     tex_path = main_tex
-                else:
-                    # Tentar adicionar .tex à pasta
-                    tex_path = tex_path.with_suffix('.tex')
+                # Note: If main.tex doesn't exist in a directory, tex_path remains
+                # as the directory and the file existence check below will fail gracefully
             elif not tex_path.exists() and not str(tex_path).endswith('.tex'):
                 # Tentar com extensão .tex
-                tex_path = tex_path.with_suffix('.tex')
+                tex_with_suffix = tex_path.with_suffix('.tex')
+                if tex_with_suffix.exists():
+                    tex_path = tex_with_suffix
             
-            if tex_path.exists():
+            if tex_path.exists() and tex_path.is_file():
                 with open(tex_path, 'r', encoding='utf-8') as f:
                     content = f.read()
                 
