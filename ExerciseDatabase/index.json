@@ -1,7 +1,7 @@
 {
   "database_version": "3.0",
-  "last_updated": "2025-11-25T10:04:09.441481",
-  "total_exercises": 59,
+  "last_updated": "2025-11-25T19:04:30.044212",
+  "total_exercises": 30,
   "statistics": {
     "by_module": {
       "P4_funcoes": 32,
@@ -99,6 +99,27 @@
         "funcao_linear",
         "grafico",
         "expressao_analitica"
+      ],
+      "points": 10,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_4FIN_ANA_002",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_002",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "MÓDULO P4 - Funções",
+      "concept": "4-funcao_inversa",
+      "concept_name": "Função Inversa",
+      "tipo": "determinacao_analitica",
+      "tipo_nome": "Determinação Analítica da Função Inversa",
+      "difficulty": 2,
+      "type": "desenvolvimento",
+      "tags": [
+        "inversa",
+        "funcao_linear",
+        "expressao_analitica",
+        "determinacao_analitica"
       ],
       "points": 10,
       "status": "active"
