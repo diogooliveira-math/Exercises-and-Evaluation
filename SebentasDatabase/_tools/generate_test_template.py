@@ -269,11 +269,17 @@ class TestTemplate:
         """Processa \\input{} de subvariants e substitui pelo conteúdo dos arquivos.
         
         Args:
-            content: Conteúdo do main.tex
+            content: Conteúdo do main.tex (contains \\input{subvariant_N} patterns)
             exercise_dir: Diretório do exercício (que contém os subvariant_*.tex)
         
         Returns:
             Conteúdo processado com subvariants incluídos
+        
+        Example input pattern in content:
+            \\begin{enumerate}
+            \\item \\input{subvariant_1}
+            \\item \\input{subvariant_2}
+            \\end{enumerate}
         """
         import re
         
@@ -290,9 +296,9 @@ class TestTemplate:
                     clean_lines = [l for l in lines if not l.strip().startswith('%')]
                     return '\n'.join(clean_lines).strip()
                 except Exception as e:
-                    return f"% ERRO: Não foi possível carregar {subvariant_name}: {e}"
+                    return f"% ERROR: Failed to load {subvariant_name}: {e}"
             else:
-                return f"% AVISO: Subvariant {subvariant_name} não encontrado"
+                return f"% WARNING: Subvariant {subvariant_name} not found"
         
         # Substituir \input{subvariant_N} pelo conteúdo do arquivo
         pattern = r'\\input\{(subvariant_\d+)\}'
