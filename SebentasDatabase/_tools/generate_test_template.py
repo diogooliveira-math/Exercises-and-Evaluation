@@ -21,6 +21,7 @@ import os
 import sys
 import json
 import yaml
+import re
 import subprocess
 import tempfile
 import shutil
@@ -38,6 +39,20 @@ try:
 except ImportError:
     # Fallback: sem cores
     GREEN = BLUE = YELLOW = RED = CYAN = RESET = BOLD = ""
+
+
+def check_pdflatex_available() -> bool:
+    """Verifica se pdflatex está disponível no sistema."""
+    try:
+        result = subprocess.run(
+            ['pdflatex', '--version'],
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+        return result.returncode == 0
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return False
 
 
 class TestTemplate:
@@ -265,6 +280,40 @@ class TestTemplate:
             print(f"{RED}✗ Erro na seleção: {e}{RESET}")
             sys.exit(1)
     
+    def _process_subvariant_inputs(self, content: str, exercise_dir: Path) -> str:
+        """Processa \\input{} de subvariants e substitui pelo conteúdo dos arquivos.
+        
+        Args:
+            content: Conteúdo do main.tex
+            exercise_dir: Diretório do exercício (que contém os subvariant_*.tex)
+        
+        Returns:
+            Conteúdo processado com subvariants incluídos
+        """
+        def replace_input(match):
+            subvariant_name = match.group(1)
+            subvariant_file = exercise_dir / f"{subvariant_name}.tex"
+            
+            if subvariant_file.exists():
+                try:
+                    with open(subvariant_file, 'r', encoding='utf-8') as f:
+                        subvariant_content = f.read().strip()
+                    # Remove comment lines from subvariant
+                    lines = subvariant_content.split('\n')
+                    clean_lines = [l for l in lines if not l.strip().startswith('%')]
+                    return '\n'.join(clean_lines).strip()
+                except Exception as e:
+                    return f"[Erro ao ler {subvariant_name}: {e}]"
+            else:
+                return f"[Subvariant não encontrado: {subvariant_name}]"
+        
+        # Regex para encontrar \input{subvariant_*}
+        # Matches: \input{subvariant_1}, \input{subvariant_10}, etc.
+        pattern = r'\\input\{(subvariant_\d+)\}'
+        
+        processed = re.sub(pattern, replace_input, content)
+        return processed
+    
     def generate_test_latex(self, discipline: str, module_name: str, 
                            concept_name: Optional[str], selected_exercises: List[Dict]) -> str:
         """Gera conteúdo LaTeX completo do teste"""
@@ -378,15 +427,34 @@ class TestTemplate:
             
             # Carregar conteúdo .tex do exercício
             source_file = ex.get('source_file') or ex.get('path', '')
+            # Normalize path separators (Windows uses \, Linux uses /)
+            source_file = source_file.replace('\\', '/')
             tex_path = self.exercise_db / source_file
             
-            # Ensure .tex extension
-            if not str(tex_path).endswith('.tex'):
-                tex_path = tex_path.with_suffix('.tex')
+            # Check if path is a folder with sub-variants (v3.4+ structure)
+            if tex_path.is_dir():
+                # Sub-variant structure: folder with main.tex + subvariant_*.tex
+                main_tex = tex_path / 'main.tex'
+                if main_tex.exists():
+                    tex_path = main_tex
+                else:
+                    # Fallback: try to find any .tex file in the folder
+                    tex_files = list(tex_path.glob('*.tex'))
+                    if tex_files:
+                        tex_path = tex_files[0]
+            else:
+                # Normal structure: single .tex file
+                # Ensure .tex extension
+                if not str(tex_path).endswith('.tex'):
+                    tex_path = tex_path.with_suffix('.tex')
             
             if tex_path.exists():
                 with open(tex_path, 'r', encoding='utf-8') as f:
                     content = f.read()
+                
+                # If this is a main.tex with sub-variants, process \input{} commands
+                if tex_path.name == 'main.tex' and tex_path.parent.is_dir():
+                    content = self._process_subvariant_inputs(content, tex_path.parent)
                 
                 # Extrair apenas o conteúdo dentro de \exercicio{}
                 # (remover metadados comentados)
@@ -546,9 +614,28 @@ class TestTemplate:
         
         print(f"\n{BLUE}{'='*70}{RESET}\n")
         
-        # Abrir ficheiro
-        os.startfile(str(self.tex_file))
-        print(f"{GREEN}✓ Ficheiro aberto para edição{RESET}")
+        # Abrir ficheiro - cross-platform support
+        try:
+            if sys.platform == 'win32':
+                os.startfile(str(self.tex_file))
+            elif sys.platform == 'darwin':
+                subprocess.run(['open', str(self.tex_file)], check=True)
+            else:
+                # Linux - try xdg-open or code
+                try:
+                    subprocess.run(['xdg-open', str(self.tex_file)], check=True)
+                except FileNotFoundError:
+                    # Fallback to VS Code if available
+                    try:
+                        subprocess.run(['code', str(self.tex_file)], check=True)
+                    except FileNotFoundError:
+                        print(f"{YELLOW}⚠️ Não foi possível abrir automaticamente.{RESET}")
+                        print(f"{YELLOW}   Abra o ficheiro manualmente: {self.tex_file}{RESET}")
+                        return
+            print(f"{GREEN}✓ Ficheiro aberto para edição{RESET}")
+        except Exception as e:
+            print(f"{YELLOW}⚠️ Não foi possível abrir automaticamente: {e}{RESET}")
+            print(f"{YELLOW}   Abra o ficheiro manualmente: {self.tex_file}{RESET}")
     
     def wait_for_edit(self) -> bool:
         """Aguarda edição do utilizador"""
@@ -572,6 +659,16 @@ class TestTemplate:
         print(f"\n{BLUE}{'='*70}{RESET}")
         print(f"{BOLD}🔨 COMPILANDO PDF{RESET}")
         print(f"{BLUE}{'='*70}{RESET}\n")
+        
+        # Verificar se pdflatex está disponível
+        if not check_pdflatex_available():
+            print(f"{YELLOW}⚠️ pdflatex não encontrado no sistema.{RESET}")
+            print(f"\n{CYAN}💡 Opções para compilar o PDF:{RESET}")
+            print(f"   1. Instale MiKTeX: https://miktex.org/download")
+            print(f"   2. Instale TeX Live: https://tug.org/texlive/")
+            print(f"   3. Use Overleaf online: https://www.overleaf.com/")
+            print(f"\n{CYAN}📄 O ficheiro .tex será guardado para compilar depois.{RESET}")
+            return None
         
         # Executar pdflatex (2x para referencias)
         for run in range(2):
@@ -608,6 +705,31 @@ class TestTemplate:
         
         print(f"{GREEN}✓ PDF compilado com sucesso!{RESET}")
         return pdf_file
+    
+    def save_tex_without_compile(self) -> Path:
+        """Guarda o ficheiro .tex numa localização permanente sem compilar."""
+        discipline = 'matematica'  # Default
+        
+        if self.concept:
+            output_dir = (self.sebentas_db / discipline / self.module / 
+                         self.concept / "tests")
+        else:
+            output_dir = (self.sebentas_db / discipline / self.module / 
+                         "tests")
+        
+        output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Nome final
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        final_name = f"teste_{self.module}"
+        if self.concept:
+            final_name += f"_{self.concept}"
+        final_name += f"_{timestamp}.tex"
+        
+        final_path = output_dir / final_name
+        shutil.copy(self.tex_file, final_path)
+        
+        return final_path
     
     def move_to_output(self, pdf_path: Path) -> Path:
         """Move PDF para localização final"""
@@ -646,7 +768,7 @@ class TestTemplate:
         """Executa workflow completo"""
         try:
             print(f"\n{BLUE}{'='*70}{RESET}")
-            print(f"{BOLD}  SISTEMA DE TESTES POR TEMPLATE  {RESET}")
+            print(f"{BOLD}  📝 SISTEMA DE TESTES POR TEMPLATE  {RESET}")
             print(f"{BLUE}{'='*70}{RESET}")
             
             # 1. Criar template
@@ -661,11 +783,28 @@ class TestTemplate:
                 self.cleanup()
                 return
             
-            # 4. Compilar PDF
+            # 4. Tentar compilar PDF
             pdf_path = self.compile_pdf()
             
             if not pdf_path:
-                print(f"\n{RED}❌ Falha na compilação{RESET}")
+                # pdflatex não disponível ou falhou - guardar .tex
+                print(f"\n{YELLOW}📄 Guardando ficheiro .tex...{RESET}")
+                tex_saved_path = self.save_tex_without_compile()
+                
+                print(f"\n{BLUE}{'='*70}{RESET}")
+                print(f"{BOLD}📄 FICHEIRO .TEX GUARDADO{RESET}")
+                print(f"{BLUE}{'='*70}{RESET}\n")
+                
+                print(f"{CYAN}📄 Ficheiro .tex:{RESET} {tex_saved_path}")
+                print(f"{CYAN}📊 Exercícios:{RESET} {len(self.exercises)}")
+                
+                print(f"\n{YELLOW}💡 Para compilar manualmente:{RESET}")
+                print(f"   pdflatex \"{tex_saved_path}\"")
+                print(f"\n{YELLOW}💡 Ou use o Overleaf:{RESET}")
+                print(f"   1. Acesse https://www.overleaf.com/")
+                print(f"   2. Crie um novo projeto")
+                print(f"   3. Cole o conteúdo do ficheiro .tex")
+                
                 self.cleanup()
                 return
             
@@ -695,10 +834,24 @@ class TestTemplate:
             for concept, count in by_concept.items():
                 print(f"  • {concept}: {count} exercícios")
             
-            # Abrir PDF
+            # Abrir PDF - cross-platform support
             choice = input(f"\nAbrir PDF? (s/n): ").strip().lower()
             if choice == 's':
-                os.startfile(str(final_path))
+                try:
+                    if sys.platform == 'win32':
+                        os.startfile(str(final_path))
+                    elif sys.platform == 'darwin':
+                        subprocess.run(['open', str(final_path)], check=True)
+                    else:
+                        # Linux - try xdg-open
+                        try:
+                            subprocess.run(['xdg-open', str(final_path)], check=True)
+                        except FileNotFoundError:
+                            print(f"{YELLOW}⚠️ Não foi possível abrir automaticamente.{RESET}")
+                            print(f"{YELLOW}   Abra o ficheiro manualmente: {final_path}{RESET}")
+                except Exception as e:
+                    print(f"{YELLOW}⚠️ Não foi possível abrir: {e}{RESET}")
+                    print(f"{YELLOW}   Abra o ficheiro manualmente: {final_path}{RESET}")
             
             # 7. Cleanup
             self.cleanup()
