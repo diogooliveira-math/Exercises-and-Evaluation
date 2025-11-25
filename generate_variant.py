@@ -106,8 +106,8 @@ def extract_metadata_from_tex(tex_path: Path) -> Optional[dict]:
     return metadata if metadata else None
 
 
-def add_subvariant_from_existing(exercise_dir: Path, main_tex: Path, template_subvariant: str, strategy: str) -> None:
-    """Add a new sub-variant to an existing exercise using an existing subvariant as template."""
+def add_new_subvariant_to_exercise(exercise_dir: Path, main_tex: Path, strategy: str) -> None:
+    """Add a new sub-variant to an existing exercise folder."""
     today = datetime.now().strftime("%Y-%m-%d")
     exercise_id = exercise_dir.name
 
@@ -130,11 +130,8 @@ def add_subvariant_from_existing(exercise_dir: Path, main_tex: Path, template_su
 
     print(f"[ADD] Proximo numero de sub-variant: {next_num}")
 
-    # Use the specified subvariant as template
-    template_file = exercise_dir / template_subvariant
-    if not template_file.exists():
-        raise SystemExit(f"❌ Template subvariant não encontrado: {template_file}")
-    
+    # Use the last sub-variant as template
+    template_file = max(subvariant_files, key=lambda x: int(re.search(r'subvariant_(\d+)\.tex', x.name).group(1)))
     template_content = template_file.read_text(encoding="utf-8")
 
     # Apply variation strategy to the template
@@ -196,10 +193,9 @@ def add_subvariant_from_existing(exercise_dir: Path, main_tex: Path, template_su
         return
 
     print("\n" + "="*70)
-    print(">> NOVA SUB-VARIANT ADICIONADA COM SUCESSO!")
+    print(">> SUB-VARIANT ADICIONADA COM SUCESSO!")
     print("="*70)
     print(f"\n[PASTA] Exercicio: {exercise_dir.name}/")
-    print(f"[TEMPLATE] Baseado em: {template_subvariant}")
     print(f"[TEX] Novo ficheiro: subvariant_{next_num}.tex")
     print(f"[COUNT] Total de sub-variants: {len(subvariant_files) + 1}")
     print(f"\n[TIP] main.tex atualizado com nova entrada")
@@ -360,8 +356,8 @@ def main() -> None:
     if focus_single_subvariant:
         print(f"\n>> Subvariant detetada: {original_subvariant}")
         print(f"Como deseja proceder?")
-        print(f"  1. Criar VARIANTE do exercicio: nova pasta com versao modificada")
-        print(f"  2. Adicionar NOVA SUB-VARIANT: novo subvariant_*.tex nesta pasta")
+        print(f"  1. Criar VARIANTE FOCADA: apenas esta subvariant (main.tex + {original_subvariant})")
+        print(f"  2. Criar VARIANTE COMPLETA: todo o exercicio, mas variando apenas esta subvariant")
         print(f"  0. Cancelar")
 
         while True:
@@ -374,15 +370,9 @@ def main() -> None:
             print("[CANCEL] Operacao cancelada.")
             return
         elif choice == '1':
-            subvariant_strategy = 'variant'
+            subvariant_strategy = 'focused'
         elif choice == '2':
-            subvariant_strategy = 'add_subvariant'
-            
-    # Handle add_subvariant strategy immediately
-    if focus_single_subvariant and subvariant_strategy == 'add_subvariant':
-        print(f"\n[ADD] Adicionando nova sub-variant baseada em {original_subvariant}")
-        add_subvariant_from_existing(src_path, src_path / "main.tex", original_subvariant, args.strategy)
-        return
+            subvariant_strategy = 'complete'
 
     if is_folder_exercise:
         # Folder-based exercise
@@ -394,8 +384,10 @@ def main() -> None:
 
         print(f"\n[PASTA] Exercicio original (pasta): {src_path.name}")
         if focus_single_subvariant:
-            if subvariant_strategy == 'variant':
-                print(f"[STRATEGY] Criando variante do exercicio baseada em {original_subvariant}")
+            if subvariant_strategy == 'focused':
+                print(f"[STRATEGY] Variante focada: apenas {original_subvariant}")
+            elif subvariant_strategy == 'complete':
+                print(f"[STRATEGY] Variante completa: todo exercicio, variando apenas {original_subvariant}")
         print(f"[TEX] Ficheiro main.tex: {main_tex.name}")
 
         # Check if this exercise has sub-variants
@@ -474,7 +466,7 @@ def main() -> None:
         new_main_tex = new_folder_path / "main.tex"
 
         if focus_single_subvariant:
-            if subvariant_strategy == 'variant':
+            if subvariant_strategy == 'focused':
                 # Create folder and copy only main.tex and the specific subvariant
                 new_folder_path.mkdir(parents=True, exist_ok=True)
                 
@@ -491,12 +483,12 @@ def main() -> None:
                 # Update main.tex to include only this subvariant
                 main_content = new_main_tex.read_text(encoding="utf-8")
                 # Replace the entire enumerate block with just this subvariant
-                new_enumerate_content = rf"""\begin{{enumerate}}[label=\alph*)]
+                new_enumerate_content = rf"""egin{{enumerate}}[label=lph*)]]]
 
 \item \input{{{original_subvariant}}}
 \end{{enumerate}}"""
                 # Find and replace the enumerate block
-                start = main_content.find(r'\begin{enumerate}')
+                start = main_content.find(r'egin{enumerate}')
                 end = main_content.find(r'\end{enumerate}')
                 if start != -1 and end != -1:
                     end += len(r'\end{enumerate}')
@@ -514,6 +506,32 @@ def main() -> None:
                 main_content = new_main_tex.read_text(encoding="utf-8")
                 main_content = update_tex_header(main_content, new_id, today)
                 new_main_tex.write_text(main_content, encoding="utf-8")
+                
+            elif subvariant_strategy == 'complete':
+                # Copy entire folder
+                shutil.copytree(src_dir, new_folder_path)
+
+                # Apply variation only to the specific subvariant
+                specific_sub_file = new_folder_path / original_subvariant
+                if specific_sub_file.exists():
+                    content = specific_sub_file.read_text(encoding="utf-8")
+                    updated = apply_variation(content, args.strategy)
+                    updated = update_tex_header(updated, new_id, today)
+                    specific_sub_file.write_text(updated, encoding="utf-8")
+                else:
+                    raise SystemExit(f"❌ Subvariant original não encontrada: {specific_sub_file}")
+
+                # Update main.tex header (no variation applied to main.tex)
+                main_content = new_main_tex.read_text(encoding="utf-8")
+                main_content = update_tex_header(main_content, new_id, today)
+                new_main_tex.write_text(main_content, encoding="utf-8")
+
+                # Update other subvariant files headers (no variation)
+                for sub_file in new_folder_path.glob("subvariant_*.tex"):
+                    if sub_file.name != original_subvariant:
+                        content = sub_file.read_text(encoding="utf-8")
+                        updated = update_tex_header(content, new_id, today)
+                        sub_file.write_text(updated, encoding="utf-8")
                 
         else:
             # Copy entire folder

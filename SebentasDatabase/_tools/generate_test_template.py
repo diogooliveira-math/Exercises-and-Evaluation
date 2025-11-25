@@ -8,6 +8,15 @@ Uso:
     python generate_test_template.py [--module MODULE] [--concept CONCEPT] [--questions N]
 """
 
+# Fix encoding issues on Windows
+import sys
+if sys.platform == 'win32':
+    import os
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+    # Force UTF-8 encoding for stdout/stderr
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stderr.reconfigure(encoding='utf-8')
+
 import os
 import sys
 import json
@@ -125,6 +134,23 @@ class TestTemplate:
             if concept and ex_concept != concept:
                 continue
             exercises.append(ex)
+        
+        return exercises
+    
+    def load_exercises_by_ids(self, exercise_ids: List[str]) -> List[Dict]:
+        """Carrega exercícios específicos pelos IDs"""
+        index_file = self.exercise_db / "index.json"
+        
+        with open(index_file, 'r', encoding='utf-8') as f:
+            index = json.load(f)
+        
+        exercises = []
+        for ex in index.get('exercises', []):
+            if ex.get('id') in exercise_ids:
+                exercises.append(ex)
+        
+        # Ordenar pela ordem dos IDs fornecidos
+        exercises.sort(key=lambda x: exercise_ids.index(x.get('id', '')))
         
         return exercises
     
@@ -330,8 +356,6 @@ class TestTemplate:
     \item Leia atentamente todas as questões
     \item Apresente todos os cálculos e justificações
     \item Escreva de forma clara e organizada
-    \item Duração: ____ minutos
-    \item Cotação total: ____ pontos
 \end{itemize}
 
 \vspace{1em}
@@ -355,6 +379,10 @@ class TestTemplate:
             # Carregar conteúdo .tex do exercício
             source_file = ex.get('source_file') or ex.get('path', '')
             tex_path = self.exercise_db / source_file
+            
+            # Ensure .tex extension
+            if not str(tex_path).endswith('.tex'):
+                tex_path = tex_path.with_suffix('.tex')
             
             if tex_path.exists():
                 with open(tex_path, 'r', encoding='utf-8') as f:
@@ -401,37 +429,85 @@ class TestTemplate:
         filename = f"teste_{timestamp}.tex"
         self.tex_file = Path(self.temp_dir) / filename
         
-        # Seleção interativa
-        if not self.module:
-            discipline, self.module, self.concept = self.select_module_and_concept()
+        # Verificar se há exercícios pré-selecionados via ambiente
+        selected_exercises_env = os.environ.get('TEST_SELECTED_EXERCISES', '')
+        if selected_exercises_env:
+            # Carregar exercícios específicos pelos IDs
+            selected_ids = [x.strip() for x in selected_exercises_env.split(',') if x.strip()]
+            if selected_ids:
+                print(f"\n{CYAN}📋 Usando exercícios pré-selecionados: {len(selected_ids)}{RESET}")
+                self.exercises = self.load_exercises_by_ids(selected_ids)
+                
+                if not self.exercises:
+                    print(f"{RED}✗ Nenhum exercício encontrado com os IDs fornecidos!{RESET}")
+                    sys.exit(1)
+                
+                print(f"{GREEN}✓ {len(self.exercises)} exercícios carregados{RESET}")
+                
+                # Usar primeiro exercício para determinar módulo/conceito
+                first_ex = self.exercises[0]
+                if 'classification' in first_ex:
+                    self.module = first_ex['classification'].get('module', '')
+                    self.concept = first_ex['classification'].get('concept', '')
+                else:
+                    self.module = first_ex.get('module', '')
+                    self.concept = first_ex.get('concept', '')
+            else:
+                # Fallback para seleção interativa
+                if not self.module:
+                    discipline, self.module, self.concept = self.select_module_and_concept()
+                else:
+                    config = self.load_modules_config()
+                    discipline = 'matematica'
+                    
+                # Carregar exercícios
+                print(f"\n{CYAN}📂 Carregando exercícios...{RESET}")
+                available_exercises = self.load_exercises(discipline, self.module, self.concept)
+                
+                if not available_exercises:
+                    print(f"{RED}✗ Nenhum exercício encontrado!{RESET}")
+                    sys.exit(1)
+                
+                print(f"{GREEN}✓ {len(available_exercises)} exercícios disponíveis{RESET}")
+                
+                # Seleção de exercícios
+                selected = self.select_exercises_interactive(available_exercises)
+                self.exercises = selected
+                
+                print(f"\n{GREEN}✓ {len(selected)} exercícios selecionados{RESET}")
         else:
-            # CLI: carregar config para obter nomes
-            config = self.load_modules_config()
-            discipline = 'matematica'  # Default
+            # Seleção interativa normal
+            if not self.module:
+                discipline, self.module, self.concept = self.select_module_and_concept()
+            else:
+                # CLI: carregar config para obter nomes
+                config = self.load_modules_config()
+                discipline = 'matematica'  # Default
+                
+            # Carregar exercícios
+            print(f"\n{CYAN}📂 Carregando exercícios...{RESET}")
+            available_exercises = self.load_exercises(discipline, self.module, self.concept)
             
-        # Carregar exercícios
-        print(f"\n{CYAN}📂 Carregando exercícios...{RESET}")
-        available_exercises = self.load_exercises(discipline, self.module, self.concept)
+            if not available_exercises:
+                print(f"{RED}✗ Nenhum exercício encontrado!{RESET}")
+                sys.exit(1)
+            
+            print(f"{GREEN}✓ {len(available_exercises)} exercícios disponíveis{RESET}")
+            
+            # Seleção de exercícios
+            selected = self.select_exercises_interactive(available_exercises)
+            self.exercises = selected
+            
+            print(f"\n{GREEN}✓ {len(selected)} exercícios selecionados{RESET}")
         
-        if not available_exercises:
-            print(f"{RED}✗ Nenhum exercício encontrado!{RESET}")
-            sys.exit(1)
-        
-        print(f"{GREEN}✓ {len(available_exercises)} exercícios disponíveis{RESET}")
-        
-        # Seleção de exercícios
-        selected = self.select_exercises_interactive(available_exercises)
-        self.exercises = selected
-        
-        print(f"\n{GREEN}✓ {len(selected)} exercícios selecionados{RESET}")
-        
-        # Obter nomes
+        # Obter nomes para o título
         config = self.load_modules_config()
-        module_name = config[discipline][self.module]['name']
+        discipline = 'matematica'  # Default
+        module_name = config.get(discipline, {}).get(self.module, {}).get('name', self.module)
         concept_name = None
         if self.concept:
             # Procurar conceito na lista
-            concepts = config[discipline][self.module]['concepts']
+            concepts = config.get(discipline, {}).get(self.module, {}).get('concepts', [])
             for c in concepts:
                 if c['id'] == self.concept:
                     concept_name = c['name']
@@ -439,7 +515,7 @@ class TestTemplate:
         
         # Gerar LaTeX
         latex_content = self.generate_test_latex(
-            discipline, module_name, concept_name, selected
+            discipline, module_name, concept_name, self.exercises
         )
         
         # Salvar
@@ -451,7 +527,7 @@ class TestTemplate:
     def open_for_editing(self):
         """Abre ficheiro no editor padrão"""
         print(f"\n{BLUE}{'='*70}{RESET}")
-        print(f"{BOLD}📝 EDITANDO TESTE LATEX{RESET}")
+        print(f"{BOLD}EDITANDO TESTE LATEX{RESET}")
         print(f"{BLUE}{'='*70}{RESET}\n")
         
         print(f"➤ Ficheiro: {CYAN}{self.tex_file.name}{RESET}")
@@ -570,7 +646,7 @@ class TestTemplate:
         """Executa workflow completo"""
         try:
             print(f"\n{BLUE}{'='*70}{RESET}")
-            print(f"{BOLD}  📝 SISTEMA DE TESTES POR TEMPLATE  {RESET}")
+            print(f"{BOLD}  SISTEMA DE TESTES POR TEMPLATE  {RESET}")
             print(f"{BLUE}{'='*70}{RESET}")
             
             # 1. Criar template
