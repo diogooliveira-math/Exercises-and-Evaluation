@@ -1,44 +1,39 @@
 {
   "database_version": "3.0",
-  "last_updated": "2025-11-25T22:45:00.000000",
+  "last_updated": "2025-11-25T22:55:00.000000",
   "total_exercises": 48,
   "statistics": {
     "by_module": {
-      "P4_funcoes": 32,
+      "P4_funcoes": 15,
       "A9_funcoes_crescimento": 9,
-      "unknown": 9,
       "A8_modelos_discretos": 3,
-      "P2_estatistica": 12,
+      "P2_estatistica": 9,
       "A12_otimizacao": 12
     },
     "by_concept": {
       "Generalidades acerca de Funções": 1,
       "Funções Polinomiais": 1,
       "Funções polinomiais de grau não superior a 3": 1,
-      "Função Inversa": 29,
+      "Função Inversa": 12,
       "Revisões de Crescimento": 4,
       "Funções Exponenciais": 5,
-      "unknown": 9,
       "Sistemas Numéricos": 3,
-      "Revisões Iniciais, inserindo manipulação de dados, tomando partido da regra de três simples e percentagens.": 3,
+      "Revisões Iniciais": 1,
       "Estudo da Monotonia com Derivadas": 6,
-      "2-Variabilidade": 3,
       "Medições Básicas": 6,
+      "Medidas de Variabilidade": 2,
       "Problemas Simples de Otimização": 6
     },
     "by_difficulty": {
-      "Fácil": 61,
-      "Médio": 5,
-      "Desconhecido": 9,
-      "Muito Fácil": 3
+      "Muito Fácil": 2,
+      "Fácil": 41,
+      "Médio": 5
     },
     "by_type": {
-      "desenvolvimento": 64,
-      "unknown": 13
+      "desenvolvimento": 48
     },
     "by_discipline": {
-      "matematica": 60,
-      "unknown": 17
+      "matematica": 48
     }
   },
   "exercises": [
