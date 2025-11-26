@@ -877,7 +877,8 @@ def main():
             tipo = data['tipo']
             # Caminho para o script de geração de sebentas
             # Caminho absoluto para o script de sebentas na raiz do projeto
-            project_root = Path(__file__).parent.parent
+            # Caminho robusto para a raiz do projeto (assume que ExerciseDatabase/_tools está sempre a 2 níveis da raiz)
+            project_root = Path(__file__).resolve().parents[2]
             sebenta_script = str((project_root / 'SebentasDatabase' / '_tools' / 'generate_sebentas.py').resolve())
             # Gerar sebenta apenas para o tipo/conceito do exercício criado
             cmd = [sys.executable, sebenta_script, '--discipline', disciplina, '--module', modulo, '--concept', conceito, '--tipo', tipo, '--no-preview', '--no-compile', '--auto-approve']

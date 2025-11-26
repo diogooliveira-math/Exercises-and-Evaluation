@@ -34,10 +34,12 @@ temp_file.write_text(conteudo, encoding="utf-8")
 # Executar script com monkeypatch para usar o ficheiro criado
 def run_test():
     print(f"[TESTE] A executar: {script_path} --file {temp_file}")
+    # Responde automaticamente 's' para incorporar e 's' para gerar sebenta
+    auto_input = 's\ns\n'
     proc = subprocess.run([
         sys.executable, str(script_path),
         "--file", str(temp_file)
-    ], text=True, capture_output=True, encoding="utf-8", errors="replace")
+    ], input=auto_input, text=True, capture_output=True, encoding="utf-8", errors="replace")
     print("[STDOUT]\n", proc.stdout)
     print("[STDERR]\n", proc.stderr)
     return proc.returncode

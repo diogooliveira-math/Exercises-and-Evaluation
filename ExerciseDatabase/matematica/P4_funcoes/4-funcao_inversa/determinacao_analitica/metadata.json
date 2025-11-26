@@ -109,6 +109,32 @@
         "inversa"
       ],
       "status": "active"
+    },
+    "MAT_P4FUNCOE_FUNC_DA_002": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor",
+      "difficulty": 2,
+      "tags": [
+        "funcao_inversa",
+        "determinacao analitica",
+        "funcoes",
+        "inversa"
+      ],
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_FUNC_DA_003": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor",
+      "difficulty": 2,
+      "tags": [
+        "funcao_inversa",
+        "determinacao analitica",
+        "funcoes",
+        "inversa"
+      ],
+      "status": "active"
     }
   }
 }

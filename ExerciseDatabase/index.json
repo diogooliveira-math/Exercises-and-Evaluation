@@ -1,10 +1,10 @@
 {
   "database_version": "3.0",
-  "last_updated": "2025-11-26T19:18:41.371062",
-  "total_exercises": 93,
+  "last_updated": "2025-11-26T20:07:49.121642",
+  "total_exercises": 77,
   "statistics": {
     "by_module": {
-      "P4_funcoes": 31,
+      "P4_funcoes": 33,
       "A9_funcoes_crescimento": 9,
       "unknown": 9,
       "A8_modelos_discretos": 23,
@@ -1467,6 +1467,48 @@
     {
       "id": "MAT_P4FUNCOE_FUNC_DA_001",
       "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_FUNC_DA_001.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "P4_funcoes",
+      "concept": "4-funcao_inversa",
+      "concept_name": "4-funcao_inversa",
+      "tipo": "determinacao_analitica",
+      "tipo_nome": "determinacao_analitica",
+      "difficulty": 2,
+      "format": "desenvolvimento",
+      "tags": [
+        "funcao_inversa",
+        "determinacao analitica",
+        "funcoes",
+        "inversa"
+      ],
+      "points": 0,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_FUNC_DA_002",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_FUNC_DA_002.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "module_name": "P4_funcoes",
+      "concept": "4-funcao_inversa",
+      "concept_name": "4-funcao_inversa",
+      "tipo": "determinacao_analitica",
+      "tipo_nome": "determinacao_analitica",
+      "difficulty": 2,
+      "format": "desenvolvimento",
+      "tags": [
+        "funcao_inversa",
+        "determinacao analitica",
+        "funcoes",
+        "inversa"
+      ],
+      "points": 0,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_FUNC_DA_003",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_FUNC_DA_003.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "P4_funcoes",

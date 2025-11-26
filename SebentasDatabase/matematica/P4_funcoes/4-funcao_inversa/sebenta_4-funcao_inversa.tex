@@ -1,0 +1,337 @@
+% Template para geração automática de sebentas
+% Gerado automaticamente - NÃO EDITAR MANUALMENTE
+\documentclass[12pt,a4paper]{article}
+
+% Encoding e idioma
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+
+% Matemática
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Gráficos e figuras
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,angles,quotes}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+% Force float barriers when needed to keep figures right after exercises
+\usepackage{placeins}
+\usepackage{float}  % Para figure[H] - força figuras exatamente onde definidas
+
+% Layout e formatação
+\usepackage{geometry}
+\geometry{a4paper,margin=2.5cm,top=3cm,bottom=3cm}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{booktabs}
+
+% Hyperlinks e referências
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+% Sistema de exercícios - macros personalizadas
+\newcounter{exerciciocount}
+\newcounter{subexerciciocount}
+\newcounter{optioncount}
+
+\newcommand{\exercicio}[1][]{% 
+    \par\vspace{1.5em}%
+    \refstepcounter{exerciciocount}%
+    \setcounter{subexerciciocount}{0}%
+    \setcounter{optioncount}{0}%
+    \noindent\textbf{Exercício~\theexerciciocount.}%
+    \ifx&#1&%
+        % Argumento vazio - o conteúdo vem depois
+        \par\vspace{0.3em}%
+    \else%
+        % Argumento fornecido - incluir inline
+        \ #1\par\vspace{0.5em}%
+    \fi%
+}
+
+\newcommand{\subexercicio}[1]{%
+    \par\vspace{0.8em}%
+    \refstepcounter{subexerciciocount}%
+    \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+}
+
+\newcommand{\option}[1]{%
+    \par
+    \refstepcounter{optioncount}%
+    \noindent(\alph{optioncount}) #1%
+}
+
+% Cabeçalho completo do teste dentro de uma caixa simples
+\newcommand{\espacoAluno}{%
+    \vspace{0.5cm}
+    \fbox{%
+        \parbox{\textwidth}{%
+            \noindent\textbf{Nome do Aluno:} \underline{\hspace{7cm}} \textbf{Turma:} \underline{\hspace{1cm}}\\[0.5cm]
+            \noindent\textbf{Assinatura do Professor:} \underline{\hspace{3cm}} \hfill \textbf{Nota:} \underline{\hspace{2cm}}\\[0.5cm]
+            \noindent\textbf{Assinatura do Encarregado de Educação:} \underline{\hspace{3cm}}
+        }%
+    }
+    \vspace{1cm}
+}
+
+% Campos para respostas
+\newcommand{\campo}[1][2.0cm]{\makebox[#1]{\hrulefill}}
+\newcommand{\campoLetra}[1][1.2cm]{\makebox[#1]{\hrulefill}}
+\newcommand{\campoCents}[1][3.0cm]{\makebox[#1]{\hrulefill}}% Cabeçalho e rodapé
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{MÓDULO P4 - Funções}
+\fancyhead[R]{Função Inversa}
+\fancyfoot[C]{\thepage}
+
+% Metadados do documento
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+
+% Remover título, autor e data - apenas conteúdo
+\thispagestyle{fancy}
+
+\section*{Função Inversa}
+
+\textit{
+Conceito de função inversa, condições de existência (injetividade), determinação analítica e gráfica, simetria e propriedades.
+}
+
+\vspace{1em}
+
+\subsection*{Tipos de Exercícios}
+\begin{itemize}
+  \item \textbf{Determinação Analítica} --- Cálculo da expressão analítica da função inversa através de manipulação algébrica
+\end{itemize}
+
+\vspace{1em}
+
+% Exercício 1: MAT_P4FUNCOE_4FX_DAX_001.tex
+% Exercise ID: MAT_P4FUNCOE_4FX_DAX_001
+% Module: MÓDULO P4 - Funções | Concept: Função Inversa | Type: Determinação Analítica da Função Inversa
+% Difficulty: 2/5 (Fácil) | Format: standard
+% Tags: inversa, expressao_analitica, algebra, calculo_analitico, injetividade, sobrejetividade, simetria, resolucao_equacao
+% Author: Test Agent | Date: 2025-11-26
+% Status: active
+
+\exercicio{Determine a função inversa de f(x) = 2x + 3.}
+\FloatBarrier
+
+% Exercício 2: main.tex
+% Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% meta:
+% id: MAT_P4FUNCOE_4FIN_ANA_001
+% title: "Determinação Analítica da Função Inversa"
+% difficulty: 2
+% tags: funcao_inversa, determinacao_analitica
+% author: Generated Example
+% has_subvariants: true
+
+\section{Determinação Analítica da Função Inversa}
+
+\exercicio{
+Determina analiticamente a função inversa das seguintes expressões:
+}
+
+\begin{enumerate}[label=\alph*)]
+
+\item % Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Sub-variant 1 for MAT_P4FUNCOE_4FIN_ANA_001
+% Function: f(x) = x + 4
+
+$f(x) = x + 4$
+\item % Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Sub-variant 2 for MAT_P4FUNCOE_4FIN_ANA_001
+% Function: f(x) = 2x - 1
+
+$f(x) = 2x - 1$
+\item % Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Sub-variant 3 for MAT_P4FUNCOE_4FIN_ANA_001
+% Function: f(x) = \frac{1}{x-1}
+
+$f(x) = \frac{1}{x-1}$
+\n\item % Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Sub-variant 3 for MAT_P4FUNCOE_4FIN_ANA_001
+% Function: f(x) = \frac{x}{2}
+
+$f(x) = \frac{x}{2}$
+\n\item % Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Sub-variant 3 for MAT_P4FUNCOE_4FIN_ANA_001
+% Function: f(x) = \frac{x}{2}
+
+$f(x) = \frac{x}{2}$
+\n\item % Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Sub-variant 3 for MAT_P4FUNCOE_4FIN_ANA_001
+% Function: f(x) = 2x-9
+
+$f(x) = x-9$
+\n\item % Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Sub-variant 8 for MAT_P4FUNCOE_4FIN_ANA_001
+% Date: 2025-11-24
+% Function: f(x) = x-6
+
+$f(x) = x-6$
+\n\item % Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Sub-variant 8 for MAT_P4FUNCOE_4FIN_ANA_001
+% Date: 2025-11-24
+% Function: f(x) = x-6
+
+$f(x) = x-6$
+\n\item q% Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Sub-variant 9 for MAT_P4FUNCOE_4FIN_ANA_001
+% Date: 2025-11-25
+% Function: f(x) = x-7
+
+$f(x) = x-7$
+\n\item % Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Sub-variant 10 for MAT_P4FUNCOE_4FIN_ANA_001
+% Date: 2025-11-25
+% Function: f(x) = 2x - 1
+
+$f(x) = 2x - 10$
+\n\item % Exercise ID: MAT_P4FUNCOE_4FIN_ANA_001
+% Sub-variant 11 for MAT_P4FUNCOE_4FIN_ANA_001
+% Date: 2025-11-25
+% Function: f(x) = 2x - 1
+
+$f(x) = 7x - 2$
+\end{enumerate}
+\FloatBarrier
+
+% Exercício 3: main.tex
+% meta:
+% id: MAT_P4FUNCOE_4FX_DAX_003
+% title: "MÓDULO P4 - Funções - Função Inversa - Determinação Analítica da Função Inversa"
+% difficulty: 3
+% tags: 
+% author: Test Agent
+% has_subvariants: true
+
+\section{MÓDULO P4 - Funções - Função Inversa - Determinação Analítica da Função Inversa}
+
+\exercicio{
+Determine analiticamente a função inversa das seguintes funções:
+}
+
+\begin{enumerate}[label=\alph*)]
+\item % Sub-variant 1 for MAT_P4FUNCOE_4FX_DAX_003
+% Content: x + 1
+
+x + 1
+\item % Sub-variant 2 for MAT_P4FUNCOE_4FX_DAX_003
+% Content: 2x - 3
+
+2x - 3
+\item % Sub-variant 3 for MAT_P4FUNCOE_4FX_DAX_003
+% Content: \\frac{1}{x-2}
+
+\\frac{1}{x-2}
+\end{enumerate}
+\FloatBarrier
+
+% Exercício 4: MAT_P4FUNCOE_4FX_DAX_002.tex
+% Exercise ID: MAT_P4FUNCOE_4FX_DAX_002
+% Module: MÓDULO P4 - Funções | Concept: Função Inversa | Type: Determinação Analítica da Função Inversa
+% Difficulty: 2/5 (Fácil) | Format: standard
+% Tags: algebra, simetria, resolucao_equacao, expressao_analitica, injetividade, inversa, sobrejetividade, calculo_analitico
+% Author: Test Agent | Date: 2025-11-26
+% Status: active
+
+\exercicio{Determine a função inversa de f(x) = 2x + 3.}
+\FloatBarrier
+
+% Exercício 5: MAT_P4FUNCOE_4FX_DAX_005.tex
+% Exercise ID: MAT_P4FUNCOE_4FX_DAX_005
+% Created: 2025-11-26
+% Difficulty: 2/5
+
+\exercicio{Determine a função inversa de f(x) = (x-1)/(x+1).}
+\FloatBarrier
+
+% Exercício 6: MAT_P4FUNCOE_4FX_DAX_003.tex
+% Exercise ID: MAT_P4FUNCOE_4FX_DAX_003
+% Module: MÓDULO P4 - Funções | Concept: Função Inversa | Type: Determinação Analítica da Função Inversa
+% Difficulty: 3/5 (Médio) | Format: standard
+% Tags: resolucao_equacao, expressao_analitica, algebra, injetividade, simetria, sobrejetividade, calculo_analitico, inversa
+% Author: Professor | Date: 2025-11-26
+% Status: active
+
+\exercicio{Teste de exercício}
+\FloatBarrier
+
+% Exercício 7: MAT_P4FUNCOE_FUNC_DA_001.tex
+% Exercise ID: MAT_P4FUNCOE_FUNC_DA_001
+% Module: P4_funcoes | Concept: 4-funcao_inversa
+% Type: determinacao_analitica | Difficulty: 2/5
+% Tags: funcao_inversa, determinacao analitica, funcoes, inversa
+% Author: Professor | Date: 2025-11-26
+
+\exercicio{
+Determine a função inversa de $f(x) = 2x + 3$.
+}
+
+\subexercicio{Verifique que $f(f^{-1}
+\FloatBarrier
+
+% Exercício 8: MAT_P4FUNCOE_FUNC_DA_002.tex
+% Exercise ID: MAT_P4FUNCOE_FUNC_DA_002
+% Module: P4_funcoes | Concept: 4-funcao_inversa
+% Type: determinacao_analitica | Difficulty: 2/5
+% Tags: funcao_inversa, determinacao analitica, funcoes, inversa
+% Author: Professor | Date: 2025-11-26
+
+\exercicio{
+Determine a função inversa de $f(x) = 2x + 3$.
+}
+
+\subexercicio{Verifique que $f(f^{-1}
+\FloatBarrier
+
+% Exercício 9: MAT_P4FUNCOE_4FX_DAX_004.tex
+% Exercise ID: MAT_P4FUNCOE_4FX_DAX_004
+% Created: 2025-11-26
+% Difficulty: 2/5
+
+\exercicio{Determine a função inversa de f(x) = 3x - 5.}
+\FloatBarrier
+
+% Exercício 10: MAT_P4FUNCOE_FUNC_DA_003.tex
+% Exercise ID: MAT_P4FUNCOE_FUNC_DA_003
+% Module: P4_funcoes | Concept: 4-funcao_inversa
+% Type: determinacao_analitica | Difficulty: 2/5
+% Tags: funcao_inversa, determinacao analitica, funcoes, inversa
+% Author: Professor | Date: 2025-11-26
+
+\exercicio{
+Determine a função inversa de $f(x) = 2x + 3$.
+}
+
+\subexercicio{Verifique que $f(f^{-1}
+\FloatBarrier
+
+
+\end{document}
