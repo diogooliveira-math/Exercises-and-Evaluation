@@ -1,0 +1,60 @@
+% Exercise ID: MAT_A8MODELO_1SX_NFX_012
+% Module: Módulo A8 - Modelos Discretos | Concept: Sistemas Numéricos | Type: Números Figurados
+% Difficulty: 3/5 (Médio) | Format: standard
+% Tags: sistemas_numericos, binario, decimal, sequencias, hexadecimal, numeros_quadrados, representacao_visual, conversao_bases, regra_sucessao
+% Author: Professor Diogo | Date: 2025-11-26
+% Status: active
+
+\exercicio{Observe a sucessão dos números quadrados representados visualmente abaixo (os valores $Q_1$, $Q_2$, $Q_3$, $Q_4$ estão indicados nas figuras):
+
+\begin{center}
+\begin{tikzpicture}[scale=0.4]
+% Q1 = 1
+\foreach \x in {0} {
+    \foreach \y in {0} {
+        \fill (\x,\y) circle (0.12);
+    }
+}
+% Valor $Q_1 = 1$ representado na figura
+
+% Q2 = 4
+\begin{scope}[xshift=3cm]
+\foreach \x in {0,1} {
+    \foreach \y in {0,1} {
+        \fill (\x,\y) circle (0.12);
+    }
+}
+% Valor $Q_2 = 4$ representado na figura
+\end{scope}
+
+% Q3 = 9
+\begin{scope}[xshift=7cm]
+\foreach \x in {0,1,2} {
+    \foreach \y in {0,1,2} {
+        \fill (\x,\y) circle (0.12);
+    }
+}
+% Valor $Q_3 = 9$ representado na figura
+\end{scope}
+
+% Q4 = 16
+\begin{scope}[xshift=12cm]
+\foreach \x in {0,1,2,3} {
+    \foreach \y in {0,1,2,3} {
+        \fill (\x,\y) circle (0.12);
+    }
+}
+% Valor $Q_4 = 16$ representado na figura
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+
+\subexercicio{Represente os quatro primeiros termos da sucessao ($Q_1, Q_2, Q_3, Q_4$) em sistema hexadecimal.}
+
+\subexercicio{Escreva o 5º termo da sucessao ($Q_5$) em notacao decimal e binaria.}
+
+\subexercicio{Determine o 8º termo da sucessao ($Q_8$) e represente-o em sistema hexadecimal.}
+
+\subexercicio{Escreva a regra geral para gerar o proximo termo da sucessao dos numeros quadrados.}}

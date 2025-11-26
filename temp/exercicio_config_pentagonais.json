@@ -1,0 +1,16 @@
+{
+  "discipline": "matematica",
+  "module": "A8_modelos_discretos",
+  "concept": "1-sistemas_numericos",
+  "tipo": "numeros_figurados",
+  "statement": "Analise a sucessao dos numeros pentagonais representados visualmente abaixo:\n\n\\begin{center}\n\\begin{tikzpicture}[scale=0.35]\n% P1 = 1\n\\fill (0,0) circle (0.1);\n\\node at (0,-0.4) {$P_1 = 1$};\n\n% P2 = 5\n\\begin{scope}[xshift=3cm]\n\\foreach \\i in {0,72,144,216,288} {\n    \\fill ({cos(\\i)},{sin(\\i)}) circle (0.1);\n}\n\\node at (0,-0.8) {$P_2 = 5$};\n\\end{scope}\n\n% P3 = 12\n\\begin{scope}[xshift=7cm]\n% Camada interior\n\\foreach \\i in {0,72,144,216,288} {\n    \\fill ({cos(\\i)},{sin(\\i)}) circle (0.1);\n}\n% Camada exterior\n\\foreach \\i in {0,72,144,216,288} {\n    \\fill ({2*cos(\\i)},{2*sin(\\i)}) circle (0.1);\n}\n\\node at (0,-1.2) {$P_3 = 12$};\n\\end{scope}\n\n% P4 = 22\n\\begin{scope}[xshift=13cm]\n% Camada interior\n\\foreach \\i in {0,72,144,216,288} {\n    \\fill ({cos(\\i)},{sin(\\i)}) circle (0.1);\n}\n% Camada media\n\\foreach \\i in {0,72,144,216,288} {\n    \\fill ({2*cos(\\i)},{2*sin(\\i)}) circle (0.1);\n}\n% Camada exterior\n\\foreach \\i in {0,72,144,216,288} {\n    \\fill ({3*cos(\\i)},{3*sin(\\i)}) circle (0.1);\n}\n\\node at (0,-1.6) {$P_4 = 22$};\n\\end{scope}\n\\end{tikzpicture}\n\\end{center}\n\n\\vspace{0.5cm}\n\n\\subexercicio{Represente os quatro primeiros termos da sucessao ($P_1, P_2, P_3, P_4$) em sistema binario.}\n\n\\subexercicio{Escreva o 5º termo da sucessao ($P_5$) em notacao decimal e hexadecimal.}\n\n\\subexercicio{Determine o 7º termo da sucessao ($P_7$) e represente-o em sistema binario.}\n\n\\subexercicio{Escreva a regra geral para gerar o proximo termo da sucessao dos numeros pentagonais.}",
+  "difficulty": 4,
+  "author": "Professor Diogo",
+  "format": "standard",
+  "additional_tags": ["numeros_pentagonais", "representacao_visual", "conversao_bases", "regra_sucessao"],
+  "subvariant_functions": [],
+  "has_parts": true,
+  "parts_count": 4,
+  "solution": "",
+  "skip_preview": true
+}

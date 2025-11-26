@@ -1,6 +1,6 @@
-PWD c:\Users\diogo\projects\Exercises-and-Evaluation\Teste_modelo
+PWD c:\Users\diogo\AAA\Projects\Exercises and Evaluation\Teste_modelo
 INPUT C:\Users\diogo\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\diogo\projects\Exercises-and-Evaluation\Teste_modelo\exame.tex
+INPUT c:\Users\diogo\AAA\Projects\Exercises and Evaluation\Teste_modelo\exame.tex
 OUTPUT exame.log
 INPUT C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\diogo\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls

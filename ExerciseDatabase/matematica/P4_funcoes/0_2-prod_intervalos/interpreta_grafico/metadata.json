@@ -1,0 +1,16 @@
+{
+  "tipo": "interpreta_grafico",
+  "tipo_nome": "Interpreta Grafico",
+  "exercicios": {
+    "MAT_P4FUNCOE_0PX_IGX_001": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_0PX_IGX_002": {
+      "created": "2025-11-26",
+      "difficulty": 2,
+      "status": "active"
+    }
+  }
+}

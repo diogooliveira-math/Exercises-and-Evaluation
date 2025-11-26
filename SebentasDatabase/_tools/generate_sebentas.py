@@ -341,7 +341,8 @@ class SebentaGenerator:
             content_lines.append("\\subsection*{Tipos de Exercícios}")
             content_lines.append("\\begin{itemize}")
             for tipo in metadata['tipos']:
-                tipo_text = f"\\textbf{{{tipo['name']}}}"
+                tipo_name_display = tipo['name'].replace('_', ' ')
+                tipo_text = f"\\textbf{{{tipo_name_display}}}"
                 if tipo.get('description'):
                     tipo_text += f" --- {tipo['description']}"
                 content_lines.append(f"  \\item {tipo_text}")

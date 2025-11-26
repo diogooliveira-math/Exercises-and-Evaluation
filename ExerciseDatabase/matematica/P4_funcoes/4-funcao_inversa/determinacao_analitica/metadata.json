@@ -23,8 +23,118 @@
     "max": 4
   },
   "has_subvariants": true,
-  "exercicios": [
-    "MAT_P4FUNCOE_4FIN_ANA_001",
-    "MAT_P4FUNCOE_4FIN_ANA_002"
-  ]
+  "exercicios": {
+    "MAT_P4FUNCOE_4FX_DAX_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Test Agent",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "inversa",
+        "expressao_analitica",
+        "algebra",
+        "calculo_analitico",
+        "injetividade",
+        "sobrejetividade",
+        "simetria",
+        "resolucao_equacao"
+      ],
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_4FX_DAX_002": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Test Agent",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "algebra",
+        "simetria",
+        "resolucao_equacao",
+        "expressao_analitica",
+        "injetividade",
+        "inversa",
+        "sobrejetividade",
+        "calculo_analitico"
+      ],
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_4FX_DAX_003": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor",
+      "difficulty": 3,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "resolucao_equacao",
+        "expressao_analitica",
+        "algebra",
+        "injetividade",
+        "simetria",
+        "sobrejetividade",
+        "calculo_analitico",
+        "inversa"
+      ],
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_4FX_DAX_004": {
+      "created": "2025-11-26",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_4FX_DAX_005": {
+      "created": "2025-11-26",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_FUNC_DA_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor",
+      "difficulty": 2,
+      "tags": [
+        "funcao_inversa",
+        "determinacao analitica",
+        "funcoes",
+        "inversa"
+      ],
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_FUNC_DA_002": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor",
+      "difficulty": 2,
+      "tags": [
+        "funcao_inversa",
+        "determinacao analitica",
+        "funcoes",
+        "inversa"
+      ],
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_FUNC_DA_003": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor",
+      "difficulty": 2,
+      "tags": [
+        "funcao_inversa",
+        "determinacao analitica",
+        "funcoes",
+        "inversa"
+      ],
+      "status": "active"
+    }
+  }
 }
