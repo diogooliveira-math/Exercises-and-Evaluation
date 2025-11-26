@@ -12,8 +12,23 @@
 Uma cultura segue $n(t)=n_0 e^{kt}$. Inicialmente 800 bactérias; após 4 h quadruplicou.
 \begin{enumerate}
   \item Determina $n_0$ e $k$.
+  \vspace{3cm}
   \item Estima $n(6)$.
+  \vspace{3cm}
   \item Esboça o gráfico e interpreta três pontos.
+    \begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-0.5,0) -- (10,0) node[right] {$t$};
+    \draw[->] (0,-0.5) -- (0,6) node[above] {$C(t)$};
+    \foreach \x in {1,2,...,9}
+      \draw (\x,0.1) -- (\x,-0.1);
+    \foreach \y in {1,2,...,5}
+      \draw (0.1,\y) -- (-0.1,\y);
+  \end{tikzpicture}
+  \end{center}
   \item Cria um novo problema semelhante e resolve.
+  \vspace{3cm}
 \end{enumerate}
+
+\vspace{3cm}
 }

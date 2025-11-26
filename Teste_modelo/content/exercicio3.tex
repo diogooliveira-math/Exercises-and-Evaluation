@@ -1,38 +1,11 @@
-\exercicio{Considere o triângulo $ABC$ retângulo em $C$, onde os pontos $A$ e $B$ pertencem ao gráfico da função linear $f(x) = 0.5x + 2$.}
-
-\begin{center}
-\begin{tikzpicture}[scale=1.2]
-    % Eixos principais
-    \draw[thick,->] (-0.5,0) -- (9.5,0) node[right] {$x$};
-    \draw[thick,->] (0,-0.5) -- (0,7.5) node[above] {$y$};
-    
-    % Marcações nos eixos
-    \foreach \x in {1,2,3,4,5,6,7,8,9}
-        \draw (\x,0.1) -- (\x,-0.1) node[below] {$\x$};
-    
-    % Origem
-    \node[below left] at (0,0) {$0$};
-    
-    % Função linear f(x) = 0.5x + 2
-    \draw[thick, blue, domain=-1:10] plot (\x, {0.5*\x + 2}) node[right] {$f(x) = 0.5x + 2$};
-    
-    % Triângulo ABC (sem coordenadas visíveis)
-    \coordinate (A) at (2,3);
-    \coordinate (B) at (5,4.5);
-    \coordinate (C) at (5,3);
-    
-    % Desenhar o triângulo
-    \draw[thick, red] (A) -- (B) -- (C) -- cycle;
-    
-    % Pontos marcados (sem coordenadas)
-    \fill[red] (A) circle (3pt) node[below left] {$A$};
-    \fill[red] (B) circle (3pt) node[above right] {$B$};
-    \fill[red] (C) circle (3pt) node[right] {$C$};
-\end{tikzpicture}
-\end{center}
-
-\subexercicio{Observe o gráfico seguinte e determine as coordenadas dos vértices do triângulo.}
-
-\vspace{4cm}
-
-\subexercicio{Calcule o ângulo BÂC.}
+\exercicio{
+Uma receita de bolo de iogurte para 2 pessoas usa:
+\begin{itemize}
+  \item 1 iogurte natural
+  \item 2 copos de açúcar
+  \item 3 copos de farinha
+  \item $\frac{1}{2}$ copo de óleo
+  \item 3 ovos
+\end{itemize}
+Pretende-se ajustar para 12 pessoas. Indica as quantidades proporcionais.
+}
