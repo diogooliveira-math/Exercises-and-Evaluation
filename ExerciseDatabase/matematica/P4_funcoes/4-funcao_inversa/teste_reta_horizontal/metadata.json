@@ -22,11 +22,31 @@
     "min": 2,
     "max": 3
   },
-  "exercicios": [
-    "MAT_P4FUNCOE_4FIN_003",
-    "MAT_P4FUNCOE_4FIN_TRH_002",
-    "MAT_P4FUNCOE_4FIN_TRH_003",
-    "MAT_P4FUNCOE_4FIN_TRH_004",
-    "MAT_P4FUNCOE_4FIN_TRH_005"
-  ]
+  "exercicios": {
+    "MAT_P4FUNCOE_4FX_TRH_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Test Agent",
+      "difficulty": 3,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "injetividade",
+        "inversa",
+        "teste_reta_horizontal",
+        "sobrejetividade",
+        "analise_grafica",
+        "simetria",
+        "condicao_existencia"
+      ],
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_4FX_TRH_006": {
+      "created": "2025-11-26",
+      "difficulty": 3,
+      "status": "active"
+    }
+  }
 }

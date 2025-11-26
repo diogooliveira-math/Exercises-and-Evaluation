@@ -1,0 +1,274 @@
+{
+  "id": "MAT_A8MODDIS_1SISNUM_NUMFIG",
+  "title": "Números Figurados",
+  "subject": "matematica",
+  "module": "A8_modelos_discretos",
+  "topic": "1-sistemas_numericos",
+  "type": "numeros_figurados",
+  "description": "Exercícios sobre sucessões de números figurados, com representação visual e conversão entre sistemas de numeração.",
+  "has_subvariants": false,
+  "tags": [
+    "números figurados",
+    "sucessões",
+    "sistemas de numeração",
+    "conversão de bases",
+    "regra da sucessão"
+  ],
+  "author": "Professor",
+  "created_at": "2025-11-26",
+  "updated_at": "2025-11-26",
+  "version": "1.0",
+  "exercicios": {
+    "MAT_A8MODELO_1SX_NFX_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Test Agent",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "binario",
+        "sistemas_numericos",
+        "hexadecimal",
+        "sequencias",
+        "decimal"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_002": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Test Agent",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "binario",
+        "hexadecimal",
+        "sequencias",
+        "decimal",
+        "sistemas_numericos"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_003": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Test",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "sequencias",
+        "sistemas_numericos",
+        "hexadecimal",
+        "binario",
+        "decimal"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_004": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor",
+      "difficulty": 3,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "sequencias",
+        "hexadecimal",
+        "decimal",
+        "sistemas_numericos",
+        "binario"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_005": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "decimal",
+        "binario",
+        "sequencias",
+        "sistemas_numericos",
+        "hexadecimal"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_006": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "decimal",
+        "sequencias",
+        "hexadecimal",
+        "binario",
+        "sistemas_numericos"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_007": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "binario",
+        "sistemas_numericos",
+        "decimal",
+        "hexadecimal",
+        "sequencias"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_008": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "decimal",
+        "hexadecimal",
+        "sistemas_numericos",
+        "binario",
+        "sequencias"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_009": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "hexadecimal",
+        "decimal",
+        "binario",
+        "sequencias",
+        "sistemas_numericos"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_010": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor",
+      "difficulty": 3,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "sistemas_numericos",
+        "decimal",
+        "hexadecimal",
+        "binario",
+        "sequencias"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_011": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor Diogo",
+      "difficulty": 3,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 4,
+      "tags": [
+        "sistemas_numericos",
+        "binario",
+        "hexadecimal",
+        "sequencias",
+        "decimal",
+        "numeros_triangulares",
+        "representacao_visual",
+        "conversao_bases",
+        "regra_sucessao"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_012": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor Diogo",
+      "difficulty": 3,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 4,
+      "tags": [
+        "sistemas_numericos",
+        "binario",
+        "decimal",
+        "sequencias",
+        "hexadecimal",
+        "numeros_quadrados",
+        "representacao_visual",
+        "conversao_bases",
+        "regra_sucessao"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_013": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Professor Diogo",
+      "difficulty": 4,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 4,
+      "tags": [
+        "binario",
+        "decimal",
+        "sequencias",
+        "hexadecimal",
+        "sistemas_numericos",
+        "numeros_pentagonais",
+        "representacao_visual",
+        "conversao_bases",
+        "regra_sucessao"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_014": {
+      "created": "2025-11-26",
+      "difficulty": 2,
+      "status": "active"
+    }
+  }
+}

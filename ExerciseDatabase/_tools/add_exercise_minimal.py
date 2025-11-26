@@ -432,20 +432,26 @@ Determine a função inversa de $f(x) = 2x + 3$.
         modulo_match = re.search(r'% Módulo:\s*(.+)', content)
         conceito_match = re.search(r'% Conceito:\s*(.+)', content)
         
-        # Extrair enunciado - usar contagem de chavetas balanceadas
-        exercicio_start = content.find('\\exercicio{')
-        if exercicio_start == -1:
+        # Extrair enunciado - procurar o ÚLTIMO bloco \exercicio{...}
+        last_exercicio_start = content.rfind('\\exercicio{')
+        print(f"[DEBUG] Caminho do ficheiro analisado: {self.temp_file}")
+        print(f"[DEBUG] Tamanho do ficheiro: {len(content)} bytes")
+        print(f"[DEBUG] Última posição de \\exercicio{{: {last_exercicio_start}")
+        if last_exercicio_start == -1:
+            print("[DEBUG] Não foi encontrado nenhum bloco \\exercicio{...} no ficheiro!")
             errors.append("Enunciado (\\exercicio{...}) é obrigatório")
             enunciado_content = ""
         else:
-            # Encontrar a posição do '{' após \exercicio
-            brace_pos = exercicio_start + len('\\exercicio')
+            brace_pos = last_exercicio_start + len('\\exercicio')
+            print(f"[DEBUG] Posição inicial das chavetas: {brace_pos}")
             enunciado_content, closed = self._extract_balanced_braces(content, brace_pos)
+            print(f"[DEBUG] Conteúdo extraído entre chavetas: >>>{enunciado_content}<<< (closed={closed})")
 
             if not closed:
                 errors.append("Chavetas não fechadas no enunciado (\\exercicio{...})")
 
             if not enunciado_content or enunciado_content.strip() == '':
+                print("[DEBUG] O conteúdo extraído está vazio após strip().")
                 errors.append("Enunciado (\\exercicio{...}) está vazio")
         
         if not modulo_match or not modulo_match.group(1).strip():
@@ -459,6 +465,8 @@ Determine a função inversa de $f(x) = 2x + 3$.
             data['conceito'] = conceito_match.group(1).strip()
         
         if enunciado_content:
+            # DEBUG: Mostrar conteúdo extraído do enunciado
+            print(f"[DEBUG] Conteúdo extraído de \\exercicio{{...}}: >>>{enunciado_content.strip()}<<<")
             # Consider common placeholders as empty (e.g., '...','TODO')
             enunciado_clean = enunciado_content.strip()
             if enunciado_clean.lower() in ['...', 'todo'] or re.fullmatch(r"\.*", enunciado_clean):
@@ -750,7 +758,12 @@ Determine a função inversa de $f(x) = 2x + 3$.
 
 def main():
     """Função principal."""
+    import argparse
     base_path = Path(__file__).parent.parent
+
+    parser = argparse.ArgumentParser(description="Criação mínima de exercício com inferência automática.")
+    parser.add_argument('--file', type=str, help='Ficheiro .tex já preenchido a processar (modo automático)')
+    args = parser.parse_args()
 
     # Fix encoding for Windows PowerShell (apply only when running as script)
     if sys.platform == 'win32':
@@ -759,34 +772,36 @@ def main():
             sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
         except Exception:
             pass
-    
+
     print(f"\n{Colors.BOLD}{Colors.CYAN}{'='*70}{Colors.END}")
     print(f"{Colors.BOLD}{Colors.CYAN}  ⚡ SISTEMA MÍNIMO - Criação Rápida de Exercícios  {Colors.END}")
     print(f"{Colors.BOLD}{Colors.CYAN}{'='*70}{Colors.END}\n")
-    print(f"{Colors.GREEN}🎯 Preencha apenas 3 campos - O resto é automático!{Colors.END}\n")
-    
+    print(f"{Colors.GREEN}Preencha apenas 3 campos - O resto é automático!{Colors.END}\n")
+
     template = MinimalExerciseTemplate(base_path)
-    
-    # Valores pré-preenchidos (últimos usados ou defaults)
-    prefill = {
-        'Módulo': 'P4_funcoes',
-        'Conceito': '4-funcao_inversa'
-    }
-    
-    # 1. Criar template
-    template.create_minimal_template(prefill=prefill)
-    
-    # 2. Abrir para edição
-    if not template.open_for_editing():
-        print(f"{Colors.RED}Falha ao abrir template{Colors.END}")
-        return 1
-    
-    # 3. Aguardar edição
-    if not template.wait_for_edit():
-        print(f"{Colors.RED}Operação cancelada{Colors.END}")
-        template.cleanup()
-        return 1
-    
+
+    if args.file:
+        # Modo automático: processar ficheiro fornecido
+        template.temp_file = Path(args.file)
+        print(f"[INFO] A processar ficheiro fornecido: {args.file}")
+    else:
+        # Valores pré-preenchidos (últimos usados ou defaults)
+        prefill = {
+            'Módulo': 'P4_funcoes',
+            'Conceito': '4-funcao_inversa'
+        }
+        # 1. Criar template
+        template.create_minimal_template(prefill=prefill)
+        # 2. Abrir para edição
+        if not template.open_for_editing():
+            print(f"{Colors.RED}Falha ao abrir template{Colors.END}")
+            return 1
+        # 3. Aguardar edição
+        if not template.wait_for_edit():
+            print(f"{Colors.RED}Operação cancelada{Colors.END}")
+            template.cleanup()
+            return 1
+
     # 4. Parse e inferência
     success, data, errors = template.parse_minimal_template()
     
@@ -848,6 +863,71 @@ def main():
 
     if success:
         template.cleanup()
+
+        # NOVO: Perguntar se quer gerar sebenta temporária para revisão
+        print(f"\n{Colors.CYAN}{'='*70}{Colors.END}")
+        gerar_sebenta = input(f"{Colors.BOLD}Deseja gerar uma sebenta temporária com este(s) exercício(s) para revisão? [S/n]: {Colors.END}").strip().lower()
+        if gerar_sebenta in ['', 's', 'sim', 'y', 'yes']:
+            import subprocess
+            import time
+            # Determinar disciplina, módulo, conceito e tipo do exercício criado
+            disciplina = data['disciplina']
+            modulo = data['módulo']
+            conceito = data['conceito']
+            tipo = data['tipo']
+            # Caminho para o script de geração de sebentas
+            # Caminho absoluto para o script de sebentas na raiz do projeto
+            project_root = Path(__file__).parent.parent
+            sebenta_script = str((project_root / 'SebentasDatabase' / '_tools' / 'generate_sebentas.py').resolve())
+            # Gerar sebenta apenas para o tipo/conceito do exercício criado
+            cmd = [sys.executable, sebenta_script, '--discipline', disciplina, '--module', modulo, '--concept', conceito, '--tipo', tipo, '--no-preview', '--no-compile', '--auto-approve']
+            print(f"\n{Colors.CYAN}A gerar sebenta temporária...{Colors.END}")
+            try:
+                subprocess.run(cmd, check=True)
+            except Exception as e:
+                print(f"{Colors.RED}Erro ao gerar sebenta: {e}{Colors.END}")
+            # Procurar ficheiro .tex gerado
+            sebenta_dir = Path(__file__).parent.parent / 'SebentasDatabase' / disciplina / modulo / conceito
+            tex_files = list(sebenta_dir.glob('sebenta_*.tex'))
+            if tex_files:
+                tex_file = tex_files[0]
+                # Compilar PDF
+                print(f"{Colors.CYAN}A compilar PDF...{Colors.END}")
+                try:
+                    subprocess.run(['pdflatex', '-interaction=nonstopmode', '-halt-on-error', str(tex_file)], cwd=sebenta_dir, check=True)
+                except Exception as e:
+                    print(f"{Colors.RED}Erro ao compilar PDF: {e}{Colors.END}")
+                # Abrir PDF para revisão
+                pdf_file = tex_file.with_suffix('.pdf')
+                if pdf_file.exists():
+                    print(f"{Colors.GREEN}PDF gerado: {pdf_file}{Colors.END}")
+                    try:
+                        os.startfile(str(pdf_file))
+                    except Exception:
+                        print(f"Abra manualmente: {pdf_file}")
+                    input(f"\n{Colors.BOLD}Pressione [Enter] após rever o PDF...{Colors.END}")
+                else:
+                    print(f"{Colors.RED}PDF não encontrado.{Colors.END}")
+                # Perguntar se quer editar algum exercício
+                editar = input(f"Deseja editar algum exercício antes de finalizar? [s/N]: ").strip().lower()
+                if editar in ['s', 'sim', 'y', 'yes']:
+                    # Abrir diretório do tipo para edição
+                    tipo_dir = Path(__file__).parent.parent / disciplina / modulo / conceito / tipo
+                    for f in tipo_dir.glob('*.tex'):
+                        try:
+                            os.startfile(str(f))
+                        except Exception:
+                            print(f"Abra manualmente: {f}")
+                    input(f"\n{Colors.BOLD}Pressione [Enter] após editar...{Colors.END}")
+                # Limpar ficheiros temporários da sebenta
+                print(f"{Colors.CYAN}A limpar ficheiros temporários da sebenta...{Colors.END}")
+                for ext in ['.aux', '.log', '.out', '.toc', '.fls', '.fdb_latexmk', '.synctex.gz', '.tex', '.pdf']:
+                    for f in sebenta_dir.glob(f'sebenta_*{ext}'):
+                        try:
+                            f.unlink()
+                        except Exception:
+                            pass
+                print(f"{Colors.GREEN}Limpeza concluída.{Colors.END}")
         return 0
     else:
         print(f"\n{Colors.RED}❌ Falha ao incorporar exercício{Colors.END}\n")

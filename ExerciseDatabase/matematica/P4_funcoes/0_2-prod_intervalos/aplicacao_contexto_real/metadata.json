@@ -1,0 +1,16 @@
+{
+  "tipo": "aplicacao_contexto_real",
+  "tipo_nome": "Aplicacao Contexto Real",
+  "exercicios": {
+    "MAT_P4FUNCOE_0PX_ACR_001": {
+      "created": "2025-11-26",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_0PX_ACR_002": {
+      "created": "2025-11-26",
+      "difficulty": 2,
+      "status": "active"
+    }
+  }
+}

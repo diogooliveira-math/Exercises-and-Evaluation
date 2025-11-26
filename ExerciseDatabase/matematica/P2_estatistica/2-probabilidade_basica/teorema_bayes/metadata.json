@@ -1,0 +1,11 @@
+{
+  "tipo": "teorema_bayes",
+  "tipo_nome": "Teorema Bayes",
+  "exercicios": {
+    "MAT_P2ESTATI_2PX_TBX_001": {
+      "created": "2025-11-26",
+      "difficulty": 4,
+      "status": "active"
+    }
+  }
+}
