@@ -22,11 +22,9 @@
     "min": 2,
     "max": 4
   },
+  "has_subvariants": true,
   "exercicios": [
-    "MAT_P4FUNCOE_4FIN_001",
-    "MAT_P4FUNCOE_4FIN_004",
-    "MAT_P4FUNCOE_4FIN_005",
-    "MAT_P4FUNCOE_4FIN_ANA_004",
-    "MAT_P4FUNCOE_4FIN_ANA_005"
+    "MAT_P4FUNCOE_4FIN_ANA_001",
+    "MAT_P4FUNCOE_4FIN_ANA_002"
   ]
 }

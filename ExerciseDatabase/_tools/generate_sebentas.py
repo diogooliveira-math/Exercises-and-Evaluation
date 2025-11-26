@@ -9,6 +9,18 @@ from pathlib import Path
 import sys
 import subprocess
 import shutil
+import os
+
+# Safety guard: this script writes sebenta files inside ExerciseDatabase (legacy).
+# To avoid accidental creation of outputs in the source tree, require explicit
+# confirmation via environment variable `ALLOW_EXERCISE_DB_SEBENTA=1` or
+# passing the `--allow-exercise-output` flag. Otherwise exit with a helpful message.
+if not (os.environ.get('ALLOW_EXERCISE_DB_SEBENTA') or '--allow-exercise-output' in sys.argv):
+    print("ERROR: This script generates sebenta files inside ExerciseDatabase/")
+    print("This repository uses SebentasDatabase/ for generated outputs.")
+    print("To generate official sebentas, run: python SebentasDatabase/_tools/generate_sebentas.py")
+    print("If you really want to run this legacy script, set env ALLOW_EXERCISE_DB_SEBENTA=1 or pass --allow-exercise-output")
+    sys.exit(2)
 
 BASE = Path(__file__).parent.parent
 DISC = 'matematica'

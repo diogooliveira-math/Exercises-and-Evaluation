@@ -2,6 +2,11 @@
 Sistema de Gestão de Exercícios com TIPOS - Versão 3.0
 Hierarquia: disciplina/tema/conceito/tipo/exercicio.tex
 Usa JSON por diretório (Opção A)
+
+NOVO: Sistema de Preview e Curadoria
+- Pré-visualização do conteúdo antes de adicionar
+- Aprovação manual do utilizador
+- Abertura automática em VS Code
 """
 
 import json
@@ -12,7 +17,8 @@ from pathlib import Path
 import re
 from typing import Dict, List, Optional
 
-# Cores para terminal
+# Importar sistema de preview
+from preview_system import PreviewManager, create_exercise_preview
 class Colors:
     HEADER = '\033[95m'
     BLUE = '\033[94m'
@@ -438,18 +444,50 @@ def create_exercise_with_types():
     print("\n" + "─" * 70)
     statement = input_multiline("Digite o ENUNCIADO PRINCIPAL do exercício:")
     
-    # 11. Múltiplas alíneas?
-    print("\n" + "─" * 70)
-    has_parts = input_with_default("Tem múltiplas alíneas? (s/n)", "n").lower() == 's'
+    # 11. Verificar se tipo suporta sub-variants
+    has_subvariants = tipo_metadata.get('has_subvariants', False)
     
+    subvariant_functions = []
+    if has_subvariants:
+        print("\n" + "─" * 70)
+        print_info(f"Este tipo suporta sub-variants (múltiplas expressões)")
+        print_info(f"As sub-variants serão criadas dinamicamente")
+        
+        use_default = input_with_default(f"Usar funções padrão? (s/n)", "s").lower() == 's'
+        
+        if use_default:
+            # Gerar funções padrão baseadas no tipo
+            if "linear" in tipo_id.lower() or "analitica" in tipo_id.lower():
+                subvariant_functions = [f"x + {i+1}" for i in range(3)]  # Default 3
+            elif "quadratica" in tipo_id.lower():
+                subvariant_functions = [f"x^2 + {i+1}" for i in range(3)]
+            elif "racional" in tipo_id.lower():
+                subvariant_functions = [f"\\frac{{{i+1}}}{{x}}" for i in range(3)]
+            else:
+                subvariant_functions = [f"f_{i+1}(x) = x + {i+1}" for i in range(3)]
+        else:
+            custom_count = int(input_with_default("Quantas funções?", "3"))
+            print_info("Digite cada função (pressione Enter para cada uma):")
+            for i in range(custom_count):
+                func = input(f"Função {i+1}: f(x) = ").strip()
+                if func:
+                    subvariant_functions.append(func)
+    
+    # 12. Múltiplas alíneas manuais? (só se não for sub-variants)
+    has_parts = False
     parts = []
     parts_count = 0
-    if has_parts:
-        parts_count = int(input_with_default("Quantas alíneas?", "3"))
-        for i in range(parts_count):
-            print(f"\n{Colors.YELLOW}Alínea {chr(97+i)}):{Colors.END}")
-            part_text = input_multiline(f"Texto da alínea {chr(97+i)}):")
-            parts.append({"letter": chr(97+i), "text": part_text})
+    
+    if not has_subvariants:
+        print("\n" + "─" * 70)
+        has_parts = input_with_default("Tem múltiplas alíneas manuais? (s/n)", "n").lower() == 's'
+        
+        if has_parts:
+            parts_count = int(input_with_default("Quantas alíneas?", "3"))
+            for i in range(parts_count):
+                print(f"\n{Colors.YELLOW}Alínea {chr(97+i)}):{Colors.END}")
+                part_text = input_multiline(f"Texto da alínea {chr(97+i)}):")
+                parts.append({"letter": chr(97+i), "text": part_text})
     
     # 12. Solução?
     print("\n" + "─" * 70)
@@ -458,7 +496,7 @@ def create_exercise_with_types():
     if has_solution:
         solution_text = input_multiline("Digite a SOLUÇÃO completa:")
     
-    # 13. Confirmar
+    # 13. Preparar conteúdo para preview
     print("\n" + "─" * 70)
     print_header("📋 RESUMO DO EXERCÍCIO")
     print(f"ID: {exercise_id}")
@@ -469,15 +507,10 @@ def create_exercise_with_types():
     print(f"Formato: {exercise_format}")
     print(f"Dificuldade: {difficulty} ({config.get_difficulty_label(difficulty)})")
     print(f"Tags: {', '.join(tags) if tags else 'Nenhuma'}")
-    print(f"Alíneas: {parts_count if has_parts else 'Não'}")
+    print(f"Alíneas: {parts_count if has_parts else ('Sub-variants: ' + str(len(subvariant_functions)) if has_subvariants else 'Não')}")
     print(f"Solução: {'Sim' if has_solution else 'Não'}")
     
-    confirm = input_with_default("\nConfirmar criação? (s/n)", "s").lower()
-    if confirm != 's':
-        print_error("Operação cancelada!")
-        return
-    
-    # 14. Criar ficheiros
+    # 14. Gerar conteúdo (mas ainda não salvar)
     today = datetime.now().strftime("%Y-%m-%d")
     
     module_name = config.get_module_name(discipline, module_id)
@@ -504,8 +537,10 @@ def create_exercise_with_types():
         },
         "exercise_type": exercise_format,
         "content": {
-            "has_multiple_parts": has_parts,
-            "parts_count": parts_count,
+            "has_multiple_parts": has_parts or has_subvariants,
+            "parts_count": parts_count if has_parts else (len(subvariant_functions) if has_subvariants else 0),
+            "has_subvariants": has_subvariants,
+            "subvariant_functions": subvariant_functions if has_subvariants else [],
             "has_graphics": tipo_metadata['caracteristicas'].get('requer_grafico', False),
             "requires_packages": ["amsmath", "amssymb"]
         },
@@ -535,7 +570,12 @@ def create_exercise_with_types():
 \\exercicio{{{statement}}}
 """
     
-    if has_parts:
+    if has_subvariants and subvariant_functions:
+        latex_content += "\n\\begin{enumerate}[label=\\alph*)]\n"
+        for func in subvariant_functions:
+            latex_content += f"\\item $f(x) = {func}$\n"
+        latex_content += "\\end{enumerate}\n\n"
+    elif has_parts:
         latex_content += "\n"
         for part in parts:
             latex_content += f"\\subexercicio{{{part['text']}}}\n\n"
@@ -543,18 +583,104 @@ def create_exercise_with_types():
     if has_solution:
         latex_content += f"\n% Solution:\n% \\begin{{solucao}}\n% {solution_text.replace(chr(10), chr(10) + '% ')}\n% \\end{{solucao}}\n"
     
-    # Salvar ficheiro .tex NO DIRETÓRIO DO TIPO
-    tex_file = tipo_path / f"{exercise_id}.tex"
-    with open(tex_file, 'w', encoding='utf-8') as f:
-        f.write(latex_content)
-    print_success(f"Ficheiro .tex criado: {tex_file.name}")
+    # 15. PRÉ-VISUALIZAÇÃO E CONFIRMAÇÃO
+    print("\n" + "─" * 70)
+    
+    # Carregar metadata do tipo atualizado (simulado)
+    tipo_metadata_updated = None
+    tipo_metadata_file = tipo_path / "metadata.json"
+    if tipo_metadata_file.exists():
+        with open(tipo_metadata_file, 'r', encoding='utf-8') as f:
+            tipo_metadata_updated = json.load(f)
+            # Simular adição à lista de exercícios
+            if not isinstance(tipo_metadata_updated.get('exercicios'), dict):
+                tipo_metadata_updated['exercicios'] = {}
+            tipo_metadata_updated['exercicios'][exercise_id] = {
+                "created": metadata.get('created', today),
+                "modified": today,
+                "author": author,
+                "difficulty": difficulty,
+                "tags": tags,
+                "status": "active"
+            }
+    
+    # Criar preview
+    if has_subvariants:
+        # Preview com estrutura de pasta
+        preview_content = {}
+        
+        # Simular criação da pasta para preview
+        import tempfile
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_folder = generate_subvariant_exercise_folder(
+                exercise_id,
+                f"{module_name} - {concept_name} - {tipo_nome}",
+                subvariant_functions,
+                metadata,
+                temp_dir
+            )
+            
+            # Ler todos os ficheiros da pasta
+            for root, dirs, files in os.walk(temp_folder):
+                for file in files:
+                    file_path = os.path.join(root, file)
+                    rel_path = os.path.relpath(file_path, temp_folder)
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        preview_content[rel_path] = f.read()
+        
+        # Adicionar metadata
+        preview_content[f"{exercise_id}_metadata.json"] = json.dumps(metadata, indent=2, ensure_ascii=False)
+        if tipo_metadata_updated:
+            preview_content["tipo_metadata_updated.json"] = json.dumps(tipo_metadata_updated, indent=2, ensure_ascii=False)
+    else:
+        # Preview tradicional com ficheiro único
+        preview_content = create_exercise_preview(
+            exercise_id,
+            latex_content,
+            metadata,
+            tipo_metadata_updated
+        )
+    
+    # Mostrar preview e pedir confirmação
+    preview = PreviewManager(auto_open=True)
+    if not preview.show_and_confirm(preview_content, f"Novo Exercício: {exercise_id}"):
+        print_error("Operação cancelada pelo utilizador!")
+        return
+    
+    # 16. SALVAR FICHEIROS (só após confirmação)
+    print_header("💾 A GUARDAR FICHEIROS...")
+    
+    if has_subvariants:
+        # Create folder structure for sub-variants
+        from generate_subvariant_exercise import generate_subvariant_exercise_folder
+        
+        exercise_folder = generate_subvariant_exercise_folder(
+            exercise_id,
+            f"{module_name} - {concept_name} - {tipo_nome}",
+            subvariant_functions,
+            metadata,
+            str(tipo_path)
+        )
+        
+        # Update file path for index
+        main_tex_file = Path(exercise_folder) / "main.tex"
+        print_success(f"Pasta do exercício criada: {Path(exercise_folder).name}/")
+        print_success(f"Ficheiro main.tex: {main_tex_file.name}")
+        print_success(f"Sub-variants criados: {len(subvariant_functions)} ficheiros")
+    else:
+        # Original single file approach
+        tex_file = tipo_path / f"{exercise_id}.tex"
+        with open(tex_file, 'w', encoding='utf-8') as f:
+            f.write(latex_content)
+        main_tex_file = tex_file
+        print_success(f"Ficheiro .tex criado: {tex_file.name}")
     
     # Atualizar metadata do tipo (sem JSON individual)
     update_type_metadata_inline(tipo_path, exercise_id, metadata)
-    print_success(f"Metadata do tipo atualizado")
+    print_success("Metadata do tipo atualizado")
     
     # Atualizar índice global
-    update_index(metadata, str(tex_file.relative_to(BASE_DIR)))
+    update_index(metadata, str(main_tex_file.relative_to(BASE_DIR)))
     
     print_header("✅ EXERCÍCIO ADICIONADO COM SUCESSO!")
     print_info(f"Localização: {discipline}/{module_id}/{concept_id}/{tipo_id}/{exercise_id}")

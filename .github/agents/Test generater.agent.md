@@ -28,17 +28,68 @@ Este agente coordena a geração de testes/exames a partir de exercícios na bas
 - (Opcional) PDFs gerados em `SebentasDatabase/.../pdfs/` quando a compilação é requerida.
 - Relatório com lista de exercícios incluídos (IDs), variantes geradas e localização dos ficheiros.
 
+## 🆕 Sistema de Preview v3.1
+
+**IMPORTANTE**: Geração de testes agora inclui preview para cada versão.
+
+### Fluxo com Preview (Padrão)
+
+1. Script seleciona exercícios
+2. **Preview automático para cada versão**:
+   - Mostra LaTeX do teste
+   - Lista exercícios selecionados com metadados
+   - Abre em VS Code
+3. Utilizador revê: `[S]im / [N]ão / [R]ever`
+4. Só compila se aprovado
+
+### Preview Múltiplas Versões
+
+Quando gera múltiplas versões, preview aparece para CADA uma:
+
+```powershell
+# 3 versões → 3 previews separados
+python SebentasDatabase/_tools/generate_tests.py --versions 3 --version-labels A,B,C
+# Preview Versão A → Confirmar
+# Preview Versão B → Confirmar
+# Preview Versão C → Confirmar
+```
+
 ## Comandos e scripts relevantes
 
 Usar os scripts do repositório para workflows automatizados (PowerShell examples):
 
 ```powershell
-# Gerar um teste simples (cria ficheiro .tex em Teste_modelo/)
-python ExerciseDatabase/_tools/generate_tests.py --module P4_funcoes --concept 4-funcao_inversa --num 5 --output Teste_modelo/exame.tex
+# Gerar teste COM PREVIEW (padrão)
+python SebentasDatabase/_tools/generate_tests.py --config test_config.json
+# → Preview automático
+# → Lista de exercícios
+# → Confirmação necessária
 
-# Gerar 3 variantes e compilar em PDFs (pergunta antes de compilar)
-python ExerciseDatabase/_tools/generate_tests.py --module P4_funcoes --num 5 --variants 3 --compile --output-dir SebentasDatabase/matematica/P4_funcoes/4-funcao_inversa/pdfs
+# Gerar teste SEM PREVIEW
+python SebentasDatabase/_tools/generate_tests.py --config test_config.json --no-preview
+
+# Auto-aprovar (CI/CD)
+python SebentasDatabase/_tools/generate_tests.py --config test_config.json --auto-approve
+
+# 3 versões com preview para cada
+python SebentasDatabase/_tools/generate_tests.py --versions 3 --version-labels A,B,C
+# Cada versão terá preview separado
 ```
+
+### Flags Disponíveis
+
+- `--no-preview` - Desabilita pré-visualização
+- `--auto-approve` - Aprova automaticamente
+- `--versions N` - Gera N versões (cada uma com preview)
+- `--version-labels` - Rótulos para versões (A,B,C...)
+
+### Responsabilidades do Agente
+
+- ✅ SEMPRE usar comando padrão (com preview)
+- ✅ AVISAR utilizador sobre preview para cada versão
+- ✅ MOSTRAR lista de exercícios antes de gerar
+- ❌ Só usar flags de automação com permissão
+- 📚 Ver [PREVIEW_SYSTEM.md](../../PREVIEW_SYSTEM.md)
 
 ## Boas práticas
 

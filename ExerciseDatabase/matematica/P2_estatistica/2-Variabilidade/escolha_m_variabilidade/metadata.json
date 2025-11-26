@@ -1,0 +1,30 @@
+{
+  "tipo": "escolha_m_variabilidade",
+  "tipo_nome": "Escolha maior variabilidade",
+  "conceito": "2-Variabilidade",
+  "tema": "P2_estatistica",
+  "disciplina": "matematica",
+  "descricao": "O aluno deverá escolher uma resposta entre várias opções",
+  "tags_tipo": [],
+  "caracteristicas": {
+    "requer_calculo": false,
+    "requer_grafico": false
+  },
+  "dificuldade_sugerida": {
+    "min": 1,
+    "max": 5
+  },
+  "exercicios": {
+    "MAT_P2ESTATI_VARI_EM_001": {
+      "created": "2025-11-21",
+      "modified": "2025-11-21",
+      "author": "Professor",
+      "difficulty": 1,
+      "tags": [
+        "Variabilidade",
+        "escolha maior variabilidade"
+      ],
+      "status": "active"
+    }
+  }
+}

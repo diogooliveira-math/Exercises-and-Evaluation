@@ -17,6 +17,58 @@ Este documento contém instruções específicas para o agente de geração de e
 - **Integração com Sebentas**: Opção para gerar PDFs automaticamente.
 - **Feedback**: Resumos claros de ações realizadas.
 
+## 🆕 Sistema de Preview e Curadoria (v3.1)
+
+**CRÍTICO**: O agente DEVE sempre usar o sistema de preview antes de adicionar conteúdo.
+
+### Fluxo Obrigatório com Preview
+
+1. **Gerar Conteúdo** (LaTeX + metadados)
+2. **🆕 PREVIEW AUTOMÁTICO**
+   - Sistema mostra preview no terminal
+   - Abre ficheiros em VS Code automaticamente
+   - Aguarda confirmação do utilizador: `[S]im / [N]ão / [R]ever`
+3. **Salvar** (só após confirmação)
+
+### Comando com Preview (Padrão)
+
+```bash
+# Criar exercício COM PREVIEW
+python ExerciseDatabase\_tools\add_exercise_with_types.py
+# → Wizard interactivo
+# → Preview automático
+# → Confirmação necessária
+```
+
+### Flags de Automação
+
+Para scripts não-interactivos:
+
+```bash
+# Sem preview (modo rápido)
+python script.py --no-preview
+
+# Auto-aprovar (CI/CD)
+python script.py --auto-approve
+
+# Totalmente automático
+python script.py --no-preview --auto-approve
+```
+
+### Responsabilidades do Agente
+
+- ✅ SEMPRE usar `add_exercise_with_types.py` (tem preview integrado)
+- ✅ NUNCA salvar ficheiros diretamente sem preview
+- ✅ INFORMAR utilizador que preview será mostrado
+- ✅ AGUARDAR confirmação antes de prosseguir
+- ❌ NUNCA usar flags `--no-preview` ou `--auto-approve` sem permissão explícita
+
+### Documentação
+
+- 📚 [PREVIEW_SYSTEM.md](./PREVIEW_SYSTEM.md) - Documentação completa
+- 🚀 [PREVIEW_QUICKSTART.md](./PREVIEW_QUICKSTART.md) - Quick start
+- 📖 Ver `.github/copilot-instructions.md` para detalhes
+
 ## Capacidades do Agente
 
 ### Fluxo Automatizado de Geração

@@ -1,0 +1,44 @@
+{
+  "tipo": "desenvolvimento",
+  "tipo_nome": "Desenvolvimento",
+  "conceito": "0-revisoes",
+  "conceito_nome": "",
+  "tema": "P2_estatistica",
+  "tema_nome": "",
+  "disciplina": "matematica",
+  "descricao": "Exercícios de desenvolvimento",
+  "tags_tipo": [
+    "revisoes"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": false
+  },
+  "dificuldade_sugerida": {
+    "min": 1,
+    "max": 3
+  },
+  "exercicios": {
+    "MAT_P2ESTATI_REVI_D_001": {
+      "created": "2025-11-21",
+      "modified": "2025-11-21",
+      "author": "Professor",
+      "difficulty": 2,
+      "tags": [
+        "revisoes"
+      ],
+      "status": "active"
+    },
+    "MAT_P2ESTATI_REVI_D_002": {
+      "created": "2025-11-21",
+      "modified": "2025-11-21",
+      "author": "Professor",
+      "difficulty": 2,
+      "tags": [
+        "revisoes",
+        "calculo"
+      ],
+      "status": "active"
+    }
+  }
+}

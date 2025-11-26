@@ -1,0 +1,91 @@
+═══════════════════════════════════════════════════════════════════
+DIAGNÓSTICO: Problema no Exercício MAT_P2ESTATI_REVI_D_002
+═══════════════════════════════════════════════════════════════════
+
+❌ O QUE O UTILIZADOR ESCREVEU NO TEMPLATE:
+───────────────────────────────────────────────────────────────────
+\exercicio{
+% Enunciado:
+    Uma mercearia registou o número de peças de fruta vendidas...
+    
+    \begin{enumerate}
+    \item Calcula a percentagem de vendas...
+    
+    \medskip
+    \begin{tabular}{lrr}
+    Fruta & Peças & Percentagem \\
+    \hline
+    Maçãs    & 120 & $\dfrac{120}{300}\times100=40{.}0\%$ \\
+    ...
+    \hline
+    Total    & 300 & $100{.}0\%$ \\
+    \end{tabular    ← ❌ ERRO: FALTA "}"!
+}
+
+Indica qual a fruta...  ← ❌ ISTO FICOU FORA!
+Calcula quantas peças...
+Primeira alínea  ← ❌ ISTO É LIXO DO TEMPLATE!
+Segunda alínea
+
+───────────────────────────────────────────────────────────────────
+
+✅ O QUE DEVERIA TER ESCRITO:
+───────────────────────────────────────────────────────────────────
+\exercicio{
+Uma mercearia registou o número de peças de fruta vendidas num dia. 
+A tabela abaixo resume os dados:
+
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Fruta} & \textbf{Quantidade} \\
+\hline
+Maçãs & 120 \\
+Bananas & 90 \\
+Laranjas & 60 \\
+Peras & 30 \\
+\hline
+\end{tabular}
+\end{center}
+}
+
+\subexercicio{Indica qual a fruta que representa a maior percentagem das vendas. Justifica a tua resposta com referência aos valores calculados.}
+
+\subexercicio{Calcula quantas peças correspondem a $25\%$ do total de vendas. Indica se deves arredondar o resultado e justifica a tua escolha (arredondamento por defeito, por excesso ou para o inteiro mais próximo).}
+
+\subexercicio{Calcula a percentagem conjunta de Maçãs e Bananas. Essas duas frutas representam mais de $50\%$ do total? Mostra os cálculos e conclui.}
+
+───────────────────────────────────────────────────────────────────
+
+📋 REGRAS DO TEMPLATE MÍNIMO:
+═══════════════════════════════════════════════════════════════════
+
+1. ✅ O ENUNCIADO vai DENTRO de \exercicio{...}
+   
+2. ✅ As ALÍNEAS vão FORA, cada uma em \subexercicio{...}
+   
+3. ✅ Todas as chavetas "{" devem ter o seu "}" correspondente
+   
+4. ✅ Apagar o texto "Primeira alínea", "Segunda alínea" do template
+   
+5. ✅ Estrutura LaTeX correta:
+   \begin{table}  →  \end{table}
+   \begin{tabular} →  \end{tabular}
+   \begin{enumerate} → \end{enumerate}
+
+═══════════════════════════════════════════════════════════════════
+
+🔧 SOLUÇÃO:
+───────────────────────────────────────────────────────────────────
+
+1. Apagar MAT_P2ESTATI_REVI_D_002.tex (está malformado)
+
+2. Executar novamente: Ctrl+Shift+B
+
+3. Preencher template CORRETAMENTE seguindo o exemplo acima
+
+4. Remover texto de exemplo ("Primeira alínea", "Segunda alínea")
+
+5. Verificar que TODAS as chavetas estão fechadas
+
+═══════════════════════════════════════════════════════════════════

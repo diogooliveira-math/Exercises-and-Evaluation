@@ -11,6 +11,11 @@ Características:
 - Remove ficheiros temporários (.aux, .log, .fls, etc.)
 - Cria estrutura organizada em SebentasDatabase/
 
+NOVO v3.1: Sistema de Preview e Curadoria
+- Pré-visualização do conteúdo LaTeX antes de compilar
+- Aprovação manual do utilizador
+- Abertura automática em VS Code para revisão
+
 Uso:
     python generate_sebentas.py [opções]
     
@@ -21,6 +26,8 @@ Opções:
     --tipo          Filtrar por tipo de exercício
     --clean-only    Apenas limpar ficheiros temporários existentes
     --no-compile    Gerar .tex mas não compilar
+    --no-preview    Não mostrar preview antes de compilar
+    --auto-approve  Aprovar automaticamente sem pedir confirmação
 """
 
 import sys
@@ -36,6 +43,45 @@ try:
     import yaml
 except ImportError:
     yaml = None
+
+# Logging setup
+import logging
+import os
+from logging.handlers import RotatingFileHandler
+
+# Ensure logs directory exists in SebentasDatabase/logs
+LOG_DIR = Path(__file__).parent.parent.parent / "SebentasDatabase" / "logs"
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+# Create timestamped logfile
+_log_filename = LOG_DIR / f"generate_sebentas_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+
+logger = logging.getLogger("generate_sebentas")
+if not logger.handlers:
+    logger.setLevel(logging.DEBUG)
+    fh = RotatingFileHandler(str(_log_filename), maxBytes=5 * 1024 * 1024, backupCount=5, encoding='utf-8')
+    fh.setLevel(logging.DEBUG)
+    formatter = logging.Formatter("%(asctime)s %(levelname)s %(name)s - %(message)s")
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+    # console handler for user-facing messages
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(logging.INFO)
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+
+# Importar sistema de preview
+try:
+    # garantir que apontamos para a pasta correta do ExerciseDatabase/_tools
+    sys.path.insert(0, str(Path(__file__).parent.parent.parent / "ExerciseDatabase" / "_tools"))
+    from preview_system import PreviewManager, create_sebenta_preview
+    from preview_system import Colors  # Import Colors for fine-tuning messages
+except ImportError:
+    PreviewManager = None
+    create_sebenta_preview = None
+    Colors = None
+    logger.warning("⚠️ Sistema de preview não disponível - a continuar sem pré-visualização")
 
 # Paths principais
 PROJECT_ROOT = Path(__file__).parent.parent.parent
@@ -57,18 +103,24 @@ class SebentaGenerator:
     """Gerador principal de sebentas."""
     
     def __init__(self, clean_only: bool = False, no_compile: bool = False, 
-                 no_module_sebenta: bool = False):
+                 no_module_sebenta: bool = False, no_preview: bool = False,
+                 auto_approve: bool = False):
         self.clean_only = clean_only
         self.no_compile = no_compile
         self.no_module_sebenta = no_module_sebenta
+        self.no_preview = no_preview
+        self.auto_approve = auto_approve
         self.stats = {
             'generated': 0,
             'compiled': 0,
             'cleaned': 0,
-            'errors': 0
+            'errors': 0,
+            'cancelled': 0
         }
         # Carregar configuração dos módulos
         self.modules_config = self.load_modules_config()
+        # Inicializar preview manager se disponível
+        self.preview_manager = PreviewManager(auto_open=True) if PreviewManager and not no_preview else None
         
     def load_modules_config(self) -> Dict:
         """Carrega configuração dos módulos."""
@@ -78,7 +130,7 @@ class SebentaGenerator:
             with open(MODULES_CONFIG, 'r', encoding='utf-8') as f:
                 return yaml.safe_load(f) or {}
         except Exception as e:
-            print(f"⚠️ Erro ao carregar modules_config.yaml: {e}")
+            logger.exception(f"⚠️ Erro ao carregar modules_config.yaml: {e}")
             return {}
     
     def get_module_name(self, discipline: str, module: str) -> str:
@@ -180,7 +232,7 @@ class SebentaGenerator:
                                     'path': tipo_dir
                                 })
             except Exception as e:
-                print(f"  ⚠️ Erro ao ler metadata do conceito: {e}")
+                logger.exception(f"  ⚠️ Erro ao ler metadata do conceito: {e}")
         
         # Procurar por tipos (subdiretórios) se não estiverem no metadata
         if not metadata['tipos']:
@@ -200,15 +252,28 @@ class SebentaGenerator:
                                 'path': tipo_dir
                             })
                     except Exception as e:
-                        print(f"  ⚠️ Erro ao ler metadata do tipo {tipo_dir.name}: {e}")
+                        logger.exception(f"  ⚠️ Erro ao ler metadata do tipo {tipo_dir.name}: {e}")
         
-        # Coletar exercícios .tex
+        # Coletar exercícios .tex ou pastas com main.tex
         exercises = []
-        for tex_file in concept_path.rglob("*.tex"):
+        seen_exercises = set()  # Para evitar duplicatas
+        
+        for item in concept_path.rglob("*"):
             # Ignorar templates e sebentas geradas
-            if tex_file.name.startswith(('sebenta_', 'template_')):
+            if item.name.startswith(('sebenta_', 'template_')):
                 continue
-            exercises.append(tex_file)
+            
+            # Se é uma pasta com main.tex, é um exercício com subvariants
+            if item.is_dir() and (item / "main.tex").exists():
+                main_tex = item / "main.tex"
+                if main_tex not in seen_exercises:
+                    exercises.append(main_tex)
+                    seen_exercises.add(main_tex)
+            # Se é um arquivo .tex individual (não subvariant_*.tex)
+            elif item.is_file() and item.suffix == '.tex' and not item.name.startswith('subvariant_'):
+                if item not in seen_exercises:
+                    exercises.append(item)
+                    seen_exercises.add(item)
         
         # Ordenação customizada para exercícios de eleições
         def custom_sort_key(tex_file: Path) -> tuple:
@@ -299,22 +364,61 @@ class SebentaGenerator:
                 try:
                     with open(tex_file, 'r', encoding='utf-8') as f:
                         exercise_content = f.read().strip()
+                    
+                    # Se é um main.tex de exercício com subvariants, processar os \input{}
+                    if tex_file.name == 'main.tex' and tex_file.parent.is_dir():
+                        exercise_content = self._process_subvariant_inputs(exercise_content, tex_file.parent)
+                    
                     content_lines.append(exercise_content)
                     # Force floats (figures) to be placed before continuing
                     content_lines.append("\\FloatBarrier")
                 except Exception as e:
                     content_lines.append(f"% ERRO ao ler {tex_file.name}: {e}")
                     content_lines.append(f"\\textbf{{Erro ao carregar exercício: {tex_file.name}}}")
+                    logger.exception(f"Erro ao ler exercício {tex_file}: {e}")
                 
                 content_lines.append("")
         
         return "\n".join(content_lines)
     
+    def _process_subvariant_inputs(self, content: str, exercise_dir: Path) -> str:
+        """Processa \input{} de subvariants e substitui pelo conteúdo dos arquivos.
+        
+        Args:
+            content: Conteúdo do main.tex
+            exercise_dir: Diretório do exercício (que contém os subvariant_*.tex)
+        
+        Returns:
+            Conteúdo processado com subvariants incluídos
+        """
+        import re
+        
+        def replace_input(match):
+            subvariant_name = match.group(1)
+            subvariant_file = exercise_dir / f"{subvariant_name}.tex"
+            
+            if subvariant_file.exists():
+                try:
+                    with open(subvariant_file, 'r', encoding='utf-8') as f:
+                        return f.read().strip()
+                except Exception as e:
+                    logger.warning(f"Erro ao ler subvariant {subvariant_file}: {e}")
+                    return f"% ERRO: Não foi possível carregar {subvariant_name}"
+            else:
+                logger.warning(f"Subvariant não encontrado: {subvariant_file}")
+                return f"% AVISO: Subvariant {subvariant_name} não encontrado"
+        
+        # Substituir \input{subvariant_N} pelo conteúdo do arquivo
+        pattern = r'\\input\{(subvariant_\d+)\}'
+        processed_content = re.sub(pattern, replace_input, content)
+        
+        return processed_content
+    
     def generate_sebenta(self, discipline: str, module: str, concept: str, 
-                        concept_path: Path) -> Optional[Path]:
+                        concept_path: Path, tipo: Optional[List[str]] = None) -> Optional[Path]:
         """Gera uma sebenta para um conceito específico."""
         
-        print(f"\n📚 Gerando sebenta: {discipline}/{module}/{concept}")
+        logger.info(f"\n📚 Gerando sebenta: {discipline}/{module}/{concept}")
         
         # Criar estrutura de output
         output_dir = SEBENTAS_DB / discipline / module / concept
@@ -330,13 +434,37 @@ class SebentaGenerator:
                 except Exception:
                     pass
         if cleaned > 0:
-            print(f"  🧹 Limpou {cleaned} ficheiros temporários antigos")
+            logger.info(f"  🧹 Limpou {cleaned} ficheiros temporários antigos")
         
         # Obter metadados
         metadata = self.get_concept_metadata(concept_path)
+
+        # Se foi solicitado um filtro por tipo, filtrar a lista de exercícios
+        if tipo:
+            filtered = []
+            for tipo_id in tipo:
+                # Filtrar exercícios que vivem dentro da subpasta do tipo
+                tipo_filtered = [p for p in metadata['exercises'] if tipo_id in [a.name for a in p.parents if a.parent == concept_path or a == concept_path]]
+                if not tipo_filtered:
+                    # Tentar também encontrar por diretório direto: concept_path/tipo_id
+                    tipo_dir = concept_path / tipo_id
+                    if tipo_dir.exists() and tipo_dir.is_dir():
+                        tipo_filtered = [p for p in metadata['exercises'] if tipo_dir in list(p.parents)]
+                filtered.extend(tipo_filtered)
+            
+            # Remover duplicatas
+            filtered = list(set(filtered))
+            
+            if not filtered:
+                logger.warning(f"  ⚠️ Nenhum exercício encontrado para tipos '{tipo}' em {concept_path}")
+                return None
+
+            metadata['exercises'] = filtered
+            # Reduzir lista de tipos mostrada no preview para os tipos solicitados
+            metadata['tipos'] = [t for t in metadata.get('tipos', []) if t.get('id') in tipo or t.get('name') in tipo]
         
         if not metadata['exercises']:
-            print(f"  ⚠️ Nenhum exercício encontrado")
+            logger.warning(f"  ⚠️ Nenhum exercício encontrado em {concept_path}")
             return None
         
         # Carregar template
@@ -360,12 +488,119 @@ class SebentaGenerator:
         latex_content = latex_content.replace("%%HEADER_RIGHT%%", header_right)
         latex_content = latex_content.replace("%%CONTENT%%", content)
         
-        # Salvar .tex
+        # PREVIEW E CONFIRMAÇÃO (se habilitado)
+        if self.preview_manager and not self.auto_approve:
+            preview_metadata = {
+                "discipline": discipline,
+                "module": module,
+                "module_name": module_name,
+                "concept": concept,
+                "concept_name": metadata['concept_name'],
+                "total_exercises": len(metadata['exercises']),
+                "tipos": [t['name'] for t in metadata['tipos']]
+            }
+            
+            preview_content = create_sebenta_preview(
+                f"sebenta_{concept}",
+                latex_content,
+                preview_metadata
+            )
+            
+            if not self.preview_manager.show_and_confirm(
+                preview_content, 
+                f"Sebenta: {metadata['concept_name']}"
+            ):
+                logger.info(f"  ❌ Cancelado pelo utilizador")
+                self.stats['cancelled'] += 1
+                return None
+        
+        # Salvar .tex (só após confirmação)
         tex_file = output_dir / f"sebenta_{concept}.tex"
         with open(tex_file, 'w', encoding='utf-8') as f:
             f.write(latex_content)
         
-        print(f"  ✅ Gerado: {tex_file.relative_to(PROJECT_ROOT)}")
+        logger.info(f"  ✅ .tex gerado: {tex_file.relative_to(PROJECT_ROOT)}")
+        
+        # FINE-TUNING: Abrir ficheiro para edição antes de compilar
+        if not self.no_compile and not self.auto_approve:
+            if Colors:
+                print(f"\n{Colors.BOLD}{Colors.CYAN}🎨 FINE-TUNING: O ficheiro .tex foi gerado e está pronto para edição{Colors.END}")
+                print(f"{Colors.BLUE}📄 Ficheiro: {tex_file}{Colors.END}")
+            else:
+                print(f"\n🎨 FINE-TUNING: O ficheiro .tex foi gerado e está pronto para edição")
+                print(f"📄 Ficheiro: {tex_file}")
+            
+            # Tentar abrir em VS Code
+            try:
+                import subprocess
+                import os
+                vscode_cmds = ["code", "code.cmd", r"C:\Program Files\Microsoft VS Code\Code.exe"]
+                opened = False
+                for cmd in vscode_cmds:
+                    try:
+                        result = subprocess.run([cmd, str(tex_file)], 
+                                              check=False, 
+                                              capture_output=True,
+                                              timeout=5)
+                        if result.returncode == 0:
+                            opened = True
+                            if Colors:
+                                print(f"{Colors.GREEN}✓ Aberto em VS Code para edição{Colors.END}")
+                            else:
+                                print("✓ Aberto em VS Code para edição")
+                            break
+                    except:
+                        continue
+                
+                if not opened:
+                    if Colors:
+                        print(f"{Colors.YELLOW}⚠️ Não foi possível abrir automaticamente. Edite manualmente:{Colors.END}")
+                        print(f"{Colors.BLUE}   {tex_file}{Colors.END}")
+                    else:
+                        print("⚠️ Não foi possível abrir automaticamente. Edite manualmente:")
+                        print(f"   {tex_file}")
+            
+            except Exception as e:
+                if Colors:
+                    print(f"{Colors.YELLOW}⚠️ Erro ao abrir ficheiro: {e}{Colors.END}")
+                else:
+                    print(f"⚠️ Erro ao abrir ficheiro: {e}")
+            
+            # Perguntar se quer prosseguir com compilação
+            while True:
+                if Colors:
+                    response = input(f"\n{Colors.GREEN}▶️  Fez edições no ficheiro? Pronto para compilar? [S]im / [N]ão / [A]bortar: {Colors.END}").strip().lower()
+                else:
+                    response = input(f"\n▶️  Fez edições no ficheiro? Pronto para compilar? [S]im / [N]ão / [A]bortar: ").strip().lower()
+                
+                if response in ['s', 'sim', 'y', 'yes']:
+                    if Colors:
+                        print(f"{Colors.GREEN}✓ Prosseguindo com compilação...{Colors.END}")
+                    else:
+                        print("✓ Prosseguindo com compilação...")
+                    break
+                elif response in ['n', 'não', 'no']:
+                    if Colors:
+                        print(f"{Colors.BLUE}⏸️  Faça as edições necessárias e pressione Enter quando estiver pronto...{Colors.END}")
+                    else:
+                        print("⏸️  Faça as edições necessárias e pressione Enter quando estiver pronto...")
+                    input()
+                    continue
+                elif response in ['a', 'abort', 'abortar']:
+                    if Colors:
+                        print(f"{Colors.RED}❌ Compilação abortada pelo utilizador{Colors.END}")
+                    else:
+                        print("❌ Compilação abortada pelo utilizador")
+                    # Remover ficheiro .tex se abortado
+                    if tex_file.exists():
+                        tex_file.unlink()
+                    return None
+                else:
+                    if Colors:
+                        print(f"{Colors.RED}Opção inválida! Digite S, N ou A{Colors.END}")
+                    else:
+                        print("Opção inválida! Digite S, N ou A")
+        
         self.stats['generated'] += 1
         
         return tex_file
@@ -374,7 +609,7 @@ class SebentaGenerator:
                                concepts: List[Dict]) -> Optional[Path]:
         """Gera uma sebenta consolidada de todo o módulo."""
         
-        print(f"\n📚 Gerando sebenta consolidada do módulo: {discipline}/{module}")
+        logger.info(f"\n📚 Gerando sebenta consolidada do módulo: {discipline}/{module}")
         
         # Criar estrutura de output
         output_dir = SEBENTAS_DB / discipline / module
@@ -458,12 +693,118 @@ class SebentaGenerator:
         latex_content = latex_content.replace("%%HEADER_RIGHT%%", header_right)
         latex_content = latex_content.replace("%%CONTENT%%", content)
         
-        # Salvar .tex
+        # PREVIEW E CONFIRMAÇÃO para sebenta de módulo (se habilitado)
+        if self.preview_manager and not self.auto_approve:
+            preview_metadata = {
+                "discipline": discipline,
+                "module": module,
+                "module_name": module_name,
+                "type": "module_compilation",
+                "total_concepts": len(concepts),
+                "concepts": [c['name'] for c in concepts]
+            }
+            
+            preview_content = create_sebenta_preview(
+                f"sebenta_modulo_{module}",
+                latex_content,
+                preview_metadata
+            )
+            
+            if not self.preview_manager.show_and_confirm(
+                preview_content,
+                f"Sebenta Módulo: {module_name}"
+            ):
+                logger.info(f"  ❌ Cancelado pelo utilizador")
+                self.stats['cancelled'] += 1
+                return None
+        
+        # Salvar .tex (só após confirmação)
         tex_file = output_dir / f"sebenta_modulo_{module}.tex"
         with open(tex_file, 'w', encoding='utf-8') as f:
             f.write(latex_content)
         
-        print(f"  ✅ Gerado: {tex_file.relative_to(PROJECT_ROOT)}")
+        logger.info(f"  ✅ .tex gerado: {tex_file.relative_to(PROJECT_ROOT)}")
+        
+        # FINE-TUNING: Abrir ficheiro para edição antes de compilar
+        if not self.no_compile and not self.auto_approve:
+            if Colors:
+                print(f"\n{Colors.BOLD}{Colors.CYAN}🎨 FINE-TUNING: O ficheiro .tex foi gerado e está pronto para edição{Colors.END}")
+                print(f"{Colors.BLUE}📄 Ficheiro: {tex_file}{Colors.END}")
+            else:
+                print(f"\n🎨 FINE-TUNING: O ficheiro .tex foi gerado e está pronto para edição")
+                print(f"📄 Ficheiro: {tex_file}")
+            
+            # Tentar abrir em VS Code
+            try:
+                import subprocess
+                import os
+                vscode_cmds = ["code", "code.cmd", r"C:\Program Files\Microsoft VS Code\Code.exe"]
+                opened = False
+                for cmd in vscode_cmds:
+                    try:
+                        result = subprocess.run([cmd, str(tex_file)], 
+                                              check=False, 
+                                              capture_output=True,
+                                              timeout=5)
+                        if result.returncode == 0:
+                            opened = True
+                            if Colors:
+                                print(f"{Colors.GREEN}✓ Aberto em VS Code para edição{Colors.END}")
+                            else:
+                                print("✓ Aberto em VS Code para edição")
+                            break
+                    except:
+                        continue
+                
+                if not opened:
+                    if Colors:
+                        print(f"{Colors.YELLOW}⚠️ Não foi possível abrir automaticamente. Edite manualmente:{Colors.END}")
+                        print(f"{Colors.BLUE}   {tex_file}{Colors.END}")
+                    else:
+                        print("⚠️ Não foi possível abrir automaticamente. Edite manualmente:")
+                        print(f"   {tex_file}")
+            
+            except Exception as e:
+                if Colors:
+                    print(f"{Colors.YELLOW}⚠️ Erro ao abrir ficheiro: {e}{Colors.END}")
+                else:
+                    print(f"⚠️ Erro ao abrir ficheiro: {e}")
+            
+            # Perguntar se quer prosseguir com compilação
+            while True:
+                if Colors:
+                    response = input(f"\n{Colors.GREEN}▶️  Fez edições no ficheiro? Pronto para compilar? [S]im / [N]ão / [A]bortar: {Colors.END}").strip().lower()
+                else:
+                    response = input(f"\n▶️  Fez edições no ficheiro? Pronto para compilar? [S]im / [N]ão / [A]bortar: ").strip().lower()
+                
+                if response in ['s', 'sim', 'y', 'yes']:
+                    if Colors:
+                        print(f"{Colors.GREEN}✓ Prosseguindo com compilação...{Colors.END}")
+                    else:
+                        print("✓ Prosseguindo com compilação...")
+                    break
+                elif response in ['n', 'não', 'no']:
+                    if Colors:
+                        print(f"{Colors.BLUE}⏸️  Faça as edições necessárias e pressione Enter quando estiver pronto...{Colors.END}")
+                    else:
+                        print("⏸️  Faça as edições necessárias e pressione Enter quando estiver pronto...")
+                    input()
+                    continue
+                elif response in ['a', 'abort', 'abortar']:
+                    if Colors:
+                        print(f"{Colors.RED}❌ Compilação abortada pelo utilizador{Colors.END}")
+                    else:
+                        print("❌ Compilação abortada pelo utilizador")
+                    # Remover ficheiro .tex se abortado
+                    if tex_file.exists():
+                        tex_file.unlink()
+                    return None
+                else:
+                    if Colors:
+                        print(f"{Colors.RED}Opção inválida! Digite S, N ou A{Colors.END}")
+                    else:
+                        print("Opção inválida! Digite S, N ou A")
+        
         self.stats['generated'] += 1
         
         # Compilar (PDFs vão para pdfs_dir)
@@ -475,15 +816,16 @@ class SebentaGenerator:
         """Compila um ficheiro .tex para PDF."""
         
         if self.no_compile:
+            logger.info("  ⚠️ no_compile set - pulando compilação")
             return True
         
         # Verificar se pdflatex está disponível
         pdflatex = shutil.which('pdflatex')
         if not pdflatex:
-            print(f"  ⚠️ pdflatex não encontrado no PATH - compilação ignorada")
+            logger.warning(f"  ⚠️ pdflatex não encontrado no PATH - compilação ignorada")
             return False
         
-        print(f"  🔨 Compilando PDF...")
+        logger.info(f"  🔨 Compilando PDF...")
         
         output_dir = tex_file.parent
         tex_name = tex_file.name
@@ -528,7 +870,7 @@ class SebentaGenerator:
                     pdf_dest.unlink()
                 pdf_file.rename(pdf_dest)
                 
-                print(f"  ✅ PDF gerado: {pdf_dest.relative_to(PROJECT_ROOT)}")
+                logger.info(f"  ✅ PDF gerado: {pdf_dest.relative_to(PROJECT_ROOT)}")
                 self.stats['compiled'] += 1
                 
                 # Limpar TODOS os ficheiros temporários incluindo .tex
@@ -551,12 +893,12 @@ class SebentaGenerator:
                         pass
                 
                 if cleaned > 0:
-                    print(f"  🧹 Limpou {cleaned} ficheiros")
+                    logger.info(f"  🧹 Limpou {cleaned} ficheiros")
                 self.stats['cleaned'] += cleaned
                 
                 return True
             else:
-                print(f"  ❌ Erro na compilação - PDF não gerado")
+                logger.error(f"  ❌ Erro na compilação - PDF não gerado for {tex_file}")
                 # Salvar log de erro se houver output
                 if result and (result.stdout or result.stderr):
                     error_log_file = output_dir / f"{tex_file.stem}_error.log"
@@ -564,39 +906,39 @@ class SebentaGenerator:
                         f.write(result.stdout or "")
                         f.write("\n=== STDERR ===\n")
                         f.write(result.stderr or "")
-                    print(f"  📄 Log salvo em: {error_log_file.name}")
+                    logger.info(f"  📄 Log salvo em: {error_log_file.relative_to(PROJECT_ROOT)}")
                 self.stats['errors'] += 1
                 return False
                 
         except subprocess.TimeoutExpired:
-            print(f"  ⏱️ Timeout na compilação")
+            logger.exception(f"  ⏱️ Timeout na compilação for {tex_file}")
             self.stats['errors'] += 1
             return False
         except Exception as e:
-            print(f"  ❌ Erro na compilação: {e}")
+            logger.exception(f"  ❌ Erro na compilação: {e}")
             self.stats['errors'] += 1
             return False
     
-    def scan_and_generate(self, discipline: Optional[str] = None,
-                         module: Optional[str] = None,
-                         concept: Optional[str] = None,
-                         tipo: Optional[str] = None):
+    def scan_and_generate(self, discipline: Optional[List[str]] = None,
+                         module: Optional[List[str]] = None,
+                         concept: Optional[List[str]] = None,
+                         tipo: Optional[List[str]] = None):
         """Escaneia ExerciseDatabase e gera sebentas."""
         
         if self.clean_only:
-            print("🧹 Modo limpeza apenas - removendo ficheiros temporários...")
+            logger.info("🧹 Modo limpeza apenas - removendo ficheiros temporários...")
             cleaned = self.clean_temp_files(SEBENTAS_DB, recursive=True)
-            print(f"\n✅ Total limpo: {cleaned} ficheiros")
+            logger.info(f"\n✅ Total limpo: {cleaned} ficheiros")
             return
         
-        print("📂 Escaneando ExerciseDatabase...")
+        logger.info("📂 Escaneando ExerciseDatabase...")
         
         # Iterar por disciplinas
         for disc_dir in sorted(EXERCISE_DB.iterdir()):
             if not disc_dir.is_dir() or disc_dir.name.startswith('_'):
                 continue
             
-            if discipline and disc_dir.name != discipline:
+            if discipline and disc_dir.name not in discipline:
                 continue
             
             # Iterar por módulos
@@ -604,10 +946,10 @@ class SebentaGenerator:
                 if not mod_dir.is_dir():
                     continue
                 
-                if module and mod_dir.name != module:
+                if module and mod_dir.name not in module:
                     continue
                 
-                print(f"\n📦 Módulo: {disc_dir.name}/{mod_dir.name}")
+                logger.info(f"\n📦 Módulo: {disc_dir.name}/{mod_dir.name}")
                 module_concepts = []
                 
                 # Iterar por conceitos
@@ -615,7 +957,7 @@ class SebentaGenerator:
                     if not conc_dir.is_dir():
                         continue
                     
-                    if concept and conc_dir.name != concept:
+                    if concept and conc_dir.name not in concept:
                         continue
                     
                     # Gerar sebenta
@@ -623,7 +965,8 @@ class SebentaGenerator:
                         disc_dir.name,
                         mod_dir.name,
                         conc_dir.name,
-                        conc_dir
+                        conc_dir,
+                        tipo=tipo
                     )
                     
                     # Compilar se gerado
@@ -642,15 +985,17 @@ class SebentaGenerator:
                     self.generate_module_sebenta(disc_dir.name, mod_dir.name, module_concepts)
         
         # Estatísticas finais
-        print("\n" + "="*60)
-        print("📊 RESUMO")
-        print("="*60)
-        print(f"Sebentas geradas: {self.stats['generated']}")
-        print(f"PDFs compilados:  {self.stats['compiled']}")
-        print(f"Ficheiros limpos: {self.stats['cleaned']}")
+        logger.info("\n" + "="*60)
+        logger.info("📊 RESUMO")
+        logger.info("="*60)
+        logger.info(f"Sebentas geradas: {self.stats['generated']}")
+        logger.info(f"PDFs compilados:  {self.stats['compiled']}")
+        logger.info(f"Ficheiros limpos: {self.stats['cleaned']}")
+        if self.stats['cancelled'] > 0:
+            logger.info(f"Canceladas:       {self.stats['cancelled']}")
         if self.stats['errors'] > 0:
-            print(f"Erros:            {self.stats['errors']}")
-        print("="*60)
+            logger.info(f"Erros:            {self.stats['errors']}")
+        logger.info("="*60)
 
 
 def main():
@@ -661,19 +1006,23 @@ def main():
     
     parser.add_argument(
         '--discipline',
-        help='Filtrar por disciplina (ex: matematica)'
+        action='append',
+        help='Filtrar por disciplina (ex: matematica). Pode ser usado múltiplas vezes para múltiplas disciplinas.'
     )
     parser.add_argument(
         '--module',
-        help='Filtrar por módulo (ex: P4_funcoes)'
+        action='append',
+        help='Filtrar por módulo (ex: P4_funcoes). Pode ser usado múltiplas vezes para múltiplos módulos.'
     )
     parser.add_argument(
         '--concept',
-        help='Filtrar por conceito específico'
+        action='append',
+        help='Filtrar por conceito específico. Pode ser usado múltiplas vezes para múltiplos conceitos.'
     )
     parser.add_argument(
         '--tipo',
-        help='Filtrar por tipo de exercício'
+        action='append',
+        help='Filtrar por tipo de exercício. Pode ser usado múltiplas vezes para múltiplos tipos.'
     )
     parser.add_argument(
         '--clean-only',
@@ -690,8 +1039,38 @@ def main():
         action='store_true',
         help='Não gerar sebenta consolidada do módulo'
     )
+    parser.add_argument(
+        '--no-preview',
+        action='store_true',
+        help='Não mostrar preview antes de compilar'
+    )
+    parser.add_argument(
+        '--auto-approve',
+        action='store_true',
+        help='Aprovar automaticamente sem pedir confirmação'
+    )
     
     args = parser.parse_args()
+
+    # Allow controlling flags via environment variables when called from VS Code tasks
+    # Environment variables: SEBENTA_NO_PREVIEW, SEBENTA_NO_COMPILE, SEBENTA_AUTO_APPROVE
+    import os
+    def env_flag(name: str) -> Optional[bool]:
+        v = os.environ.get(name, None)
+        if v is None or v == "":
+            return None
+        return str(v).lower() in ("1", "true", "yes", "s", "sim")
+
+    env_no_preview = env_flag('SEBENTA_NO_PREVIEW')
+    env_no_compile = env_flag('SEBENTA_NO_COMPILE')
+    env_auto_approve = env_flag('SEBENTA_AUTO_APPROVE')
+
+    if env_no_preview is True:
+        args.no_preview = True
+    if env_no_compile is True:
+        args.no_compile = True
+    if env_auto_approve is True:
+        args.auto_approve = True
     
     # Verificar estrutura
     if not EXERCISE_DB.exists():
@@ -705,7 +1084,9 @@ def main():
     generator = SebentaGenerator(
         clean_only=args.clean_only,
         no_compile=args.no_compile,
-        no_module_sebenta=args.no_module_sebenta
+        no_module_sebenta=args.no_module_sebenta,
+        no_preview=args.no_preview,
+        auto_approve=args.auto_approve
     )
     
     generator.scan_and_generate(
@@ -717,4 +1098,10 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as e:
+        # Log unexpected exception with stacktrace to logfile
+        logger.exception(f"Unhandled exception in generate_sebentas: {e}")
+        # Re-raise to ensure process exits with non-zero code
+        raise

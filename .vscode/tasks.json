@@ -1,0 +1,288 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // ====================================================================
+    // 🎯 TASKS ESSENCIAIS (8 total - 95% dos casos de uso)
+    // ====================================================================
+    
+    // 📝 EXERCÍCIOS
+    {
+      "label": "⚡ Novo Exercício (Mínimo - RECOMENDADO)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "ExerciseDatabase/_tools/add_exercise_minimal.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "📝 Novo Exercício (Template Completo)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "ExerciseDatabase/_tools/add_exercise_template.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 📚 SEBENTAS
+    {
+      "label": "📚 Gerar Sebenta (Direto)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "scripts/run_generate_sebenta_task.py"
+      ],
+      "options": {
+        "env": {
+          "SEBENTA_DISCIPLINE": "${input:sebenta.discipline}",
+          "SEBENTA_MODULE": "${input:sebenta.module}",
+          "SEBENTA_CONCEPT": "${input:sebenta.concept}",
+          "SEBENTA_TIPO": "${input:sebenta.tipo}",
+          "SEBENTA_NO_PREVIEW": "${input:sebenta.no_preview}",
+          "SEBENTA_AUTO_APPROVE": "${input:sebenta.auto_approve}",
+          "SEBENTA_NO_COMPILE": "${input:sebenta.no_compile}"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📚 Gerar Sebenta (Interativo)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "scripts/generate_sebenta_interactive.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    
+    
+    // 📝 TESTES
+    {
+      "label": "📝 Gerar Teste",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "SebentasDatabase/_tools/generate_test_template.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "📝 Gerar Teste (Interativo)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "scripts/generate_test_interactive.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 🔍 PESQUISA
+    {
+      "label": "🔍 Pesquisar Exercícios",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "ExerciseDatabase/_tools/search_exercises.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 🛠️ MANUTENÇÃO
+    {
+      "label": "🛠️ Validar Base de Dados",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "tests/quick_validation.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 📊 ESTATÍSTICAS
+    {
+      "label": "📊 Ver Estatísticas",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "tests/show_stats.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 🛠️ GESTÃO DE MÓDULOS
+    {
+      "label": "🛠️ Gerir Módulos",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "ExerciseDatabase/_tools/manage_modules.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 🛠️ CONSOLIDAR METADADOS
+    {
+      "label": "🛠️ Consolidar Metadados",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "ExerciseDatabase/_tools/consolidate_type_metadata.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    
+    // 🧪 TESTE DE SUB-VARIANTS
+    {
+      "label": "🧪 Testar Sub-Variants",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "tests/test_subvariant_generation.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "group": "test"
+    },
+    
+    // 🔄 GERAR VARIANTE DE EXERCÍCIO
+    {
+      "label": "🔄 Gerar Variante de Exercício",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "ExerciseDatabase/_tools/generate_variant.py",
+        "--source",
+        "${file}"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+  ,
+  "inputs": [
+    {
+      "id": "sebenta.discipline",
+      "type": "promptString",
+      "description": "Disciplinas a filtrar (ex: matematica,test). Separe múltiplas com vírgula. Deixe vazio para todas.",
+      "default": ""
+    },
+    {
+      "id": "sebenta.module",
+      "type": "promptString",
+      "description": "Módulos a filtrar (ex: P4_funcoes,P1_modelos). Separe múltiplas com vírgula. Deixe vazio para todos.",
+      "default": ""
+    },
+    {
+      "id": "sebenta.concept",
+      "type": "promptString",
+      "description": "Conceitos/temas (ex: 4-funcao_inversa,2-funcoes_polinomiais). Separe múltiplas com vírgula. Deixe vazio para todos.",
+      "default": ""
+    },
+    {
+      "id": "sebenta.tipo",
+      "type": "promptString",
+      "description": "Tipos de exercício (ex: determinacao_analitica,grafica). Separe múltiplas com vírgula. Deixe vazio para todos.",
+      "default": ""
+    }
+    ,
+    {
+      "id": "sebenta.no_preview",
+      "type": "pickString",
+      "description": "Desabilitar preview antes de compilar?",
+      "options": ["", "true", "false"],
+      "default": ""
+    },
+    {
+      "id": "sebenta.auto_approve",
+      "type": "pickString",
+      "description": "Aprovar automaticamente?",
+      "options": ["", "true", "false"],
+      "default": ""
+    },
+    {
+      "id": "sebenta.no_compile",
+      "type": "pickString",
+      "description": "Gerar apenas .tex (não compilar PDFs)?",
+      "options": ["", "true", "false"],
+      "default": "true"
+    }
+  ]
+}

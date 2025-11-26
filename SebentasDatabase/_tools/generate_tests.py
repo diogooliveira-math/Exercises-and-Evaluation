@@ -4,6 +4,12 @@ Gera um ficheiro .tex (e opcionalmente .pdf) com uma seleção de exercícios
 baseada num ficheiro de configuração JSON. Os PDFs são colocados em
 `SebentasDatabase/<discipline>/<module>/<concept>/<output_subdir>/pdfs/`.
 
+NOVO v3.1: Sistema de Preview e Curadoria
+- Pré-visualização do teste LaTeX antes de compilar
+- Lista de exercícios selecionados para revisão
+- Aprovação manual do utilizador
+- Abertura automática em VS Code
+
 Uso:
   python generate_tests.py --config SebentasDatabase/_tests_config/default_test_config.json --module P4_funcoes --concept 4-funcao_inversa
 
@@ -11,9 +17,20 @@ Opções:
   --no-compile  Gerar só o .tex, não compilar para PDF
   --config      Caminho para ficheiro JSON de configuração (padrão na pasta _tests_config)
   --discipline/module/concept/tipo permitem filtrar o pool de exercícios
+  --no-preview  Não mostrar preview antes de compilar
+  --auto-approve Aprovar automaticamente sem pedir confirmação
 """
 
 from __future__ import annotations
+
+# Fix encoding issues on Windows
+import sys
+if sys.platform == 'win32':
+    import os
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+    # Force UTF-8 encoding for stdout/stderr
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stderr.reconfigure(encoding='utf-8')
 
 import argparse
 import json
@@ -21,10 +38,20 @@ import shutil
 import subprocess
 import random
 import os
+import sys
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Any, Optional, Tuple
 import re
+
+# Importar sistema de preview
+try:
+    sys.path.insert(0, str(Path(__file__).parent.parent / "ExerciseDatabase" / "_tools"))
+    from preview_system import PreviewManager, create_test_preview
+except ImportError:
+    PreviewManager = None
+    create_test_preview = None
+    print("AVISO: Sistema de preview nao disponivel - a continuar sem pre-visualizacao")
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 EXERCISE_INDEX = PROJECT_ROOT / "ExerciseDatabase" / "index.json"
@@ -153,9 +180,66 @@ def build_test_content(selected: List[Dict[str, Any]], repo_root: Path) -> str:
     parts: List[str] = []
     for ex in selected:
         ex_path = repo_root / 'ExerciseDatabase' / Path(ex.get('path', ''))
-        parts.append(f"% Exercise: {ex.get('id')}")
+
+        # Handle both old (.tex file) and new (folder with main.tex) structures
+        is_folder_structure = False
+        if ex_path.is_dir():
+            # New structure: exercise is a folder with main.tex
+            main_tex = ex_path / 'main.tex'
+            if main_tex.exists():
+                ex_path = main_tex
+                is_folder_structure = True
+            else:
+                # Fallback: try to find any .tex file
+                tex_files = list(ex_path.glob('*.tex'))
+                if tex_files:
+                    ex_path = tex_files[0]  # Use first .tex file found
+                    is_folder_structure = True
+                else:
+                    parts.append(f"% Exercise ID: {ex.get('id')}")
+                    parts.append(f"\\exercicio{{[Exercício não encontrado: {ex_path}]}}")
+                    parts.append('')
+                    continue
+        elif not ex_path.exists():
+            # Old structure: .tex file doesn't exist, try adding .tex extension
+            tex_path = Path(str(ex_path) + '.tex')
+            if tex_path.exists():
+                ex_path = tex_path
+            else:
+                parts.append(f"% Exercise ID: {ex.get('id')}")
+                parts.append(f"\\exercicio{{[Exercício não encontrado: {ex_path}]}}")
+                parts.append('')
+                continue
+
+        parts.append(f"% Exercise ID: {ex.get('id')}")
         try:
             content = ex_path.read_text(encoding='utf-8')
+            
+                # If this is a folder structure, adjust \input{} paths to be relative to the test directory
+            if is_folder_structure:
+                exercise_dir = ex_path.parent
+                # Replace \input{subvariant_N} with \input{relative/path/from/test/dir/to/subvariant_N}
+                import re
+                def replace_input(match):
+                    filename = match.group(1)
+                    full_path = exercise_dir / filename
+                    # Calculate relative path from the test output directory to the exercise file
+                    # The test is generated in: SEBENTAS_DB / discipline / module / concept / output_subdir
+                    # Exercise is in: PROJECT_ROOT / 'ExerciseDatabase' / path_from_index
+                    try:
+                        # Get the test output directory (where pdflatex will run)
+                        test_output_dir = SEBENTAS_DB / ex.get('discipline', '') / ex.get('module', '') / ex.get('concept', '') / config.get('output_subdir', 'tests')
+                        rel_path = full_path.relative_to(test_output_dir)
+                        # Convert Windows backslashes to forward slashes for LaTeX
+                        latex_path = str(rel_path).replace('\\', '/')
+                        return f"\\input{{{latex_path}}}"
+                    except ValueError:
+                        # If relative path fails, use absolute path
+                        abs_path = str(full_path).replace('\\', '/')
+                        return f"\\input{{{abs_path}}}"
+                
+                content = re.sub(r'\\input\{([^}]+)\}', replace_input, content)
+                
         except Exception as e:
             content = f"% ERROR reading {ex_path}: {e}\n\\textbf{{Erro ao carregar exercício}}"
         parts.append(content)
@@ -171,11 +255,15 @@ def save_tex_and_compile(
     output_dir: Path,
     no_compile: bool = False,
     version_label: Optional[str] = None,
+    selected_exercises: Optional[List[Dict]] = None,
+    config: Optional[Dict] = None,
+    no_preview: bool = False,
+    auto_approve: bool = False,
 ) -> Optional[Path]:
     output_dir.mkdir(parents=True, exist_ok=True)
     ts = datetime.now().strftime('%Y%m%d_%H%M%S')
     suffix = f"_{version_label}" if version_label else ""
-    tex_file = output_dir / f"test_{ts}{suffix}.tex"
+    tex_file_name = f"test_{ts}{suffix}"
 
     template = load_template(TEMPLATE_PATH)
     filled = template.replace('%%TITLE%%', title)
@@ -183,6 +271,28 @@ def save_tex_and_compile(
     filled = filled.replace('%%HEADER_RIGHT%%', header_right)
     filled = filled.replace('%%CONTENT%%', tex_content)
 
+    # PREVIEW E CONFIRMAÇÃO (se habilitado)
+    if PreviewManager and not no_preview and not auto_approve:
+        preview_manager = PreviewManager(auto_open=True)
+        
+        # Criar preview com lista de exercícios
+        preview_content = create_test_preview(
+            tex_file_name,
+            filled,
+            selected_exercises or [],
+            config or {}
+        )
+        
+        test_title = f"Teste: {title}"
+        if version_label:
+            test_title += f" (Versão {version_label})"
+        
+        if not preview_manager.show_and_confirm(preview_content, test_title):
+            print(f"  ❌ Teste cancelado pelo utilizador")
+            return None
+
+    # Salvar .tex (só após confirmação)
+    tex_file = output_dir / f"{tex_file_name}.tex"
     tex_file.write_text(filled, encoding='utf-8')
     print(f"  ✅ .tex gerado: {tex_file.relative_to(PROJECT_ROOT)}")
 
@@ -293,6 +403,8 @@ def parse_args():
     p.add_argument('--version-labels', help='Rótulos separados por vírgula para as versões (ex: A,B,C)')
     p.add_argument('--seed', type=int, help='Seed base para seleção aleatória e versões')
     p.add_argument('--export-clean', action='store_true', help='Criar cópias dos PDFs finais sem sufixos/version labels em a distribution folder')
+    p.add_argument('--no-preview', action='store_true', help='Não mostrar preview antes de compilar')
+    p.add_argument('--auto-approve', action='store_true', help='Aprovar automaticamente sem pedir confirmação')
     return p.parse_args()
 
 
@@ -509,6 +621,10 @@ def main():
             output_dir,
             no_compile=args.no_compile,
             version_label=label,
+            selected_exercises=selected,
+            config=config,
+            no_preview=args.no_preview,
+            auto_approve=args.auto_approve,
         )
         results.append((label, result))
 

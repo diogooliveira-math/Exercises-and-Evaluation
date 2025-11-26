@@ -1,4 +1,73 @@
 matematica:
+  A7_probabilidade: 
+    name: Módulo A7 - Probabilidade
+    description: Introdução à Probabilidade
+    duration_hours: 30
+    concepts:
+    - id: "1-eventos_e_espaco_amostral"
+      name: Eventos e Espaço Amostral
+      tags:
+      - eventos
+      - espaco_amostral
+    - id: "2-lei_de_laplace"
+      name: Lei de Laplace
+      tags:
+      - probabilidade
+      - frequencia
+      - eventos_equivalentes
+    - id: "3-probabilidade_condicional_e_independencia"
+      name: Probabilidade Condicional e Independência
+      tags:
+      - condicional
+      - independencia
+      - teorema_bayes
+  P2_estatistica: 
+    name: Módulo P2 - Estatística
+    description: Introdução à Estatística Descritiva
+    duration_hours: 30
+    concepts: 
+    - id: "0-revisoes"
+      name: Revisões Iniciais, inserindo manipulação de dados, tomando partido da regra de três simples e percentagens.
+      tags:
+      - revisao
+      - consolidacao
+      - percentagens
+      - regra_de_tres_simples
+    - id: "1-Medições_básicas"
+      name: Coleta e Organização de Dados
+      tags:
+      - calculos_com_dados
+      - médias
+      - tabelas
+      - manipulacao_dados
+    - id: "2-Variabilidade"
+      name: Medidas de Variabilidade
+      tags:
+      - variabilidade
+      - desvio_medio
+      - variancia
+      - variabilidade
+      - desvio_padrao
+  A8_modelos_discretos:
+    name: Módulo A8 - Modelos Discretos
+    description: Estudo sobre sequências, tomando partido de diferentes sistemas numéricos (ex. Decimal, Binário e Hexadecial)
+    duration_hours: 30
+    concepts:
+    - id: "1-sistemas_numericos"
+      name: Sistemas Numéricos
+      tags:
+      - sistemas_numericos
+      - binario
+      - hexadecimal
+      - decimal
+      - sequencias
+    - id: "2-numeros_figurados"
+      name: Números Figurados
+      tags:
+      - numeros_figurados
+      - sequencias_numericas
+      - termos
+      - valor
   A9_funcoes_crescimento:
     name: Módulo A9 - Funções de Crescimento
     description: Revisões iniciais e estudo de funções exponenciais de crescimento e decaimento
@@ -69,48 +138,8 @@ matematica:
       - inversa
       - injetividade
       - sobrejetividade
-  A11_derivadas:
-    name: Módulo A11 - Derivadas
-    description: Cálculo diferencial
-    duration_hours: 28
-    concepts:
-    - id: taxa_variacao
-      name: Taxa de Variação
-      tags:
-      - tvm
-      - taxa_variacao_media
-      - taxa_variacao_instantanea
-    - id: definicao_derivada
-      name: Definição de Derivada
-      tags:
-      - limite
-      - definicao
-      - derivada_ponto
-    - id: regras_derivacao
-      name: Regras de Derivação
-      tags:
-      - regra_potencia
-      - regra_soma
-      - regra_produto
-      - regra_quociente
-    - id: derivada_funcao_composta
-      name: Derivada de Função Composta (Regra da Cadeia)
-      tags:
-      - regra_cadeia
-      - funcao_composta
-    - id: derivadas_ordem_superior
-      name: Derivadas de Ordem Superior
-      tags:
-      - segunda_derivada
-      - terceira_derivada
-    - id: aplicacoes_derivadas
-      name: Aplicações das Derivadas
-      tags:
-      - reta_tangente
-      - velocidade
-      - aceleracao
   A12_otimizacao:
-    name: Módulo A12 - Otimização
+    name: Módulo A10 - Otimização
     description: Problemas de otimização
     duration_hours: 25
     concepts:
@@ -138,76 +167,6 @@ matematica:
       - modelar
       - funcao_objetivo
       - restricoes
-  A13_limites:
-    name: Módulo A13 - Limites e Continuidade
-    description: Conceito de limite e continuidade
-    duration_hours: 22
-    concepts:
-    - id: conceito_limite
-      name: Conceito de Limite
-      tags:
-      - limite
-      - aproximacao
-      - vizinhanca
-    - id: calculo_limites
-      name: Cálculo de Limites
-      tags:
-      - propriedades_limites
-      - algebra_limites
-    - id: limites_laterais
-      name: Limites Laterais
-      tags:
-      - limite_esquerda
-      - limite_direita
-    - id: limites_infinito
-      name: Limites no Infinito e Infinitos
-      tags:
-      - limite_infinito
-      - assintotas
-    - id: indeterminacoes
-      name: Indeterminações
-      tags:
-      - zero_sobre_zero
-      - infinito_sobre_infinito
-      - levantamento_indeterminacao
-    - id: continuidade
-      name: Continuidade
-      tags:
-      - funcao_continua
-      - descontinuidade
-      - tipos_descontinuidade
-  A14_integrais:
-    name: Módulo A14 - Integrais
-    description: Cálculo integral
-    duration_hours: 30
-    concepts:
-    - id: primitiva
-      name: Conceito de Primitiva
-      tags:
-      - primitiva
-      - antiderivada
-      - constante_integracao
-    - id: integral_indefinido
-      name: Integral Indefinido
-      tags:
-      - integracao_direta
-      - tabela_primitivas
-    - id: integral_definido
-      name: Integral Definido
-      tags:
-      - teorema_fundamental
-      - calculo_areas
-    - id: metodos_integracao
-      name: Métodos de Integração
-      tags:
-      - substituicao
-      - por_partes
-    - id: aplicacoes_integrais
-      name: Aplicações de Integrais
-      tags:
-      - areas
-      - volumes
-      - distancias
   P4_funcoes:
     name: MÓDULO P4 - Funções
     description: Introdução às funções e funções polinomiais

@@ -1,0 +1,80 @@
+{
+  "tipo": "determinacao_valores",
+  "tipo_nome": "Determinação de valores",
+  "conceito": "1-sistemas_numericos",
+  "conceito_nome": "Sistemas Numéricos",
+  "tema": "A8_modelos_discretos",
+  "tema_nome": "Módulo A8 - Modelos Discretos",
+  "disciplina": "matematica",
+  "descricao": "Traduzir diferentes sistemas numéricos uns nos outros, como por exemplo, traduzir 10 em número binário.",
+  "tags_tipo": [
+    "Representa"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": false
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 4
+  },
+  "exercicios": {
+    "MAT_A8MODELO_1SX_DVX_001": {
+      "created": "2025-11-21",
+      "modified": "2025-11-21",
+      "author": "Professor",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "sequencias",
+        "decimal",
+        "hexadecimal",
+        "binario",
+        "Representa",
+        "sistemas_numericos"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_DVX_002": {
+      "created": "2025-11-21",
+      "modified": "2025-11-21",
+      "author": "Professor",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 5,
+      "tags": [
+        "binario",
+        "sequencias",
+        "sistemas_numericos",
+        "decimal",
+        "Representa",
+        "hexadecimal"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_DVX_003": {
+      "created": "2025-11-21",
+      "modified": "2025-11-21",
+      "author": "Professor",
+      "difficulty": 1,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "binario",
+        "decimal",
+        "hexadecimal",
+        "sistemas_numericos",
+        "sequencias",
+        "Representa"
+      ],
+      "status": "active"
+    }
+  }
+}

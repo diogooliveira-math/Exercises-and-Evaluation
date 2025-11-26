@@ -1,0 +1,308 @@
+S% Template para geração automática de sebentas
+% Gerado automaticamente - NÃO EDITAR MANUALMENTE
+\documentclass[12pt,a4paper]{article}
+
+% Encoding e idioma
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+
+% Matemática
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Gráficos e figuras
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,angles,quotes}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+% Force float barriers when needed to keep figures right after exercises
+\usepackage{placeins}
+\usepackage{float}  % Para figure[H] - força figuras exatamente onde definidas
+
+% Layout e formatação
+\usepackage{geometry}
+\geometry{a4paper,margin=2.5cm,top=3cm,bottom=3cm}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{booktabs}
+
+% Hyperlinks e referências
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+% Sistema de exercícios - macros personalizadas
+\newcounter{exerciciocount}
+\newcounter{subexerciciocount}
+\newcounter{optioncount}
+
+\newcommand{\exercicio}[1][]{% 
+    \par\vspace{1.5em}%
+    \refstepcounter{exerciciocount}%
+    \setcounter{subexerciciocount}{0}%
+    \setcounter{optioncount}{0}%
+    \noindent\textbf{Exercício~\theexerciciocount.}%
+    \ifx&#1&%
+        % Argumento vazio - o conteúdo vem depois
+        \par\vspace{0.3em}%
+    \else%
+        % Argumento fornecido - incluir inline
+        \ #1\par\vspace{0.5em}%
+    \fi%
+}
+
+\newcommand{\subexercicio}[1]{%
+    \par\vspace{0.8em}%
+    \refstepcounter{subexerciciocount}%
+    \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+}
+
+\newcommand{\option}[1]{%
+    \par
+    \refstepcounter{optioncount}%
+    \noindent(\alph{optioncount}) #1%
+}
+
+% Campos para respostas
+\newcommand{\campo}[1][2.0cm]{\makebox[#1]{\hrulefill}}
+\newcommand{\campoLetra}[1][1.2cm]{\makebox[#1]{\hrulefill}}
+\newcommand{\campoCents}[1][3.0cm]{\makebox[#1]{\hrulefill}}% Cabeçalho e rodapé
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Módulo A9 - Funções de Crescimento}
+\fancyhead[R]{0 - revisoes}
+\fancyfoot[C]{\thepage}
+
+% Metadados do documento
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+
+% Remover título, autor e data - apenas conteúdo
+\thispagestyle{fancy}
+
+\section*{0 - revisoes}
+
+\subsection*{Tipos de Exercícios}
+\begin{itemize}
+  \item \textbf{Aplicações Práticas} --- Exercícios de aplicação de conceitos matemáticos básicos (proporcionalidade, percentagens) em contextos práticos do quotidiano.
+  \item \textbf{Cálculo com Funções} --- Exercícios de cálculo de imagens, objetos e manipulação algébrica básica de funções.
+  \item \textbf{Conceito de Função} --- Exercícios sobre o conceito fundamental de função, verificação de correspondências e identificação de funções.
+\end{itemize}
+
+\vspace{1em}
+
+% Exercício 1: MAT_A9FUNCOE_0RX_APX_001.tex
+% Exercise ID: MAT_A9FUNCOE_0RX_APX_001
+% Module: Módulo A9 - Funções de Crescimento | Concept: Revisões de Crescimento | Type: Aplicações Práticas
+% Difficulty: 1/5 (Muito Fácil) | Format: desenvolvimento
+% Tags: crescimento, aplicacao_pratica, contexto_real, consolidacao, revisao, proporcionalidade, percentagens
+% Author: Professor | Date: 2025-11-20
+% Status: active
+
+\exercicio{
+Uma família de 4 pessoas consome 2 kg de arroz por semana. Quantos kg de arroz serão necessários para uma família de 6 pessoas, mantendo a mesma proporção?
+}
+\FloatBarrier
+
+% Exercício 2: MAT_A9FUNCRE_0REV_APL_001.tex
+% meta:
+% id: MAT_A9FUNCRE_0REV_APL_101
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: aplicacoes_praticas
+% tipo_nome: Aplicações Práticas
+% difficulty: 2
+% tags: revisao,proporcionalidade,aplicacao_pratica
+% author: sistema
+\exercicio{
+Uma receita de bolo de iogurte para 2 pessoas usa:
+\begin{itemize}
+  \item 1 iogurte natural
+  \item 2 copos de açúcar
+  \item 3 copos de farinha
+  \item $\frac{1}{2}$ copo de óleo
+  \item 3 ovos
+\end{itemize}
+Pretende-se ajustar para 12 pessoas. Indica as quantidades proporcionais.
+}
+\FloatBarrier
+
+% Exercício 3: MAT_A9FUNCRE_0REV_APL_002.tex
+% meta:
+% id: MAT_A9FUNCRE_0REV_APL_102
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: aplicacoes_praticas
+% tipo_nome: Aplicações Práticas
+% difficulty: 2
+% tags: revisao,percentagens,aplicacao_pratica
+% author: sistema
+\exercicio{
+O Clube A comprou um jogador por 13 milhões de euros, o que representa 18\% do seu orçamento anual. Determina o orçamento total e discute se a percentagem é sustentável face a uma segunda contratação igual.
+}
+\FloatBarrier
+
+% Exercício 4: MAT_A9FUNCRES_0REV_003.tex
+% meta:
+% id: MAT_A9FUNCRE_0REV_APL_001
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: aplicacoes_praticas
+% tipo_nome: Aplicações Práticas
+% difficulty: 2
+% tags: revisao,proporcionalidade,aplicacao_pratica
+% author: sistema
+\exercicio{
+Uma receita de bolo de iogurte para 2 pessoas usa:
+\begin{itemize}
+  \item 1 iogurte natural
+  \item 2 copos de açúcar
+  \item 3 copos de farinha
+  \item $\frac{1}{2}$ copo de óleo
+  \item 3 ovos
+\end{itemize}
+Pretende-se ajustar para 10 pessoas. Indica as quantidades proporcionais.
+}
+\FloatBarrier
+
+% Exercício 5: MAT_A9FUNCRES_0REV_004.tex
+% meta:
+% id: MAT_A9FUNCRE_0REV_APL_002
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: aplicacoes_praticas
+% tipo_nome: Aplicações Práticas
+% difficulty: 2
+% tags: revisao,percentagens,aplicacao_pratica
+% author: sistema
+\exercicio{
+O Clube A comprou um jogador por 12 milhões de euros, o que representa 20\% do seu orçamento anual. Determina o orçamento total e discute se a percentagem é sustentável face a uma segunda contratação igual.
+}
+\FloatBarrier
+
+% Exercício 6: MAT_A9FUNCRE_0REV_CAL_001.tex
+% meta:
+% id: MAT_A9FUNCRE_0REV_CAL_103
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: calculo_funcoes
+% tipo_nome: Cálculo com Funções
+% difficulty: 2
+% tags: revisao,funcoes,calculo_imagens
+% author: sistema
+\exercicio{
+Considera a função $f(x)=2x-4$.
+\begin{itemize}
+  \item[a)] Calcula $f(0)$, $f(2)$ e $f(5)$.
+  \item[b)] Qual é o valor de $x$ tal que $f(x)=1$?
+\end{itemize}
+}
+\FloatBarrier
+
+% Exercício 7: MAT_A9FUNCRES_0REV_002.tex
+% meta:
+% id: MAT_A9FUNCRE_0REV_CAL_001
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: calculo_funcoes
+% tipo_nome: Cálculo com Funções
+% difficulty: 2
+% tags: revisao,funcoes,calculo_imagens
+% author: sistema
+\exercicio{
+Considera a função $f(x)=2x-3$.
+\begin{itemize}
+  \item[a)] Calcula $f(0)$, $f(2)$ e $f(5)$.
+  \item[b)] Qual é o valor de $x$ tal que $f(x)=1$?
+\end{itemize}
+}
+\FloatBarrier
+
+% Exercício 8: MAT_A9FUNCRE_0REV_CFU_001.tex
+% meta:
+% id: MAT_A9FUNCRE_0REV_CFU_001
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: conceito_funcao
+% tipo_nome: Conceito de Função
+% difficulty: 2
+% tags: revisao,funcoes,conceito_funcao
+% author: sistema
+\exercicio{
+Considera a correspondência seguinte entre pessoas e o número de sapatos que calçam:
+\[
+\begin{tabular}{|c|c|}
+\hline
+\text{Pessoa} & \text{Número de sapatos que calça} \\
+\hline
+\text{Ana} & 37 \\
+\text{Bruno} & 42 \\
+\text{Carla} & 39 \\
+\text{David} & 42 \\
+\hline
+\end{tabular}
+\]
+\textbf{Pergunta:} Esta correspondência é uma função? Justifica escolhendo a opção correta e explicando por que as outras estão erradas.
+\begin{enumerate}
+ \item[(A)] Não é uma função, porque o número 42 aparece duas vezes.
+ \item[(B)] É uma função, porque cada pessoa está associada a um único número.
+ \item[(C)] Não é uma função, porque Bruno e David calçam o mesmo número.
+ \item[(D)] Não é uma função, porque há números repetidos na segunda coluna.
+\end{enumerate}
+}
+\FloatBarrier
+
+% Exercício 9: MAT_A9FUNCRES_0REV_001.tex
+% meta:
+% id: MAT_A9FUNCRE_0REV_CFU_001
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: conceito_funcao
+% tipo_nome: Conceito de Função
+% difficulty: 2
+% tags: revisao,funcoes,conceito_funcao
+% author: sistema
+\exercicio{
+Considera a correspondência seguinte entre pessoas e o número de sapatos que calçam:
+\[
+\begin{array}{c|c}
+\text{Pessoa} & \text{Número de sapatos que calça} \\
+\hline
+\text{Ana} & 37 \\
+\text{Bruno} & 42 \\
+\text{Carla} & 39 \\
+\text{David} & 42 \\
+\end{array}
+\]
+\textbf{Pergunta:} Esta correspondência é uma função? Justifica escolhendo a opção correta e explicando por que as outras estão erradas.
+\begin{enumerate}
+ \item[(A)] Não é uma função, porque o número 42 aparece duas vezes.
+ \item[(B)] É uma função, porque cada pessoa está associada a um único número.
+ \item[(C)] Não é uma função, porque Bruno e David calçam o mesmo número.
+ \item[(D)] Não é uma função, porque há números repetidos na segunda coluna.
+\end{enumerate}
+}
+\FloatBarrier
+
+
+\end{document}

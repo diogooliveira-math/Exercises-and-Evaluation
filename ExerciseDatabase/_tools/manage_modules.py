@@ -6,9 +6,14 @@ Versão: 2.1
 
 import yaml
 import json
+import sys
+import io
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List
+
+# Note: avoid rewrapping std streams at import-time. Apply any Windows-specific
+# stdout fixes only when running the script directly.
 
 # Cores
 class Colors:
@@ -541,6 +546,14 @@ def main_menu():
         input(f"\n{Colors.CYAN}Pressione Enter para continuar...{Colors.END}")
 
 if __name__ == "__main__":
+    # Fix encoding for Windows PowerShell when executed as script
+    if sys.platform == 'win32':
+        try:
+            sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+            sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+        except Exception:
+            pass
+
     try:
         main_menu()
     except KeyboardInterrupt:

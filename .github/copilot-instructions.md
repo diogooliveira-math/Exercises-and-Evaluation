@@ -145,8 +145,171 @@ def generate_exam(index: dict, criteria: dict) -> str:
 
 # Versão do copilot_instructions
 - v1.0 — adaptado ao repositório "Exercises and Evaluation"
+- v3.1 — adicionado sistema de preview e curadoria
+- v3.2 — adicionado sistema de tasks VS Code e template system
 
-# Use case — adicionar exercícios via VS Code (workflow suave)
+# 🆕 Sistema de Preview e Curadoria (v3.1)
+
+**CRÍTICO**: TODOS os scripts de geração DEVEM usar o sistema de preview antes de adicionar conteúdo à base de dados.
+
+## Filosofia
+> "Gere rápido, reveja sempre, confirme conscientemente"
+
+Agentes iniciam o ciclo de geração, mas o utilizador SEMPRE confirma após revisão visual.
+
+## Implementação Obrigatória
+
+### 1. Importar Preview System
+```python
+from preview_system import PreviewManager, create_exercise_preview
+```
+
+### 2. Gerar Conteúdo (como antes)
+```python
+latex_content = generate_exercise()
+metadata = build_metadata()
+```
+
+### 3. **PREVIEW E CONFIRMAÇÃO** (NOVO)
+```python
+preview_content = create_exercise_preview(
+    exercise_id,
+    latex_content,
+    metadata
+)
+
+preview = PreviewManager(auto_open=True)
+if not preview.show_and_confirm(preview_content, "Novo Exercício"):
+    # Utilizador cancelou - NÃO adicionar
+    return
+
+# Só adicionar se confirmado
+save_to_database(...)
+```
+
+### 4. Comportamento Esperado
+- ✅ Mostrar preview no terminal (primeiras 20 linhas)
+- ✅ Abrir ficheiros em VS Code automaticamente
+- ✅ Aguardar confirmação explícita `[S]im / [N]ão / [R]ever`
+- ✅ Só salvar após confirmação
+- ✅ Limpar temporários após uso
+
+## Scripts Atualizados (v3.1)
+
+### ExerciseDatabase/_tools/
+- ✅ `add_exercise_with_types.py` - COM preview
+- ✅ `preview_system.py` - Sistema central
+
+### SebentasDatabase/_tools/
+- ✅ `generate_sebentas.py` - COM preview
+  - Flags: `--no-preview`, `--auto-approve`
+- ✅ `generate_tests.py` - COM preview
+  - Flags: `--no-preview`, `--auto-approve`
+
+## Flags para Automação
+
+Para CI/CD ou scripts não-interactivos:
+```bash
+# Desabilitar preview
+python script.py --no-preview
+
+# Auto-aprovar sem confirmação
+python script.py --auto-approve
+
+# Combinar (totalmente não-interactivo)
+python script.py --no-preview --auto-approve
+```
+
+## Criar Novo Script de Geração
+
+**Template obrigatório:**
+```python
+from preview_system import PreviewManager
+
+def my_generator():
+    # 1. Gerar conteúdo
+    content = generate_something()
+    
+    # 2. Preparar preview
+    preview_content = {
+        "output.tex": content,
+        "metadata.json": json.dumps(metadata, indent=2)
+    }
+    
+    # 3. PREVIEW E CONFIRMAÇÃO
+    preview = PreviewManager(auto_open=True)
+    if not preview.show_and_confirm(preview_content, "Título do Preview"):
+        print("❌ Cancelado pelo utilizador")
+        return None
+    
+    # 4. Salvar (só após confirmação)
+    save_file(content)
+    return True
+```
+
+## Documentação
+
+- 📚 `PREVIEW_SYSTEM.md` - Documentação completa
+- 🚀 `PREVIEW_QUICKSTART.md` - Quick start 5 minutos
+- 📖 `readme.md` - Atualizado com v3.1
+
+## Estatísticas
+
+Scripts devem rastrear:
+```python
+stats = {
+    'generated': 0,    # Conteúdo gerado
+    'compiled': 0,     # PDFs compilados
+    'cancelled': 0,    # 🆕 Cancelados pelo utilizador
+    'errors': 0        # Erros
+}
+```
+
+## Comportamento do Agente (NOVO)
+
+Quando utilizador pede para:
+
+### "Cria um exercício sobre X"
+```
+Agente:
+1. ✅ Gerar conteúdo LaTeX
+2. ✅ Gerar metadados
+3. ✅ Mostrar PREVIEW automático
+4. ✅ Abrir em VS Code
+5. ⏸️ AGUARDAR confirmação do utilizador
+6. ✅ Só adicionar se confirmado
+```
+
+### "Gera uma sebenta de Y"
+```
+Agente:
+1. ✅ Compilar exercícios do módulo
+2. ✅ Gerar LaTeX da sebenta
+3. ✅ Mostrar PREVIEW
+4. ⏸️ AGUARDAR confirmação
+5. ✅ Compilar PDF se confirmado
+```
+
+### "Cria um teste com Z"
+```
+Agente:
+1. ✅ Selecionar exercícios
+2. ✅ Gerar LaTeX do teste
+3. ✅ Mostrar lista de exercícios selecionados
+4. ✅ PREVIEW do teste completo
+5. ⏸️ AGUARDAR confirmação
+6. ✅ Compilar se confirmado
+```
+
+## NUNCA Fazer
+
+❌ Adicionar conteúdo sem preview  
+❌ Salvar antes de confirmação  
+❌ Ignorar cancelamento do utilizador  
+❌ Omitir flags `--no-preview` em scripts automatizados  
+❌ Criar scripts novos sem integrar preview  
+
+## Use case — adicionar exercícios via VS Code (workflow suave)
 Objetivo: permitir que um colaborador crie um novo exercício de forma rápida a partir do VS Code, com template LaTeX, metadados válidos e validação mínima local.
 
 Passos resumidos:
@@ -215,9 +378,154 @@ Notas:
 - Não incluir credenciais nem caminhos absolutos no snippet/task.
 - Manter tasks/snippets opcionais; documentar no README CONTRIBUTING.md.
 
-# Versão do copilot_instructions
-- v1.1 — adicionada secção "Use case" para integração com VS Code
-- v1.2 — adicionada distinção crítica entre ExerciseDatabase e SebentasDatabase
+# 🆕 VERSÃO 3.4 - SUB-VARIANTS COM ESTRUTURA DE PASTAS
+
+## Nova Estrutura para Exercícios com Sub-Variants
+
+A partir da **versão 3.4**, exercícios com `has_subvariants: true` agora usam uma estrutura de pastas organizada:
+
+```
+MAT_P4FUNCOE_4FIN_ANA_001/
+├── main.tex              # Arquivo principal que inclui sub-variants
+├── subvariant_1.tex      # Primeira função: f(x) = x + 4
+├── subvariant_2.tex      # Segunda função: f(x) = 2x - 1
+└── subvariant_3.tex      # Terceira função: f(x) = \frac{1}{x-1}
+```
+
+### Vantagens da Nova Estrutura
+
+- **Modularidade**: Cada sub-variant é um arquivo separado, facilitando edição individual
+- **Reutilização**: Sub-variants podem ser facilmente movidos ou combinados
+- **Manutenção**: Mudanças em uma função não afetam outras
+- **Versionamento**: Melhor controle de versão por componente
+- **Escalabilidade**: Suporte infinito para número de sub-variants
+
+### Como Funciona
+
+1. **main.tex**: Contém o enunciado principal e inclui cada sub-variant via `\input{}`
+2. **subvariant_N.tex**: Cada arquivo contém apenas uma função específica
+3. **Preview System**: Mostra todos os arquivos da pasta antes da confirmação
+4. **Index Global**: Registra o caminho para `main.tex`
+
+### Scripts Atualizados
+
+- `generate_subvariant_exercise.py`: Agora cria estrutura de pastas
+- `add_exercise_with_types.py`: Detecta `has_subvariants` e usa nova estrutura
+- `test_subvariant_generation.py`: Testa validação de pastas
+
+### Exemplo de main.tex Gerado
+
+```latex
+% meta:
+% id: MAT_P4FUNCOE_4FIN_ANA_001
+% title: "Determinação Analítica da Função Inversa"
+% difficulty: 2
+% tags: funcao_inversa, determinacao_analitica
+% author: Professor
+% has_subvariants: true
+% subvariant_count: 3
+
+\section{Determinação Analítica da Função Inversa}
+
+\exercicio{
+Determina analiticamente a função inversa das seguintes expressões:
+}
+
+\begin{enumerate}[label=\alph*)]
+\item \input{subvariant_1}
+\item \input{subvariant_2}
+\item \input{subvariant_3}
+\end{enumerate}
+```
+
+### Exemplo de subvariant_1.tex
+
+```latex
+% Sub-variant 1 for MAT_P4FUNCOE_4FIN_ANA_001
+% Function: f(x) = x + 4
+
+$f(x) = x + 4$
+```
+
+### Comportamento do Agente (v3.4)
+
+Quando criar exercício com sub-variants:
+
+```
+Utilizador: "Cria um exercício sobre determinar f^(-1)(x) para várias funções"
+
+Agente:
+1. ✅ Detecta tipo com has_subvariants: true
+2. ✅ Solicita lista de funções ou usa padrões
+3. ✅ Gera estrutura de pastas com main.tex + subvariant_*.tex
+4. ✅ Preview mostra todos os arquivos
+5. ✅ Só salva após confirmação do usuário
+6. ✅ Atualiza index.json com caminho para main.tex
+```
+
+### Regras para Sub-Variants
+
+1. **Pasta por Exercício**: Cada exercício com sub-variants tem sua própria pasta
+2. **Nomenclatura**: `subvariant_N.tex` onde N é sequencial (1, 2, 3...)
+3. **Conteúdo Simples**: Cada sub-variant contém apenas a expressão da função
+4. **Include no Main**: main.tex usa `\input{subvariant_N}` para incluir cada um
+5. **Preview Completo**: Sistema de preview mostra todos os arquivos da pasta
+
+### Compatibilidade
+
+- Exercícios sem `has_subvariants` continuam usando arquivos únicos
+- Estrutura antiga permanece válida
+- Migração gradual: novos exercícios podem usar nova estrutura
+
+## Melhorias na Geração de Sebentas
+
+A partir da **versão 3.3**, o sistema de geração de sebentas suporta **seleção múltipla** de disciplinas, módulos, conceitos e tipos de exercício.
+
+### Novos Recursos
+
+#### ✅ Seleção Múltipla
+- **Disciplinas**: `--discipline matematica,test`
+- **Módulos**: `--module P4_funcoes,P1_modelos`  
+- **Conceitos**: `--concept 4-funcao_inversa,2-funcoes_polinomiais`
+- **Tipos**: `--tipo determinacao_analitica,grafica`
+
+#### ✅ Interface Interativa Aprimorada
+O script `generate_sebenta_interactive.py` agora permite:
+- Selecionar múltiplas opções separadas por vírgula (ex: `1,3,5`)
+- Navegação inteligente através de todas as combinações selecionadas
+- Resumo claro das seleções múltiplas
+
+#### ✅ Tasks VS Code Atualizadas
+As tasks do VS Code agora aceitam múltiplos valores separados por vírgula nos inputs.
+
+### Exemplos de Uso
+
+```bash
+# Gerar sebentas para múltiplos módulos
+python generate_sebentas.py --module P4_funcoes,P1_modelos
+
+# Múltiplos conceitos específicos
+python generate_sebentas.py --concept 4-funcao_inversa,2-funcoes_polinomiais
+
+# Combinação: múltiplos módulos e tipos
+python generate_sebentas.py --module P4_funcoes --tipo determinacao_analitica,grafica
+
+# Interface interativa (recomendado para múltiplas seleções)
+python scripts/generate_sebenta_interactive.py
+```
+
+### Comportamento
+
+- **Filtragem OR**: Se múltiplas opções são selecionadas, o sistema inclui todos os exercícios que correspondem a **qualquer** uma das opções
+- **Navegação**: A interface interativa coleta opções de todas as combinações selecionadas
+- **Compatibilidade**: Scripts antigos continuam funcionando (seleção única ainda suportada)
+
+### Benefícios
+
+🎯 **Maior Controle**: Crie sebentas personalizadas combinando diferentes módulos/temas/tipos
+🔄 **Flexibilidade**: Misture conceitos de diferentes módulos em uma única sebenta
+⚡ **Eficiência**: Interface interativa acelera seleção de múltiplas opções
+🔧 **Compatibilidade**: Mantém compatibilidade com workflows existentes
 
 # 🔄 WORKFLOW COMPLETO: Do Exercício ao PDF
 
@@ -510,6 +818,51 @@ Com tipos, agora é possível:
 
 ---
 
-**Versão**: 3.0 (com suporte a tipos de exercícios)  
-**Data**: 2025-11-19  
-**Filosofia**: Organização hierárquica, metadados ricos, automação inteligente
+# 🎯 TASKS VS CODE - INTERAÇÃO RÁPIDA (v3.2)
+
+> **Sistema completo de tasks para executar scripts essenciais**
+
+## Como Sugerir Tasks ao Utilizador
+
+**✅ SEMPRE recomende tasks quando utilizador pede:**
+- "Cria um exercício" → `📝 Novo Exercício (Template)`
+- "Gera uma sebenta" → `📚 Gerar Sebenta (Template Editável)`
+- "Faz um teste" → `📝 Gerar Teste (Template Editável)`
+- "Pesquisa exercícios" → `🔍 Pesquisar Exercícios`
+- "Valida a base" → `🛠️ Validar Base de Dados`
+
+**Exemplo de resposta correta:**
+```
+Recomendo usar a task:
+📝 Novo Exercício (Template)
+
+Para executar:
+Ctrl+Shift+P → "Tasks: Run Task" → Escolher task
+```
+
+## Tasks Essenciais (8 total - 95% dos casos)
+
+| Emoji | Task | Script |
+|-------|------|---------|
+| 📝 | Novo Exercício | `add_exercise_template.py` |
+| 📚 | Gerar Sebenta | `generate_sebenta_template.py` |
+| 📝 | Gerar Teste | `generate_test_template.py` |
+| 🔍 | Pesquisar Exercícios | `search_exercises.py` |
+| 🛠️ | Validar Base de Dados | `quick_validation.py` |
+| 📊 | Ver Estatísticas | (inline Python) |
+| 🛠️ | Gerir Módulos | `manage_modules.py` |
+| 🛠️ | Consolidar Metadados | `consolidate_type_metadata.py` |
+
+**Documentação completa:** `VSCODE_TASKS_GUIDE.md`
+
+## Quando NÃO sugerir tasks
+
+❌ Durante automação/scripts (usar CLI)  
+❌ Quando precisa parsing de output  
+❌ CI/CD pipelines (usar flags `--no-preview --auto-approve`)
+
+---
+
+**Versão**: 3.3 (seleção múltipla + tasks VS Code + template system)  
+**Data**: 2025-11-24  
+**Filosofia**: Organização hierárquica, metadados ricos, automação inteligente, interação visual, seleção múltipla flexível
