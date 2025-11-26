@@ -1,0 +1,38 @@
+% Exercise ID: MAT_A12OTIMI_ESTU_MRE_002
+% Module: Módulo A12 - Otimização | Concept: Estudo da Monotonia
+% Type: monotonia_real | Difficulty: 2/5
+% Tags: monotonia, gráfico, contexto_real, tanque
+% Author: Professor | Date: 2025-11-26
+
+\exercicio{
+Num laboratório, o nível de água num tanque foi registado ao longo de uma experiência de 30 minutos. O gráfico mostra como o nível de água variou nesse período.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+  % Eixos
+  \draw[->] (0,0) -- (7,0) node[right] {Tempo (min)};
+  \draw[->] (0,0) -- (0,6) node[above] {Nível de água (L)};
+  % Gráfico
+  \draw[thick, blue, smooth] plot coordinates {
+    (0,1)   % 0 min - 1L
+    (2,3)   % 10 min - 3L
+    (4,5)   % 20 min - 5L (máximo)
+    (6,2)   % 30 min - 2L
+  };
+  % Marcas no eixo x
+  \foreach \x/\label in {0/0, 1/5, 2/10, 3/15, 4/20, 5/25, 6/30}
+    \draw (\x,0.1) -- (\x,-0.1) node[below] {\label};
+  % Marcas no eixo y
+  \foreach \y/\label in {1/1, 2/2, 3/3, 4/4, 5/5}
+    \draw (0.1,\y) -- (-0.1,\y) node[left] {\label};
+\end{tikzpicture}
+\end{center}
+}
+
+\subexercicio{Durante que intervalo de tempo o nível de água esteve a aumentar?}
+
+\subexercicio{Durante que intervalo de tempo o nível de água esteve a diminuir?}
+
+\subexercicio{Qual foi o nível máximo de água atingido e em que minuto isso aconteceu?}
+
+\subexercicio{Interpreta o significado do ponto mais alto do gráfico no contexto da experiência.}

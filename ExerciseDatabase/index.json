@@ -1,5 +1,6 @@
 {
   "database_version": "3.0",
+
   "last_updated": "2025-11-26T20:07:49.121642",
   "total_exercises": 77,
   "statistics": {
@@ -15,6 +16,7 @@
       "Generalidades acerca de Funções": 1,
       "Funções Polinomiais": 1,
       "Funções polinomiais de grau não superior a 3": 1,
+
       "Função Inversa": 27,
       "Revisões de Crescimento": 4,
       "Funções Exponenciais": 5,
