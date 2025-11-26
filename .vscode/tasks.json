@@ -104,6 +104,20 @@
         "isDefault": true
       }
     },
+    {
+      "label": "📝 Gerar Teste (Interativo)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "scripts/generate_test_interactive.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
     
     // 🔍 PESQUISA
     {

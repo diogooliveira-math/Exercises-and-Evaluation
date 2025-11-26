@@ -72,6 +72,19 @@
     \noindent(\alph{optioncount}) #1%
 }
 
+% Cabeçalho completo do teste dentro de uma caixa simples
+\newcommand{\espacoAluno}{%
+    \vspace{0.5cm}
+    \fbox{%
+        \parbox{\textwidth}{%
+            \noindent\textbf{Nome do Aluno:} \underline{\hspace{7cm}} \textbf{Turma:} \underline{\hspace{1cm}}\\[0.5cm]
+            \noindent\textbf{Assinatura do Professor:} \underline{\hspace{3cm}} \hfill \textbf{Nota:} \underline{\hspace{2cm}}\\[0.5cm]
+            \noindent\textbf{Assinatura do Encarregado de Educação:} \underline{\hspace{3cm}}
+        }%
+    }
+    \vspace{1cm}
+}
+
 % Campos para respostas
 \newcommand{\campo}[1][2.0cm]{\makebox[#1]{\hrulefill}}
 \newcommand{\campoLetra}[1][1.2cm]{\makebox[#1]{\hrulefill}}

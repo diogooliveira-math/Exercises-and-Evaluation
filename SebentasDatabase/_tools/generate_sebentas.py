@@ -254,13 +254,26 @@ class SebentaGenerator:
                     except Exception as e:
                         logger.exception(f"  ⚠️ Erro ao ler metadata do tipo {tipo_dir.name}: {e}")
         
-        # Coletar exercícios .tex
+        # Coletar exercícios .tex ou pastas com main.tex
         exercises = []
-        for tex_file in concept_path.rglob("*.tex"):
+        seen_exercises = set()  # Para evitar duplicatas
+        
+        for item in concept_path.rglob("*"):
             # Ignorar templates e sebentas geradas
-            if tex_file.name.startswith(('sebenta_', 'template_')):
+            if item.name.startswith(('sebenta_', 'template_')):
                 continue
-            exercises.append(tex_file)
+            
+            # Se é uma pasta com main.tex, é um exercício com subvariants
+            if item.is_dir() and (item / "main.tex").exists():
+                main_tex = item / "main.tex"
+                if main_tex not in seen_exercises:
+                    exercises.append(main_tex)
+                    seen_exercises.add(main_tex)
+            # Se é um arquivo .tex individual (não subvariant_*.tex)
+            elif item.is_file() and item.suffix == '.tex' and not item.name.startswith('subvariant_'):
+                if item not in seen_exercises:
+                    exercises.append(item)
+                    seen_exercises.add(item)
         
         # Ordenação customizada para exercícios de eleições
         def custom_sort_key(tex_file: Path) -> tuple:
@@ -352,6 +365,11 @@ class SebentaGenerator:
                 try:
                     with open(tex_file, 'r', encoding='utf-8') as f:
                         exercise_content = f.read().strip()
+                    
+                    # Se é um main.tex de exercício com subvariants, processar os \input{}
+                    if tex_file.name == 'main.tex' and tex_file.parent.is_dir():
+                        exercise_content = self._process_subvariant_inputs(exercise_content, tex_file.parent)
+                    
                     content_lines.append(exercise_content)
                     # Force floats (figures) to be placed before continuing
                     content_lines.append("\\FloatBarrier")
@@ -363,6 +381,39 @@ class SebentaGenerator:
                 content_lines.append("")
         
         return "\n".join(content_lines)
+    
+    def _process_subvariant_inputs(self, content: str, exercise_dir: Path) -> str:
+        """Processa \input{} de subvariants e substitui pelo conteúdo dos arquivos.
+        
+        Args:
+            content: Conteúdo do main.tex
+            exercise_dir: Diretório do exercício (que contém os subvariant_*.tex)
+        
+        Returns:
+            Conteúdo processado com subvariants incluídos
+        """
+        import re
+        
+        def replace_input(match):
+            subvariant_name = match.group(1)
+            subvariant_file = exercise_dir / f"{subvariant_name}.tex"
+            
+            if subvariant_file.exists():
+                try:
+                    with open(subvariant_file, 'r', encoding='utf-8') as f:
+                        return f.read().strip()
+                except Exception as e:
+                    logger.warning(f"Erro ao ler subvariant {subvariant_file}: {e}")
+                    return f"% ERRO: Não foi possível carregar {subvariant_name}"
+            else:
+                logger.warning(f"Subvariant não encontrado: {subvariant_file}")
+                return f"% AVISO: Subvariant {subvariant_name} não encontrado"
+        
+        # Substituir \input{subvariant_N} pelo conteúdo do arquivo
+        pattern = r'\\input\{(subvariant_\d+)\}'
+        processed_content = re.sub(pattern, replace_input, content)
+        
+        return processed_content
     
     def generate_sebenta(self, discipline: str, module: str, concept: str, 
                         concept_path: Path, tipo: Optional[List[str]] = None) -> Optional[Path]:

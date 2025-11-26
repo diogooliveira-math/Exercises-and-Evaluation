@@ -8,10 +8,20 @@ Uso:
     python generate_test_template.py [--module MODULE] [--concept CONCEPT] [--questions N]
 """
 
+# Fix encoding issues on Windows
+import sys
+if sys.platform == 'win32':
+    import os
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+    # Force UTF-8 encoding for stdout/stderr
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stderr.reconfigure(encoding='utf-8')
+
 import os
 import sys
 import json
 import yaml
+import re
 import subprocess
 import tempfile
 import shutil
@@ -29,6 +39,20 @@ try:
 except ImportError:
     # Fallback: sem cores
     GREEN = BLUE = YELLOW = RED = CYAN = RESET = BOLD = ""
+
+
+def check_pdflatex_available() -> bool:
+    """Verifica se pdflatex está disponível no sistema."""
+    try:
+        result = subprocess.run(
+            ['pdflatex', '--version'],
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+        return result.returncode == 0
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return False
 
 
 class TestTemplate:
@@ -125,6 +149,23 @@ class TestTemplate:
             if concept and ex_concept != concept:
                 continue
             exercises.append(ex)
+        
+        return exercises
+    
+    def load_exercises_by_ids(self, exercise_ids: List[str]) -> List[Dict]:
+        """Carrega exercícios específicos pelos IDs"""
+        index_file = self.exercise_db / "index.json"
+        
+        with open(index_file, 'r', encoding='utf-8') as f:
+            index = json.load(f)
+        
+        exercises = []
+        for ex in index.get('exercises', []):
+            if ex.get('id') in exercise_ids:
+                exercises.append(ex)
+        
+        # Ordenar pela ordem dos IDs fornecidos
+        exercises.sort(key=lambda x: exercise_ids.index(x.get('id', '')))
         
         return exercises
     
@@ -239,6 +280,40 @@ class TestTemplate:
             print(f"{RED}✗ Erro na seleção: {e}{RESET}")
             sys.exit(1)
     
+    def _process_subvariant_inputs(self, content: str, exercise_dir: Path) -> str:
+        """Processa \\input{} de subvariants e substitui pelo conteúdo dos arquivos.
+        
+        Args:
+            content: Conteúdo do main.tex
+            exercise_dir: Diretório do exercício (que contém os subvariant_*.tex)
+        
+        Returns:
+            Conteúdo processado com subvariants incluídos
+        """
+        def replace_input(match):
+            subvariant_name = match.group(1)
+            subvariant_file = exercise_dir / f"{subvariant_name}.tex"
+            
+            if subvariant_file.exists():
+                try:
+                    with open(subvariant_file, 'r', encoding='utf-8') as f:
+                        subvariant_content = f.read().strip()
+                    # Remove comment lines from subvariant
+                    lines = subvariant_content.split('\n')
+                    clean_lines = [l for l in lines if not l.strip().startswith('%')]
+                    return '\n'.join(clean_lines).strip()
+                except Exception as e:
+                    return f"[Erro ao ler {subvariant_name}: {e}]"
+            else:
+                return f"[Subvariant não encontrado: {subvariant_name}]"
+        
+        # Regex para encontrar \input{subvariant_*}
+        # Matches: \input{subvariant_1}, \input{subvariant_10}, etc.
+        pattern = r'\\input\{(subvariant_\d+)\}'
+        
+        processed = re.sub(pattern, replace_input, content)
+        return processed
+    
     def generate_test_latex(self, discipline: str, module_name: str, 
                            concept_name: Optional[str], selected_exercises: List[Dict]) -> str:
         """Gera conteúdo LaTeX completo do teste"""
@@ -330,8 +405,6 @@ class TestTemplate:
     \item Leia atentamente todas as questões
     \item Apresente todos os cálculos e justificações
     \item Escreva de forma clara e organizada
-    \item Duração: ____ minutos
-    \item Cotação total: ____ pontos
 \end{itemize}
 
 \vspace{1em}
@@ -354,11 +427,34 @@ class TestTemplate:
             
             # Carregar conteúdo .tex do exercício
             source_file = ex.get('source_file') or ex.get('path', '')
+            # Normalize path separators (Windows uses \, Linux uses /)
+            source_file = source_file.replace('\\', '/')
             tex_path = self.exercise_db / source_file
+            
+            # Check if path is a folder with sub-variants (v3.4+ structure)
+            if tex_path.is_dir():
+                # Sub-variant structure: folder with main.tex + subvariant_*.tex
+                main_tex = tex_path / 'main.tex'
+                if main_tex.exists():
+                    tex_path = main_tex
+                else:
+                    # Fallback: try to find any .tex file in the folder
+                    tex_files = list(tex_path.glob('*.tex'))
+                    if tex_files:
+                        tex_path = tex_files[0]
+            else:
+                # Normal structure: single .tex file
+                # Ensure .tex extension
+                if not str(tex_path).endswith('.tex'):
+                    tex_path = tex_path.with_suffix('.tex')
             
             if tex_path.exists():
                 with open(tex_path, 'r', encoding='utf-8') as f:
                     content = f.read()
+                
+                # If this is a main.tex with sub-variants, process \input{} commands
+                if tex_path.name == 'main.tex' and tex_path.parent.is_dir():
+                    content = self._process_subvariant_inputs(content, tex_path.parent)
                 
                 # Extrair apenas o conteúdo dentro de \exercicio{}
                 # (remover metadados comentados)
@@ -401,37 +497,85 @@ class TestTemplate:
         filename = f"teste_{timestamp}.tex"
         self.tex_file = Path(self.temp_dir) / filename
         
-        # Seleção interativa
-        if not self.module:
-            discipline, self.module, self.concept = self.select_module_and_concept()
+        # Verificar se há exercícios pré-selecionados via ambiente
+        selected_exercises_env = os.environ.get('TEST_SELECTED_EXERCISES', '')
+        if selected_exercises_env:
+            # Carregar exercícios específicos pelos IDs
+            selected_ids = [x.strip() for x in selected_exercises_env.split(',') if x.strip()]
+            if selected_ids:
+                print(f"\n{CYAN}📋 Usando exercícios pré-selecionados: {len(selected_ids)}{RESET}")
+                self.exercises = self.load_exercises_by_ids(selected_ids)
+                
+                if not self.exercises:
+                    print(f"{RED}✗ Nenhum exercício encontrado com os IDs fornecidos!{RESET}")
+                    sys.exit(1)
+                
+                print(f"{GREEN}✓ {len(self.exercises)} exercícios carregados{RESET}")
+                
+                # Usar primeiro exercício para determinar módulo/conceito
+                first_ex = self.exercises[0]
+                if 'classification' in first_ex:
+                    self.module = first_ex['classification'].get('module', '')
+                    self.concept = first_ex['classification'].get('concept', '')
+                else:
+                    self.module = first_ex.get('module', '')
+                    self.concept = first_ex.get('concept', '')
+            else:
+                # Fallback para seleção interativa
+                if not self.module:
+                    discipline, self.module, self.concept = self.select_module_and_concept()
+                else:
+                    config = self.load_modules_config()
+                    discipline = 'matematica'
+                    
+                # Carregar exercícios
+                print(f"\n{CYAN}📂 Carregando exercícios...{RESET}")
+                available_exercises = self.load_exercises(discipline, self.module, self.concept)
+                
+                if not available_exercises:
+                    print(f"{RED}✗ Nenhum exercício encontrado!{RESET}")
+                    sys.exit(1)
+                
+                print(f"{GREEN}✓ {len(available_exercises)} exercícios disponíveis{RESET}")
+                
+                # Seleção de exercícios
+                selected = self.select_exercises_interactive(available_exercises)
+                self.exercises = selected
+                
+                print(f"\n{GREEN}✓ {len(selected)} exercícios selecionados{RESET}")
         else:
-            # CLI: carregar config para obter nomes
-            config = self.load_modules_config()
-            discipline = 'matematica'  # Default
+            # Seleção interativa normal
+            if not self.module:
+                discipline, self.module, self.concept = self.select_module_and_concept()
+            else:
+                # CLI: carregar config para obter nomes
+                config = self.load_modules_config()
+                discipline = 'matematica'  # Default
+                
+            # Carregar exercícios
+            print(f"\n{CYAN}📂 Carregando exercícios...{RESET}")
+            available_exercises = self.load_exercises(discipline, self.module, self.concept)
             
-        # Carregar exercícios
-        print(f"\n{CYAN}📂 Carregando exercícios...{RESET}")
-        available_exercises = self.load_exercises(discipline, self.module, self.concept)
+            if not available_exercises:
+                print(f"{RED}✗ Nenhum exercício encontrado!{RESET}")
+                sys.exit(1)
+            
+            print(f"{GREEN}✓ {len(available_exercises)} exercícios disponíveis{RESET}")
+            
+            # Seleção de exercícios
+            selected = self.select_exercises_interactive(available_exercises)
+            self.exercises = selected
+            
+            print(f"\n{GREEN}✓ {len(selected)} exercícios selecionados{RESET}")
         
-        if not available_exercises:
-            print(f"{RED}✗ Nenhum exercício encontrado!{RESET}")
-            sys.exit(1)
-        
-        print(f"{GREEN}✓ {len(available_exercises)} exercícios disponíveis{RESET}")
-        
-        # Seleção de exercícios
-        selected = self.select_exercises_interactive(available_exercises)
-        self.exercises = selected
-        
-        print(f"\n{GREEN}✓ {len(selected)} exercícios selecionados{RESET}")
-        
-        # Obter nomes
+        # Obter nomes para o título
         config = self.load_modules_config()
-        module_name = config[discipline][self.module]['name']
+        discipline = 'matematica'  # Default
+        module_name = config.get(discipline, {}).get(self.module, {}).get('name', self.module)
         concept_name = None
         if self.concept:
             # Procurar conceito na lista
-            concepts = config[discipline][self.module]['concepts']
+            concepts = config.get(discipline, {}).get(self.module, {}).get('concepts', [])
             for c in concepts:
                 if c['id'] == self.concept:
                     concept_name = c['name']
@@ -439,7 +583,7 @@ class TestTemplate:
         
         # Gerar LaTeX
         latex_content = self.generate_test_latex(
-            discipline, module_name, concept_name, selected
+            discipline, module_name, concept_name, self.exercises
         )
         
         # Salvar
@@ -451,7 +595,7 @@ class TestTemplate:
     def open_for_editing(self):
         """Abre ficheiro no editor padrão"""
         print(f"\n{BLUE}{'='*70}{RESET}")
-        print(f"{BOLD}📝 EDITANDO TESTE LATEX{RESET}")
+        print(f"{BOLD}EDITANDO TESTE LATEX{RESET}")
         print(f"{BLUE}{'='*70}{RESET}\n")
         
         print(f"➤ Ficheiro: {CYAN}{self.tex_file.name}{RESET}")
@@ -470,9 +614,28 @@ class TestTemplate:
         
         print(f"\n{BLUE}{'='*70}{RESET}\n")
         
-        # Abrir ficheiro
-        os.startfile(str(self.tex_file))
-        print(f"{GREEN}✓ Ficheiro aberto para edição{RESET}")
+        # Abrir ficheiro - cross-platform support
+        try:
+            if sys.platform == 'win32':
+                os.startfile(str(self.tex_file))
+            elif sys.platform == 'darwin':
+                subprocess.run(['open', str(self.tex_file)], check=True)
+            else:
+                # Linux - try xdg-open or code
+                try:
+                    subprocess.run(['xdg-open', str(self.tex_file)], check=True)
+                except FileNotFoundError:
+                    # Fallback to VS Code if available
+                    try:
+                        subprocess.run(['code', str(self.tex_file)], check=True)
+                    except FileNotFoundError:
+                        print(f"{YELLOW}⚠️ Não foi possível abrir automaticamente.{RESET}")
+                        print(f"{YELLOW}   Abra o ficheiro manualmente: {self.tex_file}{RESET}")
+                        return
+            print(f"{GREEN}✓ Ficheiro aberto para edição{RESET}")
+        except Exception as e:
+            print(f"{YELLOW}⚠️ Não foi possível abrir automaticamente: {e}{RESET}")
+            print(f"{YELLOW}   Abra o ficheiro manualmente: {self.tex_file}{RESET}")
     
     def wait_for_edit(self) -> bool:
         """Aguarda edição do utilizador"""
@@ -496,6 +659,16 @@ class TestTemplate:
         print(f"\n{BLUE}{'='*70}{RESET}")
         print(f"{BOLD}🔨 COMPILANDO PDF{RESET}")
         print(f"{BLUE}{'='*70}{RESET}\n")
+        
+        # Verificar se pdflatex está disponível
+        if not check_pdflatex_available():
+            print(f"{YELLOW}⚠️ pdflatex não encontrado no sistema.{RESET}")
+            print(f"\n{CYAN}💡 Opções para compilar o PDF:{RESET}")
+            print(f"   1. Instale MiKTeX: https://miktex.org/download")
+            print(f"   2. Instale TeX Live: https://tug.org/texlive/")
+            print(f"   3. Use Overleaf online: https://www.overleaf.com/")
+            print(f"\n{CYAN}📄 O ficheiro .tex será guardado para compilar depois.{RESET}")
+            return None
         
         # Executar pdflatex (2x para referencias)
         for run in range(2):
@@ -532,6 +705,31 @@ class TestTemplate:
         
         print(f"{GREEN}✓ PDF compilado com sucesso!{RESET}")
         return pdf_file
+    
+    def save_tex_without_compile(self) -> Path:
+        """Guarda o ficheiro .tex numa localização permanente sem compilar."""
+        discipline = 'matematica'  # Default
+        
+        if self.concept:
+            output_dir = (self.sebentas_db / discipline / self.module / 
+                         self.concept / "tests")
+        else:
+            output_dir = (self.sebentas_db / discipline / self.module / 
+                         "tests")
+        
+        output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Nome final
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        final_name = f"teste_{self.module}"
+        if self.concept:
+            final_name += f"_{self.concept}"
+        final_name += f"_{timestamp}.tex"
+        
+        final_path = output_dir / final_name
+        shutil.copy(self.tex_file, final_path)
+        
+        return final_path
     
     def move_to_output(self, pdf_path: Path) -> Path:
         """Move PDF para localização final"""
@@ -585,11 +783,28 @@ class TestTemplate:
                 self.cleanup()
                 return
             
-            # 4. Compilar PDF
+            # 4. Tentar compilar PDF
             pdf_path = self.compile_pdf()
             
             if not pdf_path:
-                print(f"\n{RED}❌ Falha na compilação{RESET}")
+                # pdflatex não disponível ou falhou - guardar .tex
+                print(f"\n{YELLOW}📄 Guardando ficheiro .tex...{RESET}")
+                tex_saved_path = self.save_tex_without_compile()
+                
+                print(f"\n{BLUE}{'='*70}{RESET}")
+                print(f"{BOLD}📄 FICHEIRO .TEX GUARDADO{RESET}")
+                print(f"{BLUE}{'='*70}{RESET}\n")
+                
+                print(f"{CYAN}📄 Ficheiro .tex:{RESET} {tex_saved_path}")
+                print(f"{CYAN}📊 Exercícios:{RESET} {len(self.exercises)}")
+                
+                print(f"\n{YELLOW}💡 Para compilar manualmente:{RESET}")
+                print(f"   pdflatex \"{tex_saved_path}\"")
+                print(f"\n{YELLOW}💡 Ou use o Overleaf:{RESET}")
+                print(f"   1. Acesse https://www.overleaf.com/")
+                print(f"   2. Crie um novo projeto")
+                print(f"   3. Cole o conteúdo do ficheiro .tex")
+                
                 self.cleanup()
                 return
             
@@ -619,10 +834,24 @@ class TestTemplate:
             for concept, count in by_concept.items():
                 print(f"  • {concept}: {count} exercícios")
             
-            # Abrir PDF
+            # Abrir PDF - cross-platform support
             choice = input(f"\nAbrir PDF? (s/n): ").strip().lower()
             if choice == 's':
-                os.startfile(str(final_path))
+                try:
+                    if sys.platform == 'win32':
+                        os.startfile(str(final_path))
+                    elif sys.platform == 'darwin':
+                        subprocess.run(['open', str(final_path)], check=True)
+                    else:
+                        # Linux - try xdg-open
+                        try:
+                            subprocess.run(['xdg-open', str(final_path)], check=True)
+                        except FileNotFoundError:
+                            print(f"{YELLOW}⚠️ Não foi possível abrir automaticamente.{RESET}")
+                            print(f"{YELLOW}   Abra o ficheiro manualmente: {final_path}{RESET}")
+                except Exception as e:
+                    print(f"{YELLOW}⚠️ Não foi possível abrir: {e}{RESET}")
+                    print(f"{YELLOW}   Abra o ficheiro manualmente: {final_path}{RESET}")
             
             # 7. Cleanup
             self.cleanup()

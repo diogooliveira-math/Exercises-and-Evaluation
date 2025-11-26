@@ -62,11 +62,81 @@ def generate_tex(selected: List[Dict[str, Any]], out_dir: Path, title: str = "Te
     with out_file.open("w", encoding="utf-8") as f:
         f.write("% Auto-gerado by generate_tests.py\n")
         f.write(f"% Generated: {datetime.now().isoformat()}\n")
-        f.write("\\documentclass{article}\n")
+        f.write("\\documentclass[12pt,a4paper]{article}\n\n")
+        
+        # Packages
+        f.write("% Encoding e idioma\n")
         f.write("\\usepackage[utf8]{inputenc}\n")
-        f.write("\\usepackage{amsmath,amssymb}\n")
-        f.write("\\begin{document}\n")
+        f.write("\\usepackage[T1]{fontenc}\n")
+        f.write("\\usepackage[portuguese]{babel}\n\n")
+        
+        f.write("% Matemática\n")
+        f.write("\\usepackage{amsmath}\n")
+        f.write("\\usepackage{amssymb}\n")
+        f.write("\\usepackage{amsthm}\n")
+        f.write("\\usepackage{mathtools}\n\n")
+        
+        f.write("% Gráficos e figuras\n")
+        f.write("\\usepackage{graphicx}\n")
+        f.write("\\usepackage{tikz}\n")
+        f.write("\\usetikzlibrary{calc,patterns,angles,quotes}\n")
+        f.write("\\usepackage{pgfplots}\n")
+        f.write("\\pgfplotsset{compat=1.18}\n")
+        f.write("\\usepackage{float}\n\n")
+        
+        f.write("% Layout e formatação\n")
+        f.write("\\usepackage{geometry}\n")
+        f.write("\\geometry{a4paper,margin=2.5cm,top=3cm,bottom=3cm}\n")
+        f.write("\\usepackage{enumitem}\n\n")
+        
+        # Macros para exercícios
+        f.write("% Sistema de exercícios - macros personalizadas\n")
+        f.write("\\newcounter{exerciciocount}\n")
+        f.write("\\newcounter{subexerciciocount}\n")
+        f.write("\\newcounter{optioncount}\n\n")
+        
+        f.write("\\newcommand{\\exercicio}[1][]{%\n")
+        f.write("    \\par\\vspace{1.5em}%\n")
+        f.write("    \\refstepcounter{exerciciocount}%\n")
+        f.write("    \\setcounter{subexerciciocount}{0}%\n")
+        f.write("    \\setcounter{optioncount}{0}%\n")
+        f.write("    \\noindent\\textbf{Exercício~\\theexerciciocount.}%\n")
+        f.write("    \\ifx&#1&%\n")
+        f.write("        \\par\\vspace{0.3em}%\n")
+        f.write("    \\else%\n")
+        f.write("        \\ #1\\par\\vspace{0.5em}%\n")
+        f.write("    \\fi%\n")
+        f.write("}\n\n")
+        
+        f.write("\\newcommand{\\subexercicio}[1]{%\n")
+        f.write("    \\par\\vspace{0.8em}%\n")
+        f.write("    \\refstepcounter{subexerciciocount}%\n")
+        f.write("    \\noindent\\textbf{\\theexerciciocount.\\thesubexerciciocount.} #1\\par\\vspace{0.3em}%\n")
+        f.write("}\n\n")
+        
+        f.write("\\newcommand{\\option}[1]{%\n")
+        f.write("    \\par\n")
+        f.write("    \\refstepcounter{optioncount}%\n")
+        f.write("    \\noindent(\\alph{optioncount}) #1%\n")
+        f.write("}\n\n")
+        
+        # Comando espacoAluno
+        f.write("% Cabeçalho completo do teste dentro de uma caixa simples\n")
+        f.write("\\newcommand{\\espacoAluno}{%\n")
+        f.write("    \\vspace{0.5cm}\n")
+        f.write("    \\fbox{%\n")
+        f.write("        \\parbox{\\textwidth}{%\n")
+        f.write("            \\noindent\\textbf{Nome do Aluno:} \\underline{\\hspace{7cm}} \\textbf{Turma:} \\underline{\\hspace{1cm}}\\\\[0.5cm]\n")
+        f.write("            \\noindent\\textbf{Assinatura do Professor:} \\underline{\\hspace{3cm}} \\hfill \\textbf{Nota:} \\underline{\\hspace{2cm}}\\\\[0.5cm]\n")
+        f.write("            \\noindent\\textbf{Assinatura do Encarregado de Educação:} \\underline{\\hspace{3cm}}\n")
+        f.write("        }%\n")
+        f.write("    }\n")
+        f.write("    \\vspace{1cm}\n")
+        f.write("}\n\n")
+        
+        f.write("\\begin{document}\n\n")
         f.write(f"\\section*{{{title}}}\n\n")
+        f.write("\\espacoAluno\n\n")
 
         for ex in selected:
             ex_id = ex.get("id", "")
@@ -77,8 +147,10 @@ def generate_tex(selected: List[Dict[str, Any]], out_dir: Path, title: str = "Te
                 f.write(f"% WARNING: path not found for {ex_id}: {rel_path}\n")
                 continue
             rel = os.path.relpath(abs_ex, start=out_dir)
+            # Convert Windows backslashes to forward slashes for LaTeX compatibility
+            rel = rel.replace('\\', '/')
             f.write(f"% Exercise: {ex_id}\n")
-            f.write(f"\\input{{{rel.replace('\\\\', '/')}}}\n\n")
+            f.write(f"\\input{{{rel}}}\n\n")
 
         f.write("\\end{document}\n")
 

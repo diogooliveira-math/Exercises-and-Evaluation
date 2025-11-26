@@ -29,6 +29,7 @@ from datetime import datetime
 import os
 from pathlib import Path
 from typing import Optional, Tuple
+import shutil
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -105,8 +106,8 @@ def extract_metadata_from_tex(tex_path: Path) -> Optional[dict]:
     return metadata if metadata else None
 
 
-def add_new_subvariant_to_exercise(exercise_dir: Path, main_tex: Path, strategy: str) -> None:
-    """Add a new sub-variant to an existing exercise folder."""
+def add_subvariant_from_existing(exercise_dir: Path, main_tex: Path, template_subvariant: str, strategy: str) -> None:
+    """Add a new sub-variant to an existing exercise using an existing subvariant as template."""
     today = datetime.now().strftime("%Y-%m-%d")
     exercise_id = exercise_dir.name
 
@@ -129,8 +130,11 @@ def add_new_subvariant_to_exercise(exercise_dir: Path, main_tex: Path, strategy:
 
     print(f"[ADD] Proximo numero de sub-variant: {next_num}")
 
-    # Use the last sub-variant as template
-    template_file = max(subvariant_files, key=lambda x: int(re.search(r'subvariant_(\d+)\.tex', x.name).group(1)))
+    # Use the specified subvariant as template
+    template_file = exercise_dir / template_subvariant
+    if not template_file.exists():
+        raise SystemExit(f"❌ Template subvariant não encontrado: {template_file}")
+    
     template_content = template_file.read_text(encoding="utf-8")
 
     # Apply variation strategy to the template
@@ -192,9 +196,10 @@ def add_new_subvariant_to_exercise(exercise_dir: Path, main_tex: Path, strategy:
         return
 
     print("\n" + "="*70)
-    print(">> SUB-VARIANT ADICIONADA COM SUCESSO!")
+    print(">> NOVA SUB-VARIANT ADICIONADA COM SUCESSO!")
     print("="*70)
     print(f"\n[PASTA] Exercicio: {exercise_dir.name}/")
+    print(f"[TEMPLATE] Baseado em: {template_subvariant}")
     print(f"[TEX] Novo ficheiro: subvariant_{next_num}.tex")
     print(f"[COUNT] Total de sub-variants: {len(subvariant_files) + 1}")
     print(f"\n[TIP] main.tex atualizado com nova entrada")
@@ -331,11 +336,13 @@ def main() -> None:
         raise SystemExit(f"❌ Caminho não encontrado: {src_path}")
 
     # Check if this is a subvariant file - redirect to parent folder
+    original_subvariant = None
     if not src_path.is_dir() and src_path.suffix == '.tex' and re.match(r'subvariant_\d+\.tex', src_path.name):
         parent_dir = src_path.parent
         if (parent_dir / "main.tex").exists():
-            print(f"[INFO] Ficheiro subvariant detetado. Redirecionando para pasta do exercicio: {parent_dir.name}/")
-            print(f"[INFO] Sera criada uma variante completa do exercicio com foco neste subvariant.")
+            print(f"[INFO] Ficheiro subvariant detetado: {src_path.name}")
+            print(f"[INFO] Sera criada uma variante focada nesta subvariant especifica.")
+            original_subvariant = src_path.name  # e.g., 'subvariant_1.tex'
             src_path = parent_dir
         else:
             raise SystemExit(f"[ERROR] Ficheiro subvariant encontrado fora de contexto valido: {src_path}")
@@ -346,9 +353,39 @@ def main() -> None:
 
     # Determine if this is a folder-based exercise (sub-variants) or single file
     is_folder_exercise = src_path.is_dir()
+    focus_single_subvariant = original_subvariant is not None
+
+    # Ask user about subvariant strategy if applicable
+    subvariant_strategy = None
+    if focus_single_subvariant:
+        print(f"\n>> Subvariant detetada: {original_subvariant}")
+        print(f"Como deseja proceder?")
+        print(f"  1. Criar VARIANTE do exercicio: nova pasta com versao modificada")
+        print(f"  2. Adicionar NOVA SUB-VARIANT: novo subvariant_*.tex nesta pasta")
+        print(f"  0. Cancelar")
+
+        while True:
+            choice = input(f"\nEscolha uma estratégia (1/2/0): ").strip()
+            if choice in ['1', '2', '0']:
+                break
+            print("❌ Opção inválida. Escolha 1, 2 ou 0.")
+
+        if choice == '0':
+            print("[CANCEL] Operacao cancelada.")
+            return
+        elif choice == '1':
+            subvariant_strategy = 'variant'
+        elif choice == '2':
+            subvariant_strategy = 'add_subvariant'
+            
+    # Handle add_subvariant strategy immediately
+    if focus_single_subvariant and subvariant_strategy == 'add_subvariant':
+        print(f"\n[ADD] Adicionando nova sub-variant baseada em {original_subvariant}")
+        add_subvariant_from_existing(src_path, src_path / "main.tex", original_subvariant, args.strategy)
+        return
 
     if is_folder_exercise:
-        # Folder-based exercise with sub-variants
+        # Folder-based exercise
         src_dir = src_path
         src_id = src_path.name  # e.g., MAT_P4FUNCOE_4FIN_ANA_007
         main_tex = src_path / "main.tex"
@@ -356,13 +393,16 @@ def main() -> None:
             raise SystemExit(f"❌ main.tex não encontrado na pasta: {src_path}")
 
         print(f"\n[PASTA] Exercicio original (pasta): {src_path.name}")
+        if focus_single_subvariant:
+            if subvariant_strategy == 'variant':
+                print(f"[STRATEGY] Criando variante do exercicio baseada em {original_subvariant}")
         print(f"[TEX] Ficheiro main.tex: {main_tex.name}")
 
         # Check if this exercise has sub-variants
         exercise_meta = extract_metadata_from_tex(main_tex) or {}
         has_subvariants = exercise_meta.get("has_subvariants", "false").lower() == "true"
 
-        if has_subvariants:
+        if has_subvariants and not focus_single_subvariant:
             print(f"\n>> Este exercicio tem sub-variants (alineas)!")
             print(f"O que deseja fazer?")
             print(f"  1. Criar uma NOVA PASTA de exercicio (variante completa)")
@@ -405,6 +445,9 @@ def main() -> None:
         raise SystemExit(f"❌ {e}")
     
     next_num = find_next_number(dest_parent_dir, prefix)
+    # For variants, always increment to ensure unique ID
+    if next_num == old_num:
+        next_num = str(int(old_num) + 1).zfill(3)
     new_id = f"{prefix}{next_num}"
     
     print(f"[INFO] ID original: {src_id}")
@@ -430,21 +473,63 @@ def main() -> None:
         new_folder_path = dest_parent_dir / new_id
         new_main_tex = new_folder_path / "main.tex"
 
-        # Copy entire folder
-        import shutil
-        shutil.copytree(src_dir, new_folder_path)
+        if focus_single_subvariant:
+            if subvariant_strategy == 'variant':
+                # Create folder and copy only main.tex and the specific subvariant
+                new_folder_path.mkdir(parents=True, exist_ok=True)
+                
+                # Copy main.tex
+                shutil.copy2(main_tex, new_main_tex)
+                
+                # Copy only the specific subvariant
+                src_subvariant = src_dir / original_subvariant
+                if src_subvariant.exists():
+                    shutil.copy2(src_subvariant, new_folder_path / original_subvariant)
+                else:
+                    raise SystemExit(f"❌ Subvariant original não encontrada: {src_subvariant}")
+                
+                # Update main.tex to include only this subvariant
+                main_content = new_main_tex.read_text(encoding="utf-8")
+                # Replace the entire enumerate block with just this subvariant
+                new_enumerate_content = rf"""\begin{{enumerate}}[label=\alph*)]
 
-        # Update main.tex content
-        original = (new_folder_path / "main.tex").read_text(encoding="utf-8")
-        varied = apply_variation(original, args.strategy)
-        varied = update_tex_header(varied, new_id, today)
-        (new_folder_path / "main.tex").write_text(varied, encoding="utf-8")
+\item \input{{{original_subvariant}}}
+\end{{enumerate}}"""
+                # Find and replace the enumerate block
+                start = main_content.find(r'\begin{enumerate}')
+                end = main_content.find(r'\end{enumerate}')
+                if start != -1 and end != -1:
+                    end += len(r'\end{enumerate}')
+                    main_content = main_content[:start] + new_enumerate_content + main_content[end:]
+                new_main_tex.write_text(main_content, encoding="utf-8")
+                
+                # Apply variation only to the specific subvariant
+                sub_file = new_folder_path / original_subvariant
+                content = sub_file.read_text(encoding="utf-8")
+                updated = apply_variation(content, args.strategy)
+                updated = update_tex_header(updated, new_id, today)
+                sub_file.write_text(updated, encoding="utf-8")
+                
+                # Update main.tex header
+                main_content = new_main_tex.read_text(encoding="utf-8")
+                main_content = update_tex_header(main_content, new_id, today)
+                new_main_tex.write_text(main_content, encoding="utf-8")
+                
+        else:
+            # Copy entire folder
+            shutil.copytree(src_dir, new_folder_path)
 
-        # Update subvariant files if they contain IDs
-        for sub_file in new_folder_path.glob("subvariant_*.tex"):
-            content = sub_file.read_text(encoding="utf-8")
-            updated = update_tex_header(content, new_id, today)
-            sub_file.write_text(updated, encoding="utf-8")
+            # Update main.tex content
+            original = (new_folder_path / "main.tex").read_text(encoding="utf-8")
+            varied = apply_variation(original, args.strategy)
+            varied = update_tex_header(varied, new_id, today)
+            (new_folder_path / "main.tex").write_text(varied, encoding="utf-8")
+
+            # Update subvariant files if they contain IDs
+            for sub_file in new_folder_path.glob("subvariant_*.tex"):
+                content = sub_file.read_text(encoding="utf-8")
+                updated = update_tex_header(content, new_id, today)
+                sub_file.write_text(updated, encoding="utf-8")
 
         target_file = new_main_tex
 
@@ -461,46 +546,57 @@ def main() -> None:
 
     # Abrir a variante para edição pelo utilizador e só depois registar nos metadados/index
     try:
-        if is_folder_exercise:
-            print(f"\n[PASTA] Variante criada: {new_folder_path.name}/")
-            print("Abrindo pasta da variante no editor para que edite os ficheiros (salve e feche quando terminar).")
-            try:
-                os.startfile(str(new_folder_path))
-            except Exception:
-                print("Não foi possível abrir automaticamente. Abra manualmente a pasta no seu editor.")
+        skip_editing = os.environ.get('SKIP_VARIANT_EDITING', '').lower() in ('1', 'true', 'yes')
+        if skip_editing:
+            print(f"\n[SKIP] Pulando edição (SKIP_VARIANT_EDITING={os.environ.get('SKIP_VARIANT_EDITING')})")
         else:
-            print(f"\n[TEX] Variante criada: {new_tex_path.name}")
-            print("Abrindo ficheiro no editor para que edite a variante (salve e feche quando terminar).")
-            try:
-                os.startfile(str(new_tex_path))
-            except Exception:
-                print("Não foi possível abrir automaticamente. Abra manualmente o ficheiro no seu editor.")
-
-        proceed = input("Pressione [Enter] quando terminar de editar a variante (ou digite 'c' para cancelar): ").strip().lower()
-        if proceed == 'c':
-            # Cancelar: apagar ficheiro/pasta criado
-            try:
-                if is_folder_exercise:
-                    import shutil
-                    shutil.rmtree(new_folder_path)
+            if is_folder_exercise:
+                print(f"\n[PASTA] Variante criada: {new_folder_path.name}/")
+                if focus_single_subvariant:
+                    print(f"Abrindo main.tex e {original_subvariant} no editor para que edite (salve e feche quando terminar).")
+                    try:
+                        os.startfile(str(new_main_tex))
+                        os.startfile(str(new_folder_path / original_subvariant))
+                    except Exception:
+                        print("Não foi possível abrir automaticamente. Abra manualmente os ficheiros no seu editor.")
                 else:
-                    new_tex_path.unlink()
-            except Exception:
-                pass
-            print("Operação cancelada. Variante removida.")
-            return
+                    print("Abrindo pasta da variante no editor para que edite os ficheiros (salve e feche quando terminar).")
+                    try:
+                        os.startfile(str(new_folder_path))
+                    except Exception:
+                        print("Não foi possível abrir automaticamente. Abra manualmente a pasta no seu editor.")
+            else:
+                print(f"\n[TEX] Variante criada: {new_tex_path.name}")
+                print("Abrindo ficheiro no editor para que edite a variante (salve e feche quando terminar).")
+                try:
+                    os.startfile(str(new_tex_path))
+                except Exception:
+                    print("Não foi possível abrir automaticamente. Abra manualmente o ficheiro no seu editor.")
 
-        # Verificar conteúdo mínimo
-        if is_folder_exercise:
-            new_content = (new_folder_path / "main.tex").read_text(encoding='utf-8')
-        else:
-            new_content = new_tex_path.read_text(encoding='utf-8')
-            
-        if '\\exercicio{' not in new_content:
-            resp = input("Ficheiro não contém '\\exercicio{'. Continuar e registar? (s/n): ").strip().lower()
-            if resp not in ['s', 'sim', 'y', 'yes']:
-                print("Operação cancelada pelo utilizador. Variante mantida, sem registo.")
+            proceed = input("Pressione [Enter] quando terminar de editar a variante (ou digite 'c' para cancelar): ").strip().lower()
+            if proceed == 'c':
+                # Cancelar: apagar ficheiro/pasta criado
+                try:
+                    if is_folder_exercise:
+                        shutil.rmtree(new_folder_path)
+                    else:
+                        new_tex_path.unlink()
+                except Exception:
+                    pass
+                print("Operação cancelada. Variante removida.")
                 return
+
+            # Verificar conteúdo mínimo
+            if is_folder_exercise:
+                new_content = (new_folder_path / "main.tex").read_text(encoding='utf-8')
+            else:
+                new_content = new_tex_path.read_text(encoding='utf-8')
+                
+            if '\\exercicio{' not in new_content:
+                resp = input("Ficheiro não contém '\\exercicio{'. Continuar e registar? (s/n): ").strip().lower()
+                if resp not in ['s', 'sim', 'y', 'yes']:
+                    print("Operação cancelada pelo utilizador. Variante mantida, sem registo.")
+                    return
 
     except KeyboardInterrupt:
         print("\nOperação interrompida pelo utilizador.")

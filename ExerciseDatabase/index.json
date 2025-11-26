@@ -51,7 +51,7 @@
   "exercises": [
     {
       "id": "MAT_P4FUNCOE_1GEN_001",
-      "path": "matematica/P4_funcoes/1-generalidades_funcoes/MAT_P4FUNCOE_1GEN_001.tex",
+      "path": "matematica\\P4_funcoes\\1-generalidades_funcoes\\MAT_P4FUNCOE_1GEN_001.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -65,7 +65,7 @@
     },
     {
       "id": "MAT_P4FUNCOE_2FUN_001",
-      "path": "matematica/P4_funcoes/2-funcoes_polinomiais/MAT_P4FUNCOE_2FUN_001.tex",
+      "path": "matematica\\P4_funcoes\\2-funcoes_polinomiais\\MAT_P4FUNCOE_2FUN_001.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -79,7 +79,7 @@
     },
     {
       "id": "MAT_P4FUNCOE_3FUN_001",
-      "path": "matematica/P4_funcoes/3-funcoes_polinomiais_grau_nao_superior_3/MAT_P4FUNCOE_3FUN_001.tex",
+      "path": "matematica\\P4_funcoes\\3-funcoes_polinomiais_grau_nao_superior_3\\MAT_P4FUNCOE_3FUN_001.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -93,7 +93,7 @@
     },
     {
       "id": "MAT_P4FUNCOE_4FIN_ANA_001",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_001.tex",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_001",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -114,27 +114,7 @@
     },
     {
       "id": "MAT_P4FUNCOE_4FIN_ANA_002",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_002.tex",
-      "discipline": "matematica",
-      "module": "P4_funcoes",
-      "module_name": "MÓDULO P4 - Funções",
-      "concept": "4-funcao_inversa",
-      "concept_name": "Função Inversa",
-      "tipo": "determinacao_analitica",
-      "tipo_nome": "Determinação Analítica da Função Inversa",
-      "difficulty": 2,
-      "type": "desenvolvimento",
-      "tags": [
-        "inversa",
-        "expressao_analitica",
-        "calculo"
-      ],
-      "points": 10,
-      "status": "active"
-    },
-    {
-      "id": "MAT_P4FUNCOE_4FIN_ANA_003",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_003.tex",
+      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_002",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -147,15 +127,15 @@
       "tags": [
         "inversa",
         "funcao_linear",
-        "grafico",
-        "expressao_analitica"
+        "expressao_analitica",
+        "determinacao_analitica"
       ],
       "points": 10,
       "status": "active"
     },
     {
       "id": "MAT_P4FUNCOE_4FIN_GRA_001",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_grafica/MAT_P4FUNCOE_4FIN_GRA_001.tex",
+      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\determinacao_grafica\\MAT_P4FUNCOE_4FIN_GRA_001.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -176,7 +156,7 @@
     },
     {
       "id": "MAT_P4FUNCOE_4FIN_TRH_001",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/teste_reta_horizontal/MAT_P4FUNCOE_4FIN_TRH_001.tex",
+      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\teste_reta_horizontal\\MAT_P4FUNCOE_4FIN_TRH_001.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -196,69 +176,8 @@
       "status": "active"
     },
     {
-      "id": "MAT_P4FUNCOE_4FIN_ANA_004",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_004.tex",
-      "discipline": "matematica",
-      "module": "P4_funcoes",
-      "module_name": "MÓDULO P4 - Funções",
-      "concept": "4-funcao_inversa",
-      "concept_name": "Função Inversa",
-      "tipo": "determinacao_analitica",
-      "tipo_nome": "Determinação Analítica da Função Inversa",
-      "difficulty": 2,
-      "type": "desenvolvimento",
-      "tags": [
-        "inversa",
-        "funcao_linear",
-        "grafico",
-        "expressao_analitica"
-      ],
-      "points": 10,
-      "status": "active"
-    },
-    {
-      "id": "MAT_P4FUNCOE_4FIN_ANA_005",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_005.tex",
-      "discipline": "matematica",
-      "module": "P4_funcoes",
-      "module_name": "MÓDULO P4 - Funções",
-      "concept": "4-funcao_inversa",
-      "concept_name": "Função Inversa",
-      "tipo": "determinacao_analitica",
-      "tipo_nome": "Determinação Analítica da Função Inversa",
-      "difficulty": 2,
-      "type": "desenvolvimento",
-      "tags": [
-        "inversa",
-        "funcao_linear",
-        "grafico",
-        "expressao_analitica"
-      ],
-      "points": 10,
-      "status": "active"
-    },
-    {
-      "id": "MAT_P4FUNCOE_4FIN_ANA_007",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FIN_ANA_007/main.tex",
-      "discipline": "matematica",
-      "module": "P4_funcoes",
-      "module_name": "MÓDULO P4 - Funções",
-      "concept": "4-funcao_inversa",
-      "concept_name": "Função Inversa",
-      "tipo": "determinacao_analitica",
-      "tipo_nome": "Determinação Analítica da Função Inversa",
-      "difficulty": 2,
-      "type": "desenvolvimento",
-      "tags": [
-        "funcao_inversa",
-        "determinacao_analitica"
-      ],
-      "points": 10,
-      "status": "active"
-    },
-    {
       "id": "MAT_P4FUNCOE_4FIN_GRA_002",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_grafica/MAT_P4FUNCOE_4FIN_GRA_002.tex",
+      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\determinacao_grafica\\MAT_P4FUNCOE_4FIN_GRA_002.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -279,7 +198,7 @@
     },
     {
       "id": "MAT_P4FUNCOE_4FIN_GRA_003",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_grafica/MAT_P4FUNCOE_4FIN_GRA_003.tex",
+      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\determinacao_grafica\\MAT_P4FUNCOE_4FIN_GRA_003.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -300,7 +219,7 @@
     },
     {
       "id": "MAT_P4FUNCOE_4FIN_GRA_004",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_grafica/MAT_P4FUNCOE_4FIN_GRA_004.tex",
+      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\determinacao_grafica\\MAT_P4FUNCOE_4FIN_GRA_004.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -321,7 +240,7 @@
     },
     {
       "id": "MAT_P4FUNCOE_4FIN_GRA_005",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_grafica/MAT_P4FUNCOE_4FIN_GRA_005.tex",
+      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\determinacao_grafica\\MAT_P4FUNCOE_4FIN_GRA_005.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -342,7 +261,7 @@
     },
     {
       "id": "MAT_P4FUNCOE_4FIN_TRH_002",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/teste_reta_horizontal/MAT_P4FUNCOE_4FIN_TRH_002.tex",
+      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\teste_reta_horizontal\\MAT_P4FUNCOE_4FIN_TRH_002.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -363,7 +282,7 @@
     },
     {
       "id": "MAT_P4FUNCOE_4FIN_TRH_003",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/teste_reta_horizontal/MAT_P4FUNCOE_4FIN_TRH_003.tex",
+      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\teste_reta_horizontal\\MAT_P4FUNCOE_4FIN_TRH_003.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -384,7 +303,7 @@
     },
     {
       "id": "MAT_P4FUNCOE_4FIN_TRH_004",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/teste_reta_horizontal/MAT_P4FUNCOE_4FIN_TRH_004.tex",
+      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\teste_reta_horizontal\\MAT_P4FUNCOE_4FIN_TRH_004.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -405,7 +324,7 @@
     },
     {
       "id": "MAT_P4FUNCOE_4FIN_TRH_005",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/teste_reta_horizontal/MAT_P4FUNCOE_4FIN_TRH_005.tex",
+      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\teste_reta_horizontal\\MAT_P4FUNCOE_4FIN_TRH_005.tex",
       "discipline": "matematica",
       "module": "P4_funcoes",
       "module_name": "MÓDULO P4 - Funções",
@@ -426,7 +345,7 @@
     },
     {
       "id": "MAT_A9FUNCRE_0REV_CFU_001",
-      "path": "matematica/A9_funcoes_crescimento/0-revisoes/conceito_funcao/MAT_A9FUNCRE_0REV_CFU_001.tex",
+      "path": "matematica\\A9_funcoes_crescimento\\0-revisoes\\conceito_funcao\\MAT_A9FUNCRE_0REV_CFU_001.tex",
       "discipline": "matematica",
       "module": "A9_funcoes_crescimento",
       "module_name": "Módulo A9 - Funções e Crescimento",
@@ -446,7 +365,7 @@
     },
     {
       "id": "MAT_A9FUNCRE_0REV_CAL_001",
-      "path": "matematica/A9_funcoes_crescimento/0-revisoes/calculo_funcoes/MAT_A9FUNCRE_0REV_CAL_001.tex",
+      "path": "matematica\\A9_funcoes_crescimento\\0-revisoes\\calculo_funcoes\\MAT_A9FUNCRE_0REV_CAL_001.tex",
       "discipline": "matematica",
       "module": "A9_funcoes_crescimento",
       "module_name": "Módulo A9 - Funções e Crescimento",
@@ -466,7 +385,7 @@
     },
     {
       "id": "MAT_A9FUNCRE_0REV_APL_001",
-      "path": "matematica/A9_funcoes_crescimento/0-revisoes/aplicacoes_praticas/MAT_A9FUNCRE_0REV_APL_001.tex",
+      "path": "matematica\\A9_funcoes_crescimento\\0-revisoes\\aplicacoes_praticas\\MAT_A9FUNCRE_0REV_APL_001.tex",
       "discipline": "matematica",
       "module": "A9_funcoes_crescimento",
       "module_name": "Módulo A9 - Funções e Crescimento",
@@ -486,7 +405,7 @@
     },
     {
       "id": "MAT_A9FUNCRE_0REV_APL_002",
-      "path": "matematica/A9_funcoes_crescimento/0-revisoes/aplicacoes_praticas/MAT_A9FUNCRE_0REV_APL_002.tex",
+      "path": "matematica\\A9_funcoes_crescimento\\0-revisoes\\aplicacoes_praticas\\MAT_A9FUNCRE_0REV_APL_002.tex",
       "discipline": "matematica",
       "module": "A9_funcoes_crescimento",
       "module_name": "Módulo A9 - Funções e Crescimento",
@@ -506,7 +425,7 @@
     },
     {
       "id": "MAT_A9FUNCRE_1EXP_CPO_001",
-      "path": "matematica/A9_funcoes_crescimento/1-exponenciais/crescimento_populacional/MAT_A9FUNCRE_1EXP_CPO_001.tex",
+      "path": "matematica\\A9_funcoes_crescimento\\1-exponenciais\\crescimento_populacional\\MAT_A9FUNCRE_1EXP_CPO_001.tex",
       "discipline": "matematica",
       "module": "A9_funcoes_crescimento",
       "module_name": "Módulo A9 - Funções e Crescimento",
@@ -527,7 +446,7 @@
     },
     {
       "id": "MAT_A9FUNCRE_1EXP_DME_001",
-      "path": "matematica/A9_funcoes_crescimento/1-exponenciais/decaimento_medicamento/MAT_A9FUNCRE_1EXP_DME_001.tex",
+      "path": "matematica\\A9_funcoes_crescimento\\1-exponenciais\\decaimento_medicamento\\MAT_A9FUNCRE_1EXP_DME_001.tex",
       "discipline": "matematica",
       "module": "A9_funcoes_crescimento",
       "module_name": "Módulo A9 - Funções e Crescimento",
@@ -548,7 +467,7 @@
     },
     {
       "id": "MAT_A9FUNCRE_1EXP_CBA_001",
-      "path": "matematica/A9_funcoes_crescimento/1-exponenciais/crescimento_bacterias/MAT_A9FUNCRE_1EXP_CBA_001.tex",
+      "path": "matematica\\A9_funcoes_crescimento\\1-exponenciais\\crescimento_bacterias\\MAT_A9FUNCRE_1EXP_CBA_001.tex",
       "discipline": "matematica",
       "module": "A9_funcoes_crescimento",
       "module_name": "Módulo A9 - Funções e Crescimento",
@@ -569,7 +488,7 @@
     },
     {
       "id": "MAT_A9FUNCRE_1EXP_DPR_001",
-      "path": "matematica/A9_funcoes_crescimento/1-exponenciais/depreciacao_valor/MAT_A9FUNCRE_1EXP_DPR_001.tex",
+      "path": "matematica\\A9_funcoes_crescimento\\1-exponenciais\\depreciacao_valor\\MAT_A9FUNCRE_1EXP_DPR_001.tex",
       "discipline": "matematica",
       "module": "A9_funcoes_crescimento",
       "module_name": "Módulo A9 - Funções e Crescimento",
@@ -590,7 +509,7 @@
     },
     {
       "id": "MAT_A9FUNCRE_1EXP_CBA_002",
-      "path": "matematica/A9_funcoes_crescimento/1-exponenciais/crescimento_bacterias/MAT_A9FUNCRE_1EXP_CBA_002.tex",
+      "path": "matematica\\A9_funcoes_crescimento\\1-exponenciais\\crescimento_bacterias\\MAT_A9FUNCRE_1EXP_CBA_002.tex",
       "discipline": "matematica",
       "module": "A9_funcoes_crescimento",
       "module_name": "Módulo A9 - Funções e Crescimento",
@@ -610,62 +529,8 @@
       "status": "active"
     },
     {
-      "id": "MAT_P1MODELO_ELE_CONC_001",
-      "tipo": "conceitos_eleitorais",
-      "tipo_nome": "Conceitos Eleitorais Básicos",
-      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/conceitos_eleitorais/MAT_P1MODELO_ELE_CONC_001.tex"
-    },
-    {
-      "id": "MAT_P1MODELO_ELE_MATCH_001",
-      "tipo": "compreensao_termos",
-      "tipo_nome": "Compreensão de Termos Eleitorais",
-      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/compreensao_termos/MAT_P1MODELO_ELE_MATCH_001.tex"
-    },
-    {
-      "id": "MAT_P1MODELO_PERC_CALC_001",
-      "tipo": "calculo_percentagens",
-      "tipo_nome": "Cálculo de Percentagens",
-      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/percentagens/calculo_percentagens/MAT_P1MODELO_PERC_CALC_001.tex"
-    },
-    {
-      "id": "MAT_P1MODELO_ELE_TAB1_001",
-      "tipo": "analise_tabelas_eleitorais",
-      "tipo_nome": "Análise de Tabelas Eleitorais",
-      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/analise_tabelas_eleitorais/MAT_P1MODELO_ELE_TAB1_001.tex"
-    },
-    {
-      "id": "MAT_P1MODELO_ELE_TAB2_001",
-      "tipo": "analise_tabelas_eleitorais",
-      "tipo_nome": "Análise de Tabelas Eleitorais",
-      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/analise_tabelas_eleitorais/MAT_P1MODELO_ELE_TAB2_001.tex"
-    },
-    {
-      "id": "MAT_P1MODELO_ELE_TAB3_001",
-      "tipo": "analise_tabelas_eleitorais",
-      "tipo_nome": "Análise de Tabelas Eleitorais",
-      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/analise_tabelas_eleitorais/MAT_P1MODELO_ELE_TAB3_001.tex"
-    },
-    {
-      "id": "MAT_P1MODELO_ELE_PERC_001",
-      "tipo": "analise_tabelas_eleitorais",
-      "tipo_nome": "Análise de Tabelas Eleitorais",
-      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/eleicoes/analise_tabelas_eleitorais/MAT_P1MODELO_ELE_PERC_001.tex"
-    },
-    {
-      "id": "MAT_P1MODELO_FIN_CALC_001",
-      "tipo": "calculo_percentagens_financeiras",
-      "tipo_nome": "Cálculo de Percentagens em Finanças Pessoais/Familiares",
-      "source_file": "ExerciseDatabase/matematica/P1_modelos_matematicos_para_a_cidadania/financas_pessoais/calculo_percentagens_financeiras/MAT_P1MODELO_FIN_CALC_001.tex"
-    },
-    {
-      "id": "MAT_P1MODELO_FINA_CAL_001",
-      "tipo": "calculo_percentagens_financeiras",
-      "tipo_nome": "Tipo: Calculo Percentagens Financeiras",
-      "source_file": "ExerciseDatabase\\matematica\\P1_modelos_matematicos_para_a_cidadania\\financas_pessoais\\calculo_percentagens_financeiras\\MAT_P1MODELO_FINA_CAL_001.tex"
-    },
-    {
       "id": "MAT_A8MODELO_1SX_DVX_001",
-      "path": "matematica/A8_modelos_discretos/1-sistemas_numericos/determinacao_valores/MAT_A8MODELO_1SX_DVX_001.tex",
+      "path": "matematica\\A8_modelos_discretos\\1-sistemas_numericos\\determinacao_valores\\MAT_A8MODELO_1SX_DVX_001.tex",
       "discipline": "matematica",
       "module": "A8_modelos_discretos",
       "module_name": "Módulo A8 - Modelos Discretos",
@@ -688,7 +553,7 @@
     },
     {
       "id": "MAT_A8MODELO_1SX_DVX_002",
-      "path": "matematica/A8_modelos_discretos/1-sistemas_numericos/determinacao_valores/MAT_A8MODELO_1SX_DVX_002.tex",
+      "path": "matematica\\A8_modelos_discretos\\1-sistemas_numericos\\determinacao_valores\\MAT_A8MODELO_1SX_DVX_002.tex",
       "discipline": "matematica",
       "module": "A8_modelos_discretos",
       "module_name": "Módulo A8 - Modelos Discretos",
@@ -711,7 +576,7 @@
     },
     {
       "id": "MAT_A8MODELO_1SX_DVX_003",
-      "path": "matematica/A8_modelos_discretos/1-sistemas_numericos/determinacao_valores/MAT_A8MODELO_1SX_DVX_003.tex",
+      "path": "matematica\\A8_modelos_discretos\\1-sistemas_numericos\\determinacao_valores\\MAT_A8MODELO_1SX_DVX_003.tex",
       "discipline": "matematica",
       "module": "A8_modelos_discretos",
       "module_name": "Módulo A8 - Modelos Discretos",
@@ -733,24 +598,8 @@
       "status": "active"
     },
     {
-      "id": "MAT_P2ESTATI_REVI_%_001",
-      "path": "matematica/P2_estatistica/0-revisoes/%   ↳ [OPCIONAL] Se vazio, sistema infere automaticamente/MAT_P2ESTATI_REVI_%_001.tex",
-      "module": "P2_estatistica",
-      "module_name": "Módulo P2 - Estatística",
-      "concept": "0-revisoes",
-      "concept_name": "Revisões Iniciais, inserindo manipulação de dados, tomando partido da regra de três simples e percentagens.",
-      "tipo": "%   ↳ [OPCIONAL] Se vazio, sistema infere automaticamente",
-      "difficulty": 2,
-      "type": "desenvolvimento",
-      "tags": [
-        "%   ↳ [OPCIONAL] Se vazio",
-        "gera automaticamente"
-      ],
-      "points": 0
-    },
-    {
       "id": "MAT_P2ESTATI_REVI_D_001",
-      "path": "matematica/P2_estatistica/0-revisoes/desenvolvimento/MAT_P2ESTATI_REVI_D_001.tex",
+      "path": "matematica\\P2_estatistica\\0-revisoes\\desenvolvimento\\MAT_P2ESTATI_REVI_D_001.tex",
       "module": "P2_estatistica",
       "module_name": "Módulo P2 - Estatística",
       "concept": "0-revisoes",
@@ -764,72 +613,8 @@
       "points": 0
     },
     {
-      "id": "MAT_P2ESTATI_REVI_D_002",
-      "path": "matematica/P2_estatistica/0-revisoes/desenvolvimento/MAT_P2ESTATI_REVI_D_002.tex",
-      "module": "P2_estatistica",
-      "module_name": "Módulo P2 - Estatística",
-      "concept": "0-revisoes",
-      "concept_name": "Revisões Iniciais, inserindo manipulação de dados, tomando partido da regra de três simples e percentagens.",
-      "tipo": "desenvolvimento",
-      "difficulty": 2,
-      "type": "desenvolvimento",
-      "tags": [
-        "revisoes",
-        "calculo"
-      ],
-      "points": 0
-    },
-    {
-      "id": "MAT_P4FUNCOE_FUNC_DA_002",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_FUNC_DA_002.tex",
-      "module": "P4_funcoes",
-      "module_name": "MÓDULO P4 - Funções",
-      "concept": "4-funcao_inversa",
-      "concept_name": "Função Inversa",
-      "tipo": "determinacao_analitica",
-      "difficulty": 2,
-      "type": "desenvolvimento",
-      "tags": [
-        "funcao_inversa",
-        "determinacao analitica",
-        "funcoes",
-        "inversa"
-      ],
-      "points": 0
-    },
-    {
-      "id": "MAT_P4FUNCOE_FUNC_D_001",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/desenvolvimento/MAT_P4FUNCOE_FUNC_D_001.tex",
-      "module": "P4_funcoes",
-      "module_name": "MÓDULO P4 - Funções",
-      "concept": "4-funcao_inversa",
-      "concept_name": "Função Inversa",
-      "tipo": "desenvolvimento",
-      "difficulty": 2,
-      "type": "desenvolvimento",
-      "tags": [
-        "funcao_inversa"
-      ],
-      "points": 0
-    },
-    {
-      "id": "MAT_P4FUNCOE_FUNC_D_002",
-      "path": "matematica/P4_funcoes/4-funcao_inversa/desenvolvimento/MAT_P4FUNCOE_FUNC_D_002.tex",
-      "module": "P4_funcoes",
-      "module_name": "MÓDULO P4 - Funções",
-      "concept": "4-funcao_inversa",
-      "concept_name": "Função Inversa",
-      "tipo": "desenvolvimento",
-      "difficulty": 2,
-      "type": "desenvolvimento",
-      "tags": [
-        "funcao_inversa"
-      ],
-      "points": 0
-    },
-    {
       "id": "MAT_A12OTIMI_ESTU_PRM_001",
-      "path": "matematica/A12_otimizacao/estudo_monotonia/problema_real_monotonia/MAT_A12OTIMI_ESTU_PRM_001.tex",
+      "path": "matematica\\A12_otimizacao\\estudo_monotonia\\problema_real_monotonia\\MAT_A12OTIMI_ESTU_PRM_001.tex",
       "module": "A12_otimizacao",
       "module_name": "Módulo A10 - Otimização",
       "concept": "estudo_monotonia",
@@ -846,7 +631,7 @@
     },
     {
       "id": "MAT_A12OTIMI_ESTU_PRM_003",
-      "path": "matematica/A12_otimizacao/estudo_monotonia/problema_real_monotonia/MAT_A12OTIMI_ESTU_PRM_003.tex",
+      "path": "matematica\\A12_otimizacao\\estudo_monotonia\\problema_real_monotonia\\MAT_A12OTIMI_ESTU_PRM_003.tex",
       "module": "A12_otimizacao",
       "module_name": "Módulo A10 - Otimização",
       "concept": "estudo_monotonia",
