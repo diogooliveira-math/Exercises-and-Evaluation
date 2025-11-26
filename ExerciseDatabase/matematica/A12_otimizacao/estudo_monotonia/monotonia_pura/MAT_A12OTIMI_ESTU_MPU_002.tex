@@ -1,17 +1,38 @@
 % Exercise ID: MAT_A12OTIMI_ESTU_MPU_002
 % Module: Módulo A12 - Otimização | Concept: Estudo da Monotonia
 % Type: monotonia_pura | Difficulty: 2/5
-% Tags: monotonia, derivadas, funcoes_abstratas
-% Author: Professor | Date: 2025-11-25
+% Tags: monotonia, gráfico, ramos, linear
+% Author: Professor | Date: 2025-11-26
 
 \exercicio{
-Considera a função $g(x) = -x^2 + 6x - 5$.
+O gráfico seguinte representa uma função $g(x)$ definida por ramos no intervalo $[0,3]$:
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+  \draw[->] (0,0) -- (3.4,0) node[right] {$x$};
+  \draw[->] (0,0) -- (0,2.4) node[above] {$g(x)$};
+  % ramos
+  \draw[thick, red, domain=0:2, samples=50] plot (\x, {abs(\x-1)});
+  \draw[thick, red] (2,1) -- (3,1);
+  % pontos
+  \filldraw[red] (0,1) circle (1pt);
+  \filldraw[red] (1,0) circle (1.2pt);
+  \filldraw[red] (2,1) circle (1.2pt);
+  \filldraw[red] (3,1) circle (1pt);
+  % marcas x
+  \foreach \x in {0,1,2,3} \draw (\x,0.05) -- (\x,-0.05) node[below] {\x};
+  % marcas y
+  \foreach \y in {0,1,2} \draw (0.05,\y) -- (-0.05,\y) node[left] {\y};
+\end{tikzpicture}
+\end{center}
 }
 
-\subexercicio{Calcula a derivada $g'(x)$.}
+% g(x) = |x-1| se 0 <= x < 2; g(x) = 1 se 2 <= x <= 3
+% Contexto adaptado: análise de monotonia e extremos de função por ramos valor absoluto/constante
 
-\subexercicio{Resolve a equação $g'(x) = 0$ para encontrar os pontos críticos.}
 
-\subexercicio{Estuda o sinal da derivada e indica onde a função é crescente e onde é decrescente.}
+\subexercicio{Indica os intervalos de $x$ onde $g(x)$ é crescente, decrescente e constante.}
 
-\subexercicio{Determina as coordenadas do vértice da parábola. O que representa este ponto em termos de máximo ou mínimo?}
+\subexercicio{Qual é o valor máximo e o valor mínimo de $g(x)$ no intervalo $[0,5]$? Em que pontos ocorrem?}
+
+\subexercicio{Interpreta o significado dos diferentes ramos do gráfico.}
