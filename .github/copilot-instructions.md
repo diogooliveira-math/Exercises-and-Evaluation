@@ -129,6 +129,46 @@ python tests/quick_validation.py
 - **LaTeX**: Automated compilation with cleanup
 - **Git**: Feature branches with conventional commits
 
+## OpenCode / opencode Integration
+
+- **Purpose**: This repository includes lightweight "opencode" utilities and test scripts to exercise the agent's ability to run commands, parse terminal output, and validate generated content. These are intended for safe, reproducible interactions with the project — not for exposing secrets or making unilateral persistent changes to the databases.
+- **Important scripts**: `opencode_terminal_test.py` (root), `scripts/send_prompt_opencode.py`, and `scripts/run_generate_sebenta_task.py` (helpers used by tasks).
+- **Agent behaviour rules when using opencode**:
+  - Always ask for explicit user permission before running scripts that modify the repository or databases (any script under `ExerciseDatabase/` or `SebentasDatabase/` that writes files).  
+  - Do not include secrets, credentials, or private tokens in prompts or logs. If a secret is required, prompt the user to provide it interactively and avoid persisting it in files.
+  - Capture and store opencode outputs in `temp/opencode_logs/` (or similar) and present a concise summary to the user; do not auto-commit logs to the repo.
+  - Use PowerShell semantics on Windows: when chaining commands in a single line use `;` (e.g. `python script.py --flag ; python other.py`).
+  - When a script produces long output, show a short preview (first ~40 lines) and offer to open the full log file in VS Code.
+  - When executing tests or validation scripts (`tests/quick_validation.py`, `tests/test_subvariant_generation.py`, `opencode_terminal_test.py`), prefer local-only execution and never run CI pipelines or remote deployment steps.
+
+- **How to call opencode scripts (examples)**:
+
+  - Run the basic terminal test (local, read-only checks preferred):
+
+    ```powershell
+    python opencode_terminal_test.py
+    ```
+
+  - Send a crafted prompt to the opencode helper (the helper will run a safe local command and return output):
+
+    ```powershell
+    python scripts/send_prompt_opencode.py --prompt "Run quick validation" ;
+    ```
+
+  - If chaining tasks in PowerShell, separate with `;` and avoid `&&` (PowerShell v5.1). Example:
+
+    ```powershell
+    python scripts/send_prompt_opencode.py --prompt "validate" ; python tests/quick_validation.py
+    ```
+
+- **Logging & hygiene**:
+  - Write opencode logs to `temp/opencode_logs/{timestamp}_opencode.log` and do not commit these files.  
+  - If the agent needs to propose changes based on opencode output, present a patch and request user approval before applying (use `git` only after user confirmation).
+
+- **When allowed to make changes**:
+  - The agent may create or modify documentation files (`*.md`) with user consent. For edits that affect `ExerciseDatabase/` structure or `index.json` the agent must either: (a) ask the user to run the change locally, or (b) create a PR with the changes (do not push directly to `main`).
+
+
 ---
 **Version**: 4.0 (Architecture-focused update)
 **Last updated**: 2025-11-26

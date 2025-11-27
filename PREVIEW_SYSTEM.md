@@ -293,6 +293,16 @@ preview = PreviewManager(auto_open=False)
 # Mostra no terminal, pede confirmação, mas não abre editor
 ```
 
+### OpenCode / opencode (Agentes)
+
+- Para interacções controladas por agentes, utilize os utilitários `opencode` disponíveis no repositório (`opencode_terminal_test.py`, `scripts/send_prompt_opencode.py`).
+- Regras rápidas de uso:
+    - Peça sempre permissão explícita ao utilizador antes de executar scripts que escrevam em `ExerciseDatabase/` ou `SebentasDatabase/`.
+    - Não inclua segredos em prompts; solicite valores sensíveis diretamente ao utilizador e não grave esses valores.
+    - Grave logs de execução em `temp/opencode_logs/` e apresente um sumário antes de mostrar o ficheiro completo.
+    - Em Windows PowerShell use `;` para encadear comandos em uma linha.
+
+
 ---
 
 ## 🐛 Troubleshooting
