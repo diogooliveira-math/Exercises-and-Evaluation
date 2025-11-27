@@ -80,19 +80,22 @@ def find_config(discipline: Optional[str], module: Optional[str], concept: Optio
         config_path = Path(cli_config)
         if config_path.exists():
             return config_path
-        print(f"  ⚠️ Config especificada não encontrada: {cli_config}")
+        print(f"  WARNING: Config especificada não encontrada: {cli_config}")
+
     
     # 2. Config local em tests/
     if discipline and module and concept:
         local_config = SEBENTAS_DB / discipline / module / concept / "tests" / "test_config.json"
         if local_config.exists():
-            print(f"  📋 Usando config local: {local_config.relative_to(PROJECT_ROOT)}")
+            print(f"  [CONFIG] Usando config local: {local_config.relative_to(PROJECT_ROOT)}")
             return local_config
+
     
     # 3. Config global padrão
     if DEFAULT_CONFIG.exists():
-        print(f"  📋 Usando config global: {DEFAULT_CONFIG.relative_to(PROJECT_ROOT)}")
+        print(f"  [CONFIG] Usando config global: {DEFAULT_CONFIG.relative_to(PROJECT_ROOT)}")
         return DEFAULT_CONFIG
+
     
     return None
 
@@ -176,8 +179,39 @@ def load_template(path: Path) -> str:
     return path.read_text(encoding='utf-8')
 
 
-def build_test_content(selected: List[Dict[str, Any]], repo_root: Path) -> str:
+def build_test_content(selected: List[Dict[str, Any]], repo_root: Path, config: Optional[Dict[str, Any]] = None) -> Tuple[str, List[Path]]:
+    def sanitize_tex(content: str) -> str:
+        # Heuristic sanitizer to avoid runaway LaTeX arguments from truncated exercises
+        # - normalize line endings
+        # - ensure file ends with a newline
+        # - balance braces by appending closing '}' if necessary
+        # - fix common truncated environment closings like '\end{figure}'
+        # - attempt to close unbalanced inline math '$' if present
+        if content is None:
+            return ''
+        # Normalize line endings
+        content = content.replace('\r\n', '\n')
+        content = content.replace('\r', '\n')
+        # Ensure trailing newline
+        if not content.endswith('\n'):
+            content += '\n'
+        # Fix common cases where an environment end lost the closing brace, e.g. '\end{figure\n' -> '\end{figure}\n'
+        import re
+        content = re.sub(r'(\\end\{figure)(?=\s)', r"\1}", content)
+        # Balance braces
+        open_braces = content.count('{')
+        close_braces = content.count('}')
+        if open_braces > close_braces:
+            content += '}' * (open_braces - close_braces)
+        # If there's an odd number of inline dollar signs, append a closing '$' to avoid runaway math mode
+        if content.count('$') % 2 == 1:
+            content += '$\n'
+        return content
+
     parts: List[str] = []
+    # Collect asset paths (relative to project root) that need copying into the output directory
+    assets: List[Path] = []
+
     for ex in selected:
         ex_path = repo_root / 'ExerciseDatabase' / Path(ex.get('path', ''))
 
@@ -214,37 +248,75 @@ def build_test_content(selected: List[Dict[str, Any]], repo_root: Path) -> str:
         parts.append(f"% Exercise ID: {ex.get('id')}")
         try:
             content = ex_path.read_text(encoding='utf-8')
-            
-                # If this is a folder structure, adjust \input{} paths to be relative to the test directory
-            if is_folder_structure:
-                exercise_dir = ex_path.parent
-                # Replace \input{subvariant_N} with \input{relative/path/from/test/dir/to/subvariant_N}
-                import re
-                def replace_input(match):
-                    filename = match.group(1)
-                    full_path = exercise_dir / filename
-                    # Calculate relative path from the test output directory to the exercise file
-                    # The test is generated in: SEBENTAS_DB / discipline / module / concept / output_subdir
-                    # Exercise is in: PROJECT_ROOT / 'ExerciseDatabase' / path_from_index
+            # Sanitize possible truncated or malformed TeX content
+            content = sanitize_tex(content)
+            # Truncate extremely long contents for safety (keep first 50k chars)
+            if len(content) > 50000:
+                content = content[:50000] + '\n% [truncated]\n'
+
+            # Adjust \input{} paths to point to assets/ relative paths and record the source files to copy
+            exercise_dir = ex_path.parent
+            import re
+
+            def replace_input(match):
+                filename = match.group(1)
+                candidate = exercise_dir / filename
+                # If filename lacks extension, try adding .tex
+                candidates = [candidate]
+                if candidate.suffix == '':
+                    candidates.append(candidate.with_suffix('.tex'))
+                chosen = None
+                for full_path in candidates:
+                    if full_path.exists():
+                        chosen = full_path
+                        break
+                if chosen:
+                    # Compute a path relative to project root so we can copy preserving structure
                     try:
-                        # Get the test output directory (where pdflatex will run)
-                        test_output_dir = SEBENTAS_DB / ex.get('discipline', '') / ex.get('module', '') / ex.get('concept', '') / config.get('output_subdir', 'tests')
-                        rel_path = full_path.relative_to(test_output_dir)
-                        # Convert Windows backslashes to forward slashes for LaTeX
-                        latex_path = str(rel_path).replace('\\', '/')
-                        return f"\\input{{{latex_path}}}"
-                    except ValueError:
-                        # If relative path fails, use absolute path
-                        abs_path = str(full_path).replace('\\', '/')
-                        return f"\\input{{{abs_path}}}"
-                
-                content = re.sub(r'\\input\{([^}]+)\}', replace_input, content)
-                
+                        rel_to_repo = chosen.relative_to(repo_root)
+                    except Exception:
+                        # Fallback: use file name only
+                        rel_to_repo = Path('ExerciseDatabase') / chosen.name
+                    assets.append(rel_to_repo)
+                    # Use assets/<rel_to_repo> as latex path (posix style)
+                    latex_path = Path('assets') / rel_to_repo
+                    latex_path_str = str(latex_path).replace('\\', '/')
+                    return f"\\input{{{latex_path_str}}}"
+                else:
+                    # Leave original if nothing found
+                    return match.group(0)
+
+            content = re.sub(r'\\input\{([^}]+)\}', replace_input, content)
+
+
         except Exception as e:
             content = f"% ERROR reading {ex_path}: {e}\n\\textbf{{Erro ao carregar exercício}}"
-        parts.append(content)
+        # Ensure each selected item contributes exactly one \exercicio
+        if '\\exercicio' in content:
+            parts.append(content)
+        else:
+            # Wrap the raw content inside an \exercicio{...} to normalize structure
+            wrapped = f"\\exercicio{{\n{content}\n}}"
+            parts.append(wrapped)
         parts.append('')
-    return '\n'.join(parts)
+    return '\n'.join(parts), assets
+
+
+
+def copy_assets_to_output(assets_to_copy: Optional[List[Path]], output_dir: Path, repo_root: Path) -> None:
+    """Copy asset paths (relative to repo_root) into output_dir/assets/ preserving relative structure."""
+    if not assets_to_copy:
+        return
+    assets_root = output_dir / 'assets'
+    for rel_path in assets_to_copy:
+        src = repo_root / rel_path
+        dest = assets_root / rel_path
+        try:
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            if src.exists():
+                shutil.copy2(src, dest)
+        except Exception as e:
+            print(f"  ⚠️ Falha ao copiar asset {src} -> {dest}: {e}")
 
 
 def save_tex_and_compile(
@@ -259,6 +331,7 @@ def save_tex_and_compile(
     config: Optional[Dict] = None,
     no_preview: bool = False,
     auto_approve: bool = False,
+    assets_to_copy: Optional[List[Path]] = None,
 ) -> Optional[Path]:
     output_dir.mkdir(parents=True, exist_ok=True)
     ts = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -288,8 +361,12 @@ def save_tex_and_compile(
             test_title += f" (Versão {version_label})"
         
         if not preview_manager.show_and_confirm(preview_content, test_title):
-            print(f"  ❌ Teste cancelado pelo utilizador")
+            print(f"  TESTE CANCELADO PELO UTILIZADOR")
             return None
+
+
+    # Salvar assets (se houver)
+    copy_assets_to_output(assets_to_copy, output_dir, PROJECT_ROOT)
 
     # Salvar .tex (só após confirmação)
     tex_file = output_dir / f"{tex_file_name}.tex"
@@ -298,6 +375,7 @@ def save_tex_and_compile(
 
     if no_compile:
         return tex_file
+
 
     # Compile using pdflatex if available
     pdflatex = shutil.which('pdflatex')
@@ -611,7 +689,7 @@ def main():
             header_right_default = f"{concept_name or concept}"
         header_right = config.get('header_right', header_right_default)
 
-        content = build_test_content(selected, PROJECT_ROOT)
+        content, assets = build_test_content(selected, PROJECT_ROOT, config)
 
         result = save_tex_and_compile(
             content,
@@ -625,6 +703,7 @@ def main():
             config=config,
             no_preview=args.no_preview,
             auto_approve=args.auto_approve,
+            assets_to_copy=assets,
         )
         results.append((label, result))
 
