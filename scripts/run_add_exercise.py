@@ -26,6 +26,7 @@ from pathlib import Path
 import json
 import tempfile
 import importlib.util
+import runpy
 
 # Configurar logger
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
@@ -163,6 +164,7 @@ def main() -> int:
                     tmp.close()
 
                     clarifier = Path(__file__).resolve().parent / 'agent_clarify_flow.py'
+                    # Use sys.executable to avoid relying on a literal 'python' in PATH
                     proc = subprocess.run([sys.executable, str(clarifier), '--input-file', tmp_path], capture_output=True, text=True, encoding='utf-8', errors='replace')
                     if proc.returncode != 0:
                         logger.error('Clarify flow failed: %s', proc.stderr.strip())
@@ -182,19 +184,20 @@ def main() -> int:
                             # Try to fallback to direct write using add_exercise_simple
                             try:
                                 script = Path(__file__).resolve().parents[1] / "ExerciseDatabase" / "_tools" / "add_exercise_simple.py"
+                                # Try import via spec
                                 spec = importlib.util.spec_from_file_location('add_exercise_simple_fallback', str(script))
-                                mod = importlib.util.module_from_spec(spec)
-                                spec.loader.exec_module(mod)
-                                # parsed may not contain all fields; try to extract from cmd by naive parsing
-                                # but easiest is to reuse parsed + suggestions
-                                # Combine parsed and suggestions
-                                payload = parsed.copy()
-                                payload.update({k: v for k, v in (json.loads(json.dumps({})).items())})
-                                # Ensure required keys exist
-                                for key in required:
-                                    payload.setdefault(key, '')
-                                # Call create_simple_exercise
-                                ex_id = mod.create_simple_exercise(payload['discipline'], payload['module'], payload['concept'], payload['tipo'], int(payload.get('difficulty', 2)), payload['statement'])
+                                if spec and getattr(spec, 'loader', None):
+                                    mod = importlib.util.module_from_spec(spec)
+                                    spec.loader.exec_module(mod)
+                                    create_fn = getattr(mod, 'create_simple_exercise')
+                                    ex_id = create_fn(parsed.get('discipline','matematica'), parsed.get('module','DEFAULT_MODULE'), parsed.get('concept','1-default'), parsed.get('tipo','afirmacoes_relacionais'), int(parsed.get('difficulty', 2)), parsed.get('statement',''))
+                                else:
+                                    # Use runpy as last resort
+                                    mod_globals = runpy.run_path(str(script))
+                                    create_fn = mod_globals.get('create_simple_exercise')
+                                    if not create_fn:
+                                        raise RuntimeError('create_simple_exercise not found in add_exercise_simple.py')
+                                    ex_id = create_fn(parsed.get('discipline','matematica'), parsed.get('module','DEFAULT_MODULE'), parsed.get('concept','1-default'), parsed.get('tipo','afirmacoes_relacionais'), int(parsed.get('difficulty', 2)), parsed.get('statement',''))
                                 logger.info('Fallback created exercise %s', ex_id)
                                 print(f'SUCCESS: {ex_id}')
                                 return 0
@@ -235,10 +238,20 @@ def main() -> int:
             logger.error("Failed to run script: %s", e)
             logger.info("Attempting fallback: load add_exercise_simple module and create exercise directly")
             try:
+                script = Path(__file__).resolve().parents[1] / "ExerciseDatabase" / "_tools" / "add_exercise_simple.py"
                 spec = importlib.util.spec_from_file_location('add_exercise_simple_fallback', str(script))
-                mod = importlib.util.module_from_spec(spec)
-                spec.loader.exec_module(mod)
-                ex_id = mod.create_simple_exercise(parsed["discipline"], parsed["module"], parsed["concept"], parsed["tipo"], int(parsed.get("difficulty", 2)), parsed["statement"])
+                if spec and getattr(spec, 'loader', None):
+                    mod = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(mod)
+                    create_fn = getattr(mod, 'create_simple_exercise')
+                    ex_id = create_fn(parsed["discipline"], parsed["module"], parsed["concept"], parsed["tipo"], int(parsed.get("difficulty", 2)), parsed["statement"])
+                else:
+                    # fallback using runpy
+                    mod_globals = runpy.run_path(str(script))
+                    create_fn = mod_globals.get('create_simple_exercise')
+                    if not create_fn:
+                        raise RuntimeError('create_simple_exercise not found in add_exercise_simple.py')
+                    ex_id = create_fn(parsed["discipline"], parsed["module"], parsed["concept"], parsed["tipo"], int(parsed.get("difficulty", 2)), parsed["statement"])
                 # Write a simple log
                 with open(log_file, 'w', encoding='utf-8') as lf:
                     lf.write(f"FALLBACK_CREATED: {ex_id}\n")

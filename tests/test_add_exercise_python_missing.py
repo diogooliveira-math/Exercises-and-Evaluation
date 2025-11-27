@@ -3,7 +3,6 @@ import subprocess
 import shutil
 from pathlib import Path
 import builtins
-import importlib
 
 import pytest
 
@@ -11,16 +10,9 @@ from scripts import run_add_exercise
 
 
 def test_fallback_when_python_executable_missing(monkeypatch, tmp_path, capsys):
-    # Prepare argv to call the script in positional form
-    monkeypatch.setattr(sys, 'argv', [
-        'scripts/run_add_exercise.py',
-        'matematica',
-        'TEMP_MODULE_FOR_TEST',
-        '1-temp',
-        'temp_tipo',
-        '2',
-        'Enunciado de teste para fallback'
-    ])
+    # Prepare argv to call the script using a single comma-separated kv string
+    kv = 'discipline=matematica, module=TEMP_MODULE_FOR_TEST, concept=1-temp, tipo=temp_tipo, difficulty=2, statement=Enunciado de teste para fallback'
+    monkeypatch.setattr(sys, 'argv', ['scripts/run_add_exercise.py', kv])
 
     # Make subprocess.run raise FileNotFoundError to simulate missing python in PATH
     def fake_run(*args, **kwargs):
@@ -41,7 +33,7 @@ def test_fallback_when_python_executable_missing(monkeypatch, tmp_path, capsys):
     captured = capsys.readouterr()
 
     # Assert returned success
-    assert rc == 0
+    assert rc == 0, f"Expected return code 0, got {rc}, out={captured.out} err={captured.err}"
     assert 'SUCCESS:' in captured.out or target.exists()
 
     # Verify that an exercise file was created under the expected tree
