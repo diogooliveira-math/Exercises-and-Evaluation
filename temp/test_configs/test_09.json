@@ -1,0 +1,18 @@
+{
+  "discipline": "matematica",
+  "module": "A9_funcoes_crescimento",
+  "concept": "1-exponenciais",
+  "tipo": "depreciacao_valor",
+  "format": "desenvolvimento",
+  "difficulty": 4,
+  "author": "Teste Automático",
+  "statement": "Exercício de teste para depreciacao_valor",
+  "additional_tags": [
+    "teste",
+    "automacao"
+  ],
+  "has_parts": true,
+  "parts_count": 0,
+  "solution": "Solução de exemplo",
+  "skip_preview": true
+}

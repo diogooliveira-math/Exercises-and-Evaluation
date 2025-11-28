@@ -22,19 +22,5 @@
     "min": 2,
     "max": 4
   },
-  "exercicios": {
-    "MAT_P4FUNCOE_FUNC_DA_002": {
-      "created": "2025-11-21",
-      "modified": "2025-11-21",
-      "author": "Professor",
-      "difficulty": 2,
-      "tags": [
-        "funcao_inversa",
-        "determinacao analitica",
-        "funcoes",
-        "inversa"
-      ],
-      "status": "active"
-    }
-  }
+  "exercicios": []
 }

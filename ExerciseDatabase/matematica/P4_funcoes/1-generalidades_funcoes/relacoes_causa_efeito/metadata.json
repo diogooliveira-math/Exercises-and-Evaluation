@@ -1,0 +1,21 @@
+{
+  "tipo": "relacoes_causa_efeito",
+  "tipo_nome": "Relacoes Causa Efeito",
+  "exercicios": {
+    "MAT_P4FUNCOE_1GX_RCE_001": {
+      "created": "2025-11-28",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_RCE_002": {
+      "created": "2025-11-28",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_RCE_003": {
+      "created": "2025-11-28",
+      "difficulty": 2,
+      "status": "active"
+    }
+  }
+}

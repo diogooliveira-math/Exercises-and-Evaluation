@@ -42,6 +42,28 @@
         "percentagens"
       ],
       "status": "active"
+    },
+    "MAT_A9FUNCOE_0RX_APX_002": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 5,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 0,
+      "tags": [
+        "crescimento",
+        "proporcionalidade",
+        "contexto_real",
+        "percentagens",
+        "revisao",
+        "consolidacao",
+        "aplicacao_pratica",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
     }
   }
 }

@@ -1,0 +1,49 @@
+{
+  "tipo": "monotonia_real",
+  "tipo_nome": "Monotonia em Contexto Real",
+  "conceito": "estudo_monotonia",
+  "conceito_nome": "Estudo da Monotonia com Derivadas",
+  "tema": "A12_otimizacao",
+  "tema_nome": "Módulo A12 - Otimização",
+  "disciplina": "matematica",
+  "descricao": "Exercícios com contextos reais onde a monotonia é usada como método de análise.",
+  "tags_tipo": [
+    "monotonia",
+    "derivadas",
+    "contexto_real",
+    "modelacao"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": false,
+    "complexidade_algebrica": "media"
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 3
+  },
+  "exercicios": {
+    "MAT_A12OTIMI_EXX_MRX_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 4,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 1,
+      "tags": [
+        "derivadas",
+        "modelacao",
+        "crescente",
+        "sinal_derivada",
+        "decrescente",
+        "contexto_real",
+        "monotonia",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
+}

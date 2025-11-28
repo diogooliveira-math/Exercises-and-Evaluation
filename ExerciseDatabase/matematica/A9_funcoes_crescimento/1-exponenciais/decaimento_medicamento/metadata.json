@@ -23,7 +23,28 @@
     "min": 3,
     "max": 4
   },
-  "exercicios": [
-    "MAT_A9FUNCRE_1EXP_DME_001"
-  ]
+  "exercicios": {
+    "MAT_A9FUNCOE_1EX_DMX_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "opencode-terminal-tester",
+      "difficulty": 1,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 3,
+      "tags": [
+        "decaimento",
+        "medicamento",
+        "farmacologia",
+        "crescimento",
+        "decaimento_exponencial",
+        "modelacao",
+        "exponencial",
+        "opencode_test",
+        "terminal"
+      ],
+      "status": "active"
+    }
+  }
 }

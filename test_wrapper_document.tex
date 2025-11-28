@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\begin{document}
+
+\section{Test Document}
+
+This is a test document to demonstrate the LaTeX compilation wrapper.
+
+\subsection{Exercise with Missing Subvariants}
+
+\begin{enumerate}
+\item \input{subvariant_1}
+\item \input{subvariant_2}
+\item \input{subvariant_3}
+\end{enumerate}
+
+\subsection{Expected Behavior}
+
+The wrapper should:
+\begin{itemize}
+\item Detect the missing subvariant\_1.tex, subvariant\_2.tex, and subvariant\_3.tex files
+\item Create placeholder files automatically
+\item Compile the document successfully
+\item Clean up the placeholder files (unless --no-cleanup is used)
+\end{itemize}
+
+\end{document}

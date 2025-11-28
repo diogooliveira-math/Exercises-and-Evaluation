@@ -12,6 +12,40 @@ import subprocess
 import sys
 import argparse
 
+# Ensure Python IO encoding is compatible with the test harness on Windows.
+# Set PYTHONIOENCODING early so the interpreter decodes/encodes stdout/stderr using
+# cp1252 with replacement for unsupported characters.
+if sys.platform == 'win32':
+    try:
+        os.environ['PYTHONIOENCODING'] = 'cp1252:replace'
+    except Exception:
+        pass
+
+# Additionally wrap print to avoid writing raw UTF-8 bytes from helper libraries
+try:
+    import io, builtins
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='cp1252', errors='replace', line_buffering=True)
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='cp1252', errors='replace', line_buffering=True)
+    _orig_print = builtins.print
+    def _safe_print(*args, sep=' ', end='\n', file=None, flush=False):
+        try:
+            text = sep.join(str(a) for a in args) + end
+            sys.stdout.buffer.write(text.encode('cp1252', errors='replace'))
+            if flush:
+                try:
+                    sys.stdout.flush()
+                except Exception:
+                    pass
+        except Exception:
+            _orig_print(*args, sep=sep, end=end, file=file, flush=flush)
+    builtins.print = _safe_print
+except Exception:
+    try:
+        sys.stdout.reconfigure(encoding='cp1252', errors='replace')
+        sys.stderr.reconfigure(encoding='cp1252', errors='replace')
+    except Exception:
+        pass
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 EXERCISE_DB = REPO_ROOT / "ExerciseDatabase"
 
@@ -141,9 +175,11 @@ def main():
 
     no_preview = '1'  # default to no preview
     no_compile = '1'  # default to no compile
+    user_confirmed = False
 
     if auto_mode_enabled:
         print("Auto-mode enabled: prosseguindo sem confirmação (auto-approve).")
+        user_confirmed = True
     else:
         # Ask for preview preference
         preview_input = input('Deseja pré-visualização antes de compilar? [S/n]: ').strip().lower()
@@ -157,6 +193,8 @@ def main():
         if cont not in ('s','y','sim','yes'):
             print('Cancelado pelo utilizador')
             sys.exit(0)
+        else:
+            user_confirmed = True
         
         # Set flags based on user input
         no_preview = '0' if want_preview else '1'
@@ -171,15 +209,15 @@ def main():
     # Set preview/compile based on user input or defaults
     env['SEBENTA_NO_PREVIEW'] = no_preview
     env['SEBENTA_NO_COMPILE'] = no_compile
-    # If auto-mode (CLI or SEBENTA_AUTO_CHOICES), ensure auto-approve is set
-    if auto_mode_enabled:
+    # If user explicitly confirmed or auto-mode, set auto-approve to avoid nested prompts
+    if user_confirmed:
         env['SEBENTA_AUTO_APPROVE'] = '1'
     else:
-        # Only auto-approve if user doesn't want preview or compile
-        if want_preview or want_compile:
-            env['SEBENTA_AUTO_APPROVE'] = '0'
-        else:
+        # fallback: only auto-approve if no preview and no compile
+        if no_preview == '1' and no_compile == '1':
             env['SEBENTA_AUTO_APPROVE'] = '1'
+        else:
+            env['SEBENTA_AUTO_APPROVE'] = '0'
 
     # Call wrapper
     wrapper = REPO_ROOT / 'scripts' / 'run_generate_sebenta_task.py'

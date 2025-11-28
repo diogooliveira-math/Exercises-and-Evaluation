@@ -7,6 +7,10 @@ Criar um sistema completo de gestão e geração de materiais educativos em LaTe
 - Compilar materiais didáticos (definições, proposições, exemplos)
 - Facilitar a reutilização e organização de conteúdo pedagógico
 
+### OpenCode
+- [ ] Fazer processo de preview quando se adiciona um exercício.
+----  [ ] Testar o fluxo de trabalho do OpenCode.
+
 ### Cleaning
 - [ ] Migrar scripts presentes no folder EXERCISES-AND-EVALUATION ✅ Scripts migrados e organizados em _tools/
 ---- [ ] Preparar uma forma que permita precaver o projeto, não o destruir. ✅ Sistema de backup com index.json.agent_backup

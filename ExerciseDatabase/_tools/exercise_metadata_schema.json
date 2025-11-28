@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Exercise metadata",
+  "type": "object",
+  "required": ["discipline", "module", "concept", "tipo", "difficulty", "statement"],
+  "properties": {
+    "discipline": {"type": "string", "minLength": 1},
+    "module": {"type": "string", "minLength": 1},
+    "concept": {"type": "string", "minLength": 1},
+    "tipo": {"type": "string", "minLength": 1},
+    "difficulty": {"type": "integer", "minimum": 1, "maximum": 5},
+    "statement": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": true
+}

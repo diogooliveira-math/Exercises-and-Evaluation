@@ -1,0 +1,11 @@
+{
+  "tipo": "afirmacoes_causais_despesa_preco",
+  "tipo_nome": "Afirmacoes Causais Despesa Preco",
+  "exercicios": {
+    "MAT_P4FUNCOE_1GX_ACD_001": {
+      "created": "2025-11-27",
+      "difficulty": 3,
+      "status": "active"
+    }
+  }
+}

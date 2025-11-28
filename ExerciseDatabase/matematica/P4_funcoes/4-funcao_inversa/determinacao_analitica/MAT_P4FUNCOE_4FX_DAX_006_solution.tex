@@ -1,0 +1,52 @@
+% Solução do Exercício MAT_P4FUNCOE_4FX_DAX_006
+% Determinação da função inversa de f(x) = 2x + 3
+
+\exercicioDesenvolvimento{
+\textbf{Solução Passo a Passo:}
+
+\begin{enumerate}
+\item \textbf{Verificar se a função é invertível:}
+   \begin{itemize}
+   \item A função $f(x) = 2x + 3$ é uma função linear com coeficiente $a = 2 \neq 0$.
+   \item Como é uma função afim com coeficiente angular não nulo, ela é estritamente monótona (crescente).
+   \item Portanto, $f(x)$ é bijetiva e possui função inversa.
+   \end{itemize}
+
+\item \textbf{Aplicar o método de troca de variáveis:}
+   \begin{align}
+   y &= 2x + 3 \\
+   x &= 2y + 3 \quad \text{(troca $x \leftrightarrow y$)}
+   \end{align}
+
+\item \textbf{Isolar a nova variável $y$:}
+   \begin{align}
+   x &= 2y + 3 \\
+   x - 3 &= 2y \\
+   y &= \frac{x - 3}{2}
+   \end{align}
+
+\item \textbf{Escrever a função inversa:}
+   \[f^{-1}(x) = \frac{x - 3}{2}\]
+
+\item \textbf{Verificação do resultado:}
+   \begin{itemize}
+   \item Verificar $f(f^{-1}(x)) = x$:
+     \[f\left(\frac{x - 3}{2}\right) = 2 \cdot \frac{x - 3}{2} + 3 = (x - 3) + 3 = x \checkmark\]
+   
+   \item Verificar $f^{-1}(f(x)) = x$:
+     \[f^{-1}(2x + 3) = \frac{(2x + 3) - 3}{2} = \frac{2x}{2} = x \checkmark\]
+   \end{itemize}
+
+\item \textbf{Conclusão:}
+   A função inversa de $f(x) = 2x + 3$ é:
+   \[\boxed{f^{-1}(x) = \frac{x - 3}{2}}\]
+\end{enumerate}
+
+\textbf{Observações importantes:}
+\begin{itemize}
+\item O domínio de $f(x)$ é $\mathbb{R}$ e o contradomínio também é $\mathbb{R}$.
+\item O domínio de $f^{-1}(x)$ é $\mathbb{R}$ (que era o contradomínio de $f$).
+\item O contradomínio de $f^{-1}(x)$ é $\mathbb{R}$ (que era o domínio de $f$).
+\item Graficamente, a função inversa é o reflexo de $f(x)$ em relação à reta $y = x$.
+\end{itemize}
+}

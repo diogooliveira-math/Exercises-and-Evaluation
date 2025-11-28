@@ -1,0 +1,31 @@
+{
+  "tipo": "afirmacoes_relacionais",
+  "tipo_nome": "Afirmacoes Relacionais",
+  "exercicios": {
+    "MAT_P4FUNCOE_1GX_ARX_001": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_ARX_002": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GEN_AR_001": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_ARX_004": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_ARX_005": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    }
+  }
+}

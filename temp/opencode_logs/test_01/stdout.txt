@@ -1,0 +1,7 @@
+
+======================================================================
+              ADICIONAR NOVO EXERCÍCIO (Não-Interativo)               
+======================================================================
+
+[OK] Exercício criado: MAT_P4FUNCOE_1GX_RVX_007
+Sucesso: MAT_P4FUNCOE_1GX_RVX_007

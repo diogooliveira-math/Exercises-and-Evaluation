@@ -1,0 +1,4 @@
+Please run the tool `add_exercise_simple` with the following parameters:
+discipline=matematica, module=P4_funcoes, concept=0_1-intervalos_reais, tipo=pertinencia_intervalo, difficulty=1.
+Statement: Considere o intervalo $I = [2, 5)$. Indique, justificando, se os seguintes números pertencem ao intervalo $I$: \begin{itemize} \item[a)] $2$ \item[b)] $5$ \item[c)] $3.5$ \item[d)] $1.9$ \end{itemize}
+Return only the created ID on success or a clear error message.

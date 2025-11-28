@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{calc}
+
+% Macros do sistema de exercícios
+\newcounter{exerciciocount}
+\newcounter{subexerciciocount}
+\newcounter{optioncount}
+
+\newcommand{\exercicio}[1]{%
+    \par\vspace{1.5em}%
+    \refstepcounter{exerciciocount}%
+    \setcounter{subexerciciocount}{0}%
+    \setcounter{optioncount}{0}%
+    \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+}
+
+\newcommand{\subexercicio}[1]{%
+    \par\vspace{0.8em}%
+    \refstepcounter{subexerciciocount}%
+    \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+}
+
+\begin{document}
+
+% Teste com o primeiro exercício
+\input{MAT_A8MODELO_1SX_NFX_011.tex}
+
+\vspace{2cm}
+
+% Teste com o segundo exercício
+\input{MAT_A8MODELO_1SX_NFX_012.tex}
+
+\vspace{2cm}
+
+% Teste com o terceiro exercício
+\input{MAT_A8MODELO_1SX_NFX_013.tex}
+
+\end{document}

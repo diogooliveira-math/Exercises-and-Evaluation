@@ -1,0 +1,67 @@
+{
+  "tipo": "reconhecimento_variaveis",
+  "tipo_nome": "Reconhecimento Variaveis",
+  "exercicios": {
+    "MAT_P4FUNCOE_1GX_RVX_001": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_RVX_002": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_RVX_003": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_RVX_004": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_RVX_005": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_RVX_006": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 5,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "contradominio",
+        "definicao",
+        "dominio",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_RVX_007": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "opencode-terminal-tester",
+      "difficulty": 1,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 2,
+      "tags": [
+        "dominio",
+        "contradominio",
+        "definicao",
+        "opencode_test",
+        "terminal"
+      ],
+      "status": "active"
+    }
+  }
+}

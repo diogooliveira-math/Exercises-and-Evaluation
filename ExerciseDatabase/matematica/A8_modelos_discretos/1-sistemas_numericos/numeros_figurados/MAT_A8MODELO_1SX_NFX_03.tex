@@ -1,0 +1,64 @@
+% Exercise ID: MAT_A8MODELO_1SX_NFX_013
+% Module: Módulo A8 - Modelos Discretos | Concept: Sistemas Numéricos | Type: Números Figurados
+% Difficulty: 4/5 (Difícil) | Format: standard
+% Tags: binario, decimal, sequencias, hexadecimal, sistemas_numericos, numeros_pentagonais, representacao_visual, conversao_bases, regra_sucessao
+% Author: Professor Diogo | Date: 2025-11-26
+% Status: active
+
+\exercicio{Analise a sucessão dos números pentagonais representados visualmente abaixo (os valores $P_1$, $P_2$, $P_3$, $P_4$ estão indicados nas figuras):
+
+\begin{center}
+\begin{tikzpicture}[scale=0.35]
+% P1 = 1
+\fill (0,0) circle (0.1);
+% Valor $P_1 = 1$ representado na figura
+
+% P2 = 5
+\begin{scope}[xshift=3cm]
+\foreach \i in {0,72,144,216,288} {
+    \fill ({cos(\i)},{sin(\i)}) circle (0.1);
+}
+% Valor $P_2 = 5$ representado na figura
+\end{scope}
+
+% P3 = 12
+\begin{scope}[xshift=7cm]
+% Camada interior
+\foreach \i in {0,72,144,216,288} {
+    \fill ({cos(\i)},{sin(\i)}) circle (0.1);
+}
+% Camada exterior
+\foreach \i in {0,72,144,216,288} {
+    \fill ({2*cos(\i)},{2*sin(\i)}) circle (0.1);
+}
+% Valor $P_3 = 12$ representado na figura
+\end{scope}
+
+% P4 = 22
+\begin{scope}[xshift=13cm]
+% Camada interior
+\foreach \i in {0,72,144,216,288} {
+    \fill ({cos(\i)},{sin(\i)}) circle (0.1);
+}
+% Camada media
+\foreach \i in {0,72,144,216,288} {
+    \fill ({2*cos(\i)},{2*sin(\i)}) circle (0.1);
+}
+% Camada exterior
+\foreach \i in {0,72,144,216,288} {
+    \fill ({3*cos(\i)},{3*sin(\i)}) circle (0.1);
+}
+% Valor $P_4 = 22$ representado na figura
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+
+\subexercicio{Represente os quatro primeiros termos da sucessao ($P_1, P_2, P_3, P_4$) em sistema binario.}
+
+\subexercicio{Escreva o 5º termo da sucessao ($P_5$) em notacao decimal e hexadecimal.}
+
+\subexercicio{Determine o 7º termo da sucessao ($P_7$) e represente-o em sistema binario.}
+
+\subexercicio{Escreva a regra geral para gerar o proximo termo da sucessao dos numeros pentagonais.}}

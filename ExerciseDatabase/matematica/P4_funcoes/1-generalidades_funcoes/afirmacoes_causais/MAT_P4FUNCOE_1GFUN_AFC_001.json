@@ -1,0 +1,31 @@
+{
+  "id": "MAT_P4FUNCOE_1GFUN_AFC_001",
+  "version": "1.0",
+  "created": "2025-11-28",
+  "modified": "2025-11-28",
+  "author": "Professor",
+  "classification": {
+    "discipline": "matematica",
+    "module": "P4_funcoes",
+    "module_name": "MÓDULO P4 - Funções",
+    "concept": "1-generalidades_funcoes",
+    "concept_name": "Generalidades acerca de Funções",
+    "tipo": "afirmacoes_causais",
+    "tipo_nome": "Afirmações Causais sobre Funções",
+    "tags": [
+      "afirmacoes_causais",
+      "funcoes",
+      "relacoes_causais",
+      "analise_matematica"
+    ]
+  },
+  "content": {
+    "format": "desenvolvimento",
+    "difficulty": 3,
+    "estimated_time": 15,
+    "prerequisites": ["conceito de função", "relações entre variáveis"],
+    "learning_objectives": ["analisar afirmações causais em contextos funcionais", "justificar respostas com argumentos matemáticos"],
+    "tags_content": ["afirmacoes", "causalidade", "funções"]
+  },
+  "source_file": "ExerciseDatabase/matematica/P4_funcoes/1-generalidades_funcoes/afirmacoes_causais/MAT_P4FUNCOE_1GFUN_AFC_001.tex"
+}

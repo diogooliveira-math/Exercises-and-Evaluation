@@ -1,0 +1,29 @@
+{
+  "tipo": "modelagem",
+  "tipo_nome": "Modelagem Matemática",
+  "conceito": "problemas_simples_otimizacao",
+  "conceito_nome": "Problemas Simples de Otimização",
+  "tema": "A12_otimizacao",
+  "tema_nome": "Módulo A12 - Otimização",
+  "disciplina": "matematica",
+  "descricao": "Problemas do tipo f(x)=a onde f(x) modela um contexto real e os alunos interpretam e resolvem.",
+  "tags_tipo": [
+    "modelagem",
+    "funcao",
+    "interpretacao",
+    "contexto_real"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": false,
+    "complexidade_algebrica": "baixa_media"
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 3
+  },
+  "exercicios": [
+    "MAT_A12OTIMI_PROB_MOD_001",
+    "MAT_A12OTIMI_PROB_MOD_002"
+  ]
+}

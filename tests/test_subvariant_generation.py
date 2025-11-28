@@ -114,7 +114,9 @@ def test_subvariant_generation():
     # for result in results:
     #     os.unlink(result["latex_file"])
 
-    return all_passed
+    assert all_passed, 'One or more subvariant generation validations failed'
+    return True
+
 
 
 def validate_folder_structure(exercise_folder: str, test_case: dict) -> dict:

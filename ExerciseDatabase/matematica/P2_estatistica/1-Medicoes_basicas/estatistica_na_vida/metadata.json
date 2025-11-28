@@ -1,0 +1,72 @@
+{
+  "tipo": "estatistica_na_vida",
+  "tipo_nome": "Estatística na Vida Quotidiana",
+  "conceito": "1-Medicoes_basicas",
+  "conceito_nome": "Medições Básicas",
+  "tema": "P2_estatistica",
+  "tema_nome": "Módulo P2 - Estatística",
+  "disciplina": "matematica",
+  "descricao": "Exercícios aplicando medidas estatísticas a valores do dia a dia de alunos e pessoas (notas, gastos, tempos, etc.).",
+  "tags_tipo": [
+    "media",
+    "moda",
+    "mediana",
+    "vida_quotidiana",
+    "interpretacao"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": false,
+    "complexidade_algebrica": "baixa"
+  },
+  "dificuldade_sugerida": {
+    "min": 1,
+    "max": 2
+  },
+  "exercicios": {
+    "MAT_P2ESTATI_1MX_ENV_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 0,
+      "tags": [
+        "tabelas",
+        "moda",
+        "interpretacao",
+        "media",
+        "calculos_com_dados",
+        "mediana",
+        "vida_quotidiana",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    },
+    "MAT_P2ESTATI_1MX_ENV_002": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 0,
+      "tags": [
+        "interpretacao",
+        "mediana",
+        "tabelas",
+        "moda",
+        "vida_quotidiana",
+        "media",
+        "calculos_com_dados",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
+}

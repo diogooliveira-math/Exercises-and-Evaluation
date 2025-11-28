@@ -1,0 +1,18 @@
+{
+  "discipline": "matematica",
+  "module": "A12_otimizacao",
+  "concept": "estudo_monotonia",
+  "tipo": "problema_real_monotonia",
+  "format": "desenvolvimento",
+  "difficulty": 4,
+  "author": "Teste Automático",
+  "statement": "Exercício de teste para problema_real_monotonia",
+  "additional_tags": [
+    "teste",
+    "automacao"
+  ],
+  "has_parts": false,
+  "parts_count": 0,
+  "solution": "",
+  "skip_preview": true
+}

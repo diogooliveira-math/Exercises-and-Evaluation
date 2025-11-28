@@ -1,0 +1,1 @@
+[WinError 2] O sistema não conseguiu localizar o ficheiro especificado

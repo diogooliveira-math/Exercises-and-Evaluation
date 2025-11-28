@@ -1,0 +1,11 @@
+{
+  "tipo": "tipo_teste",
+  "tipo_nome": "Tipo Teste",
+  "exercicios": {
+    "MAT_MODULOIN_CXX_TTX_001": {
+      "created": "2025-11-26",
+      "difficulty": 2,
+      "status": "active"
+    }
+  }
+}

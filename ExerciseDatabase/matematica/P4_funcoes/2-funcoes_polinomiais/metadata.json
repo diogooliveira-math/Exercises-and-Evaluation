@@ -5,11 +5,14 @@
   "module": "P4_funcoes",
   "module_name": "MÓDULO P4 - Funções",
   "order": 2,
-  "tags": [
+"tags": [
     "polinomio",
     "coeficientes",
     "grau",
-    "funcao_polinomial"
+    "funcao_polinomial",
+    "equacao_quadratica",
+    "raizes",
+    "parabola"
   ],
   "difficulty_range": {
     "min": 2,

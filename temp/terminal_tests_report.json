@@ -1,0 +1,143 @@
+{
+  "summary": {
+    "total": 6,
+    "success": 0,
+    "failures": 6,
+    "success_rate": 0.0
+  },
+  "results": [
+    {
+      "id": "Test_01",
+      "description": "Adicionar exercício simples",
+      "script": "ExerciseDatabase/_tools/add_exercise_with_types.py",
+      "inputs": [
+        "matematica",
+        "P4_funcoes",
+        "4-funcao_inversa",
+        "determinacao_analitica",
+        "3",
+        "Teste Automático",
+        "Determina a função inversa de f(x) = 2x + 1.",
+        "",
+        "n",
+        "n",
+        "",
+        "s"
+      ],
+      "success": false,
+      "exit_code": 1,
+      "output": "\n\u001b[1m\u001b[96m======================================================================\u001b[0m\n",
+      "error": "During handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\ExerciseDatabase\\_tools\\add_exercise_with_types.py\", line 769, in <module>\n    main()\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\ExerciseDatabase\\_tools\\add_exercise_with_types.py\", line 764, in main\n    print_error(f\"\\n\\nErro: {str(e)}\")\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\ExerciseDatabase\\_tools\\add_exercise_with_types.py\", line 41, in print_error\n    print(f\"{Colors.RED}\\u2717 {text}{Colors.END}\")\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u2717' in position 5: character maps to <undefined>\n",
+      "has_errors": true
+    },
+    {
+      "id": "Test_02",
+      "description": "Adicionar exercício com sub-variants",
+      "script": "ExerciseDatabase/_tools/add_exercise_with_types.py",
+      "inputs": [
+        "matematica",
+        "P4_funcoes",
+        "4-funcao_inversa",
+        "teste_reta_horizontal",
+        "2",
+        "Teste Sub-variants",
+        "Verifica se as funções são injetivas.",
+        "",
+        "s",
+        "f(x) = x²",
+        "f(x) = x³",
+        "f(x) = 2x + 1",
+        "",
+        "n",
+        "",
+        "s"
+      ],
+      "success": false,
+      "exit_code": 1,
+      "output": "\n\u001b[1m\u001b[96m======================================================================\u001b[0m\n",
+      "error": "During handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\ExerciseDatabase\\_tools\\add_exercise_with_types.py\", line 769, in <module>\n    main()\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\ExerciseDatabase\\_tools\\add_exercise_with_types.py\", line 764, in main\n    print_error(f\"\\n\\nErro: {str(e)}\")\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\ExerciseDatabase\\_tools\\add_exercise_with_types.py\", line 41, in print_error\n    print(f\"{Colors.RED}\\u2717 {text}{Colors.END}\")\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u2717' in position 5: character maps to <undefined>\n",
+      "has_errors": true
+    },
+    {
+      "id": "Test_03",
+      "description": "Gerar sebenta simples",
+      "script": "scripts/generate_sebenta_interactive.py",
+      "inputs": [
+        "matematica",
+        "1",
+        "",
+        "1",
+        "",
+        "1",
+        "",
+        "s",
+        "s"
+      ],
+      "success": false,
+      "exit_code": 1,
+      "output": "\nDisciplinas (múltiplas permitidas):\n  1. fisica\n  2. matematica\n  3. test\n  0. (nenhum / skip)\n  Pode escolher múltiplas opções separadas por vírgula (ex: 1,3,5)\nEscolha: '\"s\"' não é um número válido\nEscolha inválida — tente novamente.\nEscolha: ",
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\scripts\\generate_sebenta_interactive.py\", line 193, in <module>\n    main()\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\scripts\\generate_sebenta_interactive.py\", line 96, in main\n    discipline = pick_from_list('Disciplinas (múltiplas permitidas)', disciplines, allow_multiple=True)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\scripts\\generate_sebenta_interactive.py\", line 38, in pick_from_list\n    s = input(\"Escolha: \").strip()\n        ^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+      "has_errors": true
+    },
+    {
+      "id": "Test_04",
+      "description": "Gerar sebenta múltipla",
+      "script": "scripts/generate_sebenta_interactive.py",
+      "inputs": [
+        "matematica",
+        "1,2",
+        "",
+        "1,2,3",
+        "",
+        "1,2",
+        "",
+        "s",
+        "s"
+      ],
+      "success": false,
+      "exit_code": 1,
+      "output": "\nDisciplinas (múltiplas permitidas):\n  1. fisica\n  2. matematica\n  3. test\n  0. (nenhum / skip)\n  Pode escolher múltiplas opções separadas por vírgula (ex: 1,3,5)\nEscolha: '\"s\"' não é um número válido\nEscolha inválida — tente novamente.\nEscolha: ",
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\scripts\\generate_sebenta_interactive.py\", line 193, in <module>\n    main()\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\scripts\\generate_sebenta_interactive.py\", line 96, in main\n    discipline = pick_from_list('Disciplinas (múltiplas permitidas)', disciplines, allow_multiple=True)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\scripts\\generate_sebenta_interactive.py\", line 38, in pick_from_list\n    s = input(\"Escolha: \").strip()\n        ^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+      "has_errors": true
+    },
+    {
+      "id": "Test_05",
+      "description": "Gerar teste simples",
+      "script": "scripts/generate_test_interactive.py",
+      "inputs": [
+        "matematica",
+        "1",
+        "",
+        "1",
+        "",
+        "1",
+        "",
+        "5",
+        "teste_terminal",
+        "s",
+        "s"
+      ],
+      "success": false,
+      "exit_code": 1,
+      "output": "\nDisciplinas (múltiplas permitidas):\n  1. fisica\n  2. matematica\n  3. test\n  0. (nenhum / skip)\n  Pode escolher múltiplas opções separadas por vírgula (ex: 1,3,5)\nEscolha: '\"s\"' não é um número válido\nEscolha inválida — tente novamente.\nEscolha: ",
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\scripts\\generate_test_interactive.py\", line 427, in <module>\n    main()\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\scripts\\generate_test_interactive.py\", line 325, in main\n    discipline = pick_from_list('Disciplinas (múltiplas permitidas)', disciplines, allow_multiple=True)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\scripts\\generate_test_interactive.py\", line 39, in pick_from_list\n    s = input(\"Escolha: \").strip()\n        ^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+      "has_errors": true
+    },
+    {
+      "id": "Test_06",
+      "description": "Buscar exercícios por tag",
+      "script": "ExerciseDatabase/_tools/search_exercises.py",
+      "inputs": [
+        "1",
+        "funcao",
+        "",
+        "q"
+      ],
+      "success": false,
+      "exit_code": -1,
+      "output": "",
+      "error": "unsupported operand type(s) for +: 'NoneType' and 'str'",
+      "has_errors": true
+    }
+  ]
+}

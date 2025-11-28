@@ -1,0 +1,59 @@
+% Exercise ID: MAT_P4FUNCOE_4FX_DAX_025
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Determine a função inversa de f(x) = 2x + 3. Apresente todos os passos de resolução, incluindo verificação da bijetividade e composição das funções.}
+
+\exercicioDesenvolvimento{
+\textbf{Passo 1: Verificar se a função é bijetora}
+
+Para que uma função possua inversa, ela precisa ser bijetora (injetora e sobrejetora).
+
+\textbf{Injetividade:}
+Uma função é injetora se f(x₁) = f(x₂) ⇒ x₁ = x₂.
+
+Para f(x) = 2x + 3:
+\begin{align*}
+f(x_1) &= f(x_2) \\
+2x_1 + 3 &= 2x_2 + 3 \\
+2x_1 &= 2x_2 \\
+x_1 &= x_2
+\end{align*}
+
+Portanto, f(x) é injetora.
+
+\textbf{Sobrejetividade:}
+Como f(x) = 2x + 3 é uma função linear com coeficiente angular não nulo, seu contradomínio natural é ℝ. Para qualquer y ∈ ℝ, existe x = (y-3)/2 ∈ ℝ tal que f(x) = y. Portanto, f(x) é sobrejetora.
+
+\textbf{Conclusão:} f(x) é bijetora e possui função inversa.
+
+\textbf{Passo 2: Determinar a função inversa}
+
+Aplicamos o algoritmo para encontrar f⁻¹(x):
+
+\begin{enumerate}
+    \item Escrevemos y = f(x): \quad y = 2x + 3
+    \item Trocamos x por y: \quad x = 2y + 3
+    \item Isolamos y: \quad x - 3 = 2y
+    \item Resolvemos para y: \quad y = \frac{x - 3}{2}
+    \item Substituímos y por f⁻¹(x): \quad f^{-1}(x) = \frac{x - 3}{2}
+\end{enumerate}
+
+\textbf{Passo 3: Verificação por composição}
+
+Verificamos se f(f⁻¹(x)) = x e f⁻¹(f(x)) = x:
+
+\begin{align*}
+f(f^{-1}(x)) &= 2 \cdot \left(\frac{x - 3}{2}\right) + 3 \\
+&= (x - 3) + 3 \\
+&= x \quad \checkmark
+\end{align*}
+
+\begin{align*}
+f^{-1}(f(x)) &= \frac{2x + 3 - 3}{2} \\
+&= \frac{2x}{2} \\
+&= x \quad \checkmark
+\end{align*}
+
+\textbf{Resposta final:} A função inversa é $f^{-1}(x) = \frac{x - 3}{2}$.
+}

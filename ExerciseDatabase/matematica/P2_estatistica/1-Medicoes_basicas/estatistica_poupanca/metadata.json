@@ -1,0 +1,50 @@
+{
+  "tipo": "estatistica_poupanca",
+  "tipo_nome": "Estatística Aplicada à Poupança",
+  "conceito": "1-Medicoes_basicas",
+  "conceito_nome": "Medições Básicas",
+  "tema": "P2_estatistica",
+  "tema_nome": "Módulo P2 - Estatística",
+  "disciplina": "matematica",
+  "descricao": "Exercícios aplicando medidas estatísticas (média, moda, mediana) a tabelas que cronometram poupanças de família, pessoa ou instituição.",
+  "tags_tipo": [
+    "media",
+    "moda",
+    "mediana",
+    "poupanca",
+    "interpretacao"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": false,
+    "complexidade_algebrica": "baixa"
+  },
+  "dificuldade_sugerida": {
+    "min": 1,
+    "max": 2
+  },
+  "exercicios": {
+    "MAT_P2ESTATI_1MX_EPX_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 3,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 1,
+      "tags": [
+        "poupanca",
+        "mediana",
+        "moda",
+        "media",
+        "interpretacao",
+        "calculos_com_dados",
+        "tabelas",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
+}

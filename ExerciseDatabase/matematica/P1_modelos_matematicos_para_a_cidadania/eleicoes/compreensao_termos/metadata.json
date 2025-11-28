@@ -2,7 +2,11 @@
   "tipo": "compreensao_termos",
   "tipo_nome": "Compreensão de Termos Eleitorais",
   "conceito": "eleicoes",
-  "tags_tipo": ["definições","leitura","associação"],
+  "tags_tipo": [
+    "definições",
+    "leitura",
+    "associação"
+  ],
   "caracteristicas": {
     "requer_calculo": false,
     "requer_dados": false
@@ -11,7 +15,48 @@
     "min": 1,
     "max": 2
   },
-  "exercicios": [
-    "MAT_P1MODELO_ELE_MATCH_001"
-  ]
+  "exercicios": {
+    "MAT_P1MODELO_EXX_CTX_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 4,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 1,
+      "tags": [
+        "democracia",
+        "votacao",
+        "percentagens",
+        "leitura",
+        "definições",
+        "associação",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    },
+    "MAT_P1MODELO_EXX_CTX_002": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "democracia",
+        "associação",
+        "percentagens",
+        "leitura",
+        "votacao",
+        "definições",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
 }

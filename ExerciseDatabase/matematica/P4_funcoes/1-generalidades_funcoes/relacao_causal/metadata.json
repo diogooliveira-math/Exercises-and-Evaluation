@@ -1,0 +1,16 @@
+{
+  "tipo": "relacao_causal",
+  "tipo_nome": "Relações Causais (preço/despesa)",
+  "exercicios": {
+    "MAT_P4FUNCOE_1GX_RCX_001": {
+      "created": "2025-11-28",
+      "difficulty": 3,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_RCA_001": {
+      "created": "2025-11-28",
+      "difficulty": 3,
+      "status": "active"
+    }
+  }
+}

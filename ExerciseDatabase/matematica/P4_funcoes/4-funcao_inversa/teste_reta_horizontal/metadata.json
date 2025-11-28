@@ -22,11 +22,5 @@
     "min": 2,
     "max": 3
   },
-  "exercicios": [
-    "MAT_P4FUNCOE_4FIN_003",
-    "MAT_P4FUNCOE_4FIN_TRH_002",
-    "MAT_P4FUNCOE_4FIN_TRH_003",
-    "MAT_P4FUNCOE_4FIN_TRH_004",
-    "MAT_P4FUNCOE_4FIN_TRH_005"
-  ]
+  "exercicios": []
 }

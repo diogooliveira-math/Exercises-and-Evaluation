@@ -1,0 +1,25 @@
+{
+  "tipo": "afirmacoes_verdadeiro_falso",
+  "tipo_nome": "Afirmações Verdadeiro/Falso",
+  "conceito": "1-generalidades_funcoes",
+  "conceito_nome": "Generalidades acerca de Funções",
+  "tema": "P4_funcoes",
+  "tema_nome": "MÓDULO P4 - Funções",
+  "disciplina": "matematica",
+  "descricao": "Exercícios onde os alunos avaliam afirmações (V/F) sobre relações entre preço, quantidade e despesa.",
+  "tags_tipo": [
+    "afirmacoes",
+    "verdadeiro_falso",
+    "preco",
+    "despesa"
+  ],
+  "caracteristicas": {
+    "formato": "verdadeiro_falso",
+    "tem_partes": true
+  },
+  "dificuldade_sugerida": {
+    "min": 1,
+    "max": 3
+  },
+  "exercicios": []
+}

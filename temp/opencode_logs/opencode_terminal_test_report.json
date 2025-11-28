@@ -1,0 +1,25 @@
+{
+  "total": 2,
+  "success": 2,
+  "failures": 0,
+  "details": [
+    {
+      "index": 1,
+      "config_path": "C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\temp\\opencode_logs\\test_01\\config.json",
+      "returncode": 0,
+      "success": true,
+      "stdout_file": "C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\temp\\opencode_logs\\test_01\\stdout.txt",
+      "stderr_file": "C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\temp\\opencode_logs\\test_01\\stderr.txt",
+      "prompt_file": "C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\temp\\opencode_logs\\test_01\\prompt.txt"
+    },
+    {
+      "index": 2,
+      "config_path": "C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\temp\\opencode_logs\\test_02\\config.json",
+      "returncode": 0,
+      "success": true,
+      "stdout_file": "C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\temp\\opencode_logs\\test_02\\stdout.txt",
+      "stderr_file": "C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\temp\\opencode_logs\\test_02\\stderr.txt",
+      "prompt_file": "C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\temp\\opencode_logs\\test_02\\prompt.txt"
+    }
+  ]
+}

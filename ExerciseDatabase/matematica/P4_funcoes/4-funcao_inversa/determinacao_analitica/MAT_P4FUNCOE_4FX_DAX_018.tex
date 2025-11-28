@@ -1,0 +1,52 @@
+% Exercise ID: MAT_P4FUNCOE_4FX_DAX_018
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Determine a função inversa de f(x) = 2x + 3. Apresente todos os passos de resolução e verifique se a função é bijetora.}
+
+\exercicioDesenvolvimento{
+\textbf{Passo 1: Verificar se a função é injetora}
+
+Uma função é injetora (um-para-um) se valores diferentes de x produzem valores diferentes de f(x).
+
+Para f(x) = 2x + 3:
+\begin{itemize}
+    \item É uma função linear com coeficiente angular a = 2 ≠ 0
+    \item Funções lineares com coeficiente angular não nulo são estritamente monótonas
+    \item Como a = 2 > 0, a função é estritamente crescente
+    \item Portanto, f(x) é injetora
+\end{itemize}
+
+\textbf{Passo 2: Verificar se a função é sobrejetora}
+
+Uma função é sobrejetora (sobre) se todo elemento do contradomínio tem pelo um antecedente no domínio.
+
+Para f(x) = 2x + 3 com domínio D = ℝ e contradomínio CD = ℝ:
+\begin{itemize}
+    \item O limite quando x → -∞ é f(x) → -∞
+    \item O limite quando x → +∞ é f(x) → +∞
+    \item Pelo Teorema do Valor Intermediário, a função assume todos os valores reais
+    \item Portanto, f(x) é sobrejetora
+\end{itemize}
+
+\textbf{Conclusão:} Como f(x) é injetora e sobrejetora, ela é \textbf{bijetora} e possui função inversa.
+
+\textbf{Passo 3: Determinar a função inversa}
+
+Para encontrar f⁻¹(x), seguimos o algoritmo:
+\begin{enumerate}
+    \item Trocar f(x) por y: y = 2x + 3
+    \item Trocar x por y e y por x: x = 2y + 3
+    \item Isolar y: x - 3 = 2y
+    \item Resolver para y: y = \frac{x - 3}{2}
+    \item Substituir y por f⁻¹(x): f⁻¹(x) = \frac{x - 3}{2}
+\end{enumerate}
+
+\textbf{Verificação:}
+\begin{itemize}
+    \item f(f⁻¹(x)) = 2 \cdot \frac{x - 3}{2} + 3 = x - 3 + 3 = x \quad \checkmark
+    \item f⁻¹(f(x)) = \frac{2x + 3 - 3}{2} = \frac{2x}{2} = x \quad \checkmark
+\end{itemize}
+
+\textbf{Resposta final:} A função inversa é f⁻¹(x) = \frac{x - 3}{2}.
+}

@@ -1,0 +1,39 @@
+% Exercise ID: MAT_A12OTIMI_ESTU_MRE_001
+% Module: Módulo A12 - Otimização | Concept: Estudo da Monotonia
+% Type: monotonia_real | Difficulty: 2/5
+% Tags: monotonia, gráfico, contexto_real, temperatura
+% Author: Professor | Date: 2025-11-26
+
+\exercicio{
+A Maria está a fazer um bolo. A temperatura no interior do bolo foi medida ao longo do tempo, entre as 16h00 e as 16h30. O gráfico seguinte mostra como a temperatura variou durante esse período.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+  % Eixos
+  \draw[->] (0,0) -- (7,0) node[right] {Tempo (min)};
+  \draw[->] (0,0) -- (0,6) node[above] {Temperatura ($^\circ$C)};
+  % Gráfico
+  \draw[thick, blue, smooth] plot coordinates {
+    (0,2)   % 16h00 - 20ºC
+    (2,4)   % 16h10 - 60ºC
+    (3,5)   % 16h15 - 100ºC (máximo)
+    (5,3)   % 16h25 - 60ºC
+    (6,2.5) % 16h30 - 40ºC
+  };
+  % Marcas no eixo x
+  \foreach \x/\label in {0/0, 1/5, 2/10, 3/15, 4/20, 5/25, 6/30}
+    \draw (\x,0.1) -- (\x,-0.1) node[below] {\label};
+  % Marcas no eixo y
+  \foreach \y/\label in {2/20, 3/40, 4/60, 5/100}
+    \draw (0.1,\y) -- (-0.1,\y) node[left] {\label};
+\end{tikzpicture}
+\end{center}
+}
+
+\subexercicio{Durante que intervalo de tempo a temperatura do bolo esteve a aumentar?}
+
+\subexercicio{Durante que intervalo de tempo a temperatura esteve a diminuir?}
+
+\subexercicio{Qual foi a temperatura máxima atingida e em que minuto isso aconteceu?}
+
+\subexercicio{Interpreta o que significa o ponto mais alto do gráfico no contexto do bolo.}

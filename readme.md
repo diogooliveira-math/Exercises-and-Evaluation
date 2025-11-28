@@ -98,6 +98,23 @@ python SebentasDatabase/_tools/generate_test_template.py --questions 10
 python ExerciseDatabase/_tools/search_exercises.py
 ```
 
+### OpenCode / opencode
+
+O repositório inclui utilitários "opencode" para testes locais e para que agentes possam executar comandos seguros de diagnóstico. Principais pontos:
+
+- **Scripts relevantes**: `opencode_terminal_test.py` (raiz) e `scripts/send_prompt_opencode.py`.
+- **Segurança**: Nunca inclua segredos em prompts; peça ao utilizador para inserir segredos se necessário e não persista esses valores.
+- **Logs**: Saídas de opencode devem ser gravadas em `temp/opencode_logs/` e não devem ser commitadas.
+- **PowerShell**: Ao encadear comandos no Windows PowerShell use `;` em vez de `&&`.
+
+Exemplo de execução local (PowerShell):
+
+```powershell
+python opencode_terminal_test.py
+python scripts/send_prompt_opencode.py --prompt "Run quick validation" ; python tests/quick_validation.py
+```
+
+
 > **Atenção importante — onde são colocadas as sebentas geradas**
 >
 > - Todas as sebentas (ficheiros `.tex` e/ou `.pdf`) devem ser geradas em `SebentasDatabase/` e nunca diretamente em `ExerciseDatabase/`.

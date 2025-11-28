@@ -1,0 +1,89 @@
+{
+  "generated": [
+    {
+      "id": "MAT_P4FUNCOE_1IX_PIX_002",
+      "statement": "Indique se o número 2 pertence ao intervalo [2, 3]. Justifique a sua resposta.",
+      "a": 2,
+      "b": 3,
+      "choice_type": "inside"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1IX_PIX_003",
+      "statement": "Indique se o número 9 pertence ao intervalo (5, 8]. Justifique a sua resposta.",
+      "a": 5,
+      "b": 8,
+      "choice_type": "right_out"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1IX_PIX_004",
+      "statement": "Indique se o número 4 pertence ao intervalo (3, 8). Justifique a sua resposta.",
+      "a": 3,
+      "b": 8,
+      "choice_type": "inside"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1IX_PIX_005",
+      "statement": "Indique se o número 4 pertence ao intervalo [-1, 4). Justifique a sua resposta.",
+      "a": -1,
+      "b": 4,
+      "choice_type": "right_border"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1IX_PIX_006",
+      "statement": "Indique se o número 2 pertence ao intervalo [1, 6). Justifique a sua resposta.",
+      "a": 1,
+      "b": 6,
+      "choice_type": "inside"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1IX_PIX_007",
+      "statement": "Indique se o número 5 pertence ao intervalo (3, 4]. Justifique a sua resposta.",
+      "a": 3,
+      "b": 4,
+      "choice_type": "right_out"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1IX_PIX_008",
+      "statement": "Indique se o número 12 pertence ao intervalo [5, 11). Justifique a sua resposta.",
+      "a": 5,
+      "b": 11,
+      "choice_type": "right_out"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1IX_PIX_009",
+      "statement": "Indique se o número 3 pertence ao intervalo [2, 5). Justifique a sua resposta.",
+      "a": 2,
+      "b": 5,
+      "choice_type": "inside"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1IX_PIX_010",
+      "statement": "Indique se o número 2 pertence ao intervalo [2, 6]. Justifique a sua resposta.",
+      "a": 2,
+      "b": 6,
+      "choice_type": "left_border"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1IX_PIX_011",
+      "statement": "Indique se o número 3 pertence ao intervalo [2, 4). Justifique a sua resposta.",
+      "a": 2,
+      "b": 4,
+      "choice_type": "inside"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1IX_PIX_012",
+      "statement": "Indique se o número 5 pertence ao intervalo (0, 4]. Justifique a sua resposta.",
+      "a": 0,
+      "b": 4,
+      "choice_type": "right_out"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1IX_PIX_013",
+      "statement": "Indique se o número 3 pertence ao intervalo [2, 6]. Justifique a sua resposta.",
+      "a": 2,
+      "b": 6,
+      "choice_type": "inside"
+    }
+  ],
+  "count": 12
+}

@@ -1,0 +1,18 @@
+{
+  "discipline": "matematica",
+  "module": "P1_modelos_matematicos_para_a_cidadania",
+  "concept": "eleicoes",
+  "tipo": "compreensao_termos",
+  "format": "desenvolvimento",
+  "difficulty": 2,
+  "author": "Teste Automático",
+  "statement": "Exercício de teste para compreensao_termos",
+  "additional_tags": [
+    "teste",
+    "automacao"
+  ],
+  "has_parts": false,
+  "parts_count": 0,
+  "solution": "",
+  "skip_preview": true
+}

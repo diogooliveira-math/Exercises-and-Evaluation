@@ -1,0 +1,11 @@
+{
+  "tipo": "velocidade_media",
+  "tipo_nome": "Velocidade Media",
+  "exercicios": {
+    "FIS_P1MECANI_1CX_VMX_001": {
+      "created": "2025-11-26",
+      "difficulty": 3,
+      "status": "active"
+    }
+  }
+}

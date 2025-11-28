@@ -1,6 +1,178 @@
 # copilot-instructions.md
-# Configurações específicas para o repositório "Exercises and Evaluation"
-# Objetivo: orientar sugestões automáticas de código e conteúdo gerado por Copilot para este projeto.
+# Exercises and Evaluation - AI Coding Assistant Guidelines
+
+## Project Overview
+Educational content management system for LaTeX exercises and automated PDF generation. Dual-database architecture: `ExerciseDatabase/` (source exercises) and `SebentasDatabase/` (compiled PDFs). Hierarchical organization by discipline/module/concept/type.
+
+## Architecture Fundamentals
+- **ExerciseDatabase/**: Source LaTeX exercises with JSON metadata
+  - Structure: `disciplina/módulo/conceito/tipo/exercício.tex`
+  - Example: `matematica/A12_otimizacao/estudo_monotonia/monotonia_pura/`
+- **SebentasDatabase/**: Generated PDFs from exercises
+  - Never create exercises here; only compiled outputs
+- **Preview System**: Mandatory approval workflow before saving content
+- **Configuration**: `modules_config.yaml` drives module/concept definitions
+
+## Critical Workflows
+### Exercise Creation
+```bash
+# Use this script (not legacy versions)
+python ExerciseDatabase/_tools/add_exercise_with_types.py
+```
+- Always goes through preview system
+- Generates ID: `MAT_[MODULE]_[CONCEPT]_[TYPE]_[NUMBER]`
+- Creates both `.tex` and `.json` files
+
+### Sebenta Generation
+```bash
+python SebentasDatabase/_tools/generate_sebentas.py --module P4_funcoes
+```
+- Compiles exercises into PDFs
+- Auto-cleans LaTeX temp files
+- Filters by discipline/module/concept/type
+
+### Validation & Testing
+```bash
+python tests/quick_validation.py  # Database integrity
+python tests/show_stats.py        # Statistics overview
+```
+
+## Code Patterns & Conventions
+### Naming
+- **Classes**: PascalCase (`ExerciseGenerator`, `PreviewManager`)
+- **Functions**: camelCase (`generateExam`, `validateDatabase`)
+- **Files**: snake_case (`add_exercise_with_types.py`)
+- **Constants**: ALL_CAPS (`DEFAULT_TEMPLATE`)
+
+### Language Standards
+- **Content**: Portuguese (pt-PT)
+- **Technical terms**: English (`LaTeX`, `API`, `JSON`, `Python`)
+- **Comments**: English for code, Portuguese for educational content
+
+### LaTeX Patterns
+```latex
+\exercicio{Enunciado principal}
+\subexercicio{Primeira alínea}
+\exercicioEscolha{Pergunta?}
+\opcao{Opção A}
+```
+
+### Python Patterns
+- Type hints mandatory
+- Docstrings required
+- Pure functions for data processing
+- CLI with argparse/click
+- Preview system integration for all generators
+
+## VS Code Integration
+### Essential Tasks (Ctrl+Shift+P → "Tasks: Run Task")
+- `⚡ Novo Exercício (Mínimo)` - Quick exercise creation
+- `📚 Gerar Sebenta (Direto)` - PDF generation with filters
+- `🔍 Pesquisar Exercícios` - Search database
+- `🛠️ Validar Base de Dados` - Integrity checks
+
+### File Organization Rules
+- **ExerciseDatabase/**: Source `.tex` + `.json` files only
+- **SebentasDatabase/**: Generated PDFs + temp LaTeX files (auto-cleaned)
+- **Never mix**: Exercises belong in ExerciseDatabase, PDFs in SebentasDatabase
+
+## Preview & Quality Control
+### Mandatory for All Generation
+```python
+from preview_system import PreviewManager
+
+preview = PreviewManager(auto_open=True)
+if not preview.show_and_confirm(content_dict, "Title"):
+    return  # User cancelled
+# Proceed with saving
+```
+
+### Behavior Expectations
+- Opens files in VS Code automatically
+- Shows terminal preview (first 20 lines)
+- Requires explicit user confirmation `[S]im / [N]ão / [R]ever`
+- Tracks cancelled operations
+
+## Common Pitfalls
+- ❌ Creating exercises directly in SebentasDatabase
+- ❌ Bypassing preview system
+- ❌ Manual LaTeX compilation (use scripts)
+- ❌ Not updating metadata when adding exercises
+- ❌ Mixing Portuguese/English inconsistently
+
+## Key Files for Reference
+- `modules_config.yaml` - Module/concept definitions
+- `ExerciseDatabase/index.json` - Global exercise index
+- `preview_system.py` - Quality control system
+- `add_exercise_with_types.py` - Primary exercise creation
+- `generate_sebentas.py` - PDF compilation
+
+## Development Commands
+```bash
+# Create exercise with full workflow
+python ExerciseDatabase/_tools/add_exercise_with_types.py
+
+# Generate PDFs for specific module
+python SebentasDatabase/_tools/generate_sebentas.py --module A12_otimizacao
+
+# Search exercises
+python ExerciseDatabase/_tools/search_exercises.py
+
+# Validate everything
+python tests/quick_validation.py
+```
+
+## Integration Points
+- **VS Code Tasks**: 12+ automated workflows
+- **Preview System**: Centralized approval for all content
+- **Configuration**: YAML-driven structure
+- **LaTeX**: Automated compilation with cleanup
+- **Git**: Feature branches with conventional commits
+
+## OpenCode / opencode Integration
+
+- **Purpose**: This repository includes lightweight "opencode" utilities and test scripts to exercise the agent's ability to run commands, parse terminal output, and validate generated content. These are intended for safe, reproducible interactions with the project — not for exposing secrets or making unilateral persistent changes to the databases.
+- **Important scripts**: `opencode_terminal_test.py` (root), `scripts/send_prompt_opencode.py`, and `scripts/run_generate_sebenta_task.py` (helpers used by tasks).
+- **Agent behaviour rules when using opencode**:
+  - Always ask for explicit user permission before running scripts that modify the repository or databases (any script under `ExerciseDatabase/` or `SebentasDatabase/` that writes files).  
+  - Do not include secrets, credentials, or private tokens in prompts or logs. If a secret is required, prompt the user to provide it interactively and avoid persisting it in files.
+  - Capture and store opencode outputs in `temp/opencode_logs/` (or similar) and present a concise summary to the user; do not auto-commit logs to the repo.
+  - Use PowerShell semantics on Windows: when chaining commands in a single line use `;` (e.g. `python script.py --flag ; python other.py`).
+  - When a script produces long output, show a short preview (first ~40 lines) and offer to open the full log file in VS Code.
+  - When executing tests or validation scripts (`tests/quick_validation.py`, `tests/test_subvariant_generation.py`, `opencode_terminal_test.py`), prefer local-only execution and never run CI pipelines or remote deployment steps.
+
+- **How to call opencode scripts (examples)**:
+
+  - Run the basic terminal test (local, read-only checks preferred):
+
+    ```powershell
+    python opencode_terminal_test.py
+    ```
+
+  - Send a crafted prompt to the opencode helper (the helper will run a safe local command and return output):
+
+    ```powershell
+    python scripts/send_prompt_opencode.py --prompt "Run quick validation" ;
+    ```
+
+  - If chaining tasks in PowerShell, separate with `;` and avoid `&&` (PowerShell v5.1). Example:
+
+    ```powershell
+    python scripts/send_prompt_opencode.py --prompt "validate" ; python tests/quick_validation.py
+    ```
+
+- **Logging & hygiene**:
+  - Write opencode logs to `temp/opencode_logs/{timestamp}_opencode.log` and do not commit these files.  
+  - If the agent needs to propose changes based on opencode output, present a patch and request user approval before applying (use `git` only after user confirmation).
+
+- **When allowed to make changes**:
+  - The agent may create or modify documentation files (`*.md`) with user consent. For edits that affect `ExerciseDatabase/` structure or `index.json` the agent must either: (a) ask the user to run the change locally, or (b) create a PR with the changes (do not push directly to `main`).
+
+
+---
+**Version**: 4.0 (Architecture-focused update)
+**Last updated**: 2025-11-26
+**Purpose**: Enable AI agents to be immediately productive in this educational content management system
 
 # Idioma principal
 - Português (pt-PT).

@@ -1,0 +1,15 @@
+{
+  "id": "MAT_P4FUNCOE_1GX_AAF_001",
+  "title": "Análise de afirmações sobre preço e despesa",
+  "subject": "Matemática",
+  "topic": "P4_funcoes",
+  "subtopic": "1-generalidades_funcoes",
+  "difficulty": "medium",
+  "type": "exercise",
+  "tags": ["analise","afirmacoes","preco","despesa"],
+  "author": "OpenAI",
+  "created_at": "2025-11-27T09:36:00Z",
+  "updated_at": "2025-11-27T09:36:00Z",
+  "version": 1,
+  "source_file": "ExerciseDatabase/matematica/P4_funcoes/1-generalidades_funcoes/analise_afirmacoes/MAT_P4FUNCOE_1GX_AAF_001.tex"
+}

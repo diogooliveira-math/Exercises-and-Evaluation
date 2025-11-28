@@ -1,0 +1,21 @@
+{
+  "id": "MAT_P4FUNCOE_1GX_AVF_001",
+  "title": "Afirmações sobre preço e despesa",
+  "discipline": "matematica",
+  "module": "P4_funcoes",
+  "module_name": "MÓDULO P4 - Funções",
+  "concept": "1-generalidades_funcoes",
+  "concept_name": "Generalidades acerca de Funções",
+  "tipo": "afirmacoes_verdadeiro_falso",
+  "tipo_nome": "Afirmações Verdadeiro/Falso",
+  "difficulty": 2,
+  "format": "standard",
+  "tags": ["afirmacoes","preco","despesa","verdadeiro_falso"],
+  "author": "OpenAI",
+  "created_at": "2025-11-27T10:04:00Z",
+  "updated_at": "2025-11-27T10:04:00Z",
+  "version": 1,
+  "source_file": "ExerciseDatabase/matematica/P4_funcoes/1-generalidades_funcoes/afirmacoes_verdadeiro_falso/MAT_P4FUNCOE_1GX_AVF_001.tex",
+  "points": 0,
+  "status": "active"
+}

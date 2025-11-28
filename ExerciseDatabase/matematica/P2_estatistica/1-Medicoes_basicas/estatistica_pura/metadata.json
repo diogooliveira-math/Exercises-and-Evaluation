@@ -1,0 +1,48 @@
+{
+  "tipo": "estatistica_pura",
+  "tipo_nome": "Estatística Pura",
+  "conceito": "1-Medicoes_basicas",
+  "conceito_nome": "Medições Básicas",
+  "tema": "P2_estatistica",
+  "tema_nome": "Módulo P2 - Estatística",
+  "disciplina": "matematica",
+  "descricao": "Exercícios diretos com listas de valores numéricos para calcular medidas estatísticas (média, moda, mediana).",
+  "tags_tipo": [
+    "media",
+    "moda",
+    "mediana",
+    "calculo_direto"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": false,
+    "complexidade_algebrica": "baixa"
+  },
+  "dificuldade_sugerida": {
+    "min": 1,
+    "max": 2
+  },
+  "exercicios": {
+    "MAT_P2ESTATI_1MX_EPX_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 4,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 3,
+      "tags": [
+        "calculo_direto",
+        "tabelas",
+        "mediana",
+        "media",
+        "moda",
+        "calculos_com_dados",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
+}

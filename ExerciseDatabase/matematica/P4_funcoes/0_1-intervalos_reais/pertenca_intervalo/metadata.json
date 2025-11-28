@@ -1,0 +1,11 @@
+{
+  "tipo": "pertenca_intervalo",
+  "tipo_nome": "Pertenca Intervalo",
+  "exercicios": {
+    "MAT_P4FUNCOE_0IX_PIX_001": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    }
+  }
+}

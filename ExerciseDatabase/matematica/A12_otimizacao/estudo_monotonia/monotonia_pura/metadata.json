@@ -1,0 +1,30 @@
+{
+  "tipo": "monotonia_pura",
+  "tipo_nome": "Monotonia Pura",
+  "conceito": "estudo_monotonia",
+  "conceito_nome": "Estudo da Monotonia com Derivadas",
+  "tema": "A12_otimizacao",
+  "tema_nome": "Módulo A12 - Otimização",
+  "disciplina": "matematica",
+  "descricao": "Exercícios com funções abstratas para estudar monotonia usando derivadas.",
+  "tags_tipo": [
+    "monotonia",
+    "derivadas",
+    "funcoes_abstratas",
+    "crescente",
+    "decrescente"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": true,
+    "complexidade_algebrica": "media"
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 3
+  },
+  "exercicios": [
+    "MAT_A12OTIMI_ESTU_MPU_001",
+    "MAT_A12OTIMI_ESTU_MPU_002"
+  ]
+}

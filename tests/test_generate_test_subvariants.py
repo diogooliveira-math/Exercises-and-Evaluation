@@ -167,7 +167,7 @@ Determina $f(5)$.
         assert "f(x) = 2x + 3" in latex, "Exercise content should be present"
         
         print("✅ TEST 1 PASSED: Normal exercise loaded correctly")
-        return True
+
 
 
 def test_subvariant_exercise_loading():
@@ -411,25 +411,15 @@ def run_all_tests():
     print("🧪 TEST GENERATOR SUB-VARIANTS TEST SUITE")
     print("="*70)
     
-    results = {
-        "Test 1 - Normal Exercise": test_normal_exercise_loading(),
-        "Test 2 - Sub-variant Exercise": test_subvariant_exercise_loading(),
-        "Test 3 - Mixed Exercises": test_mixed_exercises_loading(),
-        "Test 4 - Multiple Sub-variants": test_multiple_subvariant_exercises(),
-    }
-    
-    print("\n" + "="*70)
-    print("📊 FINAL RESULTS")
-    print("="*70)
-    
-    for test_name, passed in results.items():
-        status = "✅ PASS" if passed else "❌ FAIL"
-        print(f"  {test_name}: {status}")
-    
-    all_passed = all(results.values())
-    print(f"\n🎯 Overall: {'✅ ALL TESTS PASSED' if all_passed else '❌ SOME TESTS FAILED'}")
-    
-    return all_passed
+    # Execute tests and use assertions to surface failures to pytest
+    assert test_normal_exercise_loading(), 'Test 1 (Normal Exercise) failed'
+    assert test_subvariant_exercise_loading(), 'Test 2 (Sub-variant Exercise) failed'
+    assert test_mixed_exercises_loading(), 'Test 3 (Mixed Exercises) failed'
+    assert test_multiple_subvariant_exercises(), 'Test 4 (Multiple Sub-variants) failed'
+
+    # If we reach here, all tests passed
+    print('\n🎯 Overall: ✅ ALL TESTS PASSED')
+    return True
 
 
 if __name__ == "__main__":

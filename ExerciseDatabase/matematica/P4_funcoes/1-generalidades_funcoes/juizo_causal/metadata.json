@@ -1,0 +1,11 @@
+{
+  "tipo": "juizo_causal",
+  "tipo_nome": "Juízo Causal sobre Monotonicidade",
+  "exercicios": {
+    "MAT_P4FUNCOE_1GX_JCM_001": {
+      "created": "2025-11-27",
+      "difficulty": 3,
+      "status": "active"
+    }
+  }
+}

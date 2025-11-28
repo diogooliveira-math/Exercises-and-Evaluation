@@ -1,0 +1,25 @@
+{
+  "tipo": "afirmacoes_causais",
+  "tipo_nome": "Afirmações Causais sobre Funções",
+  "conceito": "1-generalidades_funcoes",
+  "conceito_nome": "Generalidades acerca de Funções",
+  "tema": "P4_funcoes",
+  "tema_nome": "MÓDULO P4 - Funções",
+  "disciplina": "matematica",
+  "descricao": "Exercícios que envolvem análise de afirmações causais relacionadas a funções, como relações entre variáveis dependentes e independentes.",
+  "tags_tipo": [
+    "afirmacoes_causais",
+    "funcoes",
+    "relacoes_causais",
+    "analise_matematica"
+  ],
+  "caracteristicas": {
+    "requer_calculo": false,
+    "requer_grafico": false
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 4
+  },
+  "exercicios": ["MAT_P4FUNCOE_1GFUN_AFC_001"]
+}

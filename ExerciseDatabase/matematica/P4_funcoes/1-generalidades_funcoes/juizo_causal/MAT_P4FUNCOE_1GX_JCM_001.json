@@ -1,0 +1,15 @@
+{
+  "id": "MAT_P4FUNCOE_1GX_JCM_001",
+  "title": "Juízo causal sobre monotonicidade: preço e despesa",
+  "subject": "Matemática",
+  "topic": "P4_funcoes",
+  "subtopic": "1-generalidades_funcoes",
+  "difficulty": "medium",
+  "type": "juizo_causal",
+  "tags": ["juizo","causal","monotonicidade","preco","despesa"],
+  "author": "OpenAI",
+  "created_at": "2025-11-27T09:45:00Z",
+  "updated_at": "2025-11-27T09:45:00Z",
+  "version": 1,
+  "source_file": "ExerciseDatabase/matematica/P4_funcoes/1-generalidades_funcoes/juizo_causal/MAT_P4FUNCOE_1GX_JCM_001.tex"
+}
