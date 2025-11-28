@@ -23,8 +23,50 @@
     "min": 1,
     "max": 2
   },
-  "exercicios": [
-    "MAT_P2ESTATI_1MED_ENV_001",
-    "MAT_P2ESTATI_1MED_ENV_002"
-  ]
+  "exercicios": {
+    "MAT_P2ESTATI_1MX_ENV_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 0,
+      "tags": [
+        "tabelas",
+        "moda",
+        "interpretacao",
+        "media",
+        "calculos_com_dados",
+        "mediana",
+        "vida_quotidiana",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    },
+    "MAT_P2ESTATI_1MX_ENV_002": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 0,
+      "tags": [
+        "interpretacao",
+        "mediana",
+        "tabelas",
+        "moda",
+        "vida_quotidiana",
+        "media",
+        "calculos_com_dados",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
 }

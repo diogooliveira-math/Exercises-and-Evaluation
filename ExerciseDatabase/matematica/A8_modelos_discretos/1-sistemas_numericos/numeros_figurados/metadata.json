@@ -22,24 +22,26 @@
     "MAT_A8MODELO_1SX_NFX_001": {
       "created": "2025-11-26",
       "modified": "2025-11-26",
-      "author": "Test Agent",
-      "difficulty": 2,
+      "author": "Teste Automático",
+      "difficulty": 1,
       "points": 0,
       "time_estimate_minutes": 0,
-      "has_multiple_parts": false,
+      "has_multiple_parts": true,
       "parts_count": 0,
       "tags": [
         "binario",
-        "sistemas_numericos",
         "hexadecimal",
+        "decimal",
+        "sistemas_numericos",
         "sequencias",
-        "decimal"
+        "teste",
+        "automacao"
       ],
       "status": "active"
     },
     "MAT_A8MODELO_1SX_NFX_002": {
-      "created": "2025-11-26",
-      "modified": "2025-11-26",
+      "created": "2025-11-27",
+      "modified": "2025-11-27",
       "author": "Test Agent",
       "difficulty": 2,
       "points": 0,
@@ -47,126 +49,162 @@
       "has_multiple_parts": false,
       "parts_count": 0,
       "tags": [
-        "binario",
-        "hexadecimal",
-        "sequencias",
         "decimal",
-        "sistemas_numericos"
+        "sequencias",
+        "sistemas_numericos",
+        "binario",
+        "hexadecimal"
       ],
       "status": "active"
     },
     "MAT_A8MODELO_1SX_NFX_003": {
-      "created": "2025-11-26",
-      "modified": "2025-11-26",
-      "author": "Test",
+      "created": "2025-11-27",
+      "modified": "2025-11-27",
+      "author": "Test Agent",
       "difficulty": 2,
       "points": 0,
       "time_estimate_minutes": 0,
       "has_multiple_parts": false,
       "parts_count": 0,
       "tags": [
-        "sequencias",
-        "sistemas_numericos",
         "hexadecimal",
-        "binario",
-        "decimal"
+        "sistemas_numericos",
+        "decimal",
+        "sequencias",
+        "binario"
       ],
       "status": "active"
     },
     "MAT_A8MODELO_1SX_NFX_004": {
-      "created": "2025-11-26",
-      "modified": "2025-11-26",
-      "author": "Professor",
-      "difficulty": 3,
+      "created": "2025-11-27",
+      "modified": "2025-11-27",
+      "author": "Test Agent",
+      "difficulty": 2,
       "points": 0,
       "time_estimate_minutes": 0,
       "has_multiple_parts": false,
       "parts_count": 0,
       "tags": [
-        "sequencias",
-        "hexadecimal",
-        "decimal",
         "sistemas_numericos",
+        "decimal",
+        "hexadecimal",
+        "sequencias",
         "binario"
       ],
       "status": "active"
     },
     "MAT_A8MODELO_1SX_NFX_005": {
-      "created": "2025-11-26",
-      "modified": "2025-11-26",
-      "author": "Professor",
+      "created": "2025-11-27",
+      "modified": "2025-11-27",
+      "author": "Test Agent",
       "difficulty": 2,
       "points": 0,
       "time_estimate_minutes": 0,
       "has_multiple_parts": false,
       "parts_count": 0,
       "tags": [
-        "decimal",
-        "binario",
-        "sequencias",
-        "sistemas_numericos",
-        "hexadecimal"
-      ],
-      "status": "active"
-    },
-    "MAT_A8MODELO_1SX_NFX_006": {
-      "created": "2025-11-26",
-      "modified": "2025-11-26",
-      "author": "Professor",
-      "difficulty": 2,
-      "points": 0,
-      "time_estimate_minutes": 0,
-      "has_multiple_parts": false,
-      "parts_count": 0,
-      "tags": [
-        "decimal",
-        "sequencias",
         "hexadecimal",
-        "binario",
-        "sistemas_numericos"
-      ],
-      "status": "active"
-    },
-    "MAT_A8MODELO_1SX_NFX_007": {
-      "created": "2025-11-26",
-      "modified": "2025-11-26",
-      "author": "Professor",
-      "difficulty": 2,
-      "points": 0,
-      "time_estimate_minutes": 0,
-      "has_multiple_parts": false,
-      "parts_count": 0,
-      "tags": [
-        "binario",
-        "sistemas_numericos",
         "decimal",
-        "hexadecimal",
+        "sistemas_numericos",
+        "binario",
         "sequencias"
       ],
       "status": "active"
     },
-    "MAT_A8MODELO_1SX_NFX_008": {
-      "created": "2025-11-26",
-      "modified": "2025-11-26",
-      "author": "Professor",
+    "MAT_A8MODELO_1SX_NFX_006": {
+      "created": "2025-11-27",
+      "modified": "2025-11-27",
+      "author": "Test Agent",
       "difficulty": 2,
       "points": 0,
       "time_estimate_minutes": 0,
       "has_multiple_parts": false,
       "parts_count": 0,
       "tags": [
+        "sequencias",
+        "sistemas_numericos",
         "decimal",
         "hexadecimal",
+        "binario"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_007": {
+      "created": "2025-11-27",
+      "modified": "2025-11-27",
+      "author": "Test Agent",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
         "sistemas_numericos",
+        "decimal",
+        "sequencias",
         "binario",
+        "hexadecimal"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_008": {
+      "created": "2025-11-27",
+      "modified": "2025-11-27",
+      "author": "Test Agent",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "hexadecimal",
+        "decimal",
+        "binario",
+        "sistemas_numericos",
         "sequencias"
       ],
       "status": "active"
     },
     "MAT_A8MODELO_1SX_NFX_009": {
-      "created": "2025-11-26",
-      "modified": "2025-11-26",
-      "author": "Professor",
+      "created": "2025-11-27",
+      "modified": "2025-11-27",
+      "author": "Test Agent",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "sistemas_numericos",
+        "sequencias",
+        "hexadecimal",
+        "decimal",
+        "binario"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_010": {
+      "created": "2025-11-27",
+      "modified": "2025-11-27",
+      "author": "Test Agent",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "sistemas_numericos",
+        "hexadecimal",
+        "sequencias",
+        "binario",
+        "decimal"
+      ],
+      "status": "active"
+    },
+    "MAT_A8MODELO_1SX_NFX_011": {
+      "created": "2025-11-27",
+      "modified": "2025-11-27",
+      "author": "Test Agent",
       "difficulty": 2,
       "points": 0,
       "time_estimate_minutes": 0,
@@ -174,50 +212,10 @@
       "parts_count": 0,
       "tags": [
         "hexadecimal",
-        "decimal",
-        "binario",
-        "sequencias",
-        "sistemas_numericos"
-      ],
-      "status": "active"
-    },
-    "MAT_A8MODELO_1SX_NFX_010": {
-      "created": "2025-11-26",
-      "modified": "2025-11-26",
-      "author": "Professor",
-      "difficulty": 3,
-      "points": 0,
-      "time_estimate_minutes": 0,
-      "has_multiple_parts": false,
-      "parts_count": 0,
-      "tags": [
         "sistemas_numericos",
         "decimal",
-        "hexadecimal",
         "binario",
         "sequencias"
-      ],
-      "status": "active"
-    },
-    "MAT_A8MODELO_1SX_NFX_011": {
-      "created": "2025-11-26",
-      "modified": "2025-11-26",
-      "author": "Professor Diogo",
-      "difficulty": 3,
-      "points": 0,
-      "time_estimate_minutes": 0,
-      "has_multiple_parts": true,
-      "parts_count": 4,
-      "tags": [
-        "sistemas_numericos",
-        "binario",
-        "hexadecimal",
-        "sequencias",
-        "decimal",
-        "numeros_triangulares",
-        "representacao_visual",
-        "conversao_bases",
-        "regra_sucessao"
       ],
       "status": "active"
     },

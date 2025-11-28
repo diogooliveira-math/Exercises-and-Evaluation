@@ -1,0 +1,68 @@
+% Solução do Exercício MAT_P4FUNCOE_4FX_DAX_019
+% Determinação da função inversa de f(x) = 2x + 3
+
+\exercicioDesenvolvimento{
+\textbf{Solução Passo a Passo:}
+
+\begin{enumerate}
+\item \textbf{Verificar se a função é invertível (injetiva):}
+   \begin{itemize}
+   \item A função $f(x) = 2x + 3$ é uma função afim com coeficiente angular $a = 2 \neq 0$.
+   \item Como $a > 0$, a função é estritamente crescente em todo o seu domínio.
+   \item Uma função estritamente monótona é necessariamente injetiva.
+   \item Portanto, $f(x)$ é bijetora em $\mathbb{R}$ e possui função inversa.
+   \end{itemize}
+
+\item \textbf{Aplicar o método de troca de variáveis:}
+   \begin{align}
+   y &= 2x + 3 \\
+   x &= 2y + 3 \quad \text{(troca $x \leftrightarrow y$)}
+   \end{align}
+
+\item \textbf{Isolar a nova variável $y$:}
+   \begin{align}
+   x &= 2y + 3 \\
+   x - 3 &= 2y \\
+   y &= \frac{x - 3}{2}
+   \end{align}
+
+\item \textbf{Escrever a função inversa:}
+   \[f^{-1}(x) = \frac{x - 3}{2}\]
+
+\item \textbf{Verificação através da composição de funções:}
+   \begin{itemize}
+   \item Verificar $f(f^{-1}(x)) = x$:
+     \begin{align}
+     f\left(\frac{x - 3}{2}\right) &= 2 \cdot \frac{x - 3}{2} + 3 \\
+     &= (x - 3) + 3 \\
+     &= x \checkmark
+     \end{align}
+   
+   \item Verificar $f^{-1}(f(x)) = x$:
+     \begin{align}
+     f^{-1}(2x + 3) &= \frac{(2x + 3) - 3}{2} \\
+     &= \frac{2x}{2} \\
+     &= x \checkmark
+     \end{align}
+   \end{itemize}
+
+\item \textbf{Análise dos domínios e contradomínios:}
+   \begin{itemize}
+   \item Domínio de $f$: $\mathcal{D}_f = \mathbb{R}$
+   \item Contradomínio de $f$: $\mathcal{C}_f = \mathbb{R}$
+   \item Domínio de $f^{-1}$: $\mathcal{D}_{f^{-1}} = \mathbb{R}$ (igual ao contradomínio de $f$)
+   \item Contradomínio de $f^{-1}$: $\mathcal{C}_{f^{-1}} = \mathbb{R}$ (igual ao domínio de $f$)
+   \end{itemize}
+\end{enumerate}
+
+\textbf{Conclusão:}
+A função inversa de $f(x) = 2x + 3$ é:
+\[\boxed{f^{-1}(x) = \frac{x - 3}{2}}\]
+
+\textbf{Observações importantes:}
+\begin{itemize}
+\item Graficamente, a função inversa é o reflexo de $f(x)$ em relação à reta $y = x$.
+\item A composição $f \circ f^{-1} = f^{-1} \circ f = \text{id}_{\mathbb{R}}$ confirma a corretude do resultado.
+\item O ponto $(0, 3)$ em $f(x)$ corresponde ao ponto $(3, 0)$ em $f^{-1}(x)$.
+\end{itemize}
+}

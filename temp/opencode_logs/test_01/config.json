@@ -1,0 +1,18 @@
+{
+  "discipline": "matematica",
+  "module": "P4_funcoes",
+  "concept": "1-generalidades_funcoes",
+  "tipo": "reconhecimento_variaveis",
+  "format": "desenvolvimento",
+  "difficulty": 1,
+  "author": "opencode-terminal-tester",
+  "statement": "Exercício de teste para reconhecimento_variaveis",
+  "additional_tags": [
+    "opencode_test",
+    "terminal"
+  ],
+  "has_parts": false,
+  "parts_count": 2,
+  "solution": "Solução exemplo",
+  "skip_preview": true
+}

@@ -1,0 +1,71 @@
+{
+  "tipo": "pertinencia_intervalo",
+  "tipo_nome": "Pertinencia Intervalo",
+  "exercicios": {
+    "MAT_P4FUNCOE_1IX_PIX_001": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1IX_PIX_002": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1IX_PIX_003": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1IX_PIX_004": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1IX_PIX_005": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1IX_PIX_006": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1IX_PIX_007": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1IX_PIX_008": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1IX_PIX_009": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1IX_PIX_010": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1IX_PIX_011": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1IX_PIX_012": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1IX_PIX_013": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    }
+  }
+}

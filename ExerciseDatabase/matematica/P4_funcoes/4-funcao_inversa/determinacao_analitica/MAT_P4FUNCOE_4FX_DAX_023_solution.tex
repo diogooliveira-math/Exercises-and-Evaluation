@@ -1,0 +1,60 @@
+% Exercise ID: MAT_P4FUNCOE_4FX_DAX_023
+% Solution File
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicioDesenvolvimento{Solução: Determinação da função inversa de $f(x) = 2x + 3$}
+
+\textbf{Passo 1: Verificar se a função é injetora}
+
+Uma função é injetora (um-para-um) se $f(a) = f(b) \Rightarrow a = b$.
+
+Seja $f(a) = f(b)$:
+$$2a + 3 = 2b + 3$$
+$$2a = 2b$$
+$$a = b$$
+
+Portanto, $f$ é injetora.
+
+\textbf{Passo 2: Verificar se a função é sobrejetora}
+
+Uma função é sobrejetora (sobre) se para todo $y \in \mathbb{R}$, existe $x \in \mathbb{R}$ tal que $f(x) = y$.
+
+Seja $y \in \mathbb{R}$ qualquer. Queremos encontrar $x$ tal que:
+$$2x + 3 = y$$
+$$2x = y - 3$$
+$$x = \frac{y - 3}{2}$$
+
+Como $\frac{y - 3}{2} \in \mathbb{R}$ para qualquer $y \in \mathbb{R}$, a função é sobrejetora.
+
+\textbf{Conclusão:} Como $f$ é injetora e sobrejetora, ela é \textbf{bijetora} e possui função inversa.
+
+\textbf{Passo 3: Determinar a função inversa}
+
+Para encontrar $f^{-1}(x)$, seguimos o algoritmo padrão:
+
+\begin{enumerate}
+    \item Trocar $f(x)$ por $y$:
+    $$y = 2x + 3$$
+    
+    \item Trocar $x$ por $y$ e $y$ por $x$:
+    $$x = 2y + 3$$
+    
+    \item Isolar $y$:
+    $$x - 3 = 2y$$
+    $$y = \frac{x - 3}{2}$$
+    
+    \item Substituir $y$ por $f^{-1}(x)$:
+    $$f^{-1}(x) = \frac{x - 3}{2}$$
+\end{enumerate}
+
+\textbf{Passo 4: Verificação}
+
+Vamos verificar que $f(f^{-1}(x)) = x$ e $f^{-1}(f(x)) = x$:
+
+$$f(f^{-1}(x)) = f\left(\frac{x - 3}{2}\right) = 2 \cdot \frac{x - 3}{2} + 3 = x - 3 + 3 = x \checkmark$$
+
+$$f^{-1}(f(x)) = f^{-1}(2x + 3) = \frac{(2x + 3) - 3}{2} = \frac{2x}{2} = x \checkmark$$
+
+\textbf{Resposta Final:} A função inversa de $f(x) = 2x + 3$ é:
+$$\boxed{f^{-1}(x) = \frac{x - 3}{2}}$$

@@ -1,0 +1,66 @@
+{
+  "tipo": "interpretacao_contexto",
+  "tipo_nome": "Interpretacao Contexto",
+  "exercicios": {
+    "MAT_MODULOIN_CXX_ICX_001": {
+      "created": "2025-11-26",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_MODULOIN_CXX_ICX_002": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_MODULOIN_CXX_ICX_003": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_MODULOIN_CXX_ICX_004": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_MODULOIN_CXX_ICX_005": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_MODULOIN_CXX_ICX_006": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_MODULOIN_CXX_ICX_007": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_MODULOIN_CXX_ICX_008": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_MODULOIN_CXX_ICX_009": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_MODULOIN_CXX_ICX_010": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_MODULOIN_CXX_ICX_011": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_MODULOIN_CXX_ICX_012": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    }
+  }
+}

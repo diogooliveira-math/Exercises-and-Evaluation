@@ -1,0 +1,1 @@
+{"status": "needs_clarification", "missing": ["module", "concept"], "applied": {"module": {"value": "P4_funcoes", "confidence": 0.9}, "concept": {"value": "1-generalidades_funcoes", "confidence": 0.95}}, "suggestions": {"tags": ["funcoes"]}, "parsed": {"discipline": "matematica", "statement": "Teste..."}}

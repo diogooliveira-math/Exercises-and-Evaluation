@@ -2,7 +2,14 @@
   "tipo": "analise_tabelas_eleitorais",
   "tipo_nome": "Análise de Tabelas Eleitorais",
   "conceito": "eleicoes",
-  "tags_tipo": ["tabelas","percentagens","maioria","abstenção","brancos","nulos"],
+  "tags_tipo": [
+    "tabelas",
+    "percentagens",
+    "maioria",
+    "abstenção",
+    "brancos",
+    "nulos"
+  ],
   "caracteristicas": {
     "requer_calculo": true,
     "requer_dados": true
@@ -11,10 +18,29 @@
     "min": 2,
     "max": 3
   },
-  "exercicios": [
-    "MAT_P1MODELO_ELE_TAB1_001",
-    "MAT_P1MODELO_ELE_TAB2_001",
-    "MAT_P1MODELO_ELE_TAB3_001",
-    "MAT_P1MODELO_ELE_PERC_001"
-  ]
+  "exercicios": {
+    "MAT_P1MODELO_EXX_ATE_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 5,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 3,
+      "tags": [
+        "percentagens",
+        "tabelas",
+        "maioria",
+        "abstenção",
+        "brancos",
+        "democracia",
+        "votacao",
+        "nulos",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
 }

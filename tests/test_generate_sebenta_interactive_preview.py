@@ -35,7 +35,8 @@ def test_interactive_asks_for_preview():
     # Should succeed
     assert proc.returncode == 0, f"Script failed: {stderr}"
 
-    print("✅ Test passed: Interactive mode asks for preview and compile options")
+    print("Test passed: Interactive mode asks for preview and compile options")
+
 
 def test_auto_mode_does_not_ask():
     """Test that auto mode does not ask for preview."""

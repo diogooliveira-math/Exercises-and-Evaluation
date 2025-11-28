@@ -1,0 +1,11 @@
+{
+  "tipo": "afirmacoes_causais_relacoes",
+  "tipo_nome": "Afirmacoes Causais Relacoes",
+  "exercicios": {
+    "MAT_P4FUNCOE_1GX_ACR_001": {
+      "created": "2025-11-27",
+      "difficulty": 3,
+      "status": "active"
+    }
+  }
+}

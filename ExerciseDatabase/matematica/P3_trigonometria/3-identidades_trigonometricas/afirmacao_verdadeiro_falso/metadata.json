@@ -1,0 +1,26 @@
+{
+  "tipo": "afirmacao_verdadeiro_falso",
+  "tipo_nome": "Afirmacao Verdadeiro Falso",
+  "exercicios": {
+    "MAT_P3TRIGON_3IX_AVF_001": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P3TRIGON_3IX_AVF_002": {
+      "created": "2025-11-27",
+      "difficulty": 3,
+      "status": "active"
+    },
+    "MAT_P3TRIGON_3IX_AVF_003": {
+      "created": "2025-11-27",
+      "difficulty": 3,
+      "status": "active"
+    },
+    "MAT_P3TRIGON_3IX_AVF_004": {
+      "created": "2025-11-27",
+      "difficulty": 4,
+      "status": "active"
+    }
+  }
+}

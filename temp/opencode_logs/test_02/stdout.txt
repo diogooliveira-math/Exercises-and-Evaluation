@@ -1,0 +1,7 @@
+
+======================================================================
+              ADICIONAR NOVO EXERCÍCIO (Não-Interativo)               
+======================================================================
+
+[OK] Exercício criado: MAT_A9FUNCOE_1EX_DMX_001
+Sucesso: MAT_A9FUNCOE_1EX_DMX_001

@@ -168,7 +168,11 @@ def main() -> int:
                     proc = subprocess.run([sys.executable, str(clarifier), '--input-file', tmp_path], capture_output=True, text=True, encoding='utf-8', errors='replace')
                     if proc.returncode != 0:
                         logger.error('Clarify flow failed: %s', proc.stderr.strip())
-                        print(json.dumps({'status':'error','message':'clarify flow failed'}))
+                        msg = {'status':'error','message':'clarify flow failed'}
+                        try:
+                            sys.stdout.buffer.write((json.dumps(msg, ensure_ascii=False) + "\n").encode('utf-8'))
+                        except Exception:
+                            print(json.dumps(msg))
                         return 3
                     clar_out = json.loads(proc.stdout)
                     if clar_out.get('status') == 'accept' and 'command' in clar_out:
@@ -177,39 +181,67 @@ def main() -> int:
                         logger.info('Clarifier accepted suggestions, running: %s', cmd)
                         # We expect the command to be something like: python scripts/run_add_exercise.py "discipline=..., ..."
                         try:
-                            proc2 = subprocess.run(cmd, shell=True, capture_output=True, text=True, encoding='utf-8', errors='replace')
-                            return proc2.returncode
+                            # Try to parse the command and prefer running with sys.executable when possible
+                            import shlex as _shlex
+                            parts = _shlex.split(cmd)
+                            if parts:
+                                if parts[0] in ('python', 'python3'):
+                                    parts[0] = sys.executable
+                                proc2 = subprocess.run(parts, capture_output=True, text=True, encoding='utf-8', errors='replace')
+                            else:
+                                # fallback to shell execution
+                                proc2 = subprocess.run(cmd, shell=True, capture_output=True, text=True, encoding='utf-8', errors='replace')
+
+                            if proc2.returncode == 0:
+                                return proc2.returncode
+                            else:
+                                logger.error('Clarifier command exited with non-zero: %s', proc2.returncode)
+                                logger.debug('Clarifier stdout: %s', proc2.stdout)
+                                logger.debug('Clarifier stderr: %s', proc2.stderr)
+                                # Fall through to fallback creation
                         except FileNotFoundError as e:
                             logger.error('Python executable not found when executing clarifier command: %s', e)
-                            # Try to fallback to direct write using add_exercise_simple
+                        except Exception as e:
+                            logger.exception('Error executing clarifier command: %s', e)
+                        # Try to fallback to direct write using add_exercise_simple
+                        try:
+                            script = Path(__file__).resolve().parents[1] / "ExerciseDatabase" / "_tools" / "add_exercise_simple.py"
+                            # Try import via spec
+                            spec = importlib.util.spec_from_file_location('add_exercise_simple_fallback', str(script))
+                            if spec and getattr(spec, 'loader', None):
+                                mod = importlib.util.module_from_spec(spec)
+                                spec.loader.exec_module(mod)
+                                create_fn = getattr(mod, 'create_simple_exercise')
+                                ex_id = create_fn(parsed.get('discipline','matematica'), parsed.get('module','DEFAULT_MODULE'), parsed.get('concept','1-default'), parsed.get('tipo','afirmacoes_relacionais'), int(parsed.get('difficulty', 2)), parsed.get('statement',''))
+                            else:
+                                # Use runpy as last resort
+                                mod_globals = runpy.run_path(str(script))
+                                create_fn = mod_globals.get('create_simple_exercise')
+                                if not create_fn:
+                                    raise RuntimeError('create_simple_exercise not found in add_exercise_simple.py')
+                                ex_id = create_fn(parsed.get('discipline','matematica'), parsed.get('module','DEFAULT_MODULE'), parsed.get('concept','1-default'), parsed.get('tipo','afirmacoes_relacionais'), int(parsed.get('difficulty', 2)), parsed.get('statement',''))
+                            logger.info('Fallback created exercise %s', ex_id)
                             try:
-                                script = Path(__file__).resolve().parents[1] / "ExerciseDatabase" / "_tools" / "add_exercise_simple.py"
-                                # Try import via spec
-                                spec = importlib.util.spec_from_file_location('add_exercise_simple_fallback', str(script))
-                                if spec and getattr(spec, 'loader', None):
-                                    mod = importlib.util.module_from_spec(spec)
-                                    spec.loader.exec_module(mod)
-                                    create_fn = getattr(mod, 'create_simple_exercise')
-                                    ex_id = create_fn(parsed.get('discipline','matematica'), parsed.get('module','DEFAULT_MODULE'), parsed.get('concept','1-default'), parsed.get('tipo','afirmacoes_relacionais'), int(parsed.get('difficulty', 2)), parsed.get('statement',''))
-                                else:
-                                    # Use runpy as last resort
-                                    mod_globals = runpy.run_path(str(script))
-                                    create_fn = mod_globals.get('create_simple_exercise')
-                                    if not create_fn:
-                                        raise RuntimeError('create_simple_exercise not found in add_exercise_simple.py')
-                                    ex_id = create_fn(parsed.get('discipline','matematica'), parsed.get('module','DEFAULT_MODULE'), parsed.get('concept','1-default'), parsed.get('tipo','afirmacoes_relacionais'), int(parsed.get('difficulty', 2)), parsed.get('statement',''))
-                                logger.info('Fallback created exercise %s', ex_id)
+                                sys.stdout.buffer.write((f'SUCCESS: {ex_id}\n').encode('utf-8'))
+                            except Exception:
                                 print(f'SUCCESS: {ex_id}')
-                                return 0
-                            except Exception as ie:
-                                logger.exception('Fallback failed: %s', ie)
-                                return 4
+                            return 0
+                        except Exception as ie:
+                            logger.exception('Fallback failed: %s', ie)
+                            return 4
                     elif clar_out.get('status') == 'clarify':
-                        # Print question to caller for human interaction
-                        print(json.dumps(clar_out, ensure_ascii=False))
+                        # Print question to caller for human interaction using UTF-8 safe write
+                        try:
+                            sys.stdout.buffer.write((json.dumps(clar_out, ensure_ascii=False) + "\n").encode('utf-8'))
+                        except Exception:
+                            print(json.dumps(clar_out))
                         return 0
                     else:
-                        print(json.dumps({'status':'error','message':'unexpected clarifier output'}))
+                        msg = {'status':'error','message':'unexpected clarifier output'}
+                        try:
+                            sys.stdout.buffer.write((json.dumps(msg, ensure_ascii=False) + "\n").encode('utf-8'))
+                        except Exception:
+                            print(json.dumps(msg))
                         return 3
                 finally:
                     try:

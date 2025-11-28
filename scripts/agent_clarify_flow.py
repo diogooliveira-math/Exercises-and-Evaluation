@@ -42,13 +42,21 @@ def main():
     args = p.parse_args()
 
     if not args.input_file or not args.input_file.exists():
-        print(json.dumps({'status':'error','message':'input-file missing or not found'}))
+        msg = {'status':'error','message':'input-file missing or not found'}
+        try:
+            sys.stdout.buffer.write((json.dumps(msg, ensure_ascii=False) + "\n").encode('utf-8'))
+        except Exception:
+            print(json.dumps(msg))
         return 2
 
     data = json.loads(args.input_file.read_text(encoding='utf-8'))
     status = data.get('status')
     if status != 'needs_clarification':
-        print(json.dumps({'status':'error','message':'input JSON not needs_clarification'}))
+        msg = {'status':'error','message':'input JSON not needs_clarification'}
+        try:
+            sys.stdout.buffer.write((json.dumps(msg, ensure_ascii=False) + "\n").encode('utf-8'))
+        except Exception:
+            print(json.dumps(msg))
         return 2
 
     missing = data.get('missing', [])
@@ -72,7 +80,10 @@ def main():
     if can_accept:
         cmd = build_command(parsed, {m: applied[m]['value'] for m in missing})
         out = {'status':'accept','command':cmd,'accepted':{m:applied[m] for m in missing}}
-        print(json.dumps(out, ensure_ascii=False))
+        try:
+            sys.stdout.buffer.write((json.dumps(out, ensure_ascii=False) + "\n").encode('utf-8'))
+        except Exception:
+            print(json.dumps(out))
         return 0
     else:
         # Build a clarification question showing suggestions (if any)
@@ -86,7 +97,10 @@ def main():
             parts.append(f"{m}: sugestão -> {sug if sug else '<sem sugestão>'}")
         question = "Parece que faltam campos para criar o exercício: " + "; ".join(parts) + ". Aceita estas sugestões? (S/N)"
         out = {'status':'clarify','question':question,'suggestions':suggestions,'missing':missing}
-        print(json.dumps(out, ensure_ascii=False))
+        try:
+            sys.stdout.buffer.write((json.dumps(out, ensure_ascii=False) + "\n").encode('utf-8'))
+        except Exception:
+            print(json.dumps(out))
         return 0
 
 if __name__ == '__main__':

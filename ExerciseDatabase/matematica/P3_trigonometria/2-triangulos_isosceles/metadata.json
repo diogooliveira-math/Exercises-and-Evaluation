@@ -1,0 +1,17 @@
+{
+  "concept": "2-triangulos_isosceles",
+  "concept_name": "Triângulos Isósceles",
+  "description": "Exercícios sobre propriedades de triângulos isósceles, incluindo cálculo de ângulos e lados",
+  "tags": ["triangulos", "isosceles", "angulos", "lados_iguais", "geometria"],
+  "tipos": {
+    "desenvolvimento": {
+      "tipo": "desenvolvimento",
+      "tipo_nome": "Desenvolvimento",
+      "description": "Exercícios de resposta aberta com resolução completa",
+      "exercicios_count": 1
+    }
+  },
+  "total_exercicios": 1,
+  "created": "2025-11-27",
+  "updated": "2025-11-27"
+}

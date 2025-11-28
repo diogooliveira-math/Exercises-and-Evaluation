@@ -49,6 +49,25 @@ matematica:
       - variancia
       - variabilidade
       - desvio_padrao
+  P3_trigonometria:
+    name: Módulo P3 - Trigonometria
+    description: Introdução à Trigonometria e Geometria
+    duration_hours: 25
+    concepts:
+    - id: "2-triangulos_isosceles"
+      name: Triângulos Isósceles
+      tags:
+      - triangulos
+      - isosceles
+      - angulos
+      - lados_iguais
+      - geometria
+    - id: "3-identidades_trigonometricas"
+      name: Identidades Trigonométricas
+      tags:
+      - identidades
+      - trigonometria
+      - formulas
   A8_modelos_discretos:
     name: Módulo A8 - Modelos Discretos
     description: Estudo sobre sequências, tomando partido de diferentes sistemas numéricos (ex. Decimal, Binário e Hexadecial)
@@ -261,6 +280,10 @@ exercise_types:
   verdadeiro_falso:
     name: Verdadeiro ou Falso
     description: Afirmações para classificar
+    latex_macro: \exercicioVerdadeiroFalso
+  afirmacoes_relacionais:
+    name: Afirmações Relacionais (V/F + Justificação)
+    description: Afirmações sobre relações entre grandezas. O aluno classifica como Verdadeira ou Falsa e justifica brevemente.
     latex_macro: \exercicioVerdadeiroFalso
   resposta_curta:
     name: Resposta Curta

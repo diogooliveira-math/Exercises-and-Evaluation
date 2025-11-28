@@ -1,0 +1,16 @@
+{
+  "tipo": "afirmacoes_causais_monotonicidade",
+  "tipo_nome": "Afirmacoes Causais Monotonicidade",
+  "exercicios": {
+    "MAT_P4FUNCOE_1GX_ACM_001": {
+      "created": "2025-11-27",
+      "difficulty": 3,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_ACM_002": {
+      "created": "2025-11-27",
+      "difficulty": 3,
+      "status": "active"
+    }
+  }
+}

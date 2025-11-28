@@ -25,6 +25,25 @@
         "escolha maior variabilidade"
       ],
       "status": "active"
+    },
+    "MAT_P2ESTATI_2VX_EMV_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 4,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "variabilidade",
+        "variancia",
+        "desvio_medio",
+        "desvio_padrao",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
     }
   }
 }

@@ -1,0 +1,56 @@
+{
+  "tipo": "test_logging",
+  "tipo_nome": "Test Logging",
+  "exercicios": {
+    "MAT_P4FUNCOE_1GX_TLX_001": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_TLX_002": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_TLX_003": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_TLX_004": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_TLX_005": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_TLX_006": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_TLX_007": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_TLX_008": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_TLX_009": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_1GX_TLX_010": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    }
+  }
+}

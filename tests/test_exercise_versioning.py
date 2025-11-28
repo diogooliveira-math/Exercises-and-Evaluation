@@ -17,7 +17,8 @@ def test_exercise_versioning():
     # First, generate a base test
     print("Generating base test...")
     result_base = subprocess.run(
-        [sys.executable, str(script_path), "--module", "P4_funcoes", "--concept", "4-funcao_inversa", "--tipo", "determinacao_analitica", "--no-preview", "--auto-approve", "--no-compile"],
+            [sys.executable, str(script_path), "--module", "P4_funcoes", "--concept", "4-funcao_inversa", "--tipo", "determinacao_analitica", "--no-preview", "--auto-approve", "--no-compile", "--seed", "42"],
+
         cwd=str(PROJECT_ROOT),
         capture_output=True,
         text=True,
@@ -91,7 +92,7 @@ def test_exercise_versioning():
 
     print("✅ Exercise versioning test passed!")
 
-    return base_file, version_file
+
 
 if __name__ == "__main__":
     print("Testing exercise versioning functionality...")

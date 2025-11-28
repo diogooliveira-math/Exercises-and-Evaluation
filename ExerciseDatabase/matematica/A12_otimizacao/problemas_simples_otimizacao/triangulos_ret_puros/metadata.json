@@ -22,8 +22,29 @@
     "min": 2,
     "max": 3
   },
-  "exercicios": [
-    "MAT_A12OTIMI_PROB_TRI_001",
-    "MAT_A12OTIMI_PROB_TRI_002"
-  ]
+  "exercicios": {
+    "MAT_A12OTIMI_PXX_TRP_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 4,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 0,
+      "tags": [
+        "funcao",
+        "triangulo_retangulo",
+        "vertices",
+        "rampas",
+        "triangulos",
+        "coordenadas",
+        "modelagem",
+        "trigonometria",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
 }

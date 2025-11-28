@@ -1,0 +1,2 @@
+Create exercise: discipline=matematica, module=A9_funcoes_crescimento, concept=1-exponenciais, type=decaimento_medicamento, difficulty=1.
+Statement: Exercício de teste para decaimento_medicamento

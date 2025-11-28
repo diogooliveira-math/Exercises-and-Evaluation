@@ -1,0 +1,223 @@
+Agent fix report for 4-funcao_inversa
+Timestamp: 20251127T121826Z
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica\MAT_P4FUNCOE_FUNC_DA_001.tex
+ Problems:
+  - ('unbalanced_braces', 3, 2)
+  - ('odd_dollars', 3)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica\MAT_P4FUNCOE_FUNC_DA_001.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica\MAT_P4FUNCOE_FUNC_DA_001.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica\MAT_P4FUNCOE_FUNC_DA_001_agentfix_error.log
+ Applied fixes: [('balanced_braces_appended', 1), ('closed_dollar_appended', 1)]
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica\MAT_P4FUNCOE_FUNC_DA_002.tex
+ Problems:
+  - ('unbalanced_braces', 3, 2)
+  - ('odd_dollars', 3)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica\MAT_P4FUNCOE_FUNC_DA_002.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica\MAT_P4FUNCOE_FUNC_DA_002.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica\MAT_P4FUNCOE_FUNC_DA_002_agentfix_error.log
+ Applied fixes: [('balanced_braces_appended', 1), ('closed_dollar_appended', 1)]
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica\MAT_P4FUNCOE_FUNC_DA_003.tex
+ Problems:
+  - ('unbalanced_braces', 3, 2)
+  - ('odd_dollars', 3)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica\MAT_P4FUNCOE_FUNC_DA_003.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica\MAT_P4FUNCOE_FUNC_DA_003.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica\MAT_P4FUNCOE_FUNC_DA_003_agentfix_error.log
+ Applied fixes: [('balanced_braces_appended', 1), ('closed_dollar_appended', 1)]
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_001.tex
+ Problems:
+  - ('exercicio_alone', 10)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_001.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_001.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_001_agentfix_error.log
+ Applied fixes: []
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_002.tex
+ Problems:
+  - ('exercicio_alone', 10)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_002.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_002.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_002_agentfix_error.log
+ Applied fixes: []
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_003.tex
+ Problems:
+  - ('exercicio_alone', 11)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_003.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_003.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_003_agentfix_error.log
+ Applied fixes: []
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_004.tex
+ Problems:
+  - ('exercicio_alone', 11)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_004.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_004.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_004_agentfix_error.log
+ Applied fixes: []
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_005.tex
+ Problems:
+  - ('exercicio_alone', 11)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_005.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_005.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_005_agentfix_error.log
+ Applied fixes: []
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_006.tex
+ Problems:
+  - ('exercicio_alone', 11)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_006.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_006.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica_plus_grafica\MAT_P4FUNCOE_4FIN_ANA_006_agentfix_error.log
+ Applied fixes: []
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_001.tex
+ Problems:
+  - ('missing_end_figure_brace', 66, '\\end{figure')
+  - ('exercicio_alone', 10)
+  - ('exercicio_alone', 40)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_001.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_001.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_001_agentfix_error.log
+ Applied fixes: [('fixed_end_figure', 66)]
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_002.tex
+ Problems:
+  - ('missing_end_figure_brace', 67, '\\end{figure')
+  - ('exercicio_alone', 11)
+  - ('exercicio_alone', 41)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_002.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_002.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_002_agentfix_error.log
+ Applied fixes: [('fixed_end_figure', 67)]
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_003.tex
+ Problems:
+  - ('missing_end_figure_brace', 67, '\\end{figure')
+  - ('exercicio_alone', 11)
+  - ('exercicio_alone', 41)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_003.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_003.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_003_agentfix_error.log
+ Applied fixes: [('fixed_end_figure', 67)]
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_004.tex
+ Problems:
+  - ('missing_end_figure_brace', 66, '\\end{figure')
+  - ('exercicio_alone', 11)
+  - ('exercicio_alone', 41)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_004.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_004.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_004_agentfix_error.log
+ Applied fixes: [('fixed_end_figure', 66)]
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_005.tex
+ Problems:
+  - ('missing_end_figure_brace', 67, '\\end{figure')
+  - ('exercicio_alone', 11)
+  - ('exercicio_alone', 41)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_005.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_005.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_grafica\MAT_P4FUNCOE_4FIN_GRA_005_agentfix_error.log
+ Applied fixes: [('fixed_end_figure', 67)]
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_001.tex
+ Problems:
+  - ('exercicio_alone', 10)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_001.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_001.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_001_agentfix_error.log
+ Applied fixes: []
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_002.tex
+ Problems:
+  - ('exercicio_alone', 11)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_002.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_002.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_002_agentfix_error.log
+ Applied fixes: []
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_003.tex
+ Problems:
+  - ('exercicio_alone', 11)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_003.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_003.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_003_agentfix_error.log
+ Applied fixes: []
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_004.tex
+ Problems:
+  - ('exercicio_alone', 11)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_004.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_004.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_004_agentfix_error.log
+ Applied fixes: []
+
+File: ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_005.tex
+ Problems:
+  - ('exercicio_alone', 11)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_005.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_005.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\teste_reta_horizontal\MAT_P4FUNCOE_4FIN_TRH_005_agentfix_error.log
+ Applied fixes: []
+
+File: SebentasDatabase\matematica\P4_funcoes\4-funcao_inversa\sebenta_4-funcao_inversa.tex
+ Problems:
+  - ('missing_end_figure_brace', 615, '\\end{figure')
+  - ('missing_end_figure_brace', 687, '\\end{figure')
+  - ('missing_end_figure_brace', 759, '\\end{figure')
+  - ('missing_end_figure_brace', 830, '\\end{figure')
+  - ('missing_end_figure_brace', 902, '\\end{figure')
+  - ('unbalanced_braces', 490, 487)
+  - ('odd_dollars', 291)
+  - ('exercicio_alone', 348)
+  - ('exercicio_alone', 383)
+  - ('exercicio_alone', 418)
+  - ('exercicio_alone', 453)
+  - ('exercicio_alone', 489)
+  - ('exercicio_alone', 525)
+  - ('exercicio_alone', 559)
+  - ('exercicio_alone', 589)
+  - ('exercicio_alone', 631)
+  - ('exercicio_alone', 661)
+  - ('exercicio_alone', 703)
+  - ('exercicio_alone', 733)
+  - ('exercicio_alone', 775)
+  - ('exercicio_alone', 805)
+  - ('exercicio_alone', 846)
+  - ('exercicio_alone', 876)
+  - ('exercicio_alone', 928)
+  - ('exercicio_alone', 994)
+  - ('exercicio_alone', 1061)
+  - ('exercicio_alone', 1129)
+  - ('exercicio_alone', 1195)
+ Backup: C:\Users\diogo\projects\Exercises-and-Evaluation\SebentasDatabase\matematica\P4_funcoes\4-funcao_inversa\sebenta_4-funcao_inversa.bak_agent_20251127T121826Z.tex
+ Agentfix: C:\Users\diogo\projects\Exercises-and-Evaluation\SebentasDatabase\matematica\P4_funcoes\4-funcao_inversa\sebenta_4-funcao_inversa.agentfix.tex
+ PDF: None
+ Log: C:\Users\diogo\projects\Exercises-and-Evaluation\SebentasDatabase\matematica\P4_funcoes\4-funcao_inversa\sebenta_4-funcao_inversa_agentfix_error.log
+ Applied fixes: [('fixed_end_figure', 615), ('fixed_end_figure', 687), ('fixed_end_figure', 759), ('fixed_end_figure', 830), ('fixed_end_figure', 902), ('closed_dollar_appended', 1)]
+

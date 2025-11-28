@@ -1,0 +1,19 @@
+{
+  "description": "direct add_exercise_simple call",
+  "cmd": [
+    "C:\\Users\\diogo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+    "C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\ExerciseDatabase\\_tools\\add_exercise_simple.py",
+    "matematica",
+    "P4_funcoes",
+    "0_1-intervalos_reais",
+    "pertinencia_intervalo",
+    "1",
+    "Considere o intervalo $I = [2, 5)$. Indique, justificando, se os seguintes números pertencem ao intervalo $I$: \\begin{itemize} \\item[a)] $2$ \\item[b)] $5$ \\item[c)] $3.5$ \\item[d)] $1.9$ \\end{itemize}"
+  ],
+  "cwd": "C:\\Users\\diogo\\projects\\Exercises-and-Evaluation",
+  "env": null,
+  "start": 1764194776.717633,
+  "end": 1764194777.0005362,
+  "elapsed": 0.28290319442749023,
+  "returncode": 0
+}

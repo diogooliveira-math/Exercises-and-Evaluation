@@ -1,0 +1,42 @@
+{
+  "id": "MAT_P4FUNCOE_2FUN_002",
+  "version": "1.0",
+  "created": "2025-11-27",
+  "modified": "2025-11-27",
+  "author": "Exercise Creator Agent",
+  "classification": {
+    "discipline": "matematica",
+    "module": "P4_funcoes",
+    "module_name": "MÓDULO P4 - Funções",
+    "concept": "2-funcoes_polinomiais",
+    "concept_name": "Funções Polinomiais",
+    "tags": ["equacao_quadratica", "raizes", "parabola", "interpretacao_geometrica"],
+    "difficulty": 3,
+    "difficulty_label": "Médio"
+  },
+  "exercise_type": "desenvolvimento",
+  "content": {
+    "has_multiple_parts": false,
+    "parts_count": 0,
+    "has_graphics": true,
+    "requires_packages": [
+      "amsmath",
+      "amssymb",
+      "tikz",
+      "pgfplots"
+    ]
+  },
+  "evaluation": {
+    "bloom_level": "aplicacao"
+  },
+  "solution": {
+    "available": true,
+    "file": "MAT_P4FUNCOE_2FUN_002_solution.tex"
+  },
+  "usage": {
+    "times_used": 0,
+    "last_used": "",
+    "contexts": []
+  },
+  "status": "active"
+}

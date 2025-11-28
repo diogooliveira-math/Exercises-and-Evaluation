@@ -1,0 +1,11 @@
+{
+  "tipo": "test_wrapper_integration",
+  "tipo_nome": "Test Wrapper Integration",
+  "exercicios": {
+    "MAT_P4FUNCOE_1GX_TWI_001": {
+      "created": "2025-11-27",
+      "difficulty": 2,
+      "status": "active"
+    }
+  }
+}

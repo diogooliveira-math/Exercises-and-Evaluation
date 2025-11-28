@@ -22,28 +22,5 @@
     "min": 2,
     "max": 3
   },
-  "exercicios": {
-    "MAT_P4FUNCOE_4FX_DGX_001": {
-      "created": "2025-11-26",
-      "modified": "2025-11-26",
-      "author": "Test Agent",
-      "difficulty": 4,
-      "points": 0,
-      "time_estimate_minutes": 0,
-      "has_multiple_parts": false,
-      "parts_count": 0,
-      "tags": [
-        "sobrejetividade",
-        "inversa",
-        "grafico",
-        "representacao_grafica",
-        "bissectriz",
-        "injetividade",
-        "simetria",
-        "grafico",
-        "simetria"
-      ],
-      "status": "active"
-    }
-  }
+  "exercicios": []
 }

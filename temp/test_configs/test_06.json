@@ -1,0 +1,18 @@
+{
+  "discipline": "matematica",
+  "module": "P1_modelos_matematicos_para_a_cidadania",
+  "concept": "percentagens",
+  "tipo": "calculo_percentagens",
+  "format": "desenvolvimento",
+  "difficulty": 5,
+  "author": "Teste Automático",
+  "statement": "Exercício de teste para calculo_percentagens",
+  "additional_tags": [
+    "teste",
+    "automacao"
+  ],
+  "has_parts": false,
+  "parts_count": 0,
+  "solution": "",
+  "skip_preview": true
+}

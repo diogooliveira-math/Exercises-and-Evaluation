@@ -22,8 +22,28 @@
     "min": 2,
     "max": 3
   },
-  "exercicios": [
-    "MAT_A12OTIMI_ESTU_MRE_001",
-    "MAT_A12OTIMI_ESTU_MRE_002"
-  ]
+  "exercicios": {
+    "MAT_A12OTIMI_EXX_MRX_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 4,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 1,
+      "tags": [
+        "derivadas",
+        "modelacao",
+        "crescente",
+        "sinal_derivada",
+        "decrescente",
+        "contexto_real",
+        "monotonia",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
 }

@@ -1,0 +1,2 @@
+Create exercise: discipline=matematica, module=P4_funcoes, concept=1-generalidades_funcoes, type=reconhecimento_variaveis, difficulty=1.
+Statement: Exercício de teste para reconhecimento_variaveis

@@ -1,0 +1,26 @@
+{
+  "tipo": "pertinencia_intervalo",
+  "tipo_nome": "Pertinencia Intervalo",
+  "exercicios": {
+    "MAT_P4FUNCOE_0IX_PIX_001": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_0IX_PIX_002": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_0IX_PIX_003": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    },
+    "MAT_P4FUNCOE_0IX_PIX_004": {
+      "created": "2025-11-26",
+      "difficulty": 1,
+      "status": "active"
+    }
+  }
+}

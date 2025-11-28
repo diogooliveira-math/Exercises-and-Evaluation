@@ -2,7 +2,12 @@
   "tipo": "calculo_percentagens",
   "tipo_nome": "Cálculo de Percentagens",
   "conceito": "percentagens",
-  "tags_tipo": ["percentagens","aumentos","descontos","regra_de_três"],
+  "tags_tipo": [
+    "percentagens",
+    "aumentos",
+    "descontos",
+    "regra_de_três"
+  ],
   "caracteristicas": {
     "requer_calculo": true,
     "requer_dados": false
@@ -11,7 +16,69 @@
     "min": 1,
     "max": 2
   },
-  "exercicios": [
-    "MAT_P1MODELO_PERC_CALC_001"
-  ]
+  "exercicios": {
+    "MAT_P1MODELO_PXX_CPX_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 1,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 3,
+      "tags": [
+        "percentagens",
+        "aumentos",
+        "financa_pessoal",
+        "proporcionalidade",
+        "descontos",
+        "regra_de_três",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    },
+    "MAT_P1MODELO_PXX_CPX_002": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 5,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "financa_pessoal",
+        "percentagens",
+        "aumentos",
+        "descontos",
+        "regra_de_três",
+        "proporcionalidade",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    },
+    "MAT_P1MODELO_PXX_CPX_003": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 2,
+      "tags": [
+        "aumentos",
+        "regra_de_três",
+        "descontos",
+        "proporcionalidade",
+        "percentagens",
+        "financa_pessoal",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
 }

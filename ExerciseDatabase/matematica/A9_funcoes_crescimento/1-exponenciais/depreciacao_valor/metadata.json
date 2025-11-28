@@ -24,7 +24,29 @@
     "min": 3,
     "max": 4
   },
-  "exercicios": [
-    "MAT_A9FUNCRE_1EXP_DPR_001"
-  ]
+  "exercicios": {
+    "MAT_A9FUNCOE_1EX_DVX_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 4,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 0,
+      "tags": [
+        "financeiro",
+        "depreciacao",
+        "decaimento_exponencial",
+        "decaimento",
+        "crescimento",
+        "exponencial",
+        "modelacao",
+        "valor_comercial",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
 }

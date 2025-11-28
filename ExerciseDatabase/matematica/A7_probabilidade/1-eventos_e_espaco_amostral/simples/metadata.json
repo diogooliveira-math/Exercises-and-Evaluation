@@ -1,0 +1,40 @@
+{
+  "tipo": "simples",
+  "tipo_nome": "simples",
+  "conceito": "1-eventos_e_espaco_amostral",
+  "conceito_nome": "Eventos e Espaço Amostral",
+  "tema": "A7_probabilidade",
+  "tema_nome": "Módulo A7 - Probabilidade",
+  "disciplina": "matematica",
+  "descricao": "simples",
+  "tags_tipo": [
+    "simples"
+  ],
+  "caracteristicas": {
+    "requer_calculo": true,
+    "requer_grafico": true
+  },
+  "dificuldade_sugerida": {
+    "min": 2,
+    "max": 4
+  },
+  "exercicios": {
+    "MAT_A7PROBAB_1EX_SXX_001": {
+      "created": "2025-11-28",
+      "modified": "2025-11-28",
+      "author": "Professor",
+      "difficulty": 1,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "espaco_amostral",
+        "simples",
+        "eventos",
+        "simples"
+      ],
+      "status": "active"
+    }
+  }
+}

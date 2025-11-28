@@ -1,0 +1,18 @@
+{
+  "discipline": "matematica",
+  "module": "A9_funcoes_crescimento",
+  "concept": "1-exponenciais",
+  "tipo": "decaimento_medicamento",
+  "format": "desenvolvimento",
+  "difficulty": 1,
+  "author": "opencode-terminal-tester",
+  "statement": "Exercício de teste para decaimento_medicamento",
+  "additional_tags": [
+    "opencode_test",
+    "terminal"
+  ],
+  "has_parts": false,
+  "parts_count": 3,
+  "solution": "Solução exemplo",
+  "skip_preview": true
+}

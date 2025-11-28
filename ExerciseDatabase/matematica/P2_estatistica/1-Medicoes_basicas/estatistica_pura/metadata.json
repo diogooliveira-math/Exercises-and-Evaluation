@@ -22,8 +22,27 @@
     "min": 1,
     "max": 2
   },
-  "exercicios": [
-    "MAT_P2ESTATI_1MED_EPU_001",
-    "MAT_P2ESTATI_1MED_EPU_002"
-  ]
+  "exercicios": {
+    "MAT_P2ESTATI_1MX_EPX_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 4,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 3,
+      "tags": [
+        "calculo_direto",
+        "tabelas",
+        "mediana",
+        "media",
+        "moda",
+        "calculos_com_dados",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
 }

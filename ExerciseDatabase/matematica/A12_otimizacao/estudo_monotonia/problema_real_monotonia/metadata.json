@@ -20,8 +20,48 @@
     "min": 1,
     "max": 3
   },
-  "exercicios": [
-    "MAT_A12OTIMI_ESTU_PRM_002",
-    "MAT_A12OTIMI_ESTU_PRM_003"
-  ]
+  "exercicios": {
+    "MAT_A12OTIMI_EXX_PRM_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 2,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 2,
+      "tags": [
+        "decrescente",
+        "otimização",
+        "crescente",
+        "sinal_derivada",
+        "monotonia",
+        "problema_real",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    },
+    "MAT_A12OTIMI_EXX_PRM_002": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 4,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": false,
+      "parts_count": 0,
+      "tags": [
+        "decrescente",
+        "otimização",
+        "monotonia",
+        "sinal_derivada",
+        "crescente",
+        "problema_real",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
 }

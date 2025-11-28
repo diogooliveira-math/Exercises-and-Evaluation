@@ -1,0 +1,11 @@
+{
+  "tipo": "tipo_novo",
+  "tipo_nome": "Tipo Novo",
+  "exercicios": {
+    "MAT_P4FUNCOE_1GX_TNX_001": {
+      "created": "2025-11-26",
+      "difficulty": 2,
+      "status": "active"
+    }
+  }
+}

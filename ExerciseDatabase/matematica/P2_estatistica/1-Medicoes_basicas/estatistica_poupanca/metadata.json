@@ -23,8 +23,28 @@
     "min": 1,
     "max": 2
   },
-  "exercicios": [
-    "MAT_P2ESTATI_1MED_EPO_001",
-    "MAT_P2ESTATI_1MED_EPO_002"
-  ]
+  "exercicios": {
+    "MAT_P2ESTATI_1MX_EPX_001": {
+      "created": "2025-11-26",
+      "modified": "2025-11-26",
+      "author": "Teste Automático",
+      "difficulty": 3,
+      "points": 0,
+      "time_estimate_minutes": 0,
+      "has_multiple_parts": true,
+      "parts_count": 1,
+      "tags": [
+        "poupanca",
+        "mediana",
+        "moda",
+        "media",
+        "interpretacao",
+        "calculos_com_dados",
+        "tabelas",
+        "teste",
+        "automacao"
+      ],
+      "status": "active"
+    }
+  }
 }

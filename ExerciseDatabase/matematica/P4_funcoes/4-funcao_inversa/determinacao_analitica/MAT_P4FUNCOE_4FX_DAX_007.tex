@@ -1,0 +1,59 @@
+% Exercise ID: MAT_P4FUNCOE_4FX_DAX_007
+% Module: MÓDULO P4 - Funções | Concept: Função Inversa | Type: Determinação Analítica da Função Inversa
+% Difficulty: 3/5 (Médio) | Format: standard
+% Tags: resolucao_equacao, calculo_analitico, inversa, simetria, sobrejetividade, expressao_analitica, algebra, injetividade, inversa_racional
+% Author: Professor | Date: 2025-11-27
+% Status: active
+
+\exercicio{Dada f(x)=\frac{3x-1}{2x+5}, determine analiticamente f^{-1}(x) e verifique f(f^{-1}(x))=x. Inclua justificações detalhadas para cada passo do processo.}
+
+\exercicioDesenvolvimento{
+\textbf{Passo 1: Verificar se a função é invertível}
+
+Para que uma função tenha inversa, ela precisa ser bijetora (injetora e sobrejetora). 
+
+A função f(x) = \frac{3x-1}{2x+5} é uma função racional com domínio D_f = \mathbb{R} \setminus \{-\frac{5}{2}\}.
+
+Como é uma função racional com coeficientes diferentes nos termos de x no numerador e denominador, ela é estritamente monótona no seu domínio, portanto é injetora.
+
+\textbf{Passo 2: Determinar a função inversa}
+
+Para encontrar f^{-1}(x), resolvemos a equação y = \frac{3x-1}{2x+5} em ordem a x:
+
+\begin{align}
+y &= \frac{3x-1}{2x+5} \\
+y(2x+5) &= 3x-1 \\
+2xy + 5y &= 3x - 1 \\
+2xy - 3x &= -1 - 5y \\
+x(2y - 3) &= -1 - 5y \\
+x &= \frac{-1 - 5y}{2y - 3}
+\end{align}
+
+Portanto, a função inversa é:
+\[f^{-1}(x) = \frac{-1 - 5x}{2x - 3}\]
+
+\textbf{Justificação:} Trocámos a variável y por x na expressão final, pois por convenção representamos a função inversa como f^{-1}(x).
+
+\textbf{Passo 3: Verificar a composição f(f^{-1}(x)) = x}
+
+Vamos verificar que f(f^{-1}(x)) = x:
+
+\begin{align}
+f(f^{-1}(x)) &= f\left(\frac{-1 - 5x}{2x - 3}\right) \\
+&= \frac{3\left(\frac{-1 - 5x}{2x - 3}\right) - 1}{2\left(\frac{-1 - 5x}{2x - 3}\right) + 5} \\
+&= \frac{\frac{3(-1 - 5x)}{2x - 3} - 1}{\frac{2(-1 - 5x)}{2x - 3} + 5} \\
+&= \frac{\frac{-3 - 15x - (2x - 3)}{2x - 3}}{\frac{-2 - 10x + 5(2x - 3)}{2x - 3}} \\
+&= \frac{\frac{-3 - 15x - 2x + 3}{2x - 3}}{\frac{-2 - 10x + 10x - 15}{2x - 3}} \\
+&= \frac{\frac{-17x}{2x - 3}}{\frac{-17}{2x - 3}} \\
+&= \frac{-17x}{2x - 3} \cdot \frac{2x - 3}{-17} \\
+&= x
+\end{align}
+
+\textbf{Conclusão:} A verificação confirma que f^{-1}(x) = \frac{-1 - 5x}{2x - 3} é efetivamente a função inversa de f(x) = \frac{3x-1}{2x+5}, pois f(f^{-1}(x)) = x.
+
+\textbf{Domínio e Contradomínio:}
+- Domínio de f: D_f = \mathbb{R} \setminus \{-\frac{5}{2}\}
+- Contradomínio de f: Im(f) = \mathbb{R} \setminus \{\frac{3}{2}\}
+- Domínio de f^{-1}: D_{f^{-1}} = \mathbb{R} \setminus \{\frac{3}{2}\}
+- Contradomínio de f^{-1}: Im(f^{-1}) = \mathbb{R} \setminus \{-\frac{5}{2}\}
+}
