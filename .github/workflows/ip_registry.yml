@@ -1,0 +1,27 @@
+name: IP Registry CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  registry-checks:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Install deps
+      run: |
+        python -m pip install --upgrade pip
+        pip install filelock pytest
+    - name: Run registry consistency check
+      run: python scripts/check_registry_consistency.py
+    - name: Run concurrency smoke test
+      run: python -m pytest -q tests/test_ip_registry_concurrency.py
+    - name: Run unit tests
+      run: python -m pytest -q tests/test_ip_registry.py

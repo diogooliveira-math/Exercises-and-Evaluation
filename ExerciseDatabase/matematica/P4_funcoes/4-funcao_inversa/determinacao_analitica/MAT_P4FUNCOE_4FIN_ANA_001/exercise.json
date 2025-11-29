@@ -1,0 +1,13 @@
+{
+  "ip": "1.1.1.1.1",
+  "ids": {
+    "discipline": 1,
+    "module": 1,
+    "concept": 1,
+    "type": 1,
+    "exercise": 1
+  },
+  "label": "MAT_P4FUNCOE_4FIN_ANA_001",
+  "path": "matematica\\P4_funcoes\\4-funcao_inversa\\determinacao_analitica\\MAT_P4FUNCOE_4FIN_ANA_001",
+  "assigned_at": 1764427365
+}
