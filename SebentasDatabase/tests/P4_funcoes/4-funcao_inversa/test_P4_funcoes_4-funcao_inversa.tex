@@ -1,0 +1,257 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{placeins}
+\geometry{a4paper, margin=2cm}
+
+% Custom commands (add project-specific macros here)
+\newcommand{\exercicio}[1]{\textbf{#1}}
+\newcommand{\subexercicio}[1]{\item #1}
+
+\begin{document}
+
+\section*{Teste: P4 funcoes / 4 - funcao inversa}
+
+\begin{enumerate}[label=\arabic*)]
+
+\item % MAT_P4FUNCOE_4FIN_TRH_003
+﻿% Exercise ID: MAT_P4FUNCOE_4FIN_TRH_003
+% Module: MÓDULO P4 - Funções | Concept: Função Inversa | Type: Teste da Reta Horizontal
+% Difficulty: 2/5 (Fácil) | Type: desenvolvimento
+% Points: 10 | Time: 10 min
+% Tags: inversa, injetividade, teste_reta_horizontal, grafico
+% Author: Professor | Date: 2025-11-18
+% Status: active
+% Description: Determinar quais funções são invertíveis usando teste da reta horizontal
+
+\exercicio
+Considere as funções representadas nas figuras seguintes:
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.8]
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = $x$,
+        ylabel = $y$,
+        xmin = -4, xmax = 4,
+        ymin = -2, ymax = 2,
+        grid = major,
+        grid style = {dashed, gray!30},
+        width = 8cm,
+        height = 6cm,
+        title = {Função E},
+        title style = {font=\bfseries},
+    ]
+    \addplot[domain=-3.14:3.14, samples=200, thick, red] {sin(deg(x))};
+    \end{axis}
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.8]
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = $x$,
+        ylabel = $y$,
+        xmin = -1, xmax = 4,
+        ymin = -1, ymax = 4,
+        grid = major,
+        grid style = {dashed, gray!30},
+        width = 8cm,
+        height = 6cm,
+        title = {Função F},
+        title style = {font=\bfseries},
+    ]
+    \addplot[domain=0:3, thick, blue] {2*x};
+    \addplot[mark=*, mark size=2pt, blue] coordinates {(0,0)};
+    \addplot[mark=*, mark size=2pt, blue] coordinates {(3,6)};
+    \end{axis}
+\end{tikzpicture}
+\end{minipage}
+\end{figure}
+
+
+
+Quais das duas funções são invertíveis (isto é, cuja inversa também é uma função)? Justifique usando o teste da reta horizontal.
+
+\vspace{3cm}
+\FloatBarrier
+
+
+\item % MAT_P4FUNCOE_4FIN_GRA_004
+% Module: MÓDULO P4 - Funções | Concept: Função Inversa | Type: Determinação Gráfica
+% Difficulty: 2/5 (Fácil) | Type: desenvolvimento
+% Points: 10 | Time: 10 min
+% Tags: inversa, grafico, simetria, funcao_quadratica
+% Author: Professor | Date: 2025-11-18
+% Status: active
+% Description: Dado o gráfico de ramos de funções, desenhar o gráfico da inversa
+
+\exercicio
+Na figura está representado o gráfico de uma função $f$ definida em $[1, 4]$. Represente, no referencial dado, o gráfico da função inversa $f^{-1}$.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=0.8]
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = $x$,
+        ylabel = $y$,
+        xmin = -1, xmax = 5,
+        ymin = -1, ymax = 5,
+        grid = major,
+        grid style = {dashed, gray!30},
+        width = 8cm,
+        height = 6cm,
+    ]
+    \addplot[domain=-1:5, dashed, gray!70, thin] {x};
+    
+    \addplot[domain=1:4, samples=100, thick, blue] {(x-1)^2 + 1};
+    \addplot[mark=*, mark size=2pt, blue] coordinates {(1,1)};
+    \addplot[mark=*, mark size=2pt, blue] coordinates {(4,10/2)};
+    \node[anchor=west] at (axis cs:4,4.2) {$(4,4)$};
+    \node[anchor=north east] at (axis cs:1,0.8) {$(1,1)$};
+    \end{axis}
+\end{tikzpicture}
+\end{figure}
+
+\bigskip
+
+\exercicio
+Na figura está representado o gráfico de uma função $g$ definida em $]0, 4]$. Represente, no referencial dado, o gráfico da função inversa $g^{-1}$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8]
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = $x$,
+        ylabel = $y$,
+        xmin = -1, xmax = 5,
+        ymin = -1, ymax = 5,
+        grid = major,
+        grid style = {dashed, gray!30},
+        width = 8cm,
+        height = 6cm,
+    ]
+    \addplot[domain=-1:5, dashed, gray!70, thin] {x};
+    
+    \addplot[domain=0.25:4, samples=100, thick, red] {1/x + 0.75};
+    \addplot[mark=o, mark size=2pt, red] coordinates {(0.25,4.75)};
+    \addplot[mark=*, mark size=2pt, red] coordinates {(4,1)};
+    \node[anchor=south] at (axis cs:4,1.2) {$(4,1)$};
+    \end{axis}
+\end{tikzpicture}
+\end{figure}
+\vspace{3cm}
+\FloatBarrier
+
+
+\item % MAT_P4FUNCOE_4FIN_GRA_003
+% Module: MÓDULO P4 - Funções | Concept: Função Inversa | Type: Determinação Gráfica
+% Difficulty: 2/5 (Fácil) | Type: desenvolvimento
+% Points: 10 | Time: 10 min
+% Tags: inversa, grafico, simetria, funcao_quadratica
+% Author: Professor | Date: 2025-11-18
+% Status: active
+% Description: Dado o gráfico de ramos de funções, desenhar o gráfico da inversa
+
+\exercicio
+Na figura está representado o gráfico de uma função $f$ definida em $[0, +\infty[$. Represente, no referencial dado, o gráfico da função inversa $f^{-1}$.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=0.8]
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = $x$,
+        ylabel = $y$,
+        xmin = -1, xmax = 5,
+        ymin = -1, ymax = 5,
+        grid = major,
+        grid style = {dashed, gray!30},
+        width = 8cm,
+        height = 6cm,
+    ]
+    \addplot[domain=-1:5, dashed, gray!70, thin] {x};
+    
+    \addplot[domain=0:4, samples=100, thick, blue] {sqrt(2*x)};
+    \addplot[mark=*, mark size=2pt, blue] coordinates {(0,0)};
+    \addplot[mark=*, mark size=2pt, blue] coordinates {(2,2)};
+    \node[anchor=south west] at (axis cs:2,2.2) {$(2,2)$};
+    \node[anchor=north east] at (axis cs:0.2,0.2) {$(0,0)$};
+    \end{axis}
+\end{tikzpicture}
+\end{figure}
+
+\bigskip
+
+\exercicio
+Na figura está representado o gráfico de uma função $g$ definida em $[-1, 3]$. Represente, no referencial dado, o gráfico da função inversa $g^{-1}$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8]
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = $x$,
+        ylabel = $y$,
+        xmin = -2, xmax = 4,
+        ymin = -2, ymax = 4,
+        grid = major,
+        grid style = {dashed, gray!30},
+        width = 8cm,
+        height = 6cm,
+    ]
+    \addplot[domain=-2:4, dashed, gray!70, thin] {x};
+    
+    \addplot[domain=-1:3, thick, red] {-0.5*x+1.5};
+    \addplot[mark=*, mark size=2pt, red] coordinates {(-1,2)};
+    \addplot[mark=*, mark size=2pt, red] coordinates {(3,0)};
+    \node[anchor=south east] at (axis cs:-1,2) {$(-1,2)$};
+    \node[anchor=north west] at (axis cs:3,0) {$(3,0)$};
+    \end{axis}
+\end{tikzpicture}
+\end{figure}
+\vspace{3cm}
+\FloatBarrier
+
+
+\item % MAT_P4FUNCOE_4FX_DAX_021
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Dada a função $f(x) = 2x + 3$, determine a função inversa $f^{-1}(x)$ e justifique todos os passos do seu raciocínio.}
+\FloatBarrier
+
+
+\item % MAT_P4FUNCOE_4FX_DAX_022
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Dada f(x)=2x+3 determine f^{-1} e justifique}
+\FloatBarrier
+
+
+\item % MAT_P4FUNCOE_4FX_DAX_002
+% Module: MÓDULO P4 - Funções | Concept: Função Inversa | Type: Determinação Analítica da Função Inversa
+% Difficulty: 2/5 (Fácil) | Format: standard
+% Tags: algebra, simetria, resolucao_equacao, expressao_analitica, injetividade, inversa, sobrejetividade, calculo_analitico
+% Author: Test Agent | Date: 2025-11-26
+% Status: active
+
+\exercicio{Determine a função inversa de f(x) = 2x + 3.}
+\FloatBarrier
+
+\end{enumerate}
+
+\end{document}

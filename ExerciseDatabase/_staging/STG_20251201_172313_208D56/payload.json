@@ -1,0 +1,8 @@
+{
+  "discipline": "matematica",
+  "module": "P1_funcoes",
+  "concept": "funcoes_basicas",
+  "tipo": "exercicios",
+  "difficulty": "2",
+  "statement": "Calcule f(2) para f(x)=x+1."
+}

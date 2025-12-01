@@ -1,0 +1,10 @@
+ERROR: Registry not found: C:\Users\diogo\AAA\Projects\Exercises and Evaluation\SebentasDatabase\ExerciseDatabase\_registry\ip_registry.json
+INFO: \u2705 IP Resolver loaded (simple mode)
+WARNING: \u26a0\ufe0f Preview system not available
+WARNING: \u26a0\ufe0f Referência QA2 não encontrada em: C:\Users\diogo\AAA\Projects\Exercises and Evaluation\SebentasDatabase\reference\QA2
+WARNING: \u26a0\ufe0f Could not copy or reference exercise C:\Users\diogo\AAA\Projects\Exercises and Evaluation\SebentasDatabase\ExerciseDatabase\matematica\P4_funcoes\4-funcao_inversa\determinacao_analitica\MAT_P4FUNCOE_4FX_DAX_003: [WinError 3] The system cannot find the path specified: 'C:\\Users\\diogo\\AAA\\Projects\\Exercises and Evaluation\\SebentasDatabase\\ExerciseDatabase\\matematica\\P4_funcoes\\4-funcao_inversa\\determinacao_analitica\\MAT_P4FUNCOE_4FX_DAX_003'
+INFO: \u2705 Gerado exercises.tex (from exercise-path) em: SebentasDatabase\tests\integration_tmp\QA2\tex\exercises.tex
+ERROR: \u274c Template não encontrado: C:\Users\diogo\AAA\Projects\Exercises and Evaluation\SebentasDatabase\SebentasDatabase\_templates\test_template.tex
+INFO: ============================================================
+INFO: \u2705 SUCESSO: SebentasDatabase\tests\integration_tmp
+INFO: ============================================================

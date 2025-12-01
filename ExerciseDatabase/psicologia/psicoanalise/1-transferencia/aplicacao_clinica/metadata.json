@@ -1,0 +1,11 @@
+{
+  "tipo": "aplicacao_clinica",
+  "tipo_nome": "Aplicacao Clinica",
+  "exercicios": {
+    "PSI_PSICOANA_1TX_ACX_001": {
+      "created": "2025-11-30",
+      "difficulty": 2,
+      "status": "active"
+    }
+  }
+}

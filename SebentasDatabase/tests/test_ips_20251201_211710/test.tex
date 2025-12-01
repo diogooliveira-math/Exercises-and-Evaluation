@@ -1,0 +1,86 @@
+% Test template with IP-based exercise system
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (search a few relative locations)
+% If none found, load a local fallback file (copied to the test output directory by the generator)
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % fallback: load fallback_style.tex from the test root (generator copies it)
+      \input{fallback_style.tex}%
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS ==========
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+    \refstepcounter{exercise}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
+
+% Cabeçalho do teste com informação do aluno (define only if missing)
+\makeatletter
+\@ifundefined{espacoAluno}{%
+  \newcommand{\espacoAluno}{%
+    \vspace{0.5cm}
+    \begin{tcolorbox}[colback=white,colframe=black,arc=6pt,boxrule=0.8pt]
+        \noindent\textbf{Nome do Aluno:} \rule{9.5cm}{0.4pt} \textbf{Turma:} \rule{1cm}{0.4pt}\\[0.5cm]
+        \noindent\textbf{Assinatura do Professor:} \rule{3cm}{0.4pt} \hfill \textbf{Nota:} \rule{2cm}{0.4pt}\\[0.5cm]
+        \noindent\textbf{Assinatura do Encarregado de Educação:} \rule{3cm}{0.4pt}
+    \end{tcolorbox}
+    \vspace{1cm}
+  }
+}{% else: do nothing
+}
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Questão de Aula}
+\rhead{01/12/2025}
+\cfoot{\thepage}
+
+\title{Questão de aula do MÓDULO P4 - Funções}
+\author{EPRALIMA - Escola Profissional Alto Lima}
+\date{01/12/2025}
+
+\begin{document}
+\maketitle
+\espacoAluno
+
+\input{QA2/tex/exercises}
+
+\end{document}

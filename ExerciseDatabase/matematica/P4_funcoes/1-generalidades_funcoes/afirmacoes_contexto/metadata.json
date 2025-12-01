@@ -1,5 +1,11 @@
 {
   "tipo": "afirmacoes_contexto",
   "tipo_nome": "Afirmacoes Contexto",
-  "exercicios": {}
+  "exercicios": {
+    "MAT_P4FUNCOE_1GX_ACX_001": {
+      "created": "2025-11-29",
+      "difficulty": 2,
+      "status": "active"
+    }
+  }
 }

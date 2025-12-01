@@ -209,15 +209,13 @@ def main():
     # Set preview/compile based on user input or defaults
     env['SEBENTA_NO_PREVIEW'] = no_preview
     env['SEBENTA_NO_COMPILE'] = no_compile
-    # If user explicitly confirmed or auto-mode, set auto-approve to avoid nested prompts
-    if user_confirmed:
+    # Set auto-approve only for true auto-mode or when preview and compile are both disabled.
+    if auto_mode_enabled:
         env['SEBENTA_AUTO_APPROVE'] = '1'
     else:
-        # fallback: only auto-approve if no preview and no compile
-        if no_preview == '1' and no_compile == '1':
-            env['SEBENTA_AUTO_APPROVE'] = '1'
-        else:
-            env['SEBENTA_AUTO_APPROVE'] = '0'
+        # Only enable auto-approve when both preview and compile are disabled (fully non-interactive).
+        env['SEBENTA_AUTO_APPROVE'] = '1' if (no_preview == '1' and no_compile == '1') else '0'
+
 
     # Call wrapper
     wrapper = REPO_ROOT / 'scripts' / 'run_generate_sebenta_task.py'

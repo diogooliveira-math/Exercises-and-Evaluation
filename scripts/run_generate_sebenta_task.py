@@ -34,6 +34,10 @@ def env_flag(name: str) -> bool:
 
 cmd = [sys.executable, str(GENERATOR)]
 
+# Support IP-based selection via SEBENTA_IPS env var (comma-separated)
+SEBENTA_IPS = env.get('SEBENTA_IPS', '')
+
+
 # Optional string parameters
 for var, arg in [
     ("SEBENTA_DISCIPLINE", "--discipline"),
@@ -48,16 +52,36 @@ for var, arg in [
         for val in values:
             cmd.extend([arg, val])
 
-# Validation: require at least one of discipline/module/concept to be provided
+# If SEBENTA_IPS provided, resolve to paths and pass as --exercise-path to generator
+if SEBENTA_IPS:
+    try:
+        from ExerciseDatabase._tools.ip_resolver import IPResolver
+        resolver = IPResolver()
+        ips = [s.strip() for s in SEBENTA_IPS.split(',') if s.strip()]
+        paths = resolver.resolve_to_paths(ips)
+        if not paths:
+            print(f"No exercises resolved for IPs: {SEBENTA_IPS}")
+            sys.exit(3)
+        for p in paths:
+            # pass relative path
+            cmd.extend(["--exercise-path", str(p)])
+    except Exception as e:
+        print('Error resolving SEBENTA_IPS:', e)
+        sys.exit(4)
+
+
+# Validation: require at least one of discipline/module/concept, or exercise-paths provided via IPs
 provided_any = any(env.get(x, "") for x in ("SEBENTA_DISCIPLINE", "SEBENTA_MODULE", "SEBENTA_CONCEPT"))
-if not provided_any:
+if not provided_any and not SEBENTA_IPS:
     print("❌ Nenhum filtro fornecido: por favor especifique pelo menos uma das opções:")
     print("   - SEBENTA_DISCIPLINE (ex: matematica)")
     print("   - SEBENTA_MODULE (ex: P4_funcoes)")
     print("   - SEBENTA_CONCEPT (ex: 4-funcao_inversa)")
+    print("   - SEBENTA_IPS (ex: 1.2.3.4.5)")
     print("")
     print("Sugestão: na Task do VS Code, preencha pelo menos um campo ou use a task interativa.")
     sys.exit(2)
+
 
 # Boolean flags
 if env_flag("SEBENTA_NO_PREVIEW"):

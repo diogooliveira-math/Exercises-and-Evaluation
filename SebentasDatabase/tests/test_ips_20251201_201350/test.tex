@@ -1,0 +1,109 @@
+% Test template with IP-based exercise system
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % Define minimal macros if style.tex not found
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
+
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS ==========
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
+
+% Cabeçalho do teste com informação do aluno (define only if missing)
+\makeatletter
+\@ifundefined{espacoAluno}{%
+  \newcommand{\espacoAluno}{%
+    \vspace{0.5cm}
+    \begin{tcolorbox}[colback=white,colframe=black,arc=6pt,boxrule=0.8pt]
+        \noindent\textbf{Nome do Aluno:} \rule{9.5cm}{0.4pt} \textbf{Turma:} \rule{1cm}{0.4pt}\\[0.5cm]
+        \noindent\textbf{Assinatura do Professor:} \rule{3cm}{0.4pt} \hfill \textbf{Nota:} \rule{2cm}{0.4pt}\\[0.5cm]
+        \noindent\textbf{Assinatura do Encarregado de Educação:} \rule{3cm}{0.4pt}
+    \end{tcolorbox}
+    \vspace{1cm}
+  }
+}{% else: do nothing
+}
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Teste Comparacao}
+\rhead{01/12/2025}
+\cfoot{\thepage}
+
+\title{Questão de aula do MÓDULO P4 - Funções}
+\author{Copilot}
+\date{01/12/2025}
+
+\begin{document}
+\maketitle
+\espacoAluno
+
+\input{QA2/tex/exercises}
+
+\end{document}

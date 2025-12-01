@@ -203,32 +203,17 @@ def main() -> int:
                             logger.error('Python executable not found when executing clarifier command: %s', e)
                         except Exception as e:
                             logger.exception('Error executing clarifier command: %s', e)
-                        # Try to fallback to direct write using add_exercise_simple
+                        # Safe fallback: DO NOT auto-create. Log diagnostic and require manual review.
+                        logger.error('Safe wrapper invocation failed and fallback create was suppressed for safety.')
+                        # Write diagnostic log with full parsed payload for human review
+                        with open(tmp_path + '.diagnostic.json', 'w', encoding='utf-8') as diagf:
+                            diagf.write(json.dumps({'payload': parsed, 'reason': 'safe wrapper invocation failed'}, ensure_ascii=False))
+                        msg = {'status':'error','phase':'invoke','message':'safe wrapper invocation failed; manual review required','diagnostic_file': tmp_path + '.diagnostic.json'}
                         try:
-                            script = Path(__file__).resolve().parents[1] / "ExerciseDatabase" / "_tools" / "add_exercise_simple.py"
-                            # Try import via spec
-                            spec = importlib.util.spec_from_file_location('add_exercise_simple_fallback', str(script))
-                            if spec and getattr(spec, 'loader', None):
-                                mod = importlib.util.module_from_spec(spec)
-                                spec.loader.exec_module(mod)
-                                create_fn = getattr(mod, 'create_simple_exercise')
-                                ex_id = create_fn(parsed.get('discipline','matematica'), parsed.get('module','DEFAULT_MODULE'), parsed.get('concept','1-default'), parsed.get('tipo','afirmacoes_relacionais'), int(parsed.get('difficulty', 2)), parsed.get('statement',''))
-                            else:
-                                # Use runpy as last resort
-                                mod_globals = runpy.run_path(str(script))
-                                create_fn = mod_globals.get('create_simple_exercise')
-                                if not create_fn:
-                                    raise RuntimeError('create_simple_exercise not found in add_exercise_simple.py')
-                                ex_id = create_fn(parsed.get('discipline','matematica'), parsed.get('module','DEFAULT_MODULE'), parsed.get('concept','1-default'), parsed.get('tipo','afirmacoes_relacionais'), int(parsed.get('difficulty', 2)), parsed.get('statement',''))
-                            logger.info('Fallback created exercise %s', ex_id)
-                            try:
-                                sys.stdout.buffer.write((f'SUCCESS: {ex_id}\n').encode('utf-8'))
-                            except Exception:
-                                print(f'SUCCESS: {ex_id}')
-                            return 0
-                        except Exception as ie:
-                            logger.exception('Fallback failed: %s', ie)
-                            return 4
+                            sys.stdout.buffer.write((json.dumps(msg, ensure_ascii=False) + "\n").encode('utf-8'))
+                        except Exception:
+                            print(json.dumps(msg))
+                        return 4
                     elif clar_out.get('status') == 'clarify':
                         # Print question to caller for human interaction using UTF-8 safe write
                         try:
@@ -252,10 +237,22 @@ def main() -> int:
             print("Missing keys. Provide:", required)
             return 2
 
-    script = Path(__file__).resolve().parents[1] / "ExerciseDatabase" / "_tools" / "add_exercise_simple.py"
-    cmd = [sys.executable, str(script), parsed["discipline"], parsed["module"], parsed["concept"], parsed["tipo"], str(parsed["difficulty"]), parsed["statement"]]
+    # Use safe wrapper to stage exercises instead of direct creation
+    safe_script = Path(__file__).resolve().parents[1] / "ExerciseDatabase" / "_tools" / "add_exercise_safe.py"
 
-    logger.info("Running: %s", " ".join(shlex.quote(c) for c in cmd))
+    # Build payload and write to a temp file to avoid quoting issues
+    payload = {
+        'mode': 'stage',
+        'discipline': parsed['discipline'],
+        'module': parsed['module'],
+        'concept': parsed['concept'],
+        'tipo': parsed['tipo'],
+        'difficulty': parsed['difficulty'],
+        'statement': parsed['statement']
+    }
+
+    tmp_path = None
+    logger.info("Running safe wrapper: %s", str(safe_script))
     try:
         # Prepare logs directory
         logs_dir = Path(__file__).resolve().parents[1] / 'ExerciseDatabase' / 'logs'
@@ -263,35 +260,25 @@ def main() -> int:
         ts = __import__('datetime').datetime.now().strftime('%Y%m%d_%H%M%S')
         log_file = logs_dir / f"run_add_exercise_{ts}.log"
 
+        tmp = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json', encoding='utf-8')
+        tmp.write(json.dumps(payload, ensure_ascii=False))
+        tmp.flush()
+        tmp_path = tmp.name
+        tmp.close()
+
+        cmd = [sys.executable, str(safe_script), f'--payload-file={tmp_path}', '--mode=stage']
+        logger.info("Running: %s", " ".join(shlex.quote(c) for c in cmd))
+
         try:
             proc = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', errors='replace')
         except FileNotFoundError as e:
-            # Likely the python executable in PATH is missing. Try to resolve using sys.executable or python3
-            logger.error("Failed to run script: %s", e)
-            logger.info("Attempting fallback: load add_exercise_simple module and create exercise directly")
-            try:
-                script = Path(__file__).resolve().parents[1] / "ExerciseDatabase" / "_tools" / "add_exercise_simple.py"
-                spec = importlib.util.spec_from_file_location('add_exercise_simple_fallback', str(script))
-                if spec and getattr(spec, 'loader', None):
-                    mod = importlib.util.module_from_spec(spec)
-                    spec.loader.exec_module(mod)
-                    create_fn = getattr(mod, 'create_simple_exercise')
-                    ex_id = create_fn(parsed["discipline"], parsed["module"], parsed["concept"], parsed["tipo"], int(parsed.get("difficulty", 2)), parsed["statement"])
-                else:
-                    # fallback using runpy
-                    mod_globals = runpy.run_path(str(script))
-                    create_fn = mod_globals.get('create_simple_exercise')
-                    if not create_fn:
-                        raise RuntimeError('create_simple_exercise not found in add_exercise_simple.py')
-                    ex_id = create_fn(parsed["discipline"], parsed["module"], parsed["concept"], parsed["tipo"], int(parsed.get("difficulty", 2)), parsed["statement"])
-                # Write a simple log
-                with open(log_file, 'w', encoding='utf-8') as lf:
-                    lf.write(f"FALLBACK_CREATED: {ex_id}\n")
-                print(f"SUCCESS: {ex_id}")
-                return 0
-            except Exception as ie:
-                logger.exception("Fallback creation failed: %s", ie)
-                return 4
+            # Likely the python executable in PATH is missing. For safety, do NOT auto-create.
+            logger.error("Failed to run safe wrapper: %s", e)
+            # Record diagnostic and require manual intervention
+            with open(log_file, 'w', encoding='utf-8') as lf:
+                lf.write(f"SAFE_WRAPPER_FAILED: {str(e)}\nPAYLOAD: {json.dumps(parsed, ensure_ascii=False)}\n")
+            print(json.dumps({'status':'error','phase':'invoke','message':'safe wrapper invocation failed; manual review required'}, ensure_ascii=False))
+            return 4
 
         # Write log
         with open(log_file, 'w', encoding='utf-8') as lf:
@@ -302,9 +289,16 @@ def main() -> int:
             lf.write("\nSTDERR:\n")
             lf.write(proc.stderr or '')
 
-    except FileNotFoundError as e:
+    except Exception as e:
         logger.error("Failed to run script: %s", e)
         return 3
+    finally:
+        # cleanup tmp file
+        try:
+            if tmp_path:
+                Path(tmp_path).unlink()
+        except Exception:
+            pass
 
     if proc.returncode != 0:
         logger.error("Script exited with code %s", proc.returncode)

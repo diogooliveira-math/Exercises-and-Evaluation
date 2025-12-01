@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "disciplines": {
+    "matematica": {
+      "id": 1,
+      "label": "matematica",
+      "modules": {
+        "P4_funcoes": {
+          "id": 1,
+          "label": "P4_funcoes",
+          "concepts": {
+            "4-funcao_inversa": {
+              "id": 1,
+              "label": "4-funcao_inversa",
+              "types": {
+                "determinacao_analitica": {
+                  "id": 1,
+                  "label": "determinacao_analitica",
+                  "exercises": {
+                    "MAT_P4FUNCOE_4FIN_ANA_001": {
+                      "id": 1,
+                      "label": "MAT_P4FUNCOE_4FIN_ANA_001",
+                      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\determinacao_analitica\\MAT_P4FUNCOE_4FIN_ANA_001"
+                    },
+                    "MAT_P4FUNCOE_4FIN_ANA_002": {
+                      "id": 2,
+                      "label": "MAT_P4FUNCOE_4FIN_ANA_002",
+                      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\determinacao_analitica\\MAT_P4FUNCOE_4FIN_ANA_002"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "ips": {
+    "1.1.1.1.1": {
+      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\determinacao_analitica\\MAT_P4FUNCOE_4FIN_ANA_001",
+      "parts": [
+        "matematica",
+        "P4_funcoes",
+        "4-funcao_inversa",
+        "determinacao_analitica",
+        "MAT_P4FUNCOE_4FIN_ANA_001"
+      ],
+      "label": "MAT_P4FUNCOE_4FIN_ANA_001",
+      "assigned_at": 1764426277
+    },
+    "1.1.1.1.2": {
+      "path": "matematica\\P4_funcoes\\4-funcao_inversa\\determinacao_analitica\\MAT_P4FUNCOE_4FIN_ANA_002",
+      "parts": [
+        "matematica",
+        "P4_funcoes",
+        "4-funcao_inversa",
+        "determinacao_analitica",
+        "MAT_P4FUNCOE_4FIN_ANA_002"
+      ],
+      "label": "MAT_P4FUNCOE_4FIN_ANA_002",
+      "assigned_at": 1764426277
+    }
+  },
+  "next_counters": {
+    "discipline": 2,
+    "discipline.1.module": 2,
+    "discipline.1.module.1.concept": 2,
+    "discipline.1.module.1.concept.1.type": 2,
+    "discipline.1.module.1.concept.1.type.1.exercise": 3
+  }
+}

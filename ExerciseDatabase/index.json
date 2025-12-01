@@ -3999,6 +3999,26 @@
       ],
       "points": 0,
       "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1GX_ACX_001",
+      "path": "matematica/P4_funcoes/1-generalidades_funcoes/afirmacoes_contexto/MAT_P4FUNCOE_1GX_ACX_001.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "concept": "1-generalidades_funcoes",
+      "tipo": "afirmacoes_contexto",
+      "difficulty": 2,
+      "status": "active"
+    },
+    {
+      "id": "PSI_PSICOANA_1TX_ACX_001",
+      "path": "psicologia/psicoanalise/1-transferencia/aplicacao_clinica/PSI_PSICOANA_1TX_ACX_001.tex",
+      "discipline": "psicologia",
+      "module": "psicoanalise",
+      "concept": "1-transferencia",
+      "tipo": "aplicacao_clinica",
+      "difficulty": 2,
+      "status": "active"
     }
   ]
 }

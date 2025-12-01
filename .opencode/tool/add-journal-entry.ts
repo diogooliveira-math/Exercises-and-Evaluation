@@ -10,19 +10,42 @@ export default tool({
   async execute(args) {
     console.log(`[add-journal-entry] Starting execution with args:`, args);
 
-    const pythonPath = ".venv/Scripts/python.exe"; // Use Python from venv
-    const tagsArgs = args.tags ? args.tags.map(tag => `--tag "${tag}"`).join(' ') : ''
-    const cmd = `${pythonPath} agents_manifestos/add_journal_entry.py --entry "${args.entry}" ${args.category ? `--category "${args.category}"` : ''} ${tagsArgs}`
+    const candidates = []
+    const execPath = process.execPath || 'node'
+    if (/python/i.test(execPath)) candidates.push(execPath)
+    candidates.push('.venv\\Scripts\\python.exe', '.venv/bin/python', process.env.PYTHON_EXECUTABLE || '', 'python', 'python3', 'py')
 
-    console.log(`[add-journal-entry] Command to execute: ${cmd}`);
-
-    try {
-      const result = await Bun.$`${cmd}`.text()
-      console.log(`[add-journal-entry] Python script output: ${result}`);
-      return result.trim()
-    } catch (error) {
-      console.log(`[add-journal-entry] Python script failed with error:`, error);
-      throw error;
+    const script = 'agents_manifestos/add_journal_entry.py'
+    if (!require('fs').existsSync(script)) {
+      throw new Error(`Expected script not found at ${script}`)
     }
+
+    const spawn = require('child_process').spawnSync
+
+    let lastErr = null
+    for (const p of candidates) {
+      if (!p) continue
+      try {
+        console.log(`[add-journal-entry] Trying python executable: ${p}`)
+        const argsArr = [script, '--entry', `${args.entry || ''}`]
+        if (args.category) argsArr.push('--category', `${args.category}`)
+        if (Array.isArray(args.tags)) {
+          for (const t of args.tags) argsArr.push('--tag', t)
+        }
+        const res = spawn(p, argsArr, { encoding: 'utf8', timeout: 120000 })
+        if (res.error) throw res.error
+        if (res.status !== 0) {
+          lastErr = new Error(`Exit ${res.status}: ${res.stderr || ''}`)
+          continue
+        }
+        console.log(`[add-journal-entry] Python script output: ${res.stdout}`)
+        return (res.stdout || '').trim()
+      } catch (e) {
+        lastErr = e
+        continue
+      }
+    }
+
+    throw lastErr || new Error('Failed to invoke Python runner')
   },
 })

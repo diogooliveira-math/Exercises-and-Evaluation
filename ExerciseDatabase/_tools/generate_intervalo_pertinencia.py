@@ -17,13 +17,14 @@ from pathlib import Path
 import random
 import json
 
-# Import helper function from add_exercise_simple
+# We'll stage exercises using the safe wrapper instead of importing create_simple_exercise directly
 import sys
 BASE_DIR = Path(__file__).parent.parent
-# Ensure repository root is on sys.path so `ExerciseDatabase` package can be imported
 REPO_ROOT = BASE_DIR.parent
 sys.path.insert(0, str(REPO_ROOT))
-from ExerciseDatabase._tools.add_exercise_simple import create_simple_exercise  # type: ignore
+import subprocess
+
+SAFE_WRAPPER = BASE_DIR / '_tools' / 'add_exercise_safe.py'
 
 OUT_DIR = BASE_DIR / 'temp' / 'intervalo_generated'
 OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -69,19 +70,51 @@ def generate(count: int = 10):
         form_tpl, _, _ = random.choice(interval_forms)
         statement, val, choice_type = make_problem(a, b, form_tpl)
 
-        # difficulty 1 (muito simples)
+        # stage exercise via safe wrapper
         try:
-            ex_id = create_simple_exercise(discipline, module, concept, tipo, 1, statement)
-            created.append({
-                'id': ex_id,
-                'statement': statement,
-                'a': a,
-                'b': b,
-                'choice_type': choice_type
-            })
-            print(f"Created: {ex_id} | {statement}")
+            # write payload
+            payload = {
+                'mode': 'stage',
+                'discipline': discipline,
+                'module': module,
+                'concept': concept,
+                'tipo': tipo,
+                'difficulty': 1,
+                'statement': statement
+            }
+            import tempfile
+            tmp = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json', encoding='utf-8')
+            tmp.write(json.dumps(payload, ensure_ascii=False))
+            tmp.flush()
+            tmp_path = tmp.name
+            tmp.close()
+
+            proc = subprocess.run([sys.executable, str(SAFE_WRAPPER), f'--payload-file={tmp_path}'], capture_output=True, text=True)
+            out = proc.stdout.strip()
+            if out:
+                # expect JSON output from add_exercise_simple stage
+                try:
+                    res = json.loads(out.splitlines()[-1])
+                    if isinstance(res, dict) and res.get('status') == 'staged' and res.get('staged_id'):
+                        created.append({
+                            'id': res.get('staged_id'),
+                            'statement': statement,
+                            'a': a,
+                            'b': b,
+                            'choice_type': choice_type,
+                            'staged_path': res.get('staged_path')
+                        })
+                        print(f"Staged: {res.get('staged_id')} | {statement}")
+                    else:
+                        print(f"Unexpected wrapper output: {out}")
+                except Exception:
+                    print(f"Non-JSON wrapper output: {out}")
+            else:
+                print(f"No output from wrapper; rc={proc.returncode}; stderr={proc.stderr}")
+
         except Exception as e:
-            print(f"Failed to create exercise: {str(e)}")
+            print(f"Failed to stage exercise: {str(e)}")
+
 
     # salvar relatório
     ts = datetime.now().strftime('%Y%m%d_%H%M%S')

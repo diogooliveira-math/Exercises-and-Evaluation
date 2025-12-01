@@ -1,0 +1,62 @@
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
+}
+
+% Provide a minimal fallback for macros that might be missing in style.tex
+% This prevents fatal Undefined control sequence errors when templates include
+% \exercicioDesenvolvimento or similar macros.
+\providecommand{\exercicio}[1]{\par\noindent\textbf{Exercício:} #1\par}\providecommand{\subexercicio}[1]{\par\noindent\textbf{Subexercício:} #1\par}\providecommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Módulo P1: Funções}
+\rhead{funcoes basicas}
+\cfoot{\thepage}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{funcoes basicas}
+
+% Exercício 1: main.tex
+% Staged exercise STG_20251201_172313_F26C2A
+% Discipline: matematica
+% Module: P1_funcoes
+% Concept: funcoes_basicas
+% Tipo: exercicios
+
+Encontre o domínio de f(x)=1/x.
+\FloatBarrier
+
+\end{document}

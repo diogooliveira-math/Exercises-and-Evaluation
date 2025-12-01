@@ -118,6 +118,27 @@
       },
       "problemMatcher": []
     },
+    {
+      "label": "🎯 Gerar Teste (por IPs)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "SebentasDatabase/_tools/generate_test_from_ips.py",
+        "--ips",
+        "${input:test.ips}",
+        "--title",
+        "${input:test.title}",
+        "--author",
+        "${input:test.author}"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
     
     // 🔍 PESQUISA
     {
@@ -283,6 +304,24 @@
       "description": "Gerar apenas .tex (não compilar PDFs)?",
       "options": ["", "true", "false"],
       "default": "true"
+    },
+    {
+      "id": "test.ips",
+      "type": "promptString",
+      "description": "IPs dos exercícios (ex: 1.2.3.4.5,1.2.3.4.6 ou 1.2.3.4.* para wildcard)",
+      "default": ""
+    },
+    {
+      "id": "test.title",
+      "type": "promptString",
+      "description": "Título do teste",
+      "default": "Questão de Aula"
+    },
+    {
+      "id": "test.author",
+      "type": "promptString",
+      "description": "Autor do teste",
+      "default": "EPRALIMA - Escola Profissional Alto Lima"
     }
   ]
 }

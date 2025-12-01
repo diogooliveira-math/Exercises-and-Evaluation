@@ -1,0 +1,4 @@
+% Auto-generated input-path for exercises (points to ExerciseDatabase)
+\makeatletter
+\def\input@path{{../../../ExerciseDatabase/}}
+\makeatother

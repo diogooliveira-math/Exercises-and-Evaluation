@@ -98,6 +98,44 @@ python SebentasDatabase/_tools/generate_test_template.py --questions 10
 python ExerciseDatabase/_tools/search_exercises.py
 ```
 
+### 🎯 Sistema de IPs (v3.5) - NOVO!
+
+**Gere testes usando IDs hierárquicos estáveis (Itens de Prova)**
+
+```bash
+# Quick Start: Gerar teste com 3 exercícios específicos
+python SebentasDatabase/_tools/generate_test_from_ips.py \
+  --ips "1.2.4.1.3,1.2.4.2.1,1.2.4.3.2" \
+  --title "Teste de Funções"
+
+# Wildcard: Todos exercícios de determinação analítica
+python SebentasDatabase/_tools/generate_test_from_ips.py \
+  --ips "1.2.4.1.*" \
+  --title "Treino Intensivo"
+```
+
+**Formato de IP**: `D.M.C.T.E` (Disciplina.Módulo.Conceito.Tipo.Exercício)
+
+**Via VS Code Task**:
+```
+Ctrl+Shift+P → Tasks: Run Task → 🎯 Gerar Teste (por IPs)
+```
+
+**Documentação**:
+- 📚 **Guia Completo**: [`docs/IP_SYSTEM_GUIDE.md`](docs/IP_SYSTEM_GUIDE.md)
+- 🚀 **Quick Start**: [`docs/IP_SYSTEM_QUICKSTART.md`](docs/IP_SYSTEM_QUICKSTART.md)
+- 🔧 **Registry Spec**: [`docs/ip_registry.md`](docs/ip_registry.md)
+- 📖 **Referência QA2**: [`reference/QA2/`](reference/QA2/)
+
+**Vantagens**:
+✅ IDs estáveis e permanentes  
+✅ Seleção por wildcards (`1.2.*`)  
+✅ Numeração automática de exercícios  
+✅ Suporte a sub-variants  
+✅ Templates modulares (QA2-inspired)
+
+---
+
 ### OpenCode / opencode
 
 O repositório inclui utilitários "opencode" para testes locais e para que agentes possam executar comandos seguros de diagnóstico. Principais pontos:

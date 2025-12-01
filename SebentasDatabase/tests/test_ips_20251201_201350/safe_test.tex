@@ -1,0 +1,35 @@
+% Minimal safe test to include generated QA2 exercises
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\geometry{margin=2.5cm}
+% minimal macros if missing
+\makeatletter
+\@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+\@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+\@ifundefined{optioncount}{\newcounter{optioncount}}{}
+\@ifundefined{exercise}{\newcounter{exercise}}{}
+% Keep counters in sync: alias internal registers so either name works
+\@ifundefined{c@exerciciocount}{\newcounter{exerciciocount}}{}
+\let\c@exercise\c@exerciciocount
+% showexerciciotitle flag
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+% minimal exercise macros
+\@ifundefined{exercicio}{\newcommand{\exercicio}[1]{\par\vspace{1.5em}\refstepcounter{exercise}\noindent\textbf{Exercício~\theexercise.} ##1\par\vspace{0.5em}}}{}
+\@ifundefined{subexercicio}{\newcommand{\subexercicio}[1]{\par\vspace{0.8em}\refstepcounter{subexerciciocount}\noindent\textbf{\theexercise.\thesubexerciciocount.} ##1\par\vspace{0.3em}}}{}
+\@ifundefined{espacoAluno}{\newcommand{\espacoAluno}{\vspace{1cm}}}{}
+\makeatother
+\begin{document}
+\section*{Teste (versão segura)}
+\espacoAluno
+\input{QA2/tex/exercises}
+\end{document}

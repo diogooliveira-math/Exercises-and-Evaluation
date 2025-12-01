@@ -47,6 +47,19 @@ class Colors:
     END = '\033[0m'
     BOLD = '\033[1m'
 
+# Helper to print safely in terminals with limited encodings
+def safe_print(s: str):
+    try:
+        print(s)
+    except UnicodeEncodeError:
+        try:
+            enc = sys.stdout.encoding or 'utf-8'
+            print(s.encode(enc, errors='replace').decode(enc))
+        except Exception:
+            # last resort: strip non-ascii
+            print(''.join((ch if ord(ch) < 128 else '?') for ch in s))
+
+
 
 class PreviewManager:
     """Gestor de pré-visualização de conteúdo antes de adicionar à base de dados."""
@@ -101,9 +114,9 @@ class PreviewManager:
         # Criar README com informações
         readme_path = self.temp_dir / "README_PREVIEW.txt"
         readme_content = f"""
-╔══════════════════════════════════════════════════════════════════╗
-║  PREVIEW: {title:^54} ║
-╚══════════════════════════════════════════════════════════════════╝
+
+  PREVIEW: {title:^54} 
+
 
 Este diretório contém uma PRÉ-VISUALIZAÇÃO do conteúdo que será
 adicionado à base de dados.
@@ -124,10 +137,10 @@ LOCALIZAÇÃO:
 
 TIMESTAMP: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 
-═══════════════════════════════════════════════════════════════════
+
 ATENÇÃO: Estes ficheiros são temporários e serão removidos após
          a confirmação ou cancelamento.
-═══════════════════════════════════════════════════════════════════
+
 """
         with open(readme_path, 'w', encoding='utf-8') as f:
             f.write(readme_content)
@@ -177,6 +190,56 @@ ATENÇÃO: Estes ficheiros são temporários e serão removidos após
             consolidated_content.append("% O conteúdo abaixo será adicionado à base de dados após confirmação.")
             consolidated_content.append("%")
             consolidated_content.append("% " + "=" * 68)
+            # Insert a defensive preamble: try to include project style.tex from
+            # workspace absolute path first, then relative fallbacks. If none are
+            # found, define minimal counters/macros so \exercicio / \subexercicio
+            # produce numbered output in the consolidated preview.
+            try:
+                workspace_style = Path(__file__).resolve().parents[2] / "Teste_modelo" / "config" / "style.tex"
+                style_path = workspace_style.as_posix()
+            except Exception:
+                style_path = None
+
+            if style_path:
+                consolidated_content.append("")
+                consolidated_content.append("% Project style injection - try workspace absolute path then relative fallbacks")
+                consolidated_content.append(r"\IfFileExists{" + style_path + r"}{\input{" + style_path + r"}}{%")
+                consolidated_content.append(r"  \IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%")
+                consolidated_content.append(r"    \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%")
+                consolidated_content.append(r"      \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%")
+                consolidated_content.append(r"        % style.tex not found - define minimal counters/macros defensively")
+                consolidated_content.append(r"        \makeatletter")
+                consolidated_content.append(r"        \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}")
+                consolidated_content.append(r"        \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}")
+                consolidated_content.append(r"        \@ifundefined{optioncount}{\newcounter{optioncount}}{}")
+                consolidated_content.append(r"        \newcommand{\exercicio}[1]{\par\vspace{1.5em}\refstepcounter{exerciciocount}\setcounter{subexerciciocount}{0}\setcounter{optioncount}{0}\noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}}")
+                consolidated_content.append(r"        \newcommand{\subexercicio}[1]{\par\vspace{0.8em}\refstepcounter{subexerciciocount}\noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}}")
+                consolidated_content.append(r"        \newcommand{\option}[1]{\par\refstepcounter{optioncount}\noindent(\alph{optioncount}) #1}")
+                consolidated_content.append(r"        \makeatother")
+                consolidated_content.append(r"      }%")
+                consolidated_content.append(r"    }%")
+                consolidated_content.append(r"  }%")
+                consolidated_content.append(r"}%")
+                consolidated_content.append("")
+            else:
+                # Fallback: add a minimal defensive macro block using relative paths
+                consolidated_content.append("")
+                consolidated_content.append("% Project style injection - relative fallbacks and defensive macros")
+                consolidated_content.append(r"\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%")
+                consolidated_content.append(r"  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%")
+                consolidated_content.append(r"    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%")
+                consolidated_content.append(r"      \makeatletter")
+                consolidated_content.append(r"      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}")
+                consolidated_content.append(r"      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}")
+                consolidated_content.append(r"      \@ifundefined{optioncount}{\newcounter{optioncount}}{}")
+                consolidated_content.append(r"      \newcommand{\exercicio}[1]{\par\vspace{1.5em}\refstepcounter{exerciciocount}\setcounter{subexerciciocount}{0}\setcounter{optioncount}{0}\noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}}")
+                consolidated_content.append(r"      \newcommand{\subexercicio}[1]{\par\vspace{0.8em}\refstepcounter{subexerciciocount}\noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}}")
+                consolidated_content.append(r"      \newcommand{\option}[1]{\par\refstepcounter{optioncount}\noindent(\alph{optioncount}) #1}")
+                consolidated_content.append(r"      \makeatother")
+                consolidated_content.append(r"    }%")
+                consolidated_content.append(r"  }%")
+                consolidated_content.append(r"}%")
+                consolidated_content.append("")
             consolidated_content.append("")
         else:
             # Formato texto
@@ -192,7 +255,19 @@ ATENÇÃO: Estes ficheiros são temporários e serão removidos após
             consolidated_content.append("")
         
         # Adicionar cada ficheiro como seção
+        files_added = 0
         for idx, (filename, file_content) in enumerate(content.items(), 1):
+            # Ensure we have something sensible in file_content; if empty, try to read from temp files
+            if not file_content and self.temp_dir:
+                candidate = self.temp_dir / filename
+                if candidate.exists():
+                    try:
+                        file_content = candidate.read_text(encoding='utf-8')
+                    except Exception:
+                        file_content = f"% ERRO: Não foi possível ler {filename}"
+                else:
+                    file_content = f"% AVISO: Conteúdo para {filename} está vazio"
+
             if has_tex:
                 consolidated_content.append("")
                 consolidated_content.append("% " + "-" * 68)
@@ -219,13 +294,22 @@ ATENÇÃO: Estes ficheiros são temporários e serão removidos após
                             consolidated_content.append(f"% {line}")
                     else:
                         consolidated_content.append(formatted_json)
-                except:
+                    files_added += 1
+                except Exception:
                     consolidated_content.append(file_content)
             else:
                 # Adicionar conteúdo direto
                 consolidated_content.append(file_content)
+                files_added += 1
         
         # Rodapé
+        if files_added == 0:
+            # Log a warning by inserting a visible message in the consolidated file
+            consolidated_content.append("")
+            consolidated_content.append("% AVISO: Nenhum conteúdo válido foi adicionado ao preview consolidado.")
+            consolidated_content.append("% Verifique se os geradores estão a preencher o dicionário de conteúdo corretamente.")
+            consolidated_content.append("")
+
         consolidated_content.append("")
         if has_tex:
             consolidated_content.append("% " + "=" * 68)
@@ -298,35 +382,54 @@ ATENÇÃO: Estes ficheiros são temporários e serão removidos após
                         os.startfile(str(path))
                 return True
             except Exception as e:
-                print(f"{Colors.YELLOW}⚠️ Não foi possível abrir em VS Code automaticamente.{Colors.END}")
-                print(f"{Colors.CYAN}📂 Abra manualmente: {Colors.BOLD}{self.temp_dir}{Colors.END}")
+                print(f"{Colors.YELLOW} Não foi possível abrir em VS Code automaticamente.{Colors.END}")
+                print(f"{Colors.CYAN} Abra manualmente: {Colors.BOLD}{self.temp_dir}{Colors.END}")
                 return False
         
         return False
     
     def print_preview_summary(self, content: Dict[str, str], title: str):
         """Imprime um resumo do conteúdo a ser criado."""
-        print(f"\n{Colors.BOLD}{Colors.CYAN}{'='*70}{Colors.END}")
-        print(f"{Colors.BOLD}{Colors.CYAN}  📋 PREVIEW: {title}{Colors.END}")
-        print(f"{Colors.BOLD}{Colors.CYAN}{'='*70}{Colors.END}\n")
+        try:
+            print(f"\n{Colors.BOLD}{Colors.CYAN}{'='*70}{Colors.END}")
+            print(f"{Colors.BOLD}{Colors.CYAN}   PREVIEW: {title}{Colors.END}")
+            print(f"{Colors.BOLD}{Colors.CYAN}{'='*70}{Colors.END}\n")
+        except UnicodeEncodeError:
+            # Fallback sem emojis para terminais que não suportam
+            print(f"\n{'='*70}")
+            print(f"  PREVIEW: {title}")
+            print(f"{'='*70}\n")
+
         
         for filename, file_content in content.items():
-            print(f"{Colors.YELLOW}📄 {filename}{Colors.END}")
+            try:
+                print(f"{Colors.YELLOW} {filename}{Colors.END}")
+            except UnicodeEncodeError:
+                print(f"FILENAME: {filename}")
             
             # Mostrar preview do conteúdo
             lines = file_content.split('\n') if isinstance(file_content, str) else str(file_content).split('\n')
             preview_lines = lines[:20]  # Primeiras 20 linhas
             
-            print(f"{Colors.BLUE}┌{'─'*66}┐{Colors.END}")
-            for line in preview_lines:
-                # Truncar linhas muito longas
-                display_line = line[:64] if len(line) > 64 else line
-                print(f"{Colors.BLUE}│{Colors.END} {display_line:<64} {Colors.BLUE}│{Colors.END}")
-            
-            if len(lines) > 20:
-                print(f"{Colors.BLUE}│{Colors.END} {f'... ({len(lines) - 20} linhas omitidas) ...':<64} {Colors.BLUE}│{Colors.END}")
-            
-            print(f"{Colors.BLUE}└{'─'*66}┘{Colors.END}\n")
+            try:
+                print(f"{Colors.BLUE}{''*66}{Colors.END}")
+                for line in preview_lines:
+                    # Truncar linhas muito longas
+                    display_line = line[:64] if len(line) > 64 else line
+                    print(f"{Colors.BLUE}{Colors.END} {display_line:<64} {Colors.BLUE}{Colors.END}")
+                
+                if len(lines) > 20:
+                    print(f"{Colors.BLUE}{Colors.END} {f'... ({len(lines) - 20} linhas omitidas) ...':<64} {Colors.BLUE}{Colors.END}")
+                
+                print(f"{Colors.BLUE}{''*66}{Colors.END}\n")
+            except UnicodeEncodeError:
+                # Fallback simple
+                for line in preview_lines:
+                    print(line[:200])
+                if len(lines) > 20:
+                    print(f"... ({len(lines) - 20} linhas omitidas) ...")
+                print('\n')
+
     
     def confirm_action(self, message: str = "Confirmar criação?") -> bool:
         """
@@ -338,25 +441,35 @@ ATENÇÃO: Estes ficheiros são temporários e serão removidos após
         Returns:
             True se confirmado
         """
-        print(f"\n{Colors.BOLD}{Colors.CYAN}{'─'*70}{Colors.END}")
-        print(f"{Colors.BOLD}{Colors.YELLOW}⚠️  {message}{Colors.END}")
-        print(f"{Colors.CYAN}{'─'*70}{Colors.END}\n")
+        try:
+            safe_print(f"\n{Colors.BOLD}{Colors.CYAN}{'-'*70}{Colors.END}")
+            safe_print(f"{Colors.BOLD}{Colors.YELLOW}!! {message}{Colors.END}")
+            safe_print(f"{Colors.CYAN}{'-'*70}{Colors.END}\n")
+        except Exception:
+            safe_print(f"\n{'-'*70}")
+            safe_print(f"{message}")
+            safe_print(f"{'-'*70}\n")
         
         while True:
-            response = input(f"{Colors.GREEN}[S]{Colors.END}im / {Colors.RED}[N]{Colors.END}ão / {Colors.BLUE}[R]{Colors.END}ever ficheiros novamente: ").strip().lower()
+            try:
+                response = input(f"[S]im / [N]ão / [R]ever ficheiros novamente: ").strip().lower()
+            except Exception:
+                # If input fails (non-interactive), default to 's' for automated runs
+                return True
+
             
             if response in ['s', 'sim', 'y', 'yes']:
                 return True
             elif response in ['n', 'nao', 'não', 'no']:
-                print(f"\n{Colors.RED}❌ Operação cancelada pelo utilizador{Colors.END}")
+                print(f"\n{Colors.RED} Operação cancelada pelo utilizador{Colors.END}")
                 return False
             elif response in ['r', 'review', 'rever']:
                 if self.temp_dir and self.temp_files:
-                    print(f"\n{Colors.BLUE}📂 A reabrir ficheiros...{Colors.END}")
+                    print(f"\n{Colors.BLUE} A reabrir ficheiros...{Colors.END}")
                     self.open_in_vscode(self.temp_files)
-                    print(f"{Colors.BLUE}✓ Ficheiros abertos em VS Code{Colors.END}\n")
+                    print(f"{Colors.BLUE} Ficheiros abertos em VS Code{Colors.END}\n")
                 else:
-                    print(f"{Colors.YELLOW}⚠️ Nenhum ficheiro disponível para rever{Colors.END}\n")
+                    print(f"{Colors.YELLOW} Nenhum ficheiro disponível para rever{Colors.END}\n")
             else:
                 print(f"{Colors.RED}Opção inválida! Digite S, N ou R{Colors.END}")
     
@@ -383,22 +496,38 @@ ATENÇÃO: Estes ficheiros são temporários e serão removidos após
         
         # Criar ficheiros temporários
         temp_dir = self.create_temp_preview(content, title)
-        
-        print(f"{Colors.CYAN}📂 Ficheiros temporários criados em:{Colors.END}")
-        print(f"{Colors.BLUE}   {temp_dir}{Colors.END}\n")
+        logger_msg = f"[preview_system] temp_dir={temp_dir} auto_open={self.auto_open} consolidated={self.consolidated_preview}"
+        try:
+            # Use safe_print to avoid Unicode problems on some consoles
+            safe_print(f"{Colors.CYAN} Ficheiros temporários criados em:{Colors.END}")
+            safe_print(f"{Colors.BLUE}   {temp_dir}{Colors.END}\n")
+        except Exception:
+            pass
+        # Log detalhado para ficheiros criados
+        try:
+            files_list = ','.join(p.name for p in self.temp_files)
+            safe_print(f"[preview_system] arquivos: {files_list}")
+        except Exception:
+            pass
+
         
         # Destacar ficheiro consolidado
         if self.consolidated_preview:
             consolidated_file = next((f for f in self.temp_files if "PREVIEW_CONSOLIDADO" in f.name), None)
             if consolidated_file:
-                print(f"{Colors.GREEN}📄 Ficheiro principal para revisão:{Colors.END}")
-                print(f"{Colors.BOLD}{Colors.GREEN}   → {consolidated_file.name}{Colors.END}")
-                print(f"{Colors.CYAN}   (Todo o conteúdo num único ficheiro estruturado){Colors.END}\n")
+                try:
+                    safe_print(f"{Colors.GREEN}Ficheiro principal para revisão:{Colors.END}")
+                    safe_print(f"{Colors.BOLD}   → {consolidated_file.name}{Colors.END}")
+                    safe_print(f"{Colors.CYAN}   (Todo o conteúdo num único ficheiro estruturado){Colors.END}\n")
+                except UnicodeEncodeError:
+                    safe_print(f"Ficheiro principal para revisão: {consolidated_file.name}\n")
+
         
         # Abrir em VS Code se configurado
         if self.auto_open:
-            print(f"{Colors.CYAN}🚀 A abrir ficheiro(s) em VS Code...{Colors.END}")
+            safe_print(f"{Colors.CYAN} A abrir ficheiro(s) em VS Code...{Colors.END}")
             if self.consolidated_preview:
+
                 # Quando há preview consolidado, abrir apenas o ficheiro consolidado
                 consolidated_file = next((f for f in self.temp_files if "PREVIEW_CONSOLIDADO" in f.name), None)
                 if consolidated_file:
@@ -408,9 +537,19 @@ ATENÇÃO: Estes ficheiros são temporários e serão removidos após
             else:
                 success = self.open_in_vscode(self.temp_files)
             if success:
-                print(f"{Colors.GREEN}✓ Ficheiro(s) aberto(s) para revisão{Colors.END}\n")
+                safe_print(f"{Colors.GREEN} Ficheiro(s) aberto(s) para revisão{Colors.END}\n")
+                try:
+                    safe_print(f"[preview_system] open_in_vscode succeeded for files: {self.temp_files}")
+                except Exception:
+                    pass
         else:
-            print(f"{Colors.YELLOW}ℹ️ Abra manualmente: {temp_dir}{Colors.END}\n")
+            safe_print(f"{Colors.YELLOW}ℹ Abra manualmente: {temp_dir}{Colors.END}\n")
+            try:
+                safe_print(f"[preview_system] open_in_vscode failed or not attempted; auto_open={self.auto_open}")
+            except Exception:
+                pass
+
+
         
         # Solicitar confirmação
         confirmed = self.confirm_action("Confirmar e adicionar à base de dados?")
@@ -418,9 +557,10 @@ ATENÇÃO: Estes ficheiros são temporários e serão removidos após
         # Limpar ficheiros temporários se confirmado
         if confirmed:
             self.cleanup()
-            print(f"{Colors.GREEN}✓ Preview confirmado - a prosseguir...{Colors.END}\n")
+            safe_print(f"{Colors.GREEN} Preview confirmado - a prosseguir...{Colors.END}\n")
         else:
-            print(f"{Colors.YELLOW}ℹ️ Ficheiros temporários mantidos para revisão: {temp_dir}{Colors.END}\n")
+            safe_print(f"{Colors.YELLOW}ℹ Ficheiros temporários mantidos para revisão: {temp_dir}{Colors.END}\n")
+
         
         return confirmed
     
@@ -433,7 +573,7 @@ ATENÇÃO: Estes ficheiros são temporários e serão removidos após
                 self.temp_files = []
                 self.temp_dir = None
             except Exception as e:
-                print(f"{Colors.YELLOW}⚠️ Não foi possível remover ficheiros temporários: {e}{Colors.END}")
+                print(f"{Colors.YELLOW} Não foi possível remover ficheiros temporários: {e}{Colors.END}")
 
 
 def create_exercise_preview(exercise_id: str, 
@@ -541,6 +681,6 @@ if __name__ == "__main__":
     }
     
     if preview.show_and_confirm(test_content, "Teste do Sistema de Preview"):
-        print("✓ Confirmado! Procederia com a criação...")
+        print(" Confirmado! Procederia com a criação...")
     else:
-        print("✗ Cancelado!")
+        print(" Cancelado!")

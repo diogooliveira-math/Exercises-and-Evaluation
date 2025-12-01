@@ -3,13 +3,24 @@
 \newcounter{subexerciciocount}       % Contador dos subexercícios
 \newcounter{optioncount}             % Contador das opções
 
+% Control whether the macro prints the automatic "Exercício N." heading.
+% Default: show the heading. Call \showexerciciotitlefalse to suppress.
+\newif\ifshowexerciciotitle
+\showexerciciotitletrue
+
 % Macro para exercício principal
 \newcommand{\exercicio}[1]{%
-    \par\vspace{1.5em}% Espaçamento antes
-    \refstepcounter{exerciciocount}% Incrementa contador principal
-    \setcounter{subexerciciocount}{0}% Reseta contador de subexercícios
-    \setcounter{optioncount}{0}% Reseta contador de opções
-    \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+        \par\vspace{1.5em}% Espaçamento antes
+        \refstepcounter{exerciciocount}% Incrementa contador principal
+        \setcounter{subexerciciocount}{0}% Reseta contador de subexercícios
+        \setcounter{optioncount}{0}% Reseta contador de opções
+        % Only print the automatic heading if the flag is true
+        \ifshowexerciciotitle
+            \noindent\textbf{Exercício~\theexerciciocount.}\space #1\par\vspace{0.5em}%
+        \else
+            % When suppressed, just print the content without the heading
+            #1\par\vspace{0.5em}%
+        \fi
 }
 
 % Macro para subexercício
