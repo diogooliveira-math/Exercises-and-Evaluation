@@ -38,3 +38,6 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# Opencode / playground
+/playground_test/opencode/opencode/
