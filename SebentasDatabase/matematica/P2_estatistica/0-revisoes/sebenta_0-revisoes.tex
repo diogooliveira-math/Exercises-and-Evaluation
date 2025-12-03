@@ -1,0 +1,176 @@
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
+}
+
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
+
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Módulo P2 - Estatística}
+\rhead{0 - revisoes}
+\cfoot{\thepage}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{0 - revisoes}
+
+\subsection*{Tipos de Exercícios}
+\begin{itemize}
+  \item \textbf{Desenvolvimento} --- Exercícios de desenvolvimento
+\end{itemize}
+
+\vspace{1em}
+
+% Exercício 1: MAT_P2ESTATI_REVI_D_001.tex
+% Exercise ID: MAT_P2ESTATI_REVI_D_001
+% Module: Módulo P2 - Estatística | Concept: Revisões de Crescimento
+% Type: desenvolvimento | Difficulty: 2/5
+% Tags: revisoes
+% Author: Professor | Date: 2025-11-21
+
+\exercicio{
+Uma mercearia registou o número de peças de fruta vendidas num dia. A tabela abaixo resume os dados:
+
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Fruta} & \textbf{Quantidade} \\
+\hline
+Maçãs & 45 \\
+Bananas & 38 \\
+Laranjas & 22 \\
+Peras & 15 \\
+\hline
+\end{tabular}
+\end{center}
+}
+
+\subexercicio{Indica qual a fruta que representa a maior percentagem das vendas. Justifica a tua resposta com referência aos valores calculados.}
+
+\subexercicio{Calcula quantas peças correspondem a $25\%$ do total de vendas. Indica se deves arredondar o resultado e justifica a tua escolha (arredondamento por defeito, por excesso ou para o inteiro mais próximo).}
+
+\subexercicio{Calcula a percentagem conjunta de Maçãs e Bananas. Essas duas frutas representam mais de $50\%$ do total? Mostra os cálculos e conclui.}
+\FloatBarrier
+
+% Exercício 2: MAT_P2ESTATI_REVI_D_999.tex
+% Exercise ID: MAT_P2ESTATI_REVI_D_999
+% Module: P2_estatistica | Concept: 0-revisoes
+% Type: desenvolvimento | Difficulty: 2/5
+% Tags: revisoes, teste, robustez
+% Author: Teste | Date: 2025-11-21
+
+\exercicio{
+Uma fábrica produziu 100 peças num dia. A tabela mostra a distribuição por tipo:
+
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+Tipo & Quantidade \\
+\hline
+A & 40 \\
+B & 35 \\
+C & 25 \\
+\hline
+\end{tabular}
+\end{center}
+}
+
+\subexercicio{Qual a percentagem de peças do tipo A?}
+\vspace{3cm}
+\subexercicio{Quantas peças não são do tipo B?}
+\vspace{3cm}
+\subexercicio{A soma das percentagens dá 100\%? Justifique.}
+\vspace{3cm}
+\FloatBarrier
+
+\end{document}

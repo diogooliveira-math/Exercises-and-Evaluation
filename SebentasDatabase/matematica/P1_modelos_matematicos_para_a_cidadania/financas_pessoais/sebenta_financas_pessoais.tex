@@ -1,0 +1,168 @@
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
+}
+
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
+
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Módulo P1 - Modelos Matemáticos para a Cidadania}
+\rhead{financas pessoais}
+\cfoot{\thepage}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{financas pessoais}
+
+\subsection*{Tipos de Exercícios}
+\begin{itemize}
+  \item \textbf{Tipo: Calculo Percentagens Financeiras} --- Exercícios do tipo calculo_percentagens_financeiras para o conceito financas_pessoais.
+\end{itemize}
+
+\vspace{1em}
+
+% Exercício 1: MAT_P1MODELO_FIN_CALC_001.tex
+% meta:
+% id: MAT_P1MODELO_FIN_CALC_001
+% title: "Percentagens em Finanças Pessoais: juros, impostos e orçamentos"
+% difficulty: "easy"
+% tags: "percentagens,financas_pessoais,juros,impostos,orcamento"
+% author: "Auto-generated"
+% created_at: 2025-11-20T11:30:00Z
+% version: 1
+\exercicio{
+Instruções: resolve cada item relacionado a finanças pessoais/familiares e escreve a resposta nos campos indicados.
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=12pt]
+\item Um depósito a prazo de 5\,000\,€ rende juros de 3{,}5\% ao ano. Quanto receberá ao final do ano? \\
+Resposta: \campoCents
+
+\item O salário mensal é 1\,800\,€. São deduzidos 15\% para impostos. Qual é o salário líquido? \\
+Resposta: \campoCents
+
+\item Uma família tem um orçamento mensal de 3\,000\,€. Gasta 25\% em habitação. Quanto gasta em habitação? \\
+Resposta: \campoCents
+
+\item Um investimento de 10\,000\,€ teve um retorno de 8\% no primeiro ano. Qual é o valor final do investimento? \\
+Resposta: \campoCents
+
+\item Os impostos sobre um rendimento de 25\,000\,€ ao ano são 20\%. Quanto paga em impostos? \\
+Resposta: \campoCents
+
+\item Uma conta poupança rende 2\% ao ano. Se depositar 2\,500\,€, quanto terá ao final do ano? \\
+Resposta: \campoCents
+
+\item Depois de um aumento de 10\% no salário, este passa a ser 2\,200\,€. Qual era o salário anterior? \\
+Resposta: \campoCents
+\end{enumerate}
+
+\vspace{3cm}
+}
+\FloatBarrier
+
+% Exercício 2: MAT_P1MODELO_FINA_CAL_001.tex
+% meta:
+% id: MAT_P1MODELO_FINA_CAL_001
+% tipo: Tipo: Calculo Percentagens Financeiras
+% author: Agent Generated
+% created_at: 2025-11-20T15:51:49.657357Z
+
+\section{Tipo: Calculo Percentagens Financeiras}
+
+\exercicio{
+Conteúdo do exercício aqui. Substitua com enunciado real.
+
+\vspace{3cm}
+}
+\FloatBarrier
+
+\end{document}

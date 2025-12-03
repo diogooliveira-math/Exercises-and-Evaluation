@@ -1,0 +1,9 @@
+{
+  "mode": "stage",
+  "discipline": "matematica",
+  "module": "P4_funcoes",
+  "concept": "1-generalidades_funcoes",
+  "tipo": "test_wrapper_integration",
+  "difficulty": "2",
+  "statement": "'Teste integração wrapper: classifique afirmações.'"
+}

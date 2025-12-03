@@ -1,96 +1,106 @@
-S% Template para geração automática de sebentas
-% Gerado automaticamente - NÃO EDITAR MANUALMENTE
-\documentclass[12pt,a4paper]{article}
-
-% Encoding e idioma
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[portuguese]{babel}
-
-% Matemática
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{mathtools}
-
-% Gráficos e figuras
-\usepackage{graphicx}
-\usepackage{tikz}
-\usetikzlibrary{calc,patterns,angles,quotes}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
-% Force float barriers when needed to keep figures right after exercises
-\usepackage{placeins}
-\usepackage{float}  % Para figure[H] - força figuras exatamente onde definidas
-
-% Layout e formatação
+\usepackage{lmodern}
 \usepackage{geometry}
-\geometry{a4paper,margin=2.5cm,top=3cm,bottom=3cm}
 \usepackage{fancyhdr}
-\usepackage{enumitem}
-\usepackage{multicol}
-\usepackage{booktabs}
-
-% Hyperlinks e referências
 \usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    urlcolor=blue,
-    citecolor=blue
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
 }
 
-% Sistema de exercícios - macros personalizadas
-\newcounter{exerciciocount}
-\newcounter{subexerciciocount}
-\newcounter{optioncount}
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
 
-\newcommand{\exercicio}[1][]{% 
-    \par\vspace{1.5em}%
-    \refstepcounter{exerciciocount}%
-    \setcounter{subexerciciocount}{0}%
-    \setcounter{optioncount}{0}%
-    \noindent\textbf{Exercício~\theexerciciocount.}%
-    \ifx&#1&%
-        % Argumento vazio - o conteúdo vem depois
-        \par\vspace{0.3em}%
-    \else%
-        % Argumento fornecido - incluir inline
-        \ #1\par\vspace{0.5em}%
-    \fi%
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
 }
 
-\newcommand{\subexercicio}[1]{%
-    \par\vspace{0.8em}%
-    \refstepcounter{subexerciciocount}%
-    \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
 }
 
-\newcommand{\option}[1]{%
-    \par
-    \refstepcounter{optioncount}%
-    \noindent(\alph{optioncount}) #1%
-}
-
-% Campos para respostas
-\newcommand{\campo}[1][2.0cm]{\makebox[#1]{\hrulefill}}
-\newcommand{\campoLetra}[1][1.2cm]{\makebox[#1]{\hrulefill}}
-\newcommand{\campoCents}[1][3.0cm]{\makebox[#1]{\hrulefill}}% Cabeçalho e rodapé
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{Módulo A9 - Funções de Crescimento}
-\fancyhead[R]{0 - revisoes}
-\fancyfoot[C]{\thepage}
+\lhead{Módulo A9 - Funções de Crescimento}
+\rhead{0 - revisoes}
+\cfoot{\thepage}
 
-% Metadados do documento
 \title{}
 \author{}
 \date{}
 
 \begin{document}
-
-% Remover título, autor e data - apenas conteúdo
-\thispagestyle{fancy}
+\maketitle
 
 \section*{0 - revisoes}
 
@@ -113,10 +123,28 @@ S% Template para geração automática de sebentas
 
 \exercicio{
 Uma família de 4 pessoas consome 2 kg de arroz por semana. Quantos kg de arroz serão necessários para uma família de 6 pessoas, mantendo a mesma proporção?
+
+\vspace{3cm}
 }
 \FloatBarrier
 
-% Exercício 2: MAT_A9FUNCRE_0REV_APL_001.tex
+% Exercício 2: MAT_A9FUNCOE_0RX_APX_002.tex
+% Exercise ID: MAT_A9FUNCOE_0RX_APX_002
+% Module: Módulo A9 - Funções de Crescimento | Concept: Revisões de Crescimento | Type: Aplicações Práticas
+% Difficulty: 5/5 (Muito Difícil) | Format: desenvolvimento
+% Tags: crescimento, proporcionalidade, contexto_real, percentagens, revisao, consolidacao, aplicacao_pratica, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para aplicacoes_praticas}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+\FloatBarrier
+
+% Exercício 3: MAT_A9FUNCRE_0REV_APL_001.tex
 % meta:
 % id: MAT_A9FUNCRE_0REV_APL_101
 % module: A9_funcoes_crescimento
@@ -137,10 +165,12 @@ Uma receita de bolo de iogurte para 2 pessoas usa:
   \item 3 ovos
 \end{itemize}
 Pretende-se ajustar para 12 pessoas. Indica as quantidades proporcionais.
+
+\vspace{3cm}
 }
 \FloatBarrier
 
-% Exercício 3: MAT_A9FUNCRE_0REV_APL_002.tex
+% Exercício 4: MAT_A9FUNCRE_0REV_APL_002.tex
 % meta:
 % id: MAT_A9FUNCRE_0REV_APL_102
 % module: A9_funcoes_crescimento
@@ -153,10 +183,12 @@ Pretende-se ajustar para 12 pessoas. Indica as quantidades proporcionais.
 % author: sistema
 \exercicio{
 O Clube A comprou um jogador por 13 milhões de euros, o que representa 18\% do seu orçamento anual. Determina o orçamento total e discute se a percentagem é sustentável face a uma segunda contratação igual.
+
+\vspace{3cm}
 }
 \FloatBarrier
 
-% Exercício 4: MAT_A9FUNCRES_0REV_003.tex
+% Exercício 5: MAT_A9FUNCRES_0REV_003.tex
 % meta:
 % id: MAT_A9FUNCRE_0REV_APL_001
 % module: A9_funcoes_crescimento
@@ -177,10 +209,12 @@ Uma receita de bolo de iogurte para 2 pessoas usa:
   \item 3 ovos
 \end{itemize}
 Pretende-se ajustar para 10 pessoas. Indica as quantidades proporcionais.
+
+\vspace{3cm}
 }
 \FloatBarrier
 
-% Exercício 5: MAT_A9FUNCRES_0REV_004.tex
+% Exercício 6: MAT_A9FUNCRES_0REV_004.tex
 % meta:
 % id: MAT_A9FUNCRE_0REV_APL_002
 % module: A9_funcoes_crescimento
@@ -193,10 +227,12 @@ Pretende-se ajustar para 10 pessoas. Indica as quantidades proporcionais.
 % author: sistema
 \exercicio{
 O Clube A comprou um jogador por 12 milhões de euros, o que representa 20\% do seu orçamento anual. Determina o orçamento total e discute se a percentagem é sustentável face a uma segunda contratação igual.
+
+\vspace{3cm}
 }
 \FloatBarrier
 
-% Exercício 6: MAT_A9FUNCRE_0REV_CAL_001.tex
+% Exercício 7: MAT_A9FUNCRE_0REV_CAL_001.tex
 % meta:
 % id: MAT_A9FUNCRE_0REV_CAL_103
 % module: A9_funcoes_crescimento
@@ -211,12 +247,17 @@ O Clube A comprou um jogador por 12 milhões de euros, o que representa 20\% do 
 Considera a função $f(x)=2x-4$.
 \begin{itemize}
   \item[a)] Calcula $f(0)$, $f(2)$ e $f(5)$.
+  
+  \vspace{3cm}
+  
   \item[b)] Qual é o valor de $x$ tal que $f(x)=1$?
 \end{itemize}
+
+\vspace{3cm}
 }
 \FloatBarrier
 
-% Exercício 7: MAT_A9FUNCRES_0REV_002.tex
+% Exercício 8: MAT_A9FUNCRES_0REV_002.tex
 % meta:
 % id: MAT_A9FUNCRE_0REV_CAL_001
 % module: A9_funcoes_crescimento
@@ -231,12 +272,74 @@ Considera a função $f(x)=2x-4$.
 Considera a função $f(x)=2x-3$.
 \begin{itemize}
   \item[a)] Calcula $f(0)$, $f(2)$ e $f(5)$.
+  \vspace{3cm}
   \item[b)] Qual é o valor de $x$ tal que $f(x)=1$?
 \end{itemize}
+
+\vspace{3cm}
 }
 \FloatBarrier
 
-% Exercício 8: MAT_A9FUNCRE_0REV_CFU_001.tex
+% Exercício 9: MAT_A9FUNCOE_0RX_CFX_001.tex
+% Exercise ID: MAT_A9FUNCOE_0RX_CFX_001
+% Module: Módulo A9 - Funções de Crescimento | Concept: Revisões de Crescimento | Type: Conceito de Função
+% Difficulty: 1/5 (Muito Fácil) | Format: desenvolvimento
+% Tags: correspondencia, definicao, conceito_funcao, consolidacao, crescimento, revisao, verificacao, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para conceito_funcao}
+\FloatBarrier
+
+% Exercício 10: MAT_A9FUNCOE_0RX_CFX_002.tex
+% Exercise ID: MAT_A9FUNCOE_0RX_CFX_002
+% Module: Módulo A9 - Funções de Crescimento | Concept: Revisões de Crescimento | Type: Conceito de Função
+% Difficulty: 1/5 (Muito Fácil) | Format: desenvolvimento
+% Tags: conceito_funcao, consolidacao, revisao, crescimento, correspondencia, definicao, verificacao, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para conceito_funcao}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+\FloatBarrier
+
+% Exercício 11: MAT_A9FUNCOE_0RX_CFX_003.tex
+% Exercise ID: MAT_A9FUNCOE_0RX_CFX_003
+% Module: Módulo A9 - Funções de Crescimento | Concept: Revisões de Crescimento | Type: Conceito de Função
+% Difficulty: 3/5 (Médio) | Format: desenvolvimento
+% Tags: consolidacao, conceito_funcao, revisao, correspondencia, crescimento, verificacao, definicao, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para conceito_funcao}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+\FloatBarrier
+
+% Exercício 12: MAT_A9FUNCOE_0RX_CFX_004.tex
+% Exercise ID: MAT_A9FUNCOE_0RX_CFX_004
+% Module: Módulo A9 - Funções de Crescimento | Concept: Revisões de Crescimento | Type: Conceito de Função
+% Difficulty: 5/5 (Muito Difícil) | Format: desenvolvimento
+% Tags: verificacao, crescimento, definicao, conceito_funcao, consolidacao, revisao, correspondencia, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para conceito_funcao}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+\FloatBarrier
+
+% Exercício 13: MAT_A9FUNCRE_0REV_CFU_001.tex
 % meta:
 % id: MAT_A9FUNCRE_0REV_CFU_001
 % module: A9_funcoes_crescimento
@@ -268,10 +371,11 @@ Considera a correspondência seguinte entre pessoas e o número de sapatos que c
  \item[(C)] Não é uma função, porque Bruno e David calçam o mesmo número.
  \item[(D)] Não é uma função, porque há números repetidos na segunda coluna.
 \end{enumerate}
+
 }
 \FloatBarrier
 
-% Exercício 9: MAT_A9FUNCRES_0REV_001.tex
+% Exercício 14: MAT_A9FUNCRES_0REV_001.tex
 % meta:
 % id: MAT_A9FUNCRE_0REV_CFU_001
 % module: A9_funcoes_crescimento
@@ -288,8 +392,8 @@ Considera a correspondência seguinte entre pessoas e o número de sapatos que c
 \begin{array}{c|c}
 \text{Pessoa} & \text{Número de sapatos que calça} \\
 \hline
-\text{Ana} & 37 \\
-\text{Bruno} & 42 \\
+\text{Ana} & 50 \\
+\text{Bruno} & 20 \\
 \text{Carla} & 39 \\
 \text{David} & 42 \\
 \end{array}
@@ -303,6 +407,5 @@ Considera a correspondência seguinte entre pessoas e o número de sapatos que c
 \end{enumerate}
 }
 \FloatBarrier
-
 
 \end{document}

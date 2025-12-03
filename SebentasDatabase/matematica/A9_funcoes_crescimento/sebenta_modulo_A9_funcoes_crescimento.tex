@@ -1,0 +1,832 @@
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
+}
+
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
+
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Módulo A9 - Funções de Crescimento}
+\rhead{}
+\cfoot{\thepage}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Módulo A9 - Funções de Crescimento}
+
+\textit{Revisões iniciais e estudo de funções exponenciais de crescimento e decaimento}
+
+\vspace{1em}
+
+Este documento contém todos os exercícios do módulo, organizados por conceito.
+
+\tableofcontents
+\newpage
+
+\section{0 - revisoes}
+
+% Exercise ID: MAT_A9FUNCOE_0RX_APX_001
+% Module: Módulo A9 - Funções de Crescimento | Concept: Revisões de Crescimento | Type: Aplicações Práticas
+% Difficulty: 1/5 (Muito Fácil) | Format: desenvolvimento
+% Tags: crescimento, aplicacao_pratica, contexto_real, consolidacao, revisao, proporcionalidade, percentagens
+% Author: Professor | Date: 2025-11-20
+% Status: active
+
+\exercicio{
+Uma família de 4 pessoas consome 2 kg de arroz por semana. Quantos kg de arroz serão necessários para uma família de 6 pessoas, mantendo a mesma proporção?
+
+\vspace{3cm}
+}
+
+\FloatBarrier
+
+% Exercise ID: MAT_A9FUNCOE_0RX_APX_002
+% Module: Módulo A9 - Funções de Crescimento | Concept: Revisões de Crescimento | Type: Aplicações Práticas
+% Difficulty: 5/5 (Muito Difícil) | Format: desenvolvimento
+% Tags: crescimento, proporcionalidade, contexto_real, percentagens, revisao, consolidacao, aplicacao_pratica, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para aplicacoes_praticas}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_0REV_APL_101
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: aplicacoes_praticas
+% tipo_nome: Aplicações Práticas
+% difficulty: 2
+% tags: revisao,proporcionalidade,aplicacao_pratica
+% author: sistema
+\exercicio{
+Uma receita de bolo de iogurte para 2 pessoas usa:
+\begin{itemize}
+  \item 1 iogurte natural
+  \item 2 copos de açúcar
+  \item 3 copos de farinha
+  \item $\frac{1}{2}$ copo de óleo
+  \item 3 ovos
+\end{itemize}
+Pretende-se ajustar para 12 pessoas. Indica as quantidades proporcionais.
+
+\vspace{3cm}
+}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_0REV_APL_102
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: aplicacoes_praticas
+% tipo_nome: Aplicações Práticas
+% difficulty: 2
+% tags: revisao,percentagens,aplicacao_pratica
+% author: sistema
+\exercicio{
+O Clube A comprou um jogador por 13 milhões de euros, o que representa 18\% do seu orçamento anual. Determina o orçamento total e discute se a percentagem é sustentável face a uma segunda contratação igual.
+
+\vspace{3cm}
+}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_0REV_APL_001
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: aplicacoes_praticas
+% tipo_nome: Aplicações Práticas
+% difficulty: 2
+% tags: revisao,proporcionalidade,aplicacao_pratica
+% author: sistema
+\exercicio{
+Uma receita de bolo de iogurte para 2 pessoas usa:
+\begin{itemize}
+  \item 1 iogurte natural
+  \item 2 copos de açúcar
+  \item 3 copos de farinha
+  \item $\frac{1}{2}$ copo de óleo
+  \item 3 ovos
+\end{itemize}
+Pretende-se ajustar para 10 pessoas. Indica as quantidades proporcionais.
+
+\vspace{3cm}
+}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_0REV_APL_002
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: aplicacoes_praticas
+% tipo_nome: Aplicações Práticas
+% difficulty: 2
+% tags: revisao,percentagens,aplicacao_pratica
+% author: sistema
+\exercicio{
+O Clube A comprou um jogador por 12 milhões de euros, o que representa 20\% do seu orçamento anual. Determina o orçamento total e discute se a percentagem é sustentável face a uma segunda contratação igual.
+
+\vspace{3cm}
+}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_0REV_CAL_103
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: calculo_funcoes
+% tipo_nome: Cálculo com Funções
+% difficulty: 2
+% tags: revisao,funcoes,calculo_imagens
+% author: sistema
+\exercicio{
+Considera a função $f(x)=2x-4$.
+\begin{itemize}
+  \item[a)] Calcula $f(0)$, $f(2)$ e $f(5)$.
+  
+  \vspace{3cm}
+  
+  \item[b)] Qual é o valor de $x$ tal que $f(x)=1$?
+\end{itemize}
+
+\vspace{3cm}
+}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_0REV_CAL_001
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: calculo_funcoes
+% tipo_nome: Cálculo com Funções
+% difficulty: 2
+% tags: revisao,funcoes,calculo_imagens
+% author: sistema
+\exercicio{
+Considera a função $f(x)=2x-3$.
+\begin{itemize}
+  \item[a)] Calcula $f(0)$, $f(2)$ e $f(5)$.
+  \vspace{3cm}
+  \item[b)] Qual é o valor de $x$ tal que $f(x)=1$?
+\end{itemize}
+
+\vspace{3cm}
+}
+
+\FloatBarrier
+
+% Exercise ID: MAT_A9FUNCOE_0RX_CFX_001
+% Module: Módulo A9 - Funções de Crescimento | Concept: Revisões de Crescimento | Type: Conceito de Função
+% Difficulty: 1/5 (Muito Fácil) | Format: desenvolvimento
+% Tags: correspondencia, definicao, conceito_funcao, consolidacao, crescimento, revisao, verificacao, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para conceito_funcao}
+
+\FloatBarrier
+
+% Exercise ID: MAT_A9FUNCOE_0RX_CFX_002
+% Module: Módulo A9 - Funções de Crescimento | Concept: Revisões de Crescimento | Type: Conceito de Função
+% Difficulty: 1/5 (Muito Fácil) | Format: desenvolvimento
+% Tags: conceito_funcao, consolidacao, revisao, crescimento, correspondencia, definicao, verificacao, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para conceito_funcao}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+
+\FloatBarrier
+
+% Exercise ID: MAT_A9FUNCOE_0RX_CFX_003
+% Module: Módulo A9 - Funções de Crescimento | Concept: Revisões de Crescimento | Type: Conceito de Função
+% Difficulty: 3/5 (Médio) | Format: desenvolvimento
+% Tags: consolidacao, conceito_funcao, revisao, correspondencia, crescimento, verificacao, definicao, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para conceito_funcao}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+
+\FloatBarrier
+
+% Exercise ID: MAT_A9FUNCOE_0RX_CFX_004
+% Module: Módulo A9 - Funções de Crescimento | Concept: Revisões de Crescimento | Type: Conceito de Função
+% Difficulty: 5/5 (Muito Difícil) | Format: desenvolvimento
+% Tags: verificacao, crescimento, definicao, conceito_funcao, consolidacao, revisao, correspondencia, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para conceito_funcao}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_0REV_CFU_001
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: conceito_funcao
+% tipo_nome: Conceito de Função
+% difficulty: 2
+% tags: revisao,funcoes,conceito_funcao
+% author: sistema
+\exercicio{
+Considera a correspondência seguinte entre pessoas e o número de sapatos que calçam:
+\[
+\begin{tabular}{|c|c|}
+\hline
+\text{Pessoa} & \text{Número de sapatos que calça} \\
+\hline
+\text{Ana} & 37 \\
+\text{Bruno} & 42 \\
+\text{Carla} & 39 \\
+\text{David} & 42 \\
+\hline
+\end{tabular}
+\]
+\textbf{Pergunta:} Esta correspondência é uma função? Justifica escolhendo a opção correta e explicando por que as outras estão erradas.
+\begin{enumerate}
+ \item[(A)] Não é uma função, porque o número 42 aparece duas vezes.
+ \item[(B)] É uma função, porque cada pessoa está associada a um único número.
+ \item[(C)] Não é uma função, porque Bruno e David calçam o mesmo número.
+ \item[(D)] Não é uma função, porque há números repetidos na segunda coluna.
+\end{enumerate}
+
+}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_0REV_CFU_001
+% module: A9_funcoes_crescimento
+% concept: 0-revisoes
+% concept_name: Revisões de Crescimento
+% tipo: conceito_funcao
+% tipo_nome: Conceito de Função
+% difficulty: 2
+% tags: revisao,funcoes,conceito_funcao
+% author: sistema
+\exercicio{
+Considera a correspondência seguinte entre pessoas e o número de sapatos que calçam:
+\[
+\begin{array}{c|c}
+\text{Pessoa} & \text{Número de sapatos que calça} \\
+\hline
+\text{Ana} & 50 \\
+\text{Bruno} & 20 \\
+\text{Carla} & 39 \\
+\text{David} & 42 \\
+\end{array}
+\]
+\textbf{Pergunta:} Esta correspondência é uma função? Justifica escolhendo a opção correta e explicando por que as outras estão erradas.
+\begin{enumerate}
+ \item[(A)] Não é uma função, porque o número 42 aparece duas vezes.
+ \item[(B)] É uma função, porque cada pessoa está associada a um único número.
+ \item[(C)] Não é uma função, porque Bruno e David calçam o mesmo número.
+ \item[(D)] Não é uma função, porque há números repetidos na segunda coluna.
+\end{enumerate}
+}
+
+\FloatBarrier
+
+
+\newpage
+
+\section{1 - exponenciais}
+
+% meta:
+% id: MAT_A9FUNCRE_1EXP_CBA_105
+% module: A9_funcoes_crescimento
+% concept: 1-exponenciais
+% concept_name: Funções Exponenciais
+% tipo: crescimento_bacterias
+% tipo_nome: Crescimento de Bactérias
+% difficulty: 3
+% tags: crescimento_exponencial,bacterias,modelo_continuo,exponenciais
+% author: sistema
+\exercicio{
+Uma cultura segue $n(t)=n_0 e^{kt}$. Inicialmente 400 bactérias; após 2 h triplicou.
+\begin{enumerate}
+  \item Determina $n_0$ e $k$.
+  
+\vspace{3cm}
+
+  \item Estima $n(4)$.
+  
+  \vspace{3cm}
+  
+  \item Esboça o gráfico e interpreta três pontos.
+  
+    \begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-0.5,0) -- (10,0) node[right] {$t$};
+    \draw[->] (0,-0.5) -- (0,6) node[above] {$C(t)$};
+    \foreach \x in {1,2,...,9}
+      \draw (\x,0.1) -- (\x,-0.1);
+    \foreach \y in {1,2,...,5}
+      \draw (0.1,\y) -- (-0.1,\y);
+  \end{tikzpicture}
+  \end{center}
+
+  \item Cria um novo problema semelhante e resolve.
+  
+  \vspace{3cm}
+\end{enumerate}
+
+}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_1EXP_CBA_106
+% module: A9_funcoes_crescimento
+% concept: 1-exponenciais
+% concept_name: Funções Exponenciais
+% tipo: crescimento_bacterias
+% tipo_nome: Crescimento de Bactérias
+% difficulty: 3
+% tags: crescimento_exponencial,bacterias,exponenciais,modelacao
+% author: sistema
+\exercicio{
+Número de bactérias: $f(t)=300\times 4^{t/3}$ para $t$ horas após 6h.
+\begin{enumerate}
+  \item Calcula número às 7h e às 10h.
+  
+  \vspace{3cm}
+  \item Determina tempo até 4800 bactérias (horas e minutos).
+  \vspace{3cm}
+  \item Esboça o gráfico e interpreta três pontos.
+    \begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-0.5,0) -- (10,0) node[right] {$t$};
+    \draw[->] (0,-0.5) -- (0,6) node[above] {$C(t)$};
+    \foreach \x in {1,2,...,9}
+      \draw (\x,0.1) -- (\x,-0.1);
+    \foreach \y in {1,2,...,5}
+      \draw (0.1,\y) -- (-0.1,\y);
+  \end{tikzpicture}
+  \end{center}
+  \item Cria um problema adicional de crescimento e resolve.
+  \vspace{3cm}
+\end{enumerate}
+
+\vspace{3cm}
+}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_1EXP_CBA_001
+% module: A9_funcoes_crescimento
+% concept: 1-exponenciais
+% concept_name: Funções Exponenciais
+% tipo: crescimento_bacterias
+% tipo_nome: Crescimento de Bactérias
+% difficulty: 3
+% tags: crescimento_exponencial,bacterias,modelo_continuo,exponenciais
+% author: sistema
+\exercicio{
+Uma cultura segue $n(t)=n_0 e^{kt}$. Inicialmente 800 bactérias; após 4 h quadruplicou.
+\begin{enumerate}
+  \item Determina $n_0$ e $k$.
+  \vspace{3cm}
+  \item Estima $n(6)$.
+  \vspace{3cm}
+  \item Esboça o gráfico e interpreta três pontos.
+    \begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-0.5,0) -- (10,0) node[right] {$t$};
+    \draw[->] (0,-0.5) -- (0,6) node[above] {$C(t)$};
+    \foreach \x in {1,2,...,9}
+      \draw (\x,0.1) -- (\x,-0.1);
+    \foreach \y in {1,2,...,5}
+      \draw (0.1,\y) -- (-0.1,\y);
+  \end{tikzpicture}
+  \end{center}
+  \item Cria um novo problema semelhante e resolve.
+  \vspace{3cm}
+\end{enumerate}
+
+\vspace{3cm}
+}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_1EXP_CBA_002
+% module: A9_funcoes_crescimento
+% concept: 1-exponenciais
+% concept_name: Funções Exponenciais
+% tipo: crescimento_bacterias
+% tipo_nome: Crescimento de Bactérias
+% difficulty: 3
+% tags: crescimento_exponencial,bacterias,exponenciais,modelacao
+% author: sistema
+\exercicio{
+Número de bactérias: $f(t)=600\times 5^{t/4}$ para $t$ horas após 8h.
+\begin{enumerate}
+  \item Calcula número às 9h e às 12h.
+  \vspace{3cm}
+  \item Determina tempo até 15000 bactérias (horas e minutos).
+  \vspace{3cm}
+  \item Esboça o gráfico e interpreta três pontos.
+  \vspace{3cm}
+  \item Cria um problema adicional de crescimento e resolve.
+  \vspace{3cm}
+\end{enumerate}
+
+\vspace{3cm}
+}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_1EXP_CPO_107
+% module: A9_funcoes_crescimento
+% concept: 1-exponenciais
+% concept_name: Funções Exponenciais
+% tipo: crescimento_populacional
+% tipo_nome: Crescimento Populacional
+% difficulty: 3
+% tags: crescimento_exponencial,modelacao,exponenciais,populacao
+% author: sistema
+\exercicio{
+Numa reserva natural, a população de coelhos evolui segundo: $C(t)=520\times 1,1^t$, onde $t$ (anos) desde 1998.
+\textbf{Tarefas:}
+\begin{enumerate}
+  \item Representa graficamente $C(t)$ (esboço qualitativo).
+  
+  \begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-0.5,0) -- (10,0) node[right] {$t$};
+    \draw[->] (0,-0.5) -- (0,6) node[above] {$C(t)$};
+    \foreach \x in {1,2,...,9}
+      \draw (\x,0.1) -- (\x,-0.1);
+    \foreach \y in {1,2,...,5}
+      \draw (0.1,\y) -- (-0.1,\y);
+  \end{tikzpicture}
+  \end{center}
+  
+  \item Indica se o gráfico é crescente ou decrescente e interpreta.
+  \vspace{3cm}
+  \item Escolhe três pontos e explica o significado.
+  \vspace{3cm}
+  {\renewcommand{\labelenumii}{(\alph{enumii})}
+  \begin{enumerate}
+    \item Determina \(C(0)\) e \(C(1)\) e interpreta os resultados.
+    \vspace{2cm}
+    \item Calcula a taxa de crescimento relativa anual e comenta a sua implicação para a população.
+    \vspace{2cm}
+  \end{enumerate}
+  }
+  \vspace{3cm}
+  \item Cria um problema novo de crescimento exponencial e resolve-o.
+  \vspace{3cm}
+\end{enumerate}
+}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_1EXP_CPO_001
+% module: A9_funcoes_crescimento
+% concept: 1-exponenciais
+% concept_name: Funções Exponenciais
+% tipo: crescimento_populacional
+% tipo_nome: Crescimento Populacional
+% difficulty: 3
+% tags: crescimento_exponencial,modelacao,exponenciais,populacao
+% author: sistema
+\exercicio{
+Numa reserva natural, a população de veados evolui segundo: $D(t)=300\times 1,2^t$, onde $t$ (anos) desde 2000.
+\textbf{Tarefas:}
+\begin{enumerate}
+  \item Representa graficamente $D(t)$ (esboço qualitativo).
+  
+  \begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-0.5,0) -- (10,0) node[right] {$t$};
+    \draw[->] (0,-0.5) -- (0,6) node[above] {$D(t)$};
+    \foreach \x in {1,2,...,9}
+      \draw (\x,0.1) -- (\x,-0.1);
+    \foreach \y in {1,2,...,5}
+      \draw (0.1,\y) -- (-0.1,\y);
+  \end{tikzpicture}
+  \end{center}
+  
+  \item Indica se o gráfico é crescente ou decrescente e interpreta.
+  \vspace{3cm}
+  \item Escolhe três pontos e explica o significado.
+  \vspace{3cm}
+  \item Calcula:
+  {\renewcommand{\labelenumii}{(\alph{enumenumii})}
+  \begin{enumerate}
+    \item Determina \(D(0)\).
+    \vspace{2cm}
+    \item Calcula o ano em que se atingem 800 veados (ano e mês).
+    \vspace{2cm}
+  \end{enumerate}
+  }
+  \vspace{3cm}
+  \item Cria um problema novo de crescimento exponencial e resolve-o.
+  \vspace{3cm}
+\end{enumerate}
+}
+
+\FloatBarrier
+
+% Exercise ID: MAT_A9FUNCOE_1EX_DMX_001
+% Module: Módulo A9 - Funções de Crescimento | Concept: Funções Exponenciais | Type: Decaimento de Medicamento
+% Difficulty: 1/5 (Muito Fácil) | Format: desenvolvimento
+% Tags: decaimento, medicamento, farmacologia, crescimento, decaimento_exponencial, modelacao, exponencial, opencode_test, terminal
+% Author: opencode-terminal-tester | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para decaimento_medicamento}
+
+% Solution:
+% \begin{solucao}
+% Solução exemplo
+% \end{solucao}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_1EXP_DME_108
+% module: A9_funcoes_crescimento
+% concept: 1-exponenciais
+% concept_name: Funções Exponenciais
+% tipo: decaimento_medicamento
+% tipo_nome: Decaimento de Medicamento
+% difficulty: 3
+% tags: decaimento_exponencial,medicamento,exponenciais,modelacao
+% author: sistema
+\exercicio{
+A concentração de um medicamento: $C(t)=480\times 0,987^t$ (mg/cm$^3$) após $t$ minutos.
+\begin{enumerate}
+  \item Esboça o gráfico e descreve a tendência.
+    \begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-0.5,0) -- (10,0) node[right] {$t$};
+    \draw[->] (0,-0.5) -- (0,6) node[above] {$C(t)$};
+    \foreach \x in {1,2,...,9}
+      \draw (\x,0.1) -- (\x,-0.1);
+    \foreach \y in {1,2,...,5}
+      \draw (0.1,\y) -- (-0.1,\y);
+  \end{tikzpicture}
+  \end{center}
+  \item Interpreta três pontos do gráfico.
+  \vspace{3cm}
+  \item Cria e resolve um novo problema de decaimento exponencial.
+  \vspace{3cm}
+\end{enumerate}
+}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_1EXP_DME_001
+% module: A9_funcoes_crescimento
+% concept: 1-exponenciais
+% concept_name: Funções Exponenciais
+% tipo: decaimento_medicamento
+% tipo_nome: Decaimento de Medicamento
+% difficulty: 3
+% tags: decaimento_exponencial,medicamento,exponenciais,modelacao
+% author: sistema
+\exercicio{
+A concentração de um medicamento: $C(t)=600\times 0,95^t$ (mg/cm$^3$) após $t$ minutos.
+\begin{enumerate}
+  \item Esboça o gráfico e descreve a tendência.
+    \begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-0.5,0) -- (10,0) node[right] {$t$};
+    \draw[->] (0,-0.5) -- (0,6) node[above] {$C(t)$};
+    \foreach \x in {1,2,...,9}
+      \draw (\x,0.1) -- (\x,-0.1);
+    \foreach \y in {1,2,...,5}
+      \draw (0.1,\y) -- (-0.1,\y);
+  \end{tikzpicture}
+  \end{center}
+  \item Interpreta três pontos do gráfico.
+  \vspace{3cm}
+  \item Cria e resolve um novo problema de decaimento exponencial.
+  \vspace{3cm}
+\end{enumerate}
+}
+
+\FloatBarrier
+
+% Exercise ID: MAT_A9FUNCOE_1EX_DVX_001
+% Module: Módulo A9 - Funções de Crescimento | Concept: Funções Exponenciais | Type: Depreciação de Valor
+% Difficulty: 4/5 (Difícil) | Format: desenvolvimento
+% Tags: financeiro, depreciacao, decaimento_exponencial, decaimento, crescimento, exponencial, modelacao, valor_comercial, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para depreciacao_valor}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_1EXP_DPR_109
+% module: A9_funcoes_crescimento
+% concept: 1-exponenciais
+% concept_name: Funções Exponenciais
+% tipo: depreciacao_valor
+% tipo_nome: Depreciação de Valor
+% difficulty: 3
+% tags: decaimento_exponencial,valor_comercial,financeiro,exponenciais
+% author: sistema
+\exercicio{
+Valor de um automóvel: $f(t)=20500(0,81)^t$ (euros) após $t$ anos.
+\begin{enumerate}
+  \item Estima valor aos 15 meses.
+  \vspace{3cm}
+  \item Determina quando $f(t)<5000$.
+  \vspace{3cm}
+  \item Calcula percentagem de desvalorização anual.
+  \vspace{3cm}
+  \item Esboça o gráfico e interpreta três pontos.
+    \begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-0.5,0) -- (10,0) node[right] {$t$};
+    \draw[->] (0,-0.5) -- (0,6) node[above] {$C(t)$};
+    \foreach \x in {1,2,...,9}
+      \draw (\x,0.1) -- (\x,-0.1);
+    \foreach \y in {1,2,...,5}
+      \draw (0.1,\y) -- (-0.1,\y);
+  \end{tikzpicture}
+  \end{center}
+\end{enumerate}
+}
+
+\FloatBarrier
+
+% meta:
+% id: MAT_A9FUNCRE_1EXP_DPR_001
+% module: A9_funcoes_crescimento
+% concept: 1-exponenciais
+% concept_name: Funções Exponenciais
+% tipo: depreciacao_valor
+% tipo_nome: Depreciação de Valor
+% difficulty: 3
+% tags: decaimento_exponencial,valor_comercial,financeiro,exponenciais
+% author: sistema
+\exercicio{
+Valor de um automóvel: $f(t)=18000(0,85)^t$ (euros) após $t$ anos.
+\begin{enumerate}
+  \item Estima valor aos 18 meses.
+  \vspace{3cm}
+  \item Determina quando $f(t)<4000$.
+  \vspace{3cm}
+  \item Calcula percentagem de desvalorização anual.
+  \vspace{3cm}
+  \item Esboça o gráfico e interpreta três pontos.
+    \begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-0.5,0) -- (10,0) node[right] {$t$};
+    \draw[->] (0,-0.5) -- (0,6) node[above] {$C(t)$};
+    \foreach \x in {1,2,...,9}
+      \draw (\x,0.1) -- (\x,-0.1);
+    \foreach \y in {1,2,...,5}
+      \draw (0.1,\y) -- (-0.1,\y);
+  \end{tikzpicture}
+  \end{center}
+\end{enumerate}
+}
+
+\FloatBarrier
+
+
+\newpage
+
+
+\end{document}

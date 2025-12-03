@@ -1,13 +1,13 @@
 {
   "database_version": "3.0",
-  "last_updated": "2025-11-28T15:24:24.077399",
-  "total_exercises": 251,
+  "last_updated": "2025-12-02T16:36:23.106154",
+  "total_exercises": 266,
   "statistics": {
     "by_module": {
-      "P4_funcoes": 39,
+      "P4_funcoes": 40,
       "A9_funcoes_crescimento": 16,
       "unknown": 9,
-      "A8_modelos_discretos": 44,
+      "A8_modelos_discretos": 48,
       "P2_estatistica": 9,
       "A12_otimizacao": 6,
       "P1_modelos_matematicos_para_a_cidadania": 6,
@@ -21,7 +21,7 @@
       "Revisões de Crescimento": 9,
       "Funções Exponenciais": 7,
       "unknown": 9,
-      "Sistemas Numéricos": 44,
+      "Sistemas Numéricos": 48,
       "Revisões Iniciais, inserindo manipulação de dados, tomando partido da regra de três simples e percentagens.": 3,
       "Estudo da Monotonia com Derivadas": 5,
       "2-Variabilidade": 1,
@@ -33,7 +33,7 @@
       "Eventos e Espaço Amostral": 1
     },
     "by_difficulty": {
-      "Fácil": 78,
+      "Fácil": 82,
       "Médio": 15,
       "Desconhecido": 9,
       "Muito Fácil": 9,
@@ -46,8 +46,8 @@
       "Determinação Analítica da Função Inversa": 5,
       "Determinação Gráfica da Função Inversa": 1,
       "Teste da Reta Horizontal": 1,
-      "Números Figurados Test": 17,
-      "Números Figurados": 24,
+      "Números Figurados Test": 19,
+      "Números Figurados": 26,
       "Análise de Tabelas Eleitorais": 1,
       "Estatística Aplicada à Poupança": 1,
       "Conceito de Função": 4,
@@ -67,12 +67,15 @@
       "simples": 1
     },
     "by_discipline": {
-      "matematica": 110,
+      "matematica": 115,
       "unknown": 17
     },
     "by_format": {
-      "standard": 49,
+      "standard": 53,
       "desenvolvimento": 26
+    },
+    "by_project_status": {
+      "active": 8
     }
   },
   "exercises": [
@@ -4018,6 +4021,244 @@
       "concept": "1-transferencia",
       "tipo": "aplicacao_clinica",
       "difficulty": 2,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1GX_ICX_042",
+      "path": "matematica/P4_funcoes/1-generalidades_funcoes/interpretacao_contexto/MAT_P4FUNCOE_1GX_ICX_042.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "concept": "1-generalidades_funcoes",
+      "tipo": "interpretacao_contexto",
+      "difficulty": 2,
+      "status": "active"
+    },
+    {
+      "id": "MAT_MODULOIN_CXX_ICX_013",
+      "path": "matematica/MODULO_INEXISTENTE/CONCEITO_INEXISTENTE/interpretacao_contexto/MAT_MODULOIN_CXX_ICX_013.tex",
+      "discipline": "matematica",
+      "module": "MODULO_INEXISTENTE",
+      "concept": "CONCEITO_INEXISTENTE",
+      "tipo": "interpretacao_contexto",
+      "difficulty": 2,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1GX_ICX_043",
+      "path": "matematica/P4_funcoes/1-generalidades_funcoes/interpretacao_contexto/MAT_P4FUNCOE_1GX_ICX_043.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "concept": "1-generalidades_funcoes",
+      "tipo": "interpretacao_contexto",
+      "difficulty": 2,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1GX_ICX_044",
+      "path": "matematica/P4_funcoes/1-generalidades_funcoes/interpretacao_contexto/MAT_P4FUNCOE_1GX_ICX_044.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "concept": "1-generalidades_funcoes",
+      "tipo": "interpretacao_contexto",
+      "difficulty": 2,
+      "status": "active"
+    },
+    {
+      "id": "MAT_A8MODELO_1SX_NFT_001",
+      "path": "matematica/A8_modelos_discretos/1-sistemas_numericos/numeros_figurados_test/MAT_A8MODELO_1SX_NFT_001.tex",
+      "discipline": "matematica",
+      "module": "A8_modelos_discretos",
+      "module_name": "Módulo A8 - Modelos Discretos",
+      "concept": "1-sistemas_numericos",
+      "concept_name": "Sistemas Numéricos",
+      "tipo": "numeros_figurados_test",
+      "tipo_nome": "Números Figurados Test",
+      "difficulty": 2,
+      "format": "standard",
+      "tags": [
+        "decimal",
+        "sequencias",
+        "binario",
+        "teste",
+        "sistemas_numericos",
+        "numeros",
+        "hexadecimal"
+      ],
+      "points": 0,
+      "status": "active"
+    },
+    {
+      "id": "MAT_A8MODELO_1SX_NFX_012",
+      "path": "matematica/A8_modelos_discretos/1-sistemas_numericos/numeros_figurados/MAT_A8MODELO_1SX_NFX_012.tex",
+      "discipline": "matematica",
+      "module": "A8_modelos_discretos",
+      "module_name": "Módulo A8 - Modelos Discretos",
+      "concept": "1-sistemas_numericos",
+      "concept_name": "Sistemas Numéricos",
+      "tipo": "numeros_figurados",
+      "tipo_nome": "Números Figurados",
+      "difficulty": 2,
+      "format": "standard",
+      "tags": [
+        "decimal",
+        "sequencias",
+        "binario",
+        "sistemas_numericos",
+        "hexadecimal"
+      ],
+      "points": 0,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1GX_ICX_045",
+      "path": "matematica/P4_funcoes/1-generalidades_funcoes/interpretacao_contexto/MAT_P4FUNCOE_1GX_ICX_045.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "concept": "1-generalidades_funcoes",
+      "tipo": "interpretacao_contexto",
+      "difficulty": 2,
+      "status": "active"
+    },
+    {
+      "id": "MAT_MODULOIN_CXX_ICX_014",
+      "path": "matematica/MODULO_INEXISTENTE/CONCEITO_INEXISTENTE/interpretacao_contexto/MAT_MODULOIN_CXX_ICX_014.tex",
+      "discipline": "matematica",
+      "module": "MODULO_INEXISTENTE",
+      "concept": "CONCEITO_INEXISTENTE",
+      "tipo": "interpretacao_contexto",
+      "difficulty": 2,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1GX_ICX_046",
+      "path": "matematica/P4_funcoes/1-generalidades_funcoes/interpretacao_contexto/MAT_P4FUNCOE_1GX_ICX_046.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "concept": "1-generalidades_funcoes",
+      "tipo": "interpretacao_contexto",
+      "difficulty": 2,
+      "status": "active"
+    },
+    {
+      "id": "MAT_P4FUNCOE_1GX_ICX_047",
+      "path": "matematica/P4_funcoes/1-generalidades_funcoes/interpretacao_contexto/MAT_P4FUNCOE_1GX_ICX_047.tex",
+      "discipline": "matematica",
+      "module": "P4_funcoes",
+      "concept": "1-generalidades_funcoes",
+      "tipo": "interpretacao_contexto",
+      "difficulty": 2,
+      "status": "active"
+    },
+    {
+      "id": "MAT_A8MODELO_1SX_NFT_001",
+      "path": "matematica/A8_modelos_discretos/1-sistemas_numericos/numeros_figurados_test/MAT_A8MODELO_1SX_NFT_001.tex",
+      "discipline": "matematica",
+      "module": "A8_modelos_discretos",
+      "module_name": "Módulo A8 - Modelos Discretos",
+      "concept": "1-sistemas_numericos",
+      "concept_name": "Sistemas Numéricos",
+      "tipo": "numeros_figurados_test",
+      "tipo_nome": "Números Figurados Test",
+      "difficulty": 2,
+      "format": "standard",
+      "tags": [
+        "binario",
+        "decimal",
+        "teste",
+        "hexadecimal",
+        "numeros",
+        "sequencias",
+        "sistemas_numericos"
+      ],
+      "points": 0,
+      "status": "active"
+    },
+    {
+      "id": "MAT_A8MODELO_1SX_NFX_013",
+      "path": "matematica/A8_modelos_discretos/1-sistemas_numericos/numeros_figurados/MAT_A8MODELO_1SX_NFX_013.tex",
+      "discipline": "matematica",
+      "module": "A8_modelos_discretos",
+      "module_name": "Módulo A8 - Modelos Discretos",
+      "concept": "1-sistemas_numericos",
+      "concept_name": "Sistemas Numéricos",
+      "tipo": "numeros_figurados",
+      "tipo_nome": "Números Figurados",
+      "difficulty": 2,
+      "format": "standard",
+      "tags": [
+        "binario",
+        "decimal",
+        "hexadecimal",
+        "sequencias",
+        "sistemas_numericos"
+      ],
+      "points": 0,
+      "status": "active"
+    }
+  ],
+  "projects": [
+    {
+      "id": "PROJ_PROMO_001",
+      "titulo": "Promo Test",
+      "responsavel": "Tester",
+      "path": "C:/Users/diogo/AppData/Local/Temp/pytest-of-diogo/pytest-54/test_promote_project_dry_run_a0/projects/PROJ_PROMO_001",
+      "created_at": "2025-12-02T10:18:00.786454",
+      "status": "active"
+    },
+    {
+      "id": "UNKNOWN",
+      "titulo": "",
+      "responsavel": "",
+      "path": "C:/Users/diogo/projects/Exercises-and-Evaluation/ExerciseDatabase/projects/PROJ_20251202_130954",
+      "created_at": "2025-12-02T13:09:54.320579",
+      "status": "active"
+    },
+    {
+      "id": "UNKNOWN",
+      "titulo": "",
+      "responsavel": "",
+      "path": "C:/Users/diogo/projects/Exercises-and-Evaluation/ExerciseDatabase/projects/PROJ_20251202_131141",
+      "created_at": "2025-12-02T13:11:41.061606",
+      "status": "active"
+    },
+    {
+      "id": "UNKNOWN",
+      "titulo": "",
+      "responsavel": "",
+      "path": "C:/Users/diogo/projects/Exercises-and-Evaluation/ExerciseDatabase/projects/PROJ_20251202_132304",
+      "created_at": "2025-12-02T13:23:04.330452",
+      "status": "active"
+    },
+    {
+      "id": "UNKNOWN",
+      "titulo": "",
+      "responsavel": "",
+      "path": "C:/Users/diogo/projects/Exercises-and-Evaluation/ExerciseDatabase/projects/PROJ_20251202_132714",
+      "created_at": "2025-12-02T13:27:14.456577",
+      "status": "active"
+    },
+    {
+      "id": "UNKNOWN",
+      "titulo": "",
+      "responsavel": "",
+      "path": "C:/Users/diogo/projects/Exercises-and-Evaluation/ExerciseDatabase/projects/PROJ_20251202_132947",
+      "created_at": "2025-12-02T13:29:47.283610",
+      "status": "active"
+    },
+    {
+      "id": "UNKNOWN",
+      "titulo": "",
+      "responsavel": "",
+      "path": "C:/Users/diogo/projects/Exercises-and-Evaluation/ExerciseDatabase/projects/PROJ_20251202_133025",
+      "created_at": "2025-12-02T13:30:25.355726",
+      "status": "active"
+    },
+    {
+      "id": "UNKNOWN",
+      "titulo": "",
+      "responsavel": "",
+      "path": "C:/Users/diogo/projects/Exercises-and-Evaluation/ExerciseDatabase/projects/PROJ_20251202_162710",
+      "created_at": "2025-12-02T16:27:10.860294",
       "status": "active"
     }
   ]

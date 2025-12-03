@@ -44,11 +44,12 @@ from datetime import datetime
 from typing import Dict, List, Any, Optional, Tuple
 import re
 
-# Importar sistema de preview
+# Importar sistema de preview (usar caminho correto para ExerciseDatabase/_tools)
 try:
-    sys.path.insert(0, str(Path(__file__).parent.parent / "ExerciseDatabase" / "_tools"))
+    preview_tools_path = Path(__file__).resolve().parents[2] / "ExerciseDatabase" / "_tools"
+    sys.path.insert(0, str(preview_tools_path))
     from preview_system import PreviewManager, create_test_preview
-except ImportError:
+except Exception:
     PreviewManager = None
     create_test_preview = None
     print("AVISO: Sistema de preview nao disponivel - a continuar sem pre-visualizacao")
@@ -360,6 +361,17 @@ def save_tex_and_compile(
         if version_label:
             test_title += f" (Versão {version_label})"
         
+        # Create the temp preview directory explicitly and write its path to repo temp
+        try:
+            temp_preview_dir = preview_manager.create_temp_preview(preview_content, test_title)
+            temp_dir_file = PROJECT_ROOT / 'temp' / 'last_preview_dir.txt'
+            temp_dir_file.parent.mkdir(parents=True, exist_ok=True)
+            temp_dir_file.write_text(str(temp_preview_dir), encoding='utf-8')
+        except Exception:
+            # If create_temp_preview fails, continue and let show_and_confirm handle preview
+            temp_preview_dir = None
+
+        # Now invoke interactive show_and_confirm (this may open VS Code or ask the user)
         if not preview_manager.show_and_confirm(preview_content, test_title):
             print(f"  TESTE CANCELADO PELO UTILIZADOR")
             return None
@@ -375,6 +387,14 @@ def save_tex_and_compile(
 
     if no_compile:
         return tex_file
+
+    # Ensure a fallback style is present in the output dir so the template can \input{fallback_style.tex}
+    try:
+        fallback_src = SEBENTAS_DB / '_templates' / 'fallback_style.tex'
+        if fallback_src.exists():
+            shutil.copy2(fallback_src, output_dir / 'fallback_style.tex')
+    except Exception:
+        pass
 
 
     # Compile using pdflatex if available
@@ -483,6 +503,7 @@ def parse_args():
     p.add_argument('--export-clean', action='store_true', help='Criar cópias dos PDFs finais sem sufixos/version labels em a distribution folder')
     p.add_argument('--no-preview', action='store_true', help='Não mostrar preview antes de compilar')
     p.add_argument('--auto-approve', action='store_true', help='Aprovar automaticamente sem pedir confirmação')
+    p.add_argument('--qa2-output', help='Gerar uma estrutura tipo reference/QA2 em PATH (ex: --qa2-output temp/QA2_generated). Se omitido, não gera QA2.', default=None)
     return p.parse_args()
 
 
@@ -510,6 +531,40 @@ def main():
 
     index = load_index(EXERCISE_INDEX)
     exercises = index.get('exercises', [])
+
+    # Build list of available (discipline, module, concept) tuples from the index
+    available_combos = []
+    seen = set()
+    for ex in exercises:
+        disc = ex.get('discipline')
+        mod = ex.get('module')
+        conc = ex.get('concept')
+        if not (disc and mod and conc):
+            continue
+        key = (disc, mod, conc)
+        if key in seen:
+            continue
+        seen.add(key)
+        available_combos.append(key)
+
+    # If CLI filters specified, narrow the combos accordingly; otherwise process all
+    if args.discipline or args.module or args.concept:
+        filtered = []
+        for (disc, mod, conc) in available_combos:
+            if args.discipline and disc != args.discipline:
+                continue
+            if args.module and mod != args.module:
+                continue
+            if args.concept and conc != args.concept:
+                continue
+            filtered.append((disc, mod, conc))
+        combos_to_run = filtered
+    else:
+        combos_to_run = available_combos
+
+    if not combos_to_run:
+        print('Nenhum conceito/módulo disponível para gerar testes com os filtros fornecidos.')
+        return
 
     # Determinar disciplina/módulo/conceito para buscar config local
     # (pode vir de CLI ou do primeiro exercício encontrado)
@@ -613,121 +668,266 @@ def main():
     versions = args.versions if args.versions is not None else int(config.get('versions', 1) or 1)
     # Gerar labels A, B, C... se não fornecido
     if args.version_labels:
-        version_labels = [s.strip() for s in args.version_labels.split(',') if s.strip()]
-    else:
-        version_labels = config.get('version_labels') or []
-    if not version_labels:
-        # default labels A, B, C ...
-        alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        version_labels = [alphabet[i % len(alphabet)] if versions <= len(alphabet) else str(i+1) for i in range(versions)]
-    # Ajustar tamanho
-    if len(version_labels) < versions:
-        # completa com números
-        version_labels += [str(i+1) for i in range(len(version_labels), versions)]
-    version_labels = version_labels[:versions]
+        # Iterate over the selected combos and run generation for each
+        overall_results = {}
+        for (discipline, module, concept) in combos_to_run:
+            print(f"\n--- Generating test for: {discipline}/{module}/{concept} ---")
 
-    seed_base = args.seed if args.seed is not None else int(datetime.now().timestamp())
+            # Find config for this concept/module
+            config_path = find_config(discipline, module, concept, args.config)
 
-    results: List[Tuple[str, Optional[Path]]] = []
+            # Create local config if requested
+            if args.create_config and discipline and module and concept:
+                local_config_path = SEBENTAS_DB / discipline / module / concept / "tests" / "test_config.json"
+                if not local_config_path.exists():
+                    local_config_path.parent.mkdir(parents=True, exist_ok=True)
+                    if DEFAULT_CONFIG.exists():
+                        shutil.copy(DEFAULT_CONFIG, local_config_path)
+                        print(f"  ✅ Config local criada: {local_config_path.relative_to(PROJECT_ROOT)}")
+                    else:
+                        default_content = {
+                            "name": f"teste_{concept}",
+                            "title_template": "Teste - {concept_name}",
+                            "shuffle": True,
+                            "count": 5
+                        }
+                        with open(local_config_path, 'w', encoding='utf-8') as f:
+                            json.dump(default_content, f, indent=2, ensure_ascii=False)
+                        print(f"  ✅ Config local criada: {local_config_path.relative_to(PROJECT_ROOT)}")
+                    config_path = local_config_path
 
-    # Output path base
-    # Para obter disciplina/module/concept para path e headers, precisamos de uma seleção para extrair nomes amigáveis
-    # Usar uma RNG apenas para este peek (não influencia versões)
-    peek_rng = random.Random(seed_base)
-    peek_selected = select_by_config(exercises, config, filters, peek_rng)
-    if not peek_selected:
-        print('Nenhum exercício selecionado com os filtros/configuração fornecidos.')
-        return
+            config = {}
+            if config_path:
+                config = load_config(config_path)
 
-    module = args.module or (peek_selected[0].get('module') if peek_selected else '')
-    concept = args.concept or (peek_selected[0].get('concept') if peek_selected else '')
-    module_name = peek_selected[0].get('module_name', module) if peek_selected else module
-    concept_name = peek_selected[0].get('concept_name', concept) if peek_selected else concept
-    discipline = args.discipline or (peek_selected[0].get('discipline') if peek_selected else 'misc')
+            # Force filters for this combo
+            filters = {
+                'discipline': discipline,
+                'module': module,
+                'concept': concept,
+                'tipo': args.tipo,
+            }
 
-    output_subdir = config.get('output_subdir', 'tests')
-    output_dir = SEBENTAS_DB / discipline / module / concept / output_subdir
-
-    for idx in range(versions):
-        label = version_labels[idx]
-        rng = random.Random(seed_base + idx)
-        selected = select_by_config(exercises, config, filters, rng)
-        if not selected:
-            print(f'Versão {label}: nenhum exercício selecionado.')
-            results.append((label, None))
-            continue
-
-        # Build title/header por versão
-        title_template = config.get('title_template', 'Teste gerado')
-        # Dados base
-        title = title_template.format(
-            module=module,
-            concept=concept,
-            module_name=module_name,
-            concept_name=concept_name,
-            version_label=label,
-            version_text='',
-        )
-        # Não embutir referência de versão por omissão
-        embed_title = bool(config.get('embed_version_in_title', False))
-        if embed_title and ('version_label' in title_template or 'version_text' in title_template):
-            pass  # já está no template
-        elif embed_title:
-            # template não tinha placeholders; ainda assim utilizador quer embutir
-            version_label_template = config.get('version_label_template', 'Versão {label}')
-            version_text = version_label_template.format(label=label)
-            title = f"{title} - {version_text}"
-
-        header_left = config.get('header_left', module_name or module or '')
-        # Header direito: por defeito, sem referência à versão
-        embed_header = bool(config.get('embed_version_in_header', False))
-        if embed_header:
-            version_label_template = config.get('version_label_template', 'Versão {label}')
-            version_text = version_label_template.format(label=label)
-            header_right_default = f"{concept_name or concept} — {version_text}"
-        else:
-            header_right_default = f"{concept_name or concept}"
-        header_right = config.get('header_right', header_right_default)
-
-        content, assets = build_test_content(selected, PROJECT_ROOT, config)
-
-        result = save_tex_and_compile(
-            content,
-            title,
-            header_left,
-            header_right,
-            output_dir,
-            no_compile=args.no_compile,
-            version_label=label,
-            selected_exercises=selected,
-            config=config,
-            no_preview=args.no_preview,
-            auto_approve=args.auto_approve,
-            assets_to_copy=assets,
-        )
-        results.append((label, result))
-
-    # If requested, export clean copies (no version suffix) to distribution dir
-    if args.export_clean:
-        distribution_dir = output_dir / 'pdfs' / 'distribution'
-        base_name = config.get('export_base_name') or config.get('name') or f"test_{concept}"
-        for label, path in results:
-            if path and path.suffix.lower() == '.pdf' and path.exists():
-                try:
-                    dest = _make_clean_copy(path, distribution_dir, base_name)
-                    print(f"  📦 Exportado (clean): {dest.relative_to(PROJECT_ROOT)}")
-                except Exception as e:
-                    print(f"  ⚠️ Falha ao exportar versão {label}: {e}")
+            # Prepare versions and labels as before
+            versions = args.versions if args.versions is not None else int(config.get('versions', 1) or 1)
+            if args.version_labels:
+                version_labels = [s.strip() for s in args.version_labels.split(',') if s.strip()]
             else:
-                print(f"  ℹ️ Versão {label}: sem PDF para exportar")
+                version_labels = config.get('version_labels') or []
+            if not version_labels:
+                alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+                version_labels = [alphabet[i % len(alphabet)] if versions <= len(alphabet) else str(i+1) for i in range(versions)]
+            if len(version_labels) < versions:
+                version_labels += [str(i+1) for i in range(len(version_labels), versions)]
+            version_labels = version_labels[:versions]
 
-    # Print resumo
-    for label, path in results:
-        if path:
-            print(f"Versão {label}: {path}")
-        else:
-            print(f"Versão {label}: falha ou vazia")
+            seed_base = args.seed if args.seed is not None else int(datetime.now().timestamp())
 
+            # Use a peek selection to get human-friendly names
+            peek_rng = random.Random(seed_base)
+            peek_selected = select_by_config(exercises, config, filters, peek_rng)
+            if not peek_selected:
+                print(f'Nenhum exercício selecionado para {discipline}/{module}/{concept}; skipping.')
+                overall_results[(discipline, module, concept)] = []
+                continue
 
-if __name__ == '__main__':
-    main()
+            module_name = peek_selected[0].get('module_name', module)
+            concept_name = peek_selected[0].get('concept_name', concept)
+
+            output_subdir = config.get('output_subdir', 'tests')
+            output_dir = SEBENTAS_DB / discipline / module / concept / output_subdir
+
+            results: List[Tuple[str, Optional[Path]]] = []
+            for idx in range(versions):
+                label = version_labels[idx]
+                rng = random.Random(seed_base + idx)
+                selected = select_by_config(exercises, config, filters, rng)
+                if not selected:
+                    print(f'Versão {label}: nenhum exercício selecionado.')
+                    results.append((label, None))
+                    continue
+
+                title_template = config.get('title_template', 'Teste gerado')
+                title = title_template.format(
+                    module=module,
+                    concept=concept,
+                    module_name=module_name,
+                    concept_name=concept_name,
+                    version_label=label,
+                    version_text='',
+                )
+                embed_title = bool(config.get('embed_version_in_title', False))
+                if embed_title and ('version_label' in title_template or 'version_text' in title_template):
+                    pass
+                elif embed_title:
+                    version_label_template = config.get('version_label_template', 'Versão {label}')
+                    version_text = version_label_template.format(label=label)
+                    title = f"{title} - {version_text}"
+
+                header_left = config.get('header_left', module_name or module or '')
+                embed_header = bool(config.get('embed_version_in_header', False))
+                if embed_header:
+                    version_label_template = config.get('version_label_template', 'Versão {label}')
+                    version_text = version_label_template.format(label=label)
+                    header_right_default = f"{concept_name or concept} — {version_text}"
+                else:
+                    header_right_default = f"{concept_name or concept}"
+                header_right = config.get('header_right', header_right_default)
+
+                content, assets = build_test_content(selected, PROJECT_ROOT, config)
+
+                # If QA2 output requested, write QA2-style folder structure
+                if args.qa2_output:
+                    try:
+                        qa2_root = Path(args.qa2_output) if not args.qa2_output.startswith('__') else PROJECT_ROOT / 'temp' / 'QA2_generated'
+                    except Exception:
+                        qa2_root = PROJECT_ROOT / 'temp' / 'QA2_generated'
+
+                    # Structure: <qa2_root>/<discipline>/<module>/<concept>/tex/
+                    qa2_concept_tex = qa2_root / discipline / module / concept / 'tex'
+                    qa2_concept_tex.mkdir(parents=True, exist_ok=True)
+
+                    # Copy assets into qa2 tex/assets/
+                    copy_assets_to_output(assets, qa2_concept_tex, PROJECT_ROOT)
+
+                    # Copy individual source files for selected exercises into exercises.d/
+                    exercises_d = qa2_concept_tex / 'exercises.d'
+                    exercises_d.mkdir(exist_ok=True)
+                    copied_files = []
+                    for ex in selected:
+                        src_rel = ex.get('path')
+                        if not src_rel:
+                            continue
+                        src = PROJECT_ROOT / src_rel
+                        # If path points to a folder, try main.tex
+                        if src.is_dir():
+                            candidate = src / 'main.tex'
+                            if candidate.exists():
+                                src = candidate
+                            else:
+                                texs = list(src.glob('*.tex'))
+                                if texs:
+                                    src = texs[0]
+                                else:
+                                    continue
+                        # Try .tex alternative if missing
+                        if not src.exists():
+                            alt = Path(str(src) + '.tex')
+                            if alt.exists():
+                                src = alt
+                        if src.exists() and src.is_file():
+                            dest = exercises_d / src.name
+                            try:
+                                shutil.copy2(src, dest)
+                                copied_files.append(dest.name)
+                            except Exception:
+                                pass
+
+                    # Build helper stubs in exercises.d/ to match reference/QA2 structure
+                    #  - input-path: sets \input@path to point back to ExerciseDatabase
+                    #  - setup-counter: create exercise counter if missing
+                    #  - include-exercise: define \IncludeExercise wrapper
+                    exercises_d.mkdir(exist_ok=True)
+                    # input-path
+                    input_path_file = exercises_d / 'input-path.tex'
+                    input_path_content = (
+                        "\\makeatletter\n"
+                        "\\def\\input@path{{../../../ExerciseDatabase/}}\n"
+                        "\\makeatother\n"
+                    )
+                    input_path_file.write_text(input_path_content, encoding='utf-8')
+
+                    # setup-counter
+                    setup_counter_file = exercises_d / 'setup-counter.tex'
+                    setup_counter_content = (
+                        "\\makeatletter\n"
+                        "\\@ifundefined{exercise}{\\newcounter{exercise}}{}\n"
+                        "\\makeatother\n"
+                    )
+                    setup_counter_file.write_text(setup_counter_content, encoding='utf-8')
+
+                    # include-exercise
+                    include_ex_file = exercises_d / 'include-exercise.tex'
+                    include_ex_content = (
+                        "\\newcommand{\\IncludeExercise}[1]{\\input{#1}}\n"
+                    )
+                    include_ex_file.write_text(include_ex_content, encoding='utf-8')
+
+                    # Build a wrapper exercises.tex that mirrors reference/QA2: load helpers and then include
+                    exercises_tex = qa2_concept_tex / 'exercises.tex'
+                    lines = []
+                    lines.append('% Small, maintainable exercise include file.')
+                    lines.append('% Responsibilities are split into includes under `exercises.d/`:')
+                    lines.append('% - `input-path.tex`      : sets `\\input@path` for subvariant inputs')
+                    lines.append('% - `setup-counter.tex`   : ensures the `exercise` counter exists')
+                    lines.append('% - `include-exercise.tex`: defines `\\IncludeExercise{<path>}` wrapper')
+                    lines.append('% The actual exercise inclusions are then simple calls to \IncludeExercise{<path>}.')
+                    lines.append('')
+                    lines.append('% Load path, counter and the include wrapper (keeps this file minimal)')
+                    lines.append('\\input{exercises.d/input-path}')
+                    lines.append('\\input{exercises.d/setup-counter}')
+                    lines.append('\\input{exercises.d/include-exercise}')
+                    lines.append('')
+                    lines.append('% Exercise includes:')
+
+                    # For each copied file, compute a path relative to the QA2 tex dir that points to ExerciseDatabase
+                    for ex in selected:
+                        src_rel = ex.get('path')
+                        if not src_rel:
+                            continue
+                        src = PROJECT_ROOT / 'ExerciseDatabase' / src_rel
+                        # normalize to file (try folder -> main.tex)
+                        if src.is_dir():
+                            candidate = src / 'main.tex'
+                            if candidate.exists():
+                                src = candidate
+                            else:
+                                texs = list(src.glob('*.tex'))
+                                if texs:
+                                    src = texs[0]
+                                else:
+                                    continue
+                        if not src.exists():
+                            alt = Path(str(src) + '.tex')
+                            if alt.exists():
+                                src = alt
+                        if not src.exists():
+                            continue
+                        # Compute relative path from qa2_concept_tex to actual source (without .tex extension)
+                        rel = os.path.relpath(src.with_suffix(''), start=qa2_concept_tex)
+                        rel = rel.replace('\\', '/')
+                        lines.append(f"\\IncludeExercise{{{rel}}}")
+
+                    lines.append('')
+                    lines.append('\\end{document}')
+                    exercises_tex.write_text('\n'.join(lines), encoding='utf-8')
+
+                    result = exercises_tex
+                    print(f"  ✅ QA2 exercises written: {exercises_tex.relative_to(PROJECT_ROOT)}")
+                else:
+                    result = save_tex_and_compile(
+                        content,
+                        title,
+                        header_left,
+                        header_right,
+                        output_dir,
+                        no_compile=args.no_compile,
+                        version_label=label,
+                        selected_exercises=selected,
+                        config=config,
+                        no_preview=args.no_preview,
+                        auto_approve=args.auto_approve,
+                        assets_to_copy=assets,
+                    )
+                results.append((label, result))
+
+            overall_results[(discipline, module, concept)] = results
+
+        # Print summary for all combos
+        for combo, res in overall_results.items():
+            disc, mod, conc = combo
+            for label, path in res:
+                if path:
+                    print(f"{disc}/{mod}/{conc} - Versão {label}: {path}")
+                else:
+                    print(f"{disc}/{mod}/{conc} - Versão {label}: falha ou vazia")

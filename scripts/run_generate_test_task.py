@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-GENERATOR = REPO_ROOT / "SebentasDatabase" / "_tools" / "generate_test_template.py"
+GENERATOR = REPO_ROOT / "SebentasDatabase" / "_tools" / "generate_tests.py"
 
 if not GENERATOR.exists():
     print(f"Generator not found: {GENERATOR}")
@@ -35,14 +35,15 @@ def env_flag(name: str) -> bool:
 
 cmd = [sys.executable, str(GENERATOR)]
 
-# Optional string parameters
+# Optional string parameters: discipline/module/concept/tipo (take first value if multiple)
 for var, arg in [
+    ("TEST_DISCIPLINE", "--discipline"),
     ("TEST_MODULE", "--module"),
     ("TEST_CONCEPT", "--concept"),
+    ("TEST_TIPO", "--tipo"),
 ]:
     v = env.get(var, "")
     if v is not None and v != "":
-        # For module/concept, take first value if multiple
         values = [x.strip() for x in v.split(",") if x.strip()]
         if values:
             cmd.extend([arg, values[0]])
@@ -52,23 +53,14 @@ exercise_ids = env.get("TEST_EXERCISE_IDS", "")
 if exercise_ids:
     env['TEST_SELECTED_EXERCISES'] = exercise_ids
 
-# Validation: require at least module or concept to be provided
-provided_any = any(env.get(x, "") for x in ("TEST_MODULE", "TEST_CONCEPT"))
-if not provided_any:
-    print("❌ Nenhum filtro fornecido: por favor especifique pelo menos uma das opções:")
-    print("   - TEST_MODULE (ex: P4_funcoes)")
-    print("   - TEST_CONCEPT (ex: 4-funcao_inversa)")
-    print("")
-    print("Sugestão: na Task do VS Code, preencha pelo menos um campo ou use a task interativa.")
-    sys.exit(2)
-
-# Boolean flags - NOT USED by test generator (it has different logic)
-# if env_flag("TEST_NO_PREVIEW"):
-#     cmd.append("--no-preview")
-# if env_flag("TEST_NO_COMPILE"):
-#     cmd.append("--no-compile")
-# if env_flag("TEST_AUTO_APPROVE"):
-#     cmd.append("--auto-approve")
+# Do NOT require filters: the generator now supports running across all combos
+# if no filters are provided. Forward boolean flags to generator.
+if env_flag("TEST_NO_PREVIEW"):
+    cmd.append("--no-preview")
+if env_flag("TEST_NO_COMPILE"):
+    cmd.append("--no-compile")
+if env_flag("TEST_AUTO_APPROVE"):
+    cmd.append("--auto-approve")
 
 # Ensure deterministic encoding on Windows
 env['PYTHONIOENCODING'] = env.get('PYTHONIOENCODING', 'utf-8')

@@ -6,6 +6,12 @@
       "created": "2025-11-27",
       "difficulty": 2,
       "status": "active"
+    },
+    "GEN_20251202_163114": {
+      "created": "2025-12-02T16:31:14.719031",
+      "author": "Professor",
+      "difficulty": 2,
+      "status": "active"
     }
   }
 }

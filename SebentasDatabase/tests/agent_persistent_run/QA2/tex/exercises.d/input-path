@@ -1,0 +1,4 @@
+% Auto-generated input-path for exercises (points to copied external_exercises)
+\makeatletter
+\def\input@path{{../external_exercises/}}
+\makeatother

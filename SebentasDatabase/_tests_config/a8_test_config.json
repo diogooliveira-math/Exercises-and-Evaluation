@@ -1,0 +1,9 @@
+{
+  "name": "teste_a8_modelos_discretos",
+  "title_template": "Teste A8 - {module} - {concept}",
+  "count": null,
+  "shuffle": false,
+  "include_answers": false,
+  "output_subdir": "tests",
+  "notes": "Config de teste para A8_modelos_discretos: seleciona todos os exercícios do conceito."
+}

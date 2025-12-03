@@ -1,0 +1,418 @@
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
+}
+
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
+
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Módulo P1 - Modelos Matemáticos para a Cidadania}
+\rhead{eleicoes}
+\cfoot{\thepage}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{eleicoes}
+
+\subsection*{Tipos de Exercícios}
+\begin{itemize}
+  \item \textbf{Análise de Tabelas Eleitorais}
+  \item \textbf{Compreensão de Termos Eleitorais}
+  \item \textbf{Conceitos Eleitorais Básicos}
+\end{itemize}
+
+\vspace{1em}
+
+% Exercício 1: MAT_P1MODELO_ELE_MATCH_001.tex
+% meta:
+% id: MAT_P1MODELO_ELE_MATCH_001
+% title: "Associação: termos eleitorais e definições"
+% difficulty: "easy"
+% tags: "eleições,definições,compreensão"
+% author: "Auto-generated"
+% created_at: 2025-11-20T00:00:00Z
+% version: 1
+\exercicio{
+Liga as colunas: (à esquerda termos; à direita definições)
+
+\begin{tabular}{@{}p{0.55\textwidth}p{0.35\textwidth}@{}}
+\textbf{Termos} & \textbf{Definições} \\
+\midrule
+\begin{enumerate}[label=\textbf{(\arabic*)}, leftmargin=*, itemsep=10pt]
+  \item Maioria simples
+  \item Maioria absoluta
+  \item Voto nulo
+  \item Voto em branco
+  \item Abstenção
+\end{enumerate}
+&
+\begin{enumerate}[label=\textbf{\Alph*}, leftmargin=*, itemsep=8pt]
+  \item Exige mais votos que qualquer outro concorrente; não precisa de exceder metade dos votos válidos.
+  \item Votos expressos sem contar abstenções; maioria superior a metade dos votos válidos.
+  \item Voto inválido por irregularidade na folha (marcações contraditórias, sinais identificadores, etc.).
+  \item Voto depositado que não assinala qualquer opção; em muitos sistemas é contabilizado separadamente dos nulos.
+  \item Eleitor inscrito que não comparece à mesa de voto no dia da eleição.
+\end{enumerate}
+\\
+\end{tabular}
+
+\vspace{8pt}
+
+oindent Respostas: 1. \campoLetra \quad 2. \campoLetra \quad 3. \campoLetra \quad 4. \campoLetra \quad 5. \campoLetra
+
+\vspace{3cm}
+}
+\FloatBarrier
+
+% Exercício 2: MAT_P1MODELO_EXX_CTX_001.tex
+% Exercise ID: MAT_P1MODELO_EXX_CTX_001
+% Module: Módulo P1 - Modelos Matemáticos para a Cidadania | Concept: Eleições | Type: Compreensão de Termos Eleitorais
+% Difficulty: 4/5 (Difícil) | Format: desenvolvimento
+% Tags: democracia, votacao, percentagens, leitura, definições, associação, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para compreensao_termos}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+\FloatBarrier
+
+% Exercício 3: MAT_P1MODELO_EXX_CTX_002.tex
+% Exercise ID: MAT_P1MODELO_EXX_CTX_002
+% Module: Módulo P1 - Modelos Matemáticos para a Cidadania | Concept: Eleições | Type: Compreensão de Termos Eleitorais
+% Difficulty: 2/5 (Fácil) | Format: desenvolvimento
+% Tags: democracia, associação, percentagens, leitura, votacao, definições, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para compreensao_termos}
+\FloatBarrier
+
+% Exercício 4: MAT_P1MODELO_ELE_CONC_001.tex
+% meta:
+% id: MAT_P1MODELO_ELE_CONC_001
+% title: "Verdadeiro/Falso — conceitos eleitorais"
+% difficulty: "easy"
+% tags: "eleições,maioria,abstenção,votos"
+% author: "Auto-generated"
+% created_at: 2025-11-20T00:00:00Z
+% version: 1
+\exercicio{
+Instrucções: Para cada afirmação, escreve ``V'' se considerares a afirmação verdadeira ou ``F'' se considerares falsa.
+
+\begin{enumerate}[label=\textbf{(\arabic*)}, leftmargin=*, itemsep=1.0\baselineskip]
+  \item A maioria simples exige que um candidato obtenha mais votos do que qualquer outro, independentemente do número total de votos válidos.
+  \item A maioria absoluta significa obter mais de metade dos votos válidos.
+  \item Votos nulos não entram na contagem dos votos válidos.
+  \item A abstenção corresponde a eleitores que se registaram mas não compareceram à votação.
+  \item Para uma eleição que exige maioria absoluta, se nenhum candidato obtiver mais de metade dos votos válidos, realiza-se um segundo turno entre os dois mais votados.
+  \item Se um eleitor deposita uma folha de voto em que não marca nenhum candidato, esse voto é considerado voto em branco.
+\end{enumerate}
+
+\vspace{3cm}
+}
+\FloatBarrier
+
+% Exercício 5: MAT_P1MODELO_ELE_PERC_001.tex
+% meta:
+% id: MAT_P1MODELO_ELE_PERC_001
+% title: "Calcular votos a partir de percentagens — vários exemplos"
+% difficulty: "medium"
+% tags: "percentagens,total,votos,conversão"
+% author: "Auto-generated"
+% created_at: 2025-11-20T00:00:00Z
+% version: 1
+\exercicio{
+Preenche a tabela com os votos calculados a partir das percentagens e do total, e responde:
+\begin{enumerate}
+\item Considera a seguinte tabela com percentagens de votos. Preenche os votos de cada candidato, sabendo que o total de votos válidos é 1200, com 10 votos em branco e 5 nulos.
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Candidato} & \textbf{\%} & \textbf{Votos (para preencher)}\\
+\midrule
+A & 38\% & \\
+B & 34\% & \\
+C & 25\% & \\
+D & 3\% & \\
+\midrule
+\textbf{Total votos válidos} & & 1\,200\\
+Votos em branco & & 10\\
+Votos nulos & & 5\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}
+  \item Calcula o número de votos de cada candidato. \campo[6.0cm]
+  \item Alguém obteve maioria absoluta? \campo[6.0cm]
+  \item Percentagens de brancos e nulos. \campo[6.0cm]
+\end{enumerate}
+\item Considera a seguinte tabela com percentagens de votos. Preenche os votos de cada candidato, sabendo que o total de votos válidos é 2000, com 15 votos em branco e 5 nulos.
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Candidato} & \textbf{\%} & \textbf{Votos (para preencher)}\\
+\midrule
+E & 40\% & \\
+F & 30\% & \\
+G & 20\% & \\
+H & 10\% & \\
+\midrule
+\textbf{Total votos válidos} & & 2\,000\\
+Votos em branco & & 15\\
+Votos nulos & & 5\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}
+  \item Calcula o número de votos de cada candidato. \campo[6.0cm]
+  \item Alguém obteve maioria absoluta? \campo[6.0cm]
+  \item Percentagens de brancos e nulos. \campo[6.0cm]
+\end{enumerate}
+\item Considera a seguinte tabela com percentagens de votos. Preenche os votos de cada candidato, sabendo que o total de votos válidos é 800, com 20 votos em branco e 0 nulos.
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Candidato} & \textbf{\%} & \textbf{Votos (para preencher)}\\
+\midrule
+I & 45\% & \\
+J & 35\% & \\
+K & 15\% & \\
+L & 5\% & \\
+\midrule
+\textbf{Total votos válidos} & & 800\\
+Votos em branco & & 20\\
+Votos nulos & & 0\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}
+  \item Calcula o número de votos de cada candidato. \campo[6.0cm]
+  \item Alguém obteve maioria absoluta? \campo[6.0cm]
+  \item Percentagens de brancos e nulos. \campo[6.0cm]
+\end{enumerate}
+\end{enumerate}
+
+\vspace{3cm}
+}
+\FloatBarrier
+
+% Exercício 6: MAT_P1MODELO_ELE_TAB1_001.tex
+% meta:
+% id: MAT_P1MODELO_ELE_TAB1_001
+% title: "Analisar tabela eleitoral — exemplo A/B/C"
+% difficulty: "medium"
+% tags: "tabelas,percentagens,maioria,abstenção"
+% author: "Auto-generated"
+% created_at: 2025-11-20T00:00:00Z
+% version: 1
+\exercicio{
+Tabela:
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Candidato & Votos & \% (para preencher) \\
+\midrule
+A & 420 & \\
+B & 310 & \\
+C & 170 & \\
+\midrule
+Total votos válidos & 900 & \\
+Votos em branco & 25 & \\
+Votos nulos & 10 & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Perguntas:
+\begin{enumerate}
+  \item Alguém obteve maioria simples? Resposta e cálculo: \campo[6.0cm]
+  \item Alguém obteve maioria absoluta? Resposta e cálculo: \campo[6.0cm]
+  \item Calcula as percentagens de cada candidato (com duas casas decimais). \campo[6.0cm]
+\end{enumerate}
+
+\vspace{3cm}
+}
+\FloatBarrier
+
+% Exercício 7: MAT_P1MODELO_ELE_TAB2_001.tex
+% meta:
+% id: MAT_P1MODELO_ELE_TAB2_001
+% title: "Analisar tabela eleitoral — exemplo D/E/F/G"
+% difficulty: "medium"
+% tags: "tabelas,percentagens,maioria,brancos,nulos"
+% author: "Auto-generated"
+% created_at: 2025-11-20T00:00:00Z
+% version: 1
+\exercicio{
+Tabela:
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Candidato & Votos & \% (para preencher) \\
+\midrule
+D & 1\,150 & \\
+E & 980 & \\
+F & 720 & \\
+G & 150 & \\
+\midrule
+Total votos válidos & 3\,000 &  \\
+Votos em branco & 60 & \\
+Votos nulos & 40 & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Perguntas:
+\begin{enumerate}
+  \item Alguém obteve maioria simples? Resposta e cálculo: \campo[6.0cm]
+  \item Alguém obteve maioria absoluta? Resposta e cálculo: \campo[6.0cm]
+  \item Qual foi a percentagem de votos em branco e de votos nulos? \campo[6.0cm]
+\end{enumerate}
+
+\vspace{3cm}
+}
+\FloatBarrier
+
+% Exercício 8: MAT_P1MODELO_ELE_TAB3_001.tex
+% meta:
+% id: MAT_P1MODELO_ELE_TAB3_001
+% title: "Tabelas com abstenção e percentagens — exemplo H/I"
+% difficulty: "medium"
+% tags: "abstenção,percentagens,tabelas"
+% author: "Auto-generated"
+% created_at: 2025-11-20T00:00:00Z
+% version: 1
+\exercicio{
+Contém um exemplo com abstenção. Tabela:
+\begin{tabular}{lrr}
+\toprule
+Candidato & Votos & \% \\
+\midrule
+H & 2\,300 & \\
+I & 1\,900 & \\
+\midrule
+Total votos válidos & 4\,200 & \\
+Votos em branco & 150 & \\
+Votos nulos & 50 & \\
+Eleitores inscritos & 6\,000 & \\
+\bottomrule
+\end{tabular}
+
+Perguntas:
+\begin{enumerate}
+  \item Alguém obteve maioria simples? Resposta e cálculo: \campo[6.0cm]
+  \item Alguém obteve maioria absoluta? Resposta e cálculo: \campo[6.0cm]
+  \item Qual é a taxa de abstenção (em percentagem)? Resposta e cálculo: \campo[6.0cm]
+  \item Percentagem de votos em branco e nulos? Resposta e cálculo: \campo[6.0cm]
+\end{enumerate}
+
+\vspace{3cm}
+}
+\FloatBarrier
+
+% Exercício 9: MAT_P1MODELO_EXX_ATE_001.tex
+% Exercise ID: MAT_P1MODELO_EXX_ATE_001
+% Module: Módulo P1 - Modelos Matemáticos para a Cidadania | Concept: Eleições | Type: Análise de Tabelas Eleitorais
+% Difficulty: 5/5 (Muito Difícil) | Format: desenvolvimento
+% Tags: percentagens, tabelas, maioria, abstenção, brancos, democracia, votacao, nulos, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para analise_tabelas_eleitorais}
+\FloatBarrier
+
+\end{document}

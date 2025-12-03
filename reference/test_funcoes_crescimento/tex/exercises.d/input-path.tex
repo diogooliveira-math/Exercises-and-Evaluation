@@ -1,0 +1,6 @@
+% Ensure TeX looks for subvariant files in the exercise folder when main.tex uses relative \input
+% The previous value pointed to a different module (P4). Use an empty input@path here
+% so includes use explicit relative paths defined in `exercises.tex`.
+\makeatletter
+\def\input@path{{}}
+\makeatother

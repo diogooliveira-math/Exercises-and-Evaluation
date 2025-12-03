@@ -18,7 +18,9 @@ import re
 from typing import Dict, List, Optional
 
 # Importar sistema de preview
-from preview_system import PreviewManager, create_exercise_preview
+from preview_system import PreviewManager, create_exercise_preview, create_project_preview
+import sys
+import json
 class Colors:
     HEADER = '\033[95m'
     BLUE = '\033[94m'
@@ -685,6 +687,117 @@ def create_exercise_with_types():
     print_header("✅ EXERCÍCIO ADICIONADO COM SUCESSO!")
     print_info(f"Localização: {discipline}/{module_id}/{concept_id}/{tipo_id}/{exercise_id}")
 
+
+def create_research_project(payload: dict = None, auto_approve: bool = False):
+    """Create a research project in staging, with optional auto-approve.
+
+    Args:
+        payload: Optional dict to run non-interactively (used by tests).
+        auto_approve: If True, attempt to promote immediately after staging.
+
+    Returns:
+        dict: staging metadata (as returned by make_staged_project) or promotion result when auto_approve succeeds.
+    """
+    interactive = payload is None
+    if interactive:
+        print_header("🧭 CRIAR PROJECTO DE INVESTIGAÇÃO (Staging)")
+
+        titulo = input_with_default("Título do projecto", "Novo Projecto")
+        responsavel = input_with_default("Responsável (nome)", "Professor")
+        summary = input_multiline("Resumo curto do projecto (duas linhas vazias para terminar)")
+
+        # Optional classification via ModuleConfig
+        config = ModuleConfig()
+        discipline = ''
+        module_id = ''
+        concept_id = ''
+        if config.get_disciplines():
+            if input_with_default("Associar a uma disciplina existente? (s/n)", "s").lower() == 's':
+                disciplines = config.get_disciplines()
+                discipline = select_from_list(disciplines, "Escolha a disciplina:")
+                modules = config.get_modules(discipline)
+                if modules and input_with_default("Associar a um módulo? (s/n)", "s").lower() == 's':
+                    module_id = select_from_list(modules, "Escolha o módulo:")
+                    concepts = config.get_concepts(discipline, module_id)
+                    if concepts and input_with_default("Associar a um conceito? (s/n)", "s").lower() == 's':
+                        concept_options = [{'id': c['id'], 'name': c['name']} for c in concepts]
+                        concept_id = select_from_list(concept_options, "Escolha o conceito:")
+
+        tags_input = input_with_default("Tags (separadas por vírgula)", "")
+        tags = [t.strip() for t in tags_input.split(',') if t.strip()]
+
+        visibility = input_with_default("Visibilidade (private/internal/public)", "internal")
+        start_date = input_with_default("Data de início (YYYY-MM-DD)", "")
+        end_date = input_with_default("Data de fim (YYYY-MM-DD)", "")
+
+        payload = {
+            'titulo': titulo,
+            'responsavel': responsavel,
+            'summary': summary,
+            'discipline': discipline,
+            'module': module_id,
+            'concepts': [concept_id] if concept_id else [],
+            'tags': tags,
+            'visibility': visibility,
+            'start_date': start_date,
+            'end_date': end_date,
+            'created_at': datetime.now().isoformat()
+        }
+
+    # Try to stage using add_exercise_safe API (prefer absolute package import)
+    try:
+        from ExerciseDatabase._tools.add_exercise_safe import make_staged_project
+    except Exception:
+        try:
+            from add_exercise_safe import make_staged_project
+        except Exception:
+            print_warning("Não foi possível importar add_exercise_safe. Execute localmente para criar staging.")
+            print(json.dumps(payload, indent=2, ensure_ascii=False))
+            return None
+
+    meta = make_staged_project(payload)
+    staged_id = meta.get('staged_id')
+    staged_path = meta.get('staged_path')
+
+    # If auto_approve requested, try to promote immediately
+    if auto_approve:
+        promote_project = None
+        try:
+            from ExerciseDatabase._tools.promote_project_from_staging import promote_project  # type: ignore
+            promote_project = promote_project
+        except Exception:
+            try:
+                from promote_project_from_staging import promote_project  # type: ignore
+                promote_project = promote_project
+            except Exception:
+                promote_project = None
+
+        if promote_project:
+            try:
+                res = promote_project(staged_path or staged_id, dry_run=False, force=True)
+                print_success(f"Projecto promovido automaticamente: {staged_id}")
+                print_info("Projecto promovido e adicionado à base de dados.")
+                return res
+            except Exception as e:
+                print_warning(f"A promoção automática falhou: {e}")
+                # fallthrough to preview
+
+    # Create preview and show (non-interactive callers may not want to show)
+    readme_text = f"# {payload.get('titulo') or payload.get('title','Projeto')}\n\n{payload.get('summary','')}"
+    preview_content = create_project_preview(staged_path or staged_id, {'README.md': readme_text}, payload)
+    preview = PreviewManager(auto_open=True, consolidated_preview=True)
+    confirmed = preview.show_and_confirm(preview_content, f"Projecto stageado: {staged_id}")
+
+    if confirmed:
+        print_success(f"Projecto stageado: {staged_id}")
+        print_info(f"Staging path: {staged_path}")
+    else:
+        print_warning(f"Projecto mantido em staging: {staged_id} (não promovido)")
+        print_info(f"Local: {staged_path}")
+
+    return meta
+
+
 def update_index(metadata: Dict, file_path: str):
     """Atualiza índice central (agora com tipo)"""
     index_file = BASE_DIR / "index.json"
@@ -757,6 +870,11 @@ def update_index(metadata: Dict, file_path: str):
 def main():
     """Função principal"""
     try:
+        # If called with --create-project, run project creation flow
+        if '--create-project' in sys.argv:
+            auto_flag = '--auto-approve' in sys.argv
+            create_research_project(auto_approve=auto_flag)
+            return
         create_exercise_with_types()
     except KeyboardInterrupt:
         print_error("\n\nOperação cancelada pelo utilizador!")

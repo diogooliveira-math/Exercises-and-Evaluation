@@ -26,13 +26,18 @@ EXERCISE_DB = REPO_ROOT / "ExerciseDatabase"
 
 class TestTemplate:
     def __init__(self, module: str = '', concept: str = '', exercises: list = None,
-                 no_preview: bool = True, no_compile: bool = True):
+                 no_preview: bool = True, no_compile: bool = True, num_questions: int | None = None, **kwargs):
+        # Backwards-compatible constructor: accept num_questions and other kwargs
         self.module = module or 'misc'
         self.concept = concept or 'general'
         self.exercises = exercises or []
         self.no_preview = no_preview
         self.no_compile = no_compile
+        self.num_questions = num_questions
         self.index_data = self.load_index()
+        # optional runtime attributes used by tests
+        self.temp_dir = None
+        self.tex_file = None
 
     def load_index(self):
         """Load ExerciseDatabase index.json"""
@@ -205,6 +210,138 @@ class TestTemplate:
         footer = ["", "\\end{document}"]
 
         return "\n".join(header + body + footer)
+
+    # --- Compatibility shims expected by tests ---
+    def load_modules_config(self):
+        """Load `modules_config.yaml` (tests expect this method)."""
+        try:
+            import yaml
+            config_path = EXERCISE_DB / 'modules_config.yaml'
+            if config_path.exists():
+                with open(config_path, 'r', encoding='utf-8') as f:
+                    return yaml.safe_load(f)
+        except Exception:
+            pass
+        return {}
+
+    def load_exercises(self, discipline: str, module: str, concept: str | None):
+        """Return a list of exercise metadata dicts filtered by discipline/module/concept."""
+        results = []
+        for ex in self.index_data.get('exercises', []):
+            classification = ex.get('classification', {}) if isinstance(ex, dict) else {}
+            d = classification.get('discipline') or ex.get('discipline') or ex.get('subject')
+            m = classification.get('module') or ex.get('module') or ex.get('tema') or ex.get('module')
+            c = classification.get('concept') or ex.get('concept') or ex.get('subtopic')
+
+            if discipline and d and d != discipline:
+                continue
+            if module and m and m != module:
+                continue
+            if concept and c and c != concept:
+                continue
+            results.append(ex)
+        return results
+
+    def load_exercises_by_ids(self, ids: list[str]):
+        """Return a list of exercise metadata dicts for the given ids, preserving order."""
+        out = []
+        id_map = {ex.get('id'): ex for ex in self.index_data.get('exercises', [])}
+        for i in ids:
+            ex = id_map.get(i)
+            if ex:
+                out.append(ex)
+        return out
+
+    # Selection helper expected by tests
+    def _select_balanced(self, exercises: list, k: int):
+        if not exercises:
+            return []
+        if len(exercises) <= k:
+            return exercises[:]
+        # Simple balanced selection: round-robin by index
+        res = []
+        idx = 0
+        while len(res) < k:
+            res.append(exercises[idx % len(exercises)])
+            idx += 1
+        return res
+
+    # High-level generator API expected by tests
+    def generate_test_latex(self, discipline: str, module_name: str, concept_name: str | None, exercises: list):
+        """Generate a LaTeX string from provided exercise metadata list.
+
+        Each exercise may be either an ID string or a metadata dict containing an 'id'.
+        """
+        # Normalize exercises into list of dicts with 'id' and 'content'
+        normalized = []
+        for ex in exercises:
+            if isinstance(ex, str):
+                ex_id = ex
+                content = self.load_exercise_content(ex_id)
+                normalized.append({'id': ex_id, 'content': content})
+            elif isinstance(ex, dict):
+                ex_id = ex.get('id')
+                content = ex.get('content') or (self.load_exercise_content(ex_id) if ex_id else '')
+                ex_copy = ex.copy()
+                ex_copy['content'] = content
+                normalized.append(ex_copy)
+
+        # Build a simple LaTeX document
+        title = concept_name if concept_name else module_name
+        header = ["\\documentclass[12pt]{article}", "\\begin{document}", f"\\section*{{Teste - {title}}}", ""]
+        body = ["\\begin{enumerate}"]
+        for ex in normalized:
+            body.append(f"\\item % {ex.get('id', '')}")
+            body.append(ex.get('content', ''))
+        body.append("\\end{enumerate}")
+        footer = ["\\end{document}"]
+        return "\n".join(header + body + footer)
+
+    def open_for_editing(self):
+        """Open the current `self.tex_file` for editing (platform-aware)."""
+        if not self.tex_file:
+            return
+        try:
+            # Prefer os.startfile on Windows
+            if os.name == 'nt':
+                try:
+                    os.startfile(str(self.tex_file))
+                    return
+                except Exception:
+                    pass
+            # Fallback to common open commands
+            if sys.platform == 'darwin':
+                subprocess.run(['open', str(self.tex_file)], check=False)
+            else:
+                subprocess.run(['xdg-open', str(self.tex_file)], check=False)
+        except Exception:
+            pass
+
+    def check_pdflatex_available(self) -> bool:
+        return shutil_which('pdflatex') is not None
+
+    def save_tex_without_compile(self) -> Path:
+        # Ensure temp_dir exists
+        if not self.temp_dir:
+            import tempfile
+            self.temp_dir = tempfile.mkdtemp(prefix='test_template_')
+        if not self.tex_file:
+            self.tex_file = Path(self.temp_dir) / 'test.tex'
+        # generate content if not present
+        if not self.tex_file.exists():
+            # Use existing exercises to generate content
+            content = self.generate_test_latex(self.module, self.module, self.concept, self.exercises or [])
+            self.tex_file.write_text(content, encoding='utf-8')
+        return Path(self.tex_file)
+
+    def cleanup(self):
+        try:
+            if self.temp_dir:
+                import shutil
+                shutil.rmtree(self.temp_dir, ignore_errors=True)
+                self.temp_dir = None
+        except Exception:
+            pass
 
     def save(self) -> Path:
         out_dir = SEBENTA_DIR / 'tests' / self.module / self.concept

@@ -1,0 +1,103 @@
+﻿  [CONFIG] Usando config global: SebentasDatabase\_tests_config\default_test_config.json
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\determinacao_valores\MAT_A8MODELO_1SX_DVX_001.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\determinacao_valores\MAT_A8MODELO_1SX_DVX_001.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_DVX_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\determinacao_valores\MAT_A8MODELO_1SX_DVX_002.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\determinacao_valores\MAT_A8MODELO_1SX_DVX_002.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_DVX_002.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\determinacao_valores\MAT_A8MODELO_1SX_DVX_003.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\determinacao_valores\MAT_A8MODELO_1SX_DVX_003.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_DVX_003.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_001.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_001.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_002.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_002.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_002.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_003.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_003.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_003.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_004.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_004.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_004.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_005.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_005.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_005.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_006.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_006.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_006.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_007.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_007.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_007.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_008.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_008.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_008.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_009.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_009.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_009.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_010.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_010.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_010.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_011.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_011.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_011.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_012.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_012.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_012.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_013.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_014.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_001.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_001.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_002.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_002.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_002.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_003.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_003.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_003.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_004.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_004.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_004.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_005.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_005.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_005.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_006.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_006.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_006.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_007.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_007.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_007.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_008.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_008.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_008.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_009.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_009.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_009.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_010.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_010.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_010.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_011.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_011.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_011.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados_test\MAT_A8MODELO_1SX_NFT_001.tex
+Considering source: C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_012.tex
+Resolved source path exists: True
+Copied C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A8_modelos_discretos\1-sistemas_numericos\numeros_figurados\MAT_A8MODELO_1SX_NFX_012.tex -> temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex\exercises.d\MAT_A8MODELO_1SX_NFX_012.tex
+QA2 generated at temp\QA2_A8\matematica\A8_modelos_discretos\1-sistemas_numericos\tex

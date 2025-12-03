@@ -1,0 +1,209 @@
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
+}
+
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
+
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Módulo P3 - Trigonometria}
+\rhead{}
+\cfoot{\thepage}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Módulo P3 - Trigonometria}
+
+\textit{Introdução à Trigonometria e Geometria}
+
+\vspace{1em}
+
+Este documento contém todos os exercícios do módulo, organizados por conceito.
+
+\tableofcontents
+\newpage
+
+\section{2 - triangulos isosceles}
+
+% Exercise ID: MAT_P3TRIGON_2TX_DXX_001
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Num triângulo $ABC$ com $AB = AC$ e ângulo em $A = 20^\circ$, encontre os ângulos $B$ e $C$.
+
+\begin{center}
+\begin{tikzpicture}[scale=2]
+    % Definir pontos
+    \coordinate (A) at (0,2);
+    \coordinate (B) at (-1.5,0);
+    \coordinate (C) at (1.5,0);
+    
+    % Desenhar triângulo
+    \draw[thick] (A) -- (B) -- (C) -- cycle;
+    
+    % Marcar lados iguais
+    \draw[dashed] (A) -- (B);
+    \draw[dashed] (A) -- (C);
+    \node[above left] at ($(A)!0.5!(B)$) {$a$};
+    \node[above right] at ($(A)!0.5!(C)$) {$a$};
+    \node[below] at ($(B)!0.5!(C)$) {$b$};
+    
+    % Marcar ângulos
+    \draw[fill=blue!20] (0.5,0) arc (0:20:0.5);
+    \node at (0.7,0.2) {$20^\circ$};
+    
+    % Marcar pontos
+    \fill (A) circle (1pt) node[above] {$A$};
+    \fill (B) circle (1pt) node[below left] {$B$};
+    \fill (C) circle (1pt) node[below right] {$C$};
+    
+    % Indicar ângulos desconhecidos
+    \draw[fill=red!20] (-1.3,0.3) arc (160:180:0.5);
+    \draw[fill=red!20] (1.3,0.3) arc (20:0:0.5);
+    \node[red] at (-1.5,0.6) {$?$};
+    \node[red] at (1.5,0.6) {$?$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Instruções de compilação:}
+\begin{itemize}
+    \item Use \texttt{pdflatex} ou \texttt{xelatex} para compilar
+    \item Inclua os pacotes: \texttt{\textbackslash usepackage\{tikz\}} e \texttt{\textbackslash usepackage\{calc\}}
+    \item O pacote \texttt{calc} é necessário para as coordenadas intermediárias com \texttt{\$()}
+\end{itemize}}
+
+\FloatBarrier
+
+
+\newpage
+
+\section{3 - identidades trigonometricas}
+
+% Exercise ID: MAT_P3TRIGON_3IX_AVF_001
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{\exercicio{Afirmação sobre identidade fundamental}}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P3TRIGON_3IX_AVF_002
+% Created: 2025-11-27
+% Difficulty: 3/5
+
+\exercicio{\exercicio{Afirmação sobre identidade de tangente}}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P3TRIGON_3IX_AVF_003
+% Created: 2025-11-27
+% Difficulty: 3/5
+
+\exercicio{\exercicio{Afirmação sobre identidade de ângulo duplo}}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P3TRIGON_3IX_AVF_004
+% Created: 2025-11-27
+% Difficulty: 4/5
+
+\exercicio{\exercicio{Afirmação sobre identidade pitagórica inversa}}
+
+\FloatBarrier
+
+
+\newpage
+
+
+\end{document}
