@@ -1,96 +1,106 @@
-% Template para geração automática de sebentas
-% Gerado automaticamente - NÃO EDITAR MANUALMENTE
-\documentclass[12pt,a4paper]{article}
-
-% Encoding e idioma
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[portuguese]{babel}
-
-% Matemática
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{mathtools}
-
-% Gráficos e figuras
-\usepackage{graphicx}
-\usepackage{tikz}
-\usetikzlibrary{calc,patterns,angles,quotes}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
-% Force float barriers when needed to keep figures right after exercises
-\usepackage{placeins}
-\usepackage{float}  % Para figure[H] - força figuras exatamente onde definidas
-
-% Layout e formatação
+\usepackage{lmodern}
 \usepackage{geometry}
-\geometry{a4paper,margin=2.5cm,top=3cm,bottom=3cm}
 \usepackage{fancyhdr}
-\usepackage{enumitem}
-\usepackage{multicol}
-\usepackage{booktabs}
-
-% Hyperlinks e referências
 \usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    urlcolor=blue,
-    citecolor=blue
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
 }
 
-% Sistema de exercícios - macros personalizadas
-\newcounter{exerciciocount}
-\newcounter{subexerciciocount}
-\newcounter{optioncount}
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
 
-\newcommand{\exercicio}[1][]{% 
-    \par\vspace{1.5em}%
-    \refstepcounter{exerciciocount}%
-    \setcounter{subexerciciocount}{0}%
-    \setcounter{optioncount}{0}%
-    \noindent\textbf{Exercício~\theexerciciocount.}%
-    \ifx&#1&%
-        % Argumento vazio - o conteúdo vem depois
-        \par\vspace{0.3em}%
-    \else%
-        % Argumento fornecido - incluir inline
-        \ #1\par\vspace{0.5em}%
-    \fi%
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
 }
 
-\newcommand{\subexercicio}[1]{%
-    \par\vspace{0.8em}%
-    \refstepcounter{subexerciciocount}%
-    \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
 }
 
-\newcommand{\option}[1]{%
-    \par
-    \refstepcounter{optioncount}%
-    \noindent(\alph{optioncount}) #1%
-}
-
-% Campos para respostas
-\newcommand{\campo}[1][2.0cm]{\makebox[#1]{\hrulefill}}
-\newcommand{\campoLetra}[1][1.2cm]{\makebox[#1]{\hrulefill}}
-\newcommand{\campoCents}[1][3.0cm]{\makebox[#1]{\hrulefill}}% Cabeçalho e rodapé
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{MÓDULO P4 - Funções}
-\fancyhead[R]{Generalidades acerca de Funções}
-\fancyfoot[C]{\thepage}
+\lhead{MÓDULO P4 - Funções}
+\rhead{Generalidades acerca de Funções}
+\cfoot{\thepage}
 
-% Metadados do documento
 \title{}
 \author{}
 \date{}
 
 \begin{document}
-
-% Remover título, autor e data - apenas conteúdo
-\thispagestyle{fancy}
+\maketitle
 
 \section*{Generalidades acerca de Funções}
 
@@ -100,15 +110,829 @@ Conceitos fundamentais sobre funções reais de variável real, incluindo defini
 
 \vspace{1em}
 
-% Exercício 1: MAT_P4FUNCOE_1GEN_001.tex
+\subsection*{Tipos de Exercícios}
+\begin{itemize}
+  \item \textbf{Afirmações Causais (preço/despesa)}
+  \item \textbf{Afirmações Causais sobre Funções} --- Exercícios que envolvem análise de afirmações causais relacionadas a funções, como relações entre variáveis dependentes e independentes.
+  \item \textbf{Afirmacoes Causais Despesa Preco}
+  \item \textbf{Afirmacoes Causais Monotonicidade}
+  \item \textbf{Afirmacoes Causais Relacoes}
+  \item \textbf{Afirmacoes Contexto}
+  \item \textbf{Afirmacoes Contextuais}
+  \item \textbf{Afirmacoes Relacionais}
+  \item \textbf{Afirmações Verdadeiro/Falso} --- Exercícios onde os alunos avaliam afirmações (V/F) sobre relações entre preço, quantidade e despesa.
+  \item \textbf{Análise de Afirmações} --- Exercícios nos quais o aluno analisa afirmações sobre relações entre preço e despesa total e decide se são verdadeiras ou falsas.
+  \item \textbf{Interpretacao Contexto}
+  \item \textbf{Juízo Causal sobre Monotonicidade}
+  \item \textbf{Reconhecimento Variaveis}
+  \item \textbf{Relações Causais (preço/despesa)}
+  \item \textbf{Relacoes Causa Efeito}
+  \item \textbf{Test Logging}
+  \item \textbf{Test Payload File}
+  \item \textbf{Test Wrapper Integration}
+  \item \textbf{Tipo Novo}
+\end{itemize}
+
+\vspace{1em}
+
+% Exercício 1: MAT_P4FUNCOE_1GX_ACA_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ACA_001
+% Created: 2025-11-28
+% Difficulty: 3/5
+
+\exercicio{Considere as seguintes afirmações sobre o preço p>0, a quantidade demandada q(p)\ge 0 e a despesa total D(p)=p\,q(p). Para cada afirmação: (i) classifique-a como "sempre verdadeira", "às vezes verdadeira" ou "falsa"; (ii) justifique brevemente a sua resposta (prova curta ou contraexemplo).
+
+\begin{enumerate}[a)]
+\item Quando o preço aumenta, a despesa total D(p) aumenta.
+\item Se q(p) é decrescente em p, então D(p) é decrescente.
+\item Se q(p)=k/p (k>0), então D(p) é constante e não depende de p.
+\item Se p_1<p_2 e D(p_2)>D(p_1), então necessariamente q(p_2)>q(p_1).
+\end{enumerate}}
+\FloatBarrier
+
+% Exercício 2: MAT_P4FUNCOE_1GX_ACX_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ACX_001
+% Created: 2025-11-28
+% Difficulty: 3/5
+
+\exercicio{'Considere as seguintes afirmações sobre preço (p)}
+\FloatBarrier
+
+% Exercício 3: MAT_P4FUNCOE_1GX_ACX_002.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ACX_002
+% Created: 2025-11-28
+% Difficulty: 3/5
+
+\exercicio{'Considere as seguintes afirmações sobre preço (p)}
+\FloatBarrier
+
+% Exercício 4: MAT_P4FUNCOE_1GFUN_AFC_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GFUN_AFC_001
+% Module: MÓDULO P4 - Funções | Concept: Generalidades acerca de Funções
+% Difficulty: 3/5 (Médio) | Format: desenvolvimento
+% Tags: afirmacoes_causais, funcoes, relacoes_causais, analise_matematica
+% Author: Professor | Date: 2025-11-28
+% Status: active
+
+\exercicio{Considere P (preço) e D (despesa) relacionadas por uma função D = f(P). Para cada uma das afirmações seguintes: (i) indique se é verdadeira ou falsa; (ii) justifique a sua resposta com argumentos matemáticos; (iii) quando possível, dê um exemplo explícito de função f que torne a afirmação verdadeira e outro que a torne falsa.
+\par
+\subexercicio{(A) "Quando o preço aumenta, a despesa aumenta."}
+\subexercicio{(B) "Se o preço dobra, então a despesa dobra."}
+\subexercicio{(C) "Se f for estritamente crescente, então qualquer aumento do preço implica um aumento da despesa."}
+\subexercicio{(D) "Se f for constante, então a despesa não varia quando o preço varia."}}
+\FloatBarrier
+
+% Exercício 5: MAT_P4FUNCOE_1GX_ACD_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ACD_001
+% Created: 2025-11-27
+% Difficulty: 3/5
+
+\exercicio{Classifique V/F e justifique: (a) Quando o preço de um bem aumenta}
+\FloatBarrier
+
+% Exercício 6: MAT_P4FUNCOE_1GX_ACM_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ACM_001
+% Created: 2025-11-27
+% Difficulty: 3/5
+
+\exercicio{Classificação de afirmações: para cada afirmação indique VERDADEIRA/FALSA}
+\FloatBarrier
+
+% Exercício 7: MAT_P4FUNCOE_1GX_ACM_002.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ACM_002
+% Created: 2025-11-27
+% Difficulty: 3/5
+
+\exercicio{Teste de logging de inputs.}
+\FloatBarrier
+
+% Exercício 8: MAT_P4FUNCOE_1GX_ACR_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ACR_001
+% Created: 2025-11-27
+% Difficulty: 3/5
+
+\exercicio{Classifique as seguintes afirmações como VERDADEIRA ou FALSA; justifique rigorosamente e}
+\FloatBarrier
+
+% Exercício 9: MAT_P4FUNCOE_1GX_ACX_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ACX_001
+% Created: 2025-11-29
+% Difficulty: 2/5
+
+\exercicio{Teste de staging via wrapper}
+\FloatBarrier
+
+% Exercício 10: MAT_P4FUNCOE_1GX_ACX_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ACX_001
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Considere que}
+\FloatBarrier
+
+% Exercício 11: MAT_P4FUNCOE_1GEN_AR_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GEN_AR_001
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Classifique cada afirmação como Verdadeira (V) ou Falsa (F) e justifique brevemente.}
+
+\subexercicio{(a) Quando o preço de um bem aumenta, a despesa (gasto total) com esse bem aumenta.}
+
+\subexercicio{(b) Se a quantidade consumida desse bem se mantém fixa, então um aumento do preço implica um aumento da despesa.}
+
+\subexercicio{(c) A relação que associa a cada preço $p$ a despesa total $D(p)=p\cdot q(p)$ é, em toda situação, uma função (ou seja, a cada preço corresponde um único valor de despesa).}
+
+\subexercicio{(d) Se $D(p)=p\cdot q(p)$ é uma função monótona crescente em $p$ (para $p>0$), então obrigatoriamente $q(p)$ é constante e positiva.}
+
+\subexercicio{(e) Se $D(p)=p\cdot q(p)$ é injetora para $p>0$, então $q(p)$ é também uma função injetora.}
+\FloatBarrier
+
+% Exercício 12: MAT_P4FUNCOE_1GX_ARX_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ARX_001
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Teste de afirmação: 1+1=2}
+\FloatBarrier
+
+% Exercício 13: MAT_P4FUNCOE_1GX_ARX_002.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ARX_002
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Classifique cada uma das afirmações seguintes como Verdadeira (V) ou Falsa (F). Em cada caso, justifique brevemente a sua resposta.}
+
+\subexercicio{(a) "Quando o preço de um produto aumenta, a despesa total com esse produto aumenta."}
+
+\subexercicio{(b) "Se o preço de um produto aumenta e a quantidade vendida permanece exactamente a mesma, então a despesa total aumenta."}
+
+\subexercicio{(c) "Se uma relação associa a cada preço uma despesa (ou seja, para cada preço existe exactamente uma despesa associada), então essa relação é uma função do conjunto dos preços no conjunto das despesas."}
+
+\subexercicio{(d) "Se $f: \mathbb{R}\to\mathbb{R}$ é crescente, então para quaisquer $x_1<x_2$ temos $f(x_1)\le f(x_2)$."}
+
+\subexercicio{(e) "Uma função que é injectiva garante que valores iguais da imagem correspondem a argumentos iguais."}
+\FloatBarrier
+
+% Exercício 14: MAT_P4FUNCOE_1GX_ARX_004.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ARX_004
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Quero que cries um exercício no módulo P4_funcoes na generalidades de funcoes (procurar nomenclatura) e adiciones um novo tipo de exercício (escolhe tu a nomenclatura do tipo de exercício!)}
+\FloatBarrier
+
+% Exercício 15: MAT_P4FUNCOE_1GX_ARX_005.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ARX_005
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Quero que cries um exercício no módulo P4_funcoes na generalidades de funcoes onde os alunos analisem afirmacoes tipo 'quando o preço aumenta a despesa vai aumentar'}
+\FloatBarrier
+
+% Exercício 16: MAT_P4FUNCOE_1GX_AVF_001.tex
+% meta:
+% id: MAT_P4FUNCOE_1GX_AVF_001
+% title: "Afirmações sobre preço e despesa"
+% difficulty: 2
+% tags: ["afirmacoes","preco","despesa","verdadeiro_falso"]
+% author: "OpenAI"
+% has_parts: true
+% parts_count: 3
+
+\section{Afirmações sobre preço e despesa}
+
+\exercicio{
+Considere a seguinte situação:
+
+Numa loja, o preço de um produto é representado por $p$ (em euros) e a despesa total dos clientes é dada por $D(p)$.
+
+Para cada uma das afirmações seguintes, indique se é verdadeira ou falsa, justificando a sua resposta:
+\begin{enumerate}
+    \item Quando o preço aumenta, a despesa total $D(p)$ aumenta sempre.
+    \item Se o preço for zero, a despesa total $D(0)$ é necessariamente zero.
+    \item Se a despesa total $D(p)$ diminui quando o preço aumenta, então os clientes estão a comprar menos produtos.
+\end{enumerate}
+}
+\FloatBarrier
+
+% Exercício 17: MAT_P4FUNCOE_1GX_AAF_001.tex
+% meta:
+% id: MAT_P4FUNCOE_1GX_AAF_001
+% title: "Análise de afirmações sobre preço e despesa"
+% discipline: "matematica"
+% module: "P4_funcoes"
+% concept: "1-generalidades_funcoes"
+% tipo: "analise_afirmacoes"
+% difficulty: 2
+% tags: "analise,afirmacoes,preco,despesa"
+% author: "OpenAI"
+% version: 1
+
+\section{Análise de afirmações}
+
+\exercicio{
+Considere a seguinte situação:
+
+"Numa loja, o preço de um produto é representado por $p$ (em euros) e a despesa total dos clientes é dada por $D(p)$.")
+
+Para cada uma das afirmações seguintes, indique se é verdadeira ou falsa, justificando a sua resposta:
+\begin{enumerate}
+    \item Quando o preço aumenta, a despesa total $D(p)$ aumenta sempre.
+    \item Se o preço for zero, a despesa total $D(0)$ é necessariamente zero.
+    \item Se a despesa total $D(p)$ diminui quando o preço aumenta, então os clientes estão a comprar menos produtos.
+\end{enumerate}
+}
+\FloatBarrier
+
+% Exercício 18: MAT_P4FUNCOE_1GX_ICX_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_001
+% Created: 2025-11-26
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 19: MAT_P4FUNCOE_1GX_ICX_002.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_002
+% Created: 2025-11-26
+% Difficulty: 2/5
+
+\exercicio{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA}
+\FloatBarrier
+
+% Exercício 20: MAT_P4FUNCOE_1GX_ICX_003.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_003
+% Created: 2025-11-26
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 21: MAT_P4FUNCOE_1GX_ICX_004.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_004
+% Created: 2025-11-26
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.\par 1. Quando o preço aumenta, a despesa total D(x) aumenta sempre.\par 2. Se o preço for zero, a despesa total D(0) é necessariamente zero.\par 3. Se a despesa total D(x) diminui quando o preço aumenta, então os clientes estão a comprar menos produtos.}
+\FloatBarrier
+
+% Exercício 22: MAT_P4FUNCOE_1GX_ICX_005.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_005
+% Created: 2025-11-26
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 23: MAT_P4FUNCOE_1GX_ICX_006.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_006
+% Created: 2025-11-26
+% Difficulty: 2/5
+
+\exercicio{A*3000}
+\FloatBarrier
+
+% Exercício 24: MAT_P4FUNCOE_1GX_ICX_007.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_007
+% Created: 2025-11-26
+% Difficulty: 2/5
+
+\exercicio{Quando o preço aumenta, a despesa aumenta? Verdadeiro ou falso? Justifique.}
+\FloatBarrier
+
+% Exercício 25: MAT_P4FUNCOE_1GX_ICX_008.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_008
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 26: MAT_P4FUNCOE_1GX_ICX_009.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_009
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA}
+\FloatBarrier
+
+% Exercício 27: MAT_P4FUNCOE_1GX_ICX_010.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_010
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 28: MAT_P4FUNCOE_1GX_ICX_011.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_011
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 29: MAT_P4FUNCOE_1GX_ICX_012.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_012
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA}
+\FloatBarrier
+
+% Exercício 30: MAT_P4FUNCOE_1GX_ICX_013.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_013
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 31: MAT_P4FUNCOE_1GX_ICX_014.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_014
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 32: MAT_P4FUNCOE_1GX_ICX_015.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_015
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA}
+\FloatBarrier
+
+% Exercício 33: MAT_P4FUNCOE_1GX_ICX_016.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_016
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 34: MAT_P4FUNCOE_1GX_ICX_017.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_017
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 35: MAT_P4FUNCOE_1GX_ICX_018.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_018
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA}
+\FloatBarrier
+
+% Exercício 36: MAT_P4FUNCOE_1GX_ICX_019.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_019
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 37: MAT_P4FUNCOE_1GX_ICX_020.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_020
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 38: MAT_P4FUNCOE_1GX_ICX_021.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_021
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA}
+\FloatBarrier
+
+% Exercício 39: MAT_P4FUNCOE_1GX_ICX_022.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_022
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 40: MAT_P4FUNCOE_1GX_ICX_023.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_023
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 41: MAT_P4FUNCOE_1GX_ICX_024.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_024
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA}
+\FloatBarrier
+
+% Exercício 42: MAT_P4FUNCOE_1GX_ICX_025.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_025
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 43: MAT_P4FUNCOE_1GX_ICX_026.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_026
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 44: MAT_P4FUNCOE_1GX_ICX_027.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_027
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA}
+\FloatBarrier
+
+% Exercício 45: MAT_P4FUNCOE_1GX_ICX_028.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_028
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 46: MAT_P4FUNCOE_1GX_ICX_029.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_029
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 47: MAT_P4FUNCOE_1GX_ICX_030.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_030
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA}
+\FloatBarrier
+
+% Exercício 48: MAT_P4FUNCOE_1GX_ICX_031.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_031
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 49: MAT_P4FUNCOE_1GX_ICX_032.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_032
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 50: MAT_P4FUNCOE_1GX_ICX_033.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_033
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA}
+\FloatBarrier
+
+% Exercício 51: MAT_P4FUNCOE_1GX_ICX_034.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_034
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 52: MAT_P4FUNCOE_1GX_ICX_035.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_035
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 53: MAT_P4FUNCOE_1GX_ICX_036.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_036
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA}
+\FloatBarrier
+
+% Exercício 54: MAT_P4FUNCOE_1GX_ICX_037.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_037
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 55: MAT_P4FUNCOE_1GX_ICX_038.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_038
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 56: MAT_P4FUNCOE_1GX_ICX_039.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_039
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA}
+\FloatBarrier
+
+% Exercício 57: MAT_P4FUNCOE_1GX_ICX_040.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_040
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 58: MAT_P4FUNCOE_1GX_ICX_041.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_041
+% Created: 2025-11-28
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 59: MAT_P4FUNCOE_1GX_ICX_042.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_042
+% Created: 2025-12-02
+% Difficulty: 2/5
+
+\exercicio{Considere a seguinte situação: Numa loja, o preço de um produto é representado por x (em euros) e a despesa total dos clientes é dada por D(x). Indique se as seguintes afirmações são verdadeiras ou falsas, justificando a sua resposta.}
+\FloatBarrier
+
+% Exercício 60: MAT_P4FUNCOE_1GX_ICX_043.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_043
+% Created: 2025-12-02
+% Difficulty: 2/5
+
+\exercicio{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA}
+\FloatBarrier
+
+% Exercício 61: MAT_P4FUNCOE_1GX_ICX_044.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_ICX_044
+% Created: 2025-12-02
+% Difficulty: 2/5
+
+\exercicio{Questão com caracteres especiais: % $ & { } [ ] ~ # _ ^ \}
+\FloatBarrier
+
+% Exercício 62: MAT_P4FUNCOE_1GX_JCM_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_JCM_001
+% Created: 2025-11-27
+% Difficulty: 3/5
+
+\exercicio{Considere as seguintes funções que relacionam o preço $p$ (em euros) com a despesa $E(p)$. Para cada uma, analise a afirmação: "Quando o preço aumenta, a despesa aumenta." Decida se a afirmação é verdadeira para todos os valores de $p$; justifique rigorosamente ou apresente um contraexemplo.\\
+\begin{enumerate}[a)]
+\item $E(p)=10+2p$.
+\item $E(p)=100-3p$.
+\item $E(p)=\dfrac{50p}{p+10},\quad p
+eq -10$.
+\item $E(p)=\begin{cases} p^2,& p\ge 0,\\ -p,& p<0.\end{cases}$
+\end{enumerate}
+
+% Metadata file: ExerciseDatabase/matematica/P4_funcoes/1-generalidades_funcoes/juizo_causal/MAT_P4FUNCOE_1GX_JCM_001.json
+\FloatBarrier
+
+% Exercício 63: MAT_P4FUNCOE_1GEN_001.tex
 % Exercise ID: MAT_P4FUNCOE_1GEN_001
 % Module: MÓDULO P4 - Funções | Concept: Generalidades acerca de Funções
 % Difficulty: 2/5 (Fácil) | Type: desenvolvimento
 % Author: Exemplo | Date: 2025-11-15
 % Status: active
 
-\exercicio{Defina o conceito de função entre conjuntos e dê dois exemplos simples.}
+\exercicio{Defina o conceito de função entre conjuntos e dê dois exemplos simples.
+\vspace{3cm}
+}
 \FloatBarrier
 
+% Exercício 64: MAT_P4FUNCOE_1GX_RVX_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_RVX_001
+% Created: 2025-11-26
+% Difficulty: 1/5
+
+\exercicio{Numa fábrica, o número de peças produzidas depende do número de horas de funcionamento das máquinas. Identifique a variável independente e a variável dependente neste contexto.}
+\FloatBarrier
+
+% Exercício 65: MAT_P4FUNCOE_1GX_RVX_002.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_RVX_002
+% Created: 2025-11-26
+% Difficulty: 1/5
+
+\exercicio{Um agricultor rega as suas plantas e observa o crescimento das mesmas ao longo do tempo. Indique qual é a variável independente e qual é a variável dependente.}
+\FloatBarrier
+
+% Exercício 66: MAT_P4FUNCOE_1GX_RVX_003.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_RVX_003
+% Created: 2025-11-26
+% Difficulty: 1/5
+
+\exercicio{Numa experiência laboratorial, um cientista altera a temperatura de um líquido e regista a quantidade de gás libertado. Identifique as variáveis independente e dependente.}
+\FloatBarrier
+
+% Exercício 67: MAT_P4FUNCOE_1GX_RVX_004.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_RVX_004
+% Created: 2025-11-26
+% Difficulty: 1/5
+
+\exercicio{Uma empresa aumenta o investimento em publicidade e analisa o número de novos clientes obtidos. Indique qual é a variável independente e qual é a variável dependente.}
+\FloatBarrier
+
+% Exercício 68: MAT_P4FUNCOE_1GX_RVX_005.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_RVX_005
+% Created: 2025-11-26
+% Difficulty: 1/5
+
+\exercicio{Um estudante estuda mais horas por semana e observa a evolução das suas notas nos testes. Identifique a variável independente e a variável dependente neste caso.}
+\FloatBarrier
+
+% Exercício 69: MAT_P4FUNCOE_1GX_RVX_006.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_RVX_006
+% Module: MÓDULO P4 - Funções | Concept: Generalidades acerca de Funções | Type: Reconhecimento Variaveis
+% Difficulty: 5/5 (Muito Difícil) | Format: desenvolvimento
+% Tags: contradominio, definicao, dominio, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para reconhecimento_variaveis}
+\FloatBarrier
+
+% Exercício 70: MAT_P4FUNCOE_1GX_RVX_007.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_RVX_007
+% Module: MÓDULO P4 - Funções | Concept: Generalidades acerca de Funções | Type: Reconhecimento Variaveis
+% Difficulty: 1/5 (Muito Fácil) | Format: desenvolvimento
+% Tags: dominio, contradominio, definicao, opencode_test, terminal
+% Author: opencode-terminal-tester | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para reconhecimento_variaveis}
+
+% Solution:
+% \begin{solucao}
+% Solução exemplo
+% \end{solucao}
+\FloatBarrier
+
+% Exercício 71: MAT_P4FUNCOE_1GX_RCA_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_RCA_001
+% Created: 2025-11-28
+% Difficulty: 3/5
+
+\exercicio{Considere p>0, q(p)\ge 0 e a despesa total D(p)=p\,q(p). Para cada uma das afirmações seguintes: (i) classifique-a como "sempre verdadeira", "às vezes verdadeira" ou "falsa"; (ii) justifique brevemente a sua resposta (prova curta ou contraexemplo).\begin{enumerate}[a)]\item Sempre que o preço p aumenta, a despesa total D(p) aumenta.\item Se q(p) é decrescente em p, então D(p) é decrescente.\item Se q(p)=k/p com k>0, então D(p) é constante e independe de p.\item Se p_1<p_2 e D(p_2)>D(p_1), então necessariamente q(p_2)>q(p_1).\end{enumerate}}
+\FloatBarrier
+
+% Exercício 72: MAT_P4FUNCOE_1GX_RCX_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_RCX_001
+% Created: 2025-11-28
+% Difficulty: 3/5
+
+\exercicio{'\exercicio{Considere p>0}
+\FloatBarrier
+
+% Exercício 73: MAT_P4FUNCOE_1GX_RCE_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_RCE_001
+% Created: 2025-11-28
+% Difficulty: 2/5
+
+\exercicio{'Classifique as afirmações seguintes como Verdadeira (V) ou Falsa (F) e justifique brevemente cada resposta.
+
+(a) Quando o preço de um bem aumenta}
+\FloatBarrier
+
+% Exercício 74: MAT_P4FUNCOE_1GX_RCE_002.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_RCE_002
+% Created: 2025-11-28
+% Difficulty: 2/5
+
+\exercicio{'Classifique as afirmações seguintes como Verdadeira (V) ou Falsa (F) e justifique brevemente cada resposta.
+
+(a) Quando o preço de um bem aumenta}
+\FloatBarrier
+
+% Exercício 75: MAT_P4FUNCOE_1GX_RCE_003.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_RCE_003
+% Created: 2025-11-28
+% Difficulty: 2/5
+
+\exercicio{'Classifique as afirmações seguintes como Verdadeira (V) ou Falsa (F) e justifique brevemente cada resposta.
+
+(a) Quando o preço de um bem aumenta}
+\FloatBarrier
+
+% Exercício 76: MAT_P4FUNCOE_1GX_TLX_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_TLX_001
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{'Teste logging'}
+\FloatBarrier
+
+% Exercício 77: MAT_P4FUNCOE_1GX_TLX_002.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_TLX_002
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{'Teste logging'}
+\FloatBarrier
+
+% Exercício 78: MAT_P4FUNCOE_1GX_TLX_003.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_TLX_003
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{'Teste logging'}
+\FloatBarrier
+
+% Exercício 79: MAT_P4FUNCOE_1GX_TLX_004.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_TLX_004
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{'Teste logging'}
+\FloatBarrier
+
+% Exercício 80: MAT_P4FUNCOE_1GX_TLX_005.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_TLX_005
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{'Teste logging'}
+\FloatBarrier
+
+% Exercício 81: MAT_P4FUNCOE_1GX_TLX_006.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_TLX_006
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{'Teste logging'}
+\FloatBarrier
+
+% Exercício 82: MAT_P4FUNCOE_1GX_TLX_007.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_TLX_007
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{'Teste logging'}
+\FloatBarrier
+
+% Exercício 83: MAT_P4FUNCOE_1GX_TLX_008.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_TLX_008
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{'Teste logging'}
+\FloatBarrier
+
+% Exercício 84: MAT_P4FUNCOE_1GX_TLX_009.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_TLX_009
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{'Teste logging'}
+\FloatBarrier
+
+% Exercício 85: MAT_P4FUNCOE_1GX_TLX_010.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_TLX_010
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{'Teste logging'}
+\FloatBarrier
+
+% Exercício 86: MAT_P4FUNCOE_1GX_TWI_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_TWI_001
+% Created: 2025-11-27
+% Difficulty: 2/5
+
+\exercicio{'Teste integração wrapper: classifique afirmações.'}
+\FloatBarrier
+
+% Exercício 87: MAT_P4FUNCOE_1GX_TNX_001.tex
+% Exercise ID: MAT_P4FUNCOE_1GX_TNX_001
+% Created: 2025-11-26
+% Difficulty: 2/5
+
+\exercicio{Exemplo de exercício para tipo novo. O script deve criar o diretório e o tipo automaticamente.}
+\FloatBarrier
 
 \end{document}

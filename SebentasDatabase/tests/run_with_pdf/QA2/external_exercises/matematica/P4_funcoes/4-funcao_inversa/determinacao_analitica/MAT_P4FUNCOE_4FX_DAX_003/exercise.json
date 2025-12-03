@@ -1,0 +1,13 @@
+{
+  "ip": "1.1.1.1.3",
+  "ids": {
+    "discipline": 1,
+    "module": 1,
+    "concept": 1,
+    "type": 1,
+    "exercise": 3
+  },
+  "label": "MAT_P4FUNCOE_4FX_DAX_003",
+  "path": "matematica\\P4_funcoes\\4-funcao_inversa\\determinacao_analitica\\MAT_P4FUNCOE_4FX_DAX_003",
+  "assigned_at": 1764427365
+}

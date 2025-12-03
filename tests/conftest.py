@@ -1,3 +1,11 @@
+import pytest
+from fastapi.testclient import TestClient
+from service.fastapi_app import app
+
+
+@pytest.fixture
+def client():
+    return TestClient(app)
 import importlib
 from pathlib import Path
 import shutil

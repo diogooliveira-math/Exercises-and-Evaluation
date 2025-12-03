@@ -1,0 +1,159 @@
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
+}
+
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
+
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Psicoanalise}
+\rhead{}
+\cfoot{\thepage}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Psicoanalise}
+
+Este documento contém todos os exercícios do módulo, organizados por conceito.
+
+\tableofcontents
+\newpage
+
+\section{1 - transferencia}
+
+% Exercise ID: PSI_PSICOANA_1TX_ACX_001
+% Created: 2025-11-30
+% Difficulty: 2/5
+
+\exercicio{Transferência em contextos clínicos — versão para jovens adultos
+
+Leia atentamente as três vinhetas clínicas e, para cada uma, responda de forma concisa (máx. 6 linhas por resposta):
+
+\subexercicio{1} Paciente A (jovem adulto em transição): Após terminar o secundário e começar a faculdade/trabalho, o paciente apresenta comportamentos repetidos em sessão que remetem para relações familiares anteriores:
+(i) pede frequentemente a opinião do terapeuta sobre decisões pessoais importantes (curso, emprego, namoro) e interpreta a concordância como prova de apoio incondicional;  
+(ii) quando o terapeuta sugere limites (p. ex. não comentar assuntos clínicos nas redes), o paciente reage com silêncio prolongado ou ironia, como fazia quando o progenitor reagia com retirada emocional;  
+(iii) procura fora de sessão contacto e elogios por mensagens, ficando ansioso se não obtém resposta rápida — reproduzindo uma dependência afetiva prévia.  
+Perguntas: a) Identifique que formas de transferência estão presentes (indique positiva/negativa quando apropriado). b) Explique brevemente como essas transferências podem influenciar a aliança terapêutica e proponha uma atitude clínica simples do terapeuta para as gerir.
+
+\subexercicio{2} Paciente B (terapia de grupo): Um membro idealiza a terapeuta e espera que esta resolva todos os conflitos do grupo, tal como fazia com uma figura maternal na infância.  
+Perguntas: a) Identifique a transferência e diferencie-a da admiração. b) Sugira uma intervenção breve que a terapeuta pode usar no grupo.
+
+\subexercicio{3} Paciente C (adolescente): O adolescente recusa autoridade e desafia regras, comportamento que remete para rebeldia contra uma professora que o punia injustamente.  
+Perguntas: a) Explique como a transferência reproduz padrões relacionais anteriores. b) Aponte uma estratégia concreta para o terapeuta lidar com esta transferência sem confrontos improdutivos.
+
+\texto{Orientações:} Responda de forma clara e objetiva, usando conceitos básicos de psicanálise (transferência, transferência positiva/negativa, contratransferência) quando pertinente. Cada subexercício vale 1 ponto.}
+
+\FloatBarrier
+
+% Preview wrapper for PSI_PSICOANA_1TX_ACX_001
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{parskip}
+\usepackage{enumitem}
+\newcommand{\exercicio}[1]{\par\noindent\textbf{Exercício. }#1\par}
+\newcommand{\subexercicio}[1]{\par\noindent\textbf{Subexercício. }#1\par}
+\newcommand{\texto}[1]{\par\noindent\textit{#1}\par}
+\begin{document}
+\input{PSI_PSICOANA_1TX_ACX_001.tex}
+\end{document}
+
+\FloatBarrier
+
+
+\newpage
+
+
+\end{document}

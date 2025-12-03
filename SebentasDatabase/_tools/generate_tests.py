@@ -44,11 +44,12 @@ from datetime import datetime
 from typing import Dict, List, Any, Optional, Tuple
 import re
 
-# Importar sistema de preview
+# Importar sistema de preview (usar caminho correto para ExerciseDatabase/_tools)
 try:
-    sys.path.insert(0, str(Path(__file__).parent.parent / "ExerciseDatabase" / "_tools"))
+    preview_tools_path = Path(__file__).resolve().parents[2] / "ExerciseDatabase" / "_tools"
+    sys.path.insert(0, str(preview_tools_path))
     from preview_system import PreviewManager, create_test_preview
-except ImportError:
+except Exception:
     PreviewManager = None
     create_test_preview = None
     print("AVISO: Sistema de preview nao disponivel - a continuar sem pre-visualizacao")
@@ -360,6 +361,17 @@ def save_tex_and_compile(
         if version_label:
             test_title += f" (Versão {version_label})"
         
+        # Create the temp preview directory explicitly and write its path to repo temp
+        try:
+            temp_preview_dir = preview_manager.create_temp_preview(preview_content, test_title)
+            temp_dir_file = PROJECT_ROOT / 'temp' / 'last_preview_dir.txt'
+            temp_dir_file.parent.mkdir(parents=True, exist_ok=True)
+            temp_dir_file.write_text(str(temp_preview_dir), encoding='utf-8')
+        except Exception:
+            # If create_temp_preview fails, continue and let show_and_confirm handle preview
+            temp_preview_dir = None
+
+        # Now invoke interactive show_and_confirm (this may open VS Code or ask the user)
         if not preview_manager.show_and_confirm(preview_content, test_title):
             print(f"  TESTE CANCELADO PELO UTILIZADOR")
             return None
@@ -491,6 +503,7 @@ def parse_args():
     p.add_argument('--export-clean', action='store_true', help='Criar cópias dos PDFs finais sem sufixos/version labels em a distribution folder')
     p.add_argument('--no-preview', action='store_true', help='Não mostrar preview antes de compilar')
     p.add_argument('--auto-approve', action='store_true', help='Aprovar automaticamente sem pedir confirmação')
+    p.add_argument('--qa2-output', help='Gerar uma estrutura tipo reference/QA2 em PATH (ex: --qa2-output temp/QA2_generated). Se omitido, não gera QA2.', default=None)
     return p.parse_args()
 
 
@@ -763,20 +776,149 @@ def main():
 
                 content, assets = build_test_content(selected, PROJECT_ROOT, config)
 
-                result = save_tex_and_compile(
-                    content,
-                    title,
-                    header_left,
-                    header_right,
-                    output_dir,
-                    no_compile=args.no_compile,
-                    version_label=label,
-                    selected_exercises=selected,
-                    config=config,
-                    no_preview=args.no_preview,
-                    auto_approve=args.auto_approve,
-                    assets_to_copy=assets,
-                )
+                # If QA2 output requested, write QA2-style folder structure
+                if args.qa2_output:
+                    try:
+                        qa2_root = Path(args.qa2_output) if not args.qa2_output.startswith('__') else PROJECT_ROOT / 'temp' / 'QA2_generated'
+                    except Exception:
+                        qa2_root = PROJECT_ROOT / 'temp' / 'QA2_generated'
+
+                    # Structure: <qa2_root>/<discipline>/<module>/<concept>/tex/
+                    qa2_concept_tex = qa2_root / discipline / module / concept / 'tex'
+                    qa2_concept_tex.mkdir(parents=True, exist_ok=True)
+
+                    # Copy assets into qa2 tex/assets/
+                    copy_assets_to_output(assets, qa2_concept_tex, PROJECT_ROOT)
+
+                    # Copy individual source files for selected exercises into exercises.d/
+                    exercises_d = qa2_concept_tex / 'exercises.d'
+                    exercises_d.mkdir(exist_ok=True)
+                    copied_files = []
+                    for ex in selected:
+                        src_rel = ex.get('path')
+                        if not src_rel:
+                            continue
+                        src = PROJECT_ROOT / src_rel
+                        # If path points to a folder, try main.tex
+                        if src.is_dir():
+                            candidate = src / 'main.tex'
+                            if candidate.exists():
+                                src = candidate
+                            else:
+                                texs = list(src.glob('*.tex'))
+                                if texs:
+                                    src = texs[0]
+                                else:
+                                    continue
+                        # Try .tex alternative if missing
+                        if not src.exists():
+                            alt = Path(str(src) + '.tex')
+                            if alt.exists():
+                                src = alt
+                        if src.exists() and src.is_file():
+                            dest = exercises_d / src.name
+                            try:
+                                shutil.copy2(src, dest)
+                                copied_files.append(dest.name)
+                            except Exception:
+                                pass
+
+                    # Build helper stubs in exercises.d/ to match reference/QA2 structure
+                    #  - input-path: sets \input@path to point back to ExerciseDatabase
+                    #  - setup-counter: create exercise counter if missing
+                    #  - include-exercise: define \IncludeExercise wrapper
+                    exercises_d.mkdir(exist_ok=True)
+                    # input-path
+                    input_path_file = exercises_d / 'input-path.tex'
+                    input_path_content = (
+                        "\\makeatletter\n"
+                        "\\def\\input@path{{../../../ExerciseDatabase/}}\n"
+                        "\\makeatother\n"
+                    )
+                    input_path_file.write_text(input_path_content, encoding='utf-8')
+
+                    # setup-counter
+                    setup_counter_file = exercises_d / 'setup-counter.tex'
+                    setup_counter_content = (
+                        "\\makeatletter\n"
+                        "\\@ifundefined{exercise}{\\newcounter{exercise}}{}\n"
+                        "\\makeatother\n"
+                    )
+                    setup_counter_file.write_text(setup_counter_content, encoding='utf-8')
+
+                    # include-exercise
+                    include_ex_file = exercises_d / 'include-exercise.tex'
+                    include_ex_content = (
+                        "\\newcommand{\\IncludeExercise}[1]{\\input{#1}}\n"
+                    )
+                    include_ex_file.write_text(include_ex_content, encoding='utf-8')
+
+                    # Build a wrapper exercises.tex that mirrors reference/QA2: load helpers and then include
+                    exercises_tex = qa2_concept_tex / 'exercises.tex'
+                    lines = []
+                    lines.append('% Small, maintainable exercise include file.')
+                    lines.append('% Responsibilities are split into includes under `exercises.d/`:')
+                    lines.append('% - `input-path.tex`      : sets `\\input@path` for subvariant inputs')
+                    lines.append('% - `setup-counter.tex`   : ensures the `exercise` counter exists')
+                    lines.append('% - `include-exercise.tex`: defines `\\IncludeExercise{<path>}` wrapper')
+                    lines.append('% The actual exercise inclusions are then simple calls to \IncludeExercise{<path>}.')
+                    lines.append('')
+                    lines.append('% Load path, counter and the include wrapper (keeps this file minimal)')
+                    lines.append('\\input{exercises.d/input-path}')
+                    lines.append('\\input{exercises.d/setup-counter}')
+                    lines.append('\\input{exercises.d/include-exercise}')
+                    lines.append('')
+                    lines.append('% Exercise includes:')
+
+                    # For each copied file, compute a path relative to the QA2 tex dir that points to ExerciseDatabase
+                    for ex in selected:
+                        src_rel = ex.get('path')
+                        if not src_rel:
+                            continue
+                        src = PROJECT_ROOT / 'ExerciseDatabase' / src_rel
+                        # normalize to file (try folder -> main.tex)
+                        if src.is_dir():
+                            candidate = src / 'main.tex'
+                            if candidate.exists():
+                                src = candidate
+                            else:
+                                texs = list(src.glob('*.tex'))
+                                if texs:
+                                    src = texs[0]
+                                else:
+                                    continue
+                        if not src.exists():
+                            alt = Path(str(src) + '.tex')
+                            if alt.exists():
+                                src = alt
+                        if not src.exists():
+                            continue
+                        # Compute relative path from qa2_concept_tex to actual source (without .tex extension)
+                        rel = os.path.relpath(src.with_suffix(''), start=qa2_concept_tex)
+                        rel = rel.replace('\\', '/')
+                        lines.append(f"\\IncludeExercise{{{rel}}}")
+
+                    lines.append('')
+                    lines.append('\\end{document}')
+                    exercises_tex.write_text('\n'.join(lines), encoding='utf-8')
+
+                    result = exercises_tex
+                    print(f"  ✅ QA2 exercises written: {exercises_tex.relative_to(PROJECT_ROOT)}")
+                else:
+                    result = save_tex_and_compile(
+                        content,
+                        title,
+                        header_left,
+                        header_right,
+                        output_dir,
+                        no_compile=args.no_compile,
+                        version_label=label,
+                        selected_exercises=selected,
+                        config=config,
+                        no_preview=args.no_preview,
+                        auto_approve=args.auto_approve,
+                        assets_to_copy=assets,
+                    )
                 results.append((label, result))
 
             overall_results[(discipline, module, concept)] = results

@@ -96,6 +96,9 @@ class PreviewManager:
         # Criar ficheiros
         for filename, file_content in content.items():
             file_path = self.temp_dir / filename
+            # Ensure parent directories exist for nested paths
+            if file_path.parent and not file_path.parent.exists():
+                file_path.parent.mkdir(parents=True, exist_ok=True)
             
             # Se for JSON, formatar bonito
             if filename.endswith('.json'):
@@ -664,6 +667,111 @@ def create_test_preview(test_name: str,
     }
     
     return preview_content
+
+
+def create_project_preview(project_ref, files: Dict[str, str] = None, metadata: Dict = None) -> Dict[str, str]:
+    """Create a preview content dict for a project.
+
+    This helper is flexible for tests and callers:
+    - If `project_ref` is a Path or string pointing to an existing folder, the function
+      will read files from that folder and return the preview dict.
+    - Otherwise, keep the original behavior: `project_ref` is a project id/name,
+      `files` is a mapping and `metadata` is a dict.
+
+    Returns a dict mapping filenames to string content suitable for PreviewManager.
+    """
+    preview = {}
+
+    # If caller passed a folder Path-like as the first argument, read from disk
+    try:
+        from pathlib import Path as _Path
+        if isinstance(project_ref, (_Path,)) or (isinstance(project_ref, str) and _Path(project_ref).exists()):
+            project_folder = _Path(project_ref)
+            files_map = {}
+            for child in sorted(project_folder.rglob('*')):
+                if child.is_file():
+                    try:
+                        rel = child.relative_to(project_folder).as_posix()
+                        files_map[rel] = child.read_text(encoding='utf-8')
+                    except Exception:
+                        files_map[child.name] = ''
+
+            # Try to load metadata.json if present
+            metadata_obj = None
+            if (project_folder / 'metadata.json').exists():
+                try:
+                    metadata_obj = json.loads((project_folder / 'metadata.json').read_text(encoding='utf-8'))
+                except Exception:
+                    metadata_obj = None
+
+            # Build preview using the same logic as below
+            proj_id = project_folder.name
+            readme = files_map.get('README.md') or files_map.get('readme.md') or files_map.get('README')
+            if readme:
+                preview['README.md'] = readme
+            preview[f"{proj_id}_metadata.json"] = json.dumps(metadata_obj or {}, indent=2, ensure_ascii=False)
+            for k, v in files_map.items():
+                if k in ('README.md', 'readme.md', 'README'):
+                    continue
+                preview[k] = v
+
+            return preview
+    except Exception:
+        # fall back to default behavior below
+        pass
+
+    # Backwards-compatible behavior: project_ref is id/name, files is mapping
+    project_id = str(project_ref)
+    files = files or {}
+    metadata = metadata or {}
+
+    readme = files.get('README.md') or files.get('readme.md') or files.get('README')
+    if readme:
+        preview['README.md'] = readme
+
+    preview[f"{project_id}_metadata.json"] = json.dumps(metadata or {}, indent=2, ensure_ascii=False)
+
+    for k, v in files.items():
+        if k in ('README.md', 'readme.md', 'README'):
+            continue
+        preview[k] = v
+
+    return preview
+
+
+def show_project_folder_preview(project_folder: Path, metadata: Optional[Dict] = None, pm: Optional[PreviewManager] = None) -> Optional[Path]:
+    """Create preview content from a project folder and show with PreviewManager.
+
+    Returns path to temp preview directory created by PreviewManager.create_temp_preview
+    or None on failure.
+    """
+    project_folder = Path(project_folder)
+    if not project_folder.exists():
+        return None
+
+    # Read files in folder (non-recursive for simplicity)
+    files = {}
+    for child in sorted(project_folder.rglob('*')):
+        if child.is_file():
+            # Read small files safely
+            try:
+                rel = child.relative_to(project_folder).as_posix()
+                files[rel] = child.read_text(encoding='utf-8')
+            except Exception:
+                files[child.name] = ''
+
+    # If metadata not provided, try to read metadata.json
+    if metadata is None and (project_folder / 'metadata.json').exists():
+        try:
+            metadata = json.loads((project_folder / 'metadata.json').read_text(encoding='utf-8'))
+        except Exception:
+            metadata = {}
+
+    content = create_project_preview(project_folder.name, files, metadata or {})
+
+    manager = pm or PreviewManager(auto_open=False, consolidated_preview=False)
+    temp_dir = manager.create_temp_preview(content, title=f"Project Preview: {project_folder.name}")
+    return temp_dir
 
 
 # Exemplo de uso

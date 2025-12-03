@@ -220,46 +220,38 @@
       "status": "active"
     },
     "MAT_A8MODELO_1SX_NFX_012": {
-      "created": "2025-11-26",
-      "modified": "2025-11-26",
-      "author": "Professor Diogo",
-      "difficulty": 3,
+      "created": "2025-12-02",
+      "modified": "2025-12-02",
+      "author": "Test Agent",
+      "difficulty": 2,
       "points": 0,
       "time_estimate_minutes": 0,
-      "has_multiple_parts": true,
-      "parts_count": 4,
+      "has_multiple_parts": false,
+      "parts_count": 0,
       "tags": [
-        "sistemas_numericos",
-        "binario",
         "decimal",
         "sequencias",
-        "hexadecimal",
-        "numeros_quadrados",
-        "representacao_visual",
-        "conversao_bases",
-        "regra_sucessao"
+        "binario",
+        "sistemas_numericos",
+        "hexadecimal"
       ],
       "status": "active"
     },
     "MAT_A8MODELO_1SX_NFX_013": {
-      "created": "2025-11-26",
-      "modified": "2025-11-26",
-      "author": "Professor Diogo",
-      "difficulty": 4,
+      "created": "2025-12-02",
+      "modified": "2025-12-02",
+      "author": "Test Agent",
+      "difficulty": 2,
       "points": 0,
       "time_estimate_minutes": 0,
-      "has_multiple_parts": true,
-      "parts_count": 4,
+      "has_multiple_parts": false,
+      "parts_count": 0,
       "tags": [
         "binario",
         "decimal",
-        "sequencias",
         "hexadecimal",
-        "sistemas_numericos",
-        "numeros_pentagonais",
-        "representacao_visual",
-        "conversao_bases",
-        "regra_sucessao"
+        "sequencias",
+        "sistemas_numericos"
       ],
       "status": "active"
     },

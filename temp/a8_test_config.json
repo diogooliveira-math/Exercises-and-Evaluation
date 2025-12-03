@@ -1,0 +1,10 @@
+{
+  "name": "teste_a8_custom",
+  "title_template": "Teste - {module_name} - {concept_name} - {version_label}",
+  "shuffle": false,
+  "count": 12,
+  "include_answers": false,
+  "output_subdir": "tests",
+  "pdfs_subdir": "pdfs",
+  "notes": "Local config for A8 QA generation - deterministic, include 12 items"
+}

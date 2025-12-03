@@ -1,0 +1,195 @@
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
+}
+
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
+
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Módulo P1 - Modelos Matemáticos para a Cidadania}
+\rhead{percentagens}
+\cfoot{\thepage}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{percentagens}
+
+\subsection*{Tipos de Exercícios}
+\begin{itemize}
+  \item \textbf{Cálculo de Percentagens}
+\end{itemize}
+
+\vspace{1em}
+
+% Exercício 1: MAT_P1MODELO_PERC_CALC_001.tex
+% meta:
+% id: MAT_P1MODELO_PERC_CALC_001
+% title: "Percentagens: aumentos, descontos e reversão"
+% difficulty: "easy"
+% tags: "percentagens,desconto,aumento,regra_de_três"
+% author: "Auto-generated"
+% created_at: 2025-11-20T00:00:00Z
+% version: 1
+\exercicio{
+Instruções: resolve cada item e escreve a resposta nos campos indicados.
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=12pt]
+\item O salário base é 870\,€. Vai aumentar 6{,}1\%. Quanto ficará o salário? \\
+Resposta: \campoCents
+
+\item O salário base é 1\,245\,€. Aumenta 4{,}75\%. Quanto ficará o salário (arredonda a cêntimos)? \\
+Resposta: \campoCents
+
+\item Um produto custa 320\,€. Aplica-se um desconto de 12{,}5\%. Qual é o preço depois do desconto? \\
+Resposta: \campoCents
+
+\item O valor passou de 5,00\,€ para 7,50\,€. Qual foi a percentagem do aumento? \\
+Resposta: \campo[2.5cm]
+
+\item Um passe mensal custava 60\,€ e passou a custar 51\,€. Qual foi a percentagem de redução? \\
+Resposta: \campo[2.5cm]
+
+\item Um salário de 900\,€ aumenta 3\% no mês 1 e mais 2{,}5\% no mês 2. Qual é o salário final (arredonda a cêntimos)? \\
+Resposta: \campoCents
+
+\item Depois de um aumento de 20\% um produto custa 180\,€. Quanto custava antes do aumento? \\
+Resposta: \campoCents
+\end{enumerate}
+
+\vspace{3cm}
+}
+\FloatBarrier
+
+% Exercício 2: MAT_P1MODELO_PXX_CPX_001.tex
+% Exercise ID: MAT_P1MODELO_PXX_CPX_001
+% Module: Módulo P1 - Modelos Matemáticos para a Cidadania | Concept: Percentagens | Type: Cálculo de Percentagens
+% Difficulty: 1/5 (Muito Fácil) | Format: desenvolvimento
+% Tags: percentagens, aumentos, financa_pessoal, proporcionalidade, descontos, regra_de_três, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para calculo_percentagens}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+\FloatBarrier
+
+% Exercício 3: MAT_P1MODELO_PXX_CPX_002.tex
+% Exercise ID: MAT_P1MODELO_PXX_CPX_002
+% Module: Módulo P1 - Modelos Matemáticos para a Cidadania | Concept: Percentagens | Type: Cálculo de Percentagens
+% Difficulty: 5/5 (Muito Difícil) | Format: desenvolvimento
+% Tags: financa_pessoal, percentagens, aumentos, descontos, regra_de_três, proporcionalidade, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para calculo_percentagens}
+\FloatBarrier
+
+% Exercício 4: MAT_P1MODELO_PXX_CPX_003.tex
+% Exercise ID: MAT_P1MODELO_PXX_CPX_003
+% Module: Módulo P1 - Modelos Matemáticos para a Cidadania | Concept: Percentagens | Type: Cálculo de Percentagens
+% Difficulty: 2/5 (Fácil) | Format: desenvolvimento
+% Tags: aumentos, regra_de_três, descontos, proporcionalidade, percentagens, financa_pessoal, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para calculo_percentagens}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+\FloatBarrier
+
+\end{document}

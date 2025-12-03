@@ -1,0 +1,36 @@
+% Título e informações do exame
+\title{Questão de aula do MÓDULO P4 - Funções}
+\author{EPRALIMA - Escola Profissional Alto Lima}
+
+\date{}
+
+% Cabeçalho completo do teste dentro de uma caixa arredondada
+\newcommand{\espacoAluno}{%
+    \vspace{0.5cm}
+    \begin{tcolorbox}[colback=white,colframe=black,arc=6pt,boxrule=0.8pt]
+        \noindent\textbf{Nome do Aluno:} \rule{9.5cm}{0.4pt} \textbf{Turma:} \rule{1cm}{0.4pt}\\[0.5cm]
+        \noindent\textbf{Assinatura do Professor:} \rule{3cm}{0.4pt} \hfill \textbf{Nota:} \rule{2cm}{0.4pt}\\[0.5cm]
+        \noindent\textbf{Assinatura do Encarregado de Educação:} \rule{3cm}{0.4pt}
+    \end{tcolorbox}
+    \vspace{1cm}
+}
+
+% Minimal macros expected by Exercise fragments
+% Provide a safe definition for \exercicio if not already defined.
+% Provide a boolean flag to control whether the automatic heading is shown.
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Provide a safe definition for \exercicio if not already defined.
+% The macro respects the \ifshowexerciciotitle flag: when false it prints only the content.
+\providecommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\noindent\textbf{Exercício: }#1\par
+    \else
+        #1\par
+    \fi
+}

@@ -1,0 +1,9 @@
+{
+  "mode": "stage",
+  "discipline": "matematica",
+  "module": "P4_funcoes",
+  "concept": "1-intervalo_real",
+  "tipo": "pertinencia_intervalo",
+  "difficulty": 1,
+  "statement": "Teste unitário: pertence ao intervalo?"
+}

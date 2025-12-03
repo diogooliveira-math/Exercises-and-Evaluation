@@ -1,0 +1,215 @@
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
+}
+
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
+
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{MÓDULO P4 - Funções}
+\rhead{Funções Polinomiais}
+\cfoot{\thepage}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Funções Polinomiais}
+
+\textit{
+Estudo das funções polinomiais, suas propriedades, coeficientes, grau e operações básicas.
+}
+
+\vspace{1em}
+
+% Exercício 1: MAT_P4FUNCOE_2FUN_001.tex
+% Exercise ID: MAT_P4FUNCOE_2FUN_001
+% Module: MÓDULO P4 - Funções | Concept: Funções Polinomiais
+% Difficulty: 2/5 (Fácil) | Type: desenvolvimento
+% Author: Exemplo | Date: 2025-11-15
+% Status: active
+
+\exercicio{Dê a definição de função polinomial e escreva um polinómio de grau 2.
+\vspace{3cm}
+}
+\FloatBarrier
+
+% Exercício 2: MAT_P4FUNCOE_2FUN_002.tex
+% Exercise ID: MAT_P4FUNCOE_2FUN_002
+% Module: MÓDULO P4 - Funções | Concept: Funções Polinomiais
+% Difficulty: 3/5 (Médio) | Type: desenvolvimento
+% Author: Exercise Creator Agent | Date: 2025-11-27
+% Status: active
+
+\exercicio{Resolva a equação $x^2-5x+6=0$ e interprete geometricamente as raízes. Forneça a solução completa e uma sugestão de figura (gráfico da parábola).
+\vspace{5cm}
+}
+\FloatBarrier
+
+% Exercício 3: MAT_P4FUNCOE_2FUN_002_solution.tex
+% Solution for Exercise ID: MAT_P4FUNCOE_2FUN_002
+% Module: MÓDULO P4 - Funções | Concept: Funções Polinomiais
+
+\exercicioDesenvolvimento{
+\textbf{Solução:}
+
+\textbf{1. Resolução da equação $x^2-5x+6=0$}
+
+Método da fatoração:
+\begin{align}
+x^2-5x+6 &= 0 \\
+(x-2)(x-3) &= 0
+\end{align}
+
+Portanto, as raízes são:
+\begin{itemize}
+\item $x_1 = 2$
+\item $x_2 = 3$
+\end{itemize}
+
+Verificação pelo método de Bhaskara:
+\begin{align}
+\Delta &= b^2-4ac = (-5)^2-4(1)(6) = 25-24 = 1 \\
+x &= \frac{-b \pm \sqrt{\Delta}}{2a} = \frac{5 \pm \sqrt{1}}{2} \\
+x_1 &= \frac{5+1}{2} = 3 \\
+x_2 &= \frac{5-1}{2} = 2
+\end{align}
+
+\textbf{2. Interpretação geométrica}
+
+As raízes $x_1 = 2$ e $x_2 = 3$ representam os pontos onde a parábola $y = x^2-5x+6$ intercepta o eixo dos xx (eixo horizontal). 
+
+\textbf{Características da parábola:}
+\begin{itemize}
+\item Vértice: $x_v = \frac{-b}{2a} = \frac{5}{2} = 2.5$
+\item $y_v = (2.5)^2-5(2.5)+6 = 6.25-12.5+6 = -0.25$
+\item Concavidade: Para cima (pois $a = 1 > 0$)
+\item Eixo de simetria: $x = 2.5$
+\end{itemize}
+
+\textbf{3. Sugestão de figura}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+\begin{axis}[
+    axis lines = center,
+    xlabel = {$x$},
+    ylabel = {$y$},
+    ymin=-2, ymax=4,
+    xmin=-1, xmax=5,
+    grid=major,
+    grid style={dashed,gray!30},
+    width=10cm,
+    height=6cm
+]
+% Parábola
+\addplot[domain=-1:5, samples=100, thick, blue]{x^2-5*x+6};
+% Raízes
+\addplot[only marks, mark=*, mark size=3pt, red] coordinates {(2,0) (3,0)};
+% Vértice
+\addplot[only marks, mark=square*, mark size=3pt, green] coordinates {(2.5,-0.25)};
+% Labels
+
+\node[above] at (axis cs:2,0.2) {$x_1=2$};
+
+\node[above] at (axis cs:3,0.2) {$x_2=3$};
+
+\node[below left] at (axis cs:2.5,-0.25) {V$(2.5,-0.25)$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\textbf{Interpretação geométrica final:}
+As raízes $x_1 = 2$ e $x_2 = 3$ são os abcissas dos pontos de intersecção da parábola com o eixo dos xx. Geometricamente, representam os valores de $x$ para os quais a função $f(x) = x^2-5x+6$ se anula. A distância entre as raízes é $|x_2-x_1| = 1$, e o eixo de simetria da parábola passa pelo ponto médio entre elas, ou seja, em $x = 2.5$.
+}
+\FloatBarrier
+
+\end{document}

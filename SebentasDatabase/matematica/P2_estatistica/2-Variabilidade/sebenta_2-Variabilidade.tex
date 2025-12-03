@@ -1,0 +1,216 @@
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
+}
+
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
+
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Módulo P2 - Estatística}
+\rhead{2 - Variabilidade}
+\cfoot{\thepage}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{2 - Variabilidade}
+
+\subsection*{Tipos de Exercícios}
+\begin{itemize}
+  \item \textbf{Escolha maior variabilidade} --- O aluno deverá escolher uma resposta entre várias opções
+  \item \textbf{Medidas de Variabilidade} --- Exercícios para calcular medidas de variabilidade como amplitude e desvio absoluto médio, aproveitando contextos de poupança e vida quotidiana.
+\end{itemize}
+
+\vspace{1em}
+
+% Exercício 1: MAT_P2ESTATI_2VX_EMV_001.tex
+% Exercise ID: MAT_P2ESTATI_2VX_EMV_001
+% Module: Módulo P2 - Estatística | Concept: Medidas de Variabilidade | Type: Escolha maior variabilidade
+% Difficulty: 4/5 (Difícil) | Format: desenvolvimento
+% Tags: variabilidade, variancia, desvio_medio, desvio_padrao, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para escolha_m_variabilidade}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+\FloatBarrier
+
+% Exercício 2: MAT_P2ESTATI_VARI_EM_001.tex
+% Exercise ID: MAT_P2ESTATI_VARI_EM_001
+% Module: P2_estatistica | Concept: 2-Variabilidade
+% Type: escolha_multipla | Difficulty: 1/5
+% Tags: Variabilidade, escolha multipla
+% Author: Professor | Date: 2025-11-21
+
+\exercicio{
+Considere as seguintes situações e escolha a que apresenta maior variabilidade:
+}
+
+% \subexercicio{...}  % REMOVED placeholder - preencher a alínea real
+\subexercicio{Temperatura ao longo de um ano (diária) vs temperatura ao longo de um dia (horária).}
+\subexercicio{Número de carros que passam numa rua por hora vs número de carros que passam numa semana na mesma rua.}
+\subexercicio{Peso de recém-nascidos numa maternidade vs peso de adultos numa população.}
+\subexercicio{Nota de um aluno nas várias avaliações ao longo do ano vs nota média da turma em cada avaliação.}
+% \subexercicio{...}  % REMOVED placeholder - preencher a alínea real
+% \subexercicio{...}  % REMOVED placeholder - preencher a alínea real
+\FloatBarrier
+
+% Exercício 3: MAT_P2ESTATI_2VAR_MDV_001.tex
+% Exercise ID: MAT_P2ESTATI_2VAR_MDV_001
+% Module: Módulo P2 - Estatística | Concept: Variabilidade
+% Type: medidas_de_variabilidade | Difficulty: 2/5
+% Tags: amplitude, desvio_absoluto_medio, variabilidade, poupanca
+% Author: Professor | Date: 2025-11-25
+
+\exercicio{
+Uma família registou as suas poupanças mensais (em euros) durante 5 meses:
+
+\begin{center}
+$\{120, 180, 150, 200, 100\}$
+\end{center}
+}
+
+\subexercicio{Calcula a amplitude das poupanças. Identifica o valor máximo e o valor mínimo.}
+
+\subexercicio{Calcula a média das poupanças.}
+
+\subexercicio{Calcula o Desvio Absoluto Médio (DAM) usando a fórmula:
+\[}
+\text{DAM} = \frac{\sum_{i=1}^{n} |x_i - \bar{x}|}{n}
+\]
+Para isso:
+\begin{enumerate}
+\item Calcula a diferença de cada valor para a média (em módulo).
+\item Soma todas as diferenças.
+\item Divide pelo número de valores.
+\end{enumerate}}
+
+\subexercicio{O que indica um DAM alto ou baixo sobre a consistência das poupanças da família? Interpreta o valor que obtiveste.}
+\FloatBarrier
+
+% Exercício 4: MAT_P2ESTATI_2VAR_MDV_002.tex
+% Exercise ID: MAT_P2ESTATI_2VAR_MDV_002
+% Module: Módulo P2 - Estatística | Concept: Variabilidade
+% Type: medidas_de_variabilidade | Difficulty: 2/5
+% Tags: amplitude, desvio_absoluto_medio, variabilidade, notas
+% Author: Professor | Date: 2025-11-25
+
+\exercicio{
+Dois alunos, Pedro e Joana, tiveram as seguintes notas (de 0 a 20) em 6 testes:
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+& \textbf{Teste 1} & \textbf{Teste 2} & \textbf{Teste 3} & \textbf{Teste 4} & \textbf{Teste 5} & \textbf{Teste 6} \\
+\hline
+\textbf{Pedro} & 10 & 18 & 8 & 16 & 12 & 14 \\
+\hline
+\textbf{Joana} & 12 & 14 & 13 & 13 & 12 & 14 \\
+\hline
+\end{tabular}
+\end{center}
+}
+
+\subexercicio{Calcula a amplitude das notas de cada aluno.}
+
+\subexercicio{Calcula a média das notas de cada aluno.}
+
+\subexercicio{Calcula o Desvio Absoluto Médio (DAM) das notas de cada aluno.}
+
+\subexercicio{Qual dos alunos teve um desempenho mais consistente? Justifica usando os valores da amplitude e do DAM.}
+\FloatBarrier
+
+\end{document}

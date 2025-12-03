@@ -33,7 +33,7 @@ def run_generator(output_dir: Path) -> int:
         exercise_rel,
         "--output",
         str(output_dir),
-        "--no-compile",
+        # Note: run with compilation enabled so we can assert the produced PDF
     ]
 
     proc = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120)
@@ -67,6 +67,14 @@ def test_generate_and_diff_exercises_tex():
         # Locate generated exercises.tex inside QA2/tex
         gen_ex = out / "QA2" / "tex" / "exercises.tex"
         assert gen_ex.exists(), f"Generated exercises.tex not found at {gen_ex}"
+
+        # Also check for a compiled PDF in the QA2 copy (the generator compiles by
+        # default and places the resulting PDF under `QA2/tex/exame.pdf`). This is
+        # a hard assertion: the test should fail if the PDF is not produced.
+        gen_pdf = out / "QA2" / "tex" / "exame.pdf"
+        assert gen_pdf.exists(), f"Generated PDF not found at {gen_pdf}"
+        # Basic sanity: file should be non-empty
+        assert gen_pdf.stat().st_size > 0, f"Generated PDF is empty: {gen_pdf}"
 
         # Reference file
         ref_ex = REPO_ROOT / "reference" / "QA2" / "tex" / "exercises.tex"

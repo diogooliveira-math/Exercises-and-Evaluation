@@ -1,0 +1,524 @@
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
+}
+
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
+
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Módulo P2 - Estatística}
+\rhead{}
+\cfoot{\thepage}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Módulo P2 - Estatística}
+
+\textit{Introdução à Estatística Descritiva}
+
+\vspace{1em}
+
+Este documento contém todos os exercícios do módulo, organizados por conceito.
+
+\tableofcontents
+\newpage
+
+\section{0 - revisoes}
+
+% Exercise ID: MAT_P2ESTATI_REVI_D_001
+% Module: Módulo P2 - Estatística | Concept: Revisões de Crescimento
+% Type: desenvolvimento | Difficulty: 2/5
+% Tags: revisoes
+% Author: Professor | Date: 2025-11-21
+
+\exercicio{
+Uma mercearia registou o número de peças de fruta vendidas num dia. A tabela abaixo resume os dados:
+
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Fruta} & \textbf{Quantidade} \\
+\hline
+Maçãs & 45 \\
+Bananas & 38 \\
+Laranjas & 22 \\
+Peras & 15 \\
+\hline
+\end{tabular}
+\end{center}
+}
+
+\subexercicio{Indica qual a fruta que representa a maior percentagem das vendas. Justifica a tua resposta com referência aos valores calculados.}
+
+\subexercicio{Calcula quantas peças correspondem a $25\%$ do total de vendas. Indica se deves arredondar o resultado e justifica a tua escolha (arredondamento por defeito, por excesso ou para o inteiro mais próximo).}
+
+\subexercicio{Calcula a percentagem conjunta de Maçãs e Bananas. Essas duas frutas representam mais de $50\%$ do total? Mostra os cálculos e conclui.}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P2ESTATI_REVI_D_999
+% Module: P2_estatistica | Concept: 0-revisoes
+% Type: desenvolvimento | Difficulty: 2/5
+% Tags: revisoes, teste, robustez
+% Author: Teste | Date: 2025-11-21
+
+\exercicio{
+Uma fábrica produziu 100 peças num dia. A tabela mostra a distribuição por tipo:
+
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+Tipo & Quantidade \\
+\hline
+A & 40 \\
+B & 35 \\
+C & 25 \\
+\hline
+\end{tabular}
+\end{center}
+}
+
+\subexercicio{Qual a percentagem de peças do tipo A?}
+\vspace{3cm}
+\subexercicio{Quantas peças não são do tipo B?}
+\vspace{3cm}
+\subexercicio{A soma das percentagens dá 100\%? Justifique.}
+\vspace{3cm}
+\FloatBarrier
+
+
+\newpage
+
+\section{1 - Medicoes basicas}
+
+% Exercise ID: MAT_P2ESTATI_1MED_ENV_001
+% Module: Módulo P2 - Estatística | Concept: Medições Básicas
+% Type: estatistica_na_vida | Difficulty: 2/5
+% Tags: media, moda, mediana, notas, interpretacao
+% Author: Professor | Date: 2025-11-25
+
+\exercicio{
+O João registou as suas notas (de 0 a 20 valores) nas primeiras 7 fichas de avaliação do ano letivo:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{Ficha 1} & \textbf{Ficha 2} & \textbf{Ficha 3} & \textbf{Ficha 4} & \textbf{Ficha 5} & \textbf{Ficha 6} & \textbf{Ficha 7} \\
+\hline
+14 & 12 & 15 & 12 & 16 & 14 & 12 \\
+\hline
+\end{tabular}
+\end{center}
+}
+
+\subexercicio{Calcula a média das notas do João. Arredonda à unidade.}
+
+\subexercicio{Determina a moda das notas. O que significa este valor para o desempenho do João?}
+
+\subexercicio{Calcula a mediana das notas. Mostra os valores ordenados.}
+
+\subexercicio{Se o João precisar de ter pelo menos 13 valores de média para passar, qual é a nota mínima que precisa na próxima ficha? Justifica.}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P2ESTATI_1MED_ENV_002
+% Module: Módulo P2 - Estatística | Concept: Medições Básicas
+% Type: estatistica_na_vida | Difficulty: 2/5
+% Tags: media, moda, mediana, gastos, interpretacao
+% Author: Professor | Date: 2025-11-25
+
+\exercicio{
+A Maria registou os seus gastos semanais em transporte (em euros) durante um mês:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Semana 1} & \textbf{Semana 2} & \textbf{Semana 3} & \textbf{Semana 4} \\
+\hline
+15 & 18 & 15 & 22 \\
+\hline
+\end{tabular}
+\end{center}
+}
+
+\subexercicio{Calcula a média dos gastos semanais da Maria.}
+
+\subexercicio{Determina a moda dos gastos. Qual o significado prático deste valor?}
+
+\subexercicio{Calcula a mediana. Compara-a com a média.}
+
+\subexercicio{A Maria tem um orçamento mensal de 70€ para transporte. Considerando os dados, achas que ela consegue cumprir o orçamento? Justifica com base nos valores estatísticos calculados.}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P2ESTATI_1MX_ENV_001
+% Module: Módulo P2 - Estatística | Concept: Medições Básicas | Type: Estatística na Vida Quotidiana
+% Difficulty: 2/5 (Fácil) | Format: desenvolvimento
+% Tags: tabelas, moda, interpretacao, media, calculos_com_dados, mediana, vida_quotidiana, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para estatistica_na_vida}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P2ESTATI_1MX_ENV_002
+% Module: Módulo P2 - Estatística | Concept: Medições Básicas | Type: Estatística na Vida Quotidiana
+% Difficulty: 2/5 (Fácil) | Format: desenvolvimento
+% Tags: interpretacao, mediana, tabelas, moda, vida_quotidiana, media, calculos_com_dados, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para estatistica_na_vida}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P2ESTATI_1MED_EPO_001
+% Module: Módulo P2 - Estatística | Concept: Medições Básicas
+% Type: estatistica_poupanca | Difficulty: 2/5
+% Tags: media, moda, mediana, poupanca, interpretacao
+% Author: Professor | Date: 2025-11-25
+
+\exercicio{
+A família Silva registou as suas poupanças mensais (em euros) durante 6 meses:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Jan} & \textbf{Fev} & \textbf{Mar} & \textbf{Abr} & \textbf{Mai} & \textbf{Jun} \\
+\hline
+150 & 200 & 150 & 180 & 200 & 220 \\
+\hline
+\end{tabular}
+\end{center}
+}
+
+\subexercicio{Calcula a média das poupanças mensais da família Silva.}
+
+\subexercicio{Determina a moda dos valores registados. Explica o que significa este valor no contexto da poupança.}
+
+\subexercicio{Calcula a mediana das poupanças. Mostra os passos do cálculo.}
+
+\subexercicio{Compara a média e a mediana obtidas. O que podes concluir sobre a distribuição das poupanças da família?}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P2ESTATI_1MED_EPO_002
+% Module: Módulo P2 - Estatística | Concept: Medições Básicas
+% Type: estatistica_poupanca | Difficulty: 2/5
+% Tags: media, moda, mediana, poupanca, interpretacao
+% Author: Professor | Date: 2025-11-25
+
+\exercicio{
+Uma associação de jovens decidiu poupar para uma viagem de finalistas. A tabela seguinte mostra o valor poupado (em euros) por cada membro durante um mês:
+
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Membro} & \textbf{Poupança (€)} \\
+\hline
+Ana & 25 \\
+Bruno & 30 \\
+Carla & 25 \\
+Daniel & 40 \\
+Eva & 30 \\
+Filipe & 25 \\
+Gonçalo & 35 \\
+Helena & 30 \\
+\hline
+\end{tabular}
+\end{center}
+}
+
+\subexercicio{Calcula a média das poupanças do grupo.}
+
+\subexercicio{Determina a moda. Quantos membros pouparam esse valor?}
+
+\subexercicio{Calcula a mediana das poupanças. Ordena primeiro os valores.}
+
+\subexercicio{Se o objetivo é que cada membro contribua com pelo menos 30€, quantos membros ficaram abaixo desse valor? Usa a mediana para justificar se o grupo está no bom caminho.}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P2ESTATI_1MX_EPX_001
+% Module: Módulo P2 - Estatística | Concept: Medições Básicas | Type: Estatística Aplicada à Poupança
+% Difficulty: 3/5 (Médio) | Format: desenvolvimento
+% Tags: poupanca, mediana, moda, media, interpretacao, calculos_com_dados, tabelas, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para estatistica_poupanca}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P2ESTATI_1MED_EPU_001
+% Module: Módulo P2 - Estatística | Concept: Medições Básicas
+% Type: estatistica_pura | Difficulty: 1/5
+% Tags: media, moda, mediana, calculo_direto
+% Author: Professor | Date: 2025-11-25
+
+\exercicio{
+Considera o seguinte conjunto de dados:
+
+\begin{center}
+$\{5, 8, 12, 8, 6, 10, 8, 9\}$
+\end{center}
+}
+
+\subexercicio{Calcula a média aritmética dos valores.}
+
+\subexercicio{Determina a moda do conjunto de dados.}
+
+\subexercicio{Ordena os valores e calcula a mediana.}
+
+\subexercicio{Qual das três medidas (média, moda ou mediana) melhor representa o ``centro'' destes dados? Justifica a tua resposta.}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P2ESTATI_1MED_EPU_002
+% Module: Módulo P2 - Estatística | Concept: Medições Básicas
+% Type: estatistica_pura | Difficulty: 2/5
+% Tags: media, moda, mediana, calculo_direto
+% Author: Professor | Date: 2025-11-25
+
+\exercicio{
+Considera o seguinte conjunto de dados:
+
+\begin{center}
+$\{3, 7, 7, 10, 15, 7, 12, 9, 11\}$
+\end{center}
+}
+
+\subexercicio{Calcula a média aritmética. Apresenta o resultado com uma casa decimal.}
+
+\subexercicio{Identifica a moda. Quantas vezes aparece esse valor?}
+
+\subexercicio{Calcula a mediana. Nota: este conjunto tem um número ímpar de elementos.}
+
+\subexercicio{Se adicionarmos o valor 100 ao conjunto, como achas que isso afetaria a média e a mediana? Calcula os novos valores e comenta a diferença.}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P2ESTATI_1MX_EPX_001
+% Module: Módulo P2 - Estatística | Concept: Medições Básicas | Type: Estatística Pura
+% Difficulty: 4/5 (Difícil) | Format: desenvolvimento
+% Tags: calculo_direto, tabelas, mediana, media, moda, calculos_com_dados, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para estatistica_pura}
+
+\FloatBarrier
+
+
+\newpage
+
+\section{2 - Variabilidade}
+
+% Exercise ID: MAT_P2ESTATI_2VX_EMV_001
+% Module: Módulo P2 - Estatística | Concept: Medidas de Variabilidade | Type: Escolha maior variabilidade
+% Difficulty: 4/5 (Difícil) | Format: desenvolvimento
+% Tags: variabilidade, variancia, desvio_medio, desvio_padrao, teste, automacao
+% Author: Teste Automático | Date: 2025-11-26
+% Status: active
+
+\exercicio{Exercício de teste para escolha_m_variabilidade}
+
+% Solution:
+% \begin{solucao}
+% Solução de exemplo
+% \end{solucao}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P2ESTATI_VARI_EM_001
+% Module: P2_estatistica | Concept: 2-Variabilidade
+% Type: escolha_multipla | Difficulty: 1/5
+% Tags: Variabilidade, escolha multipla
+% Author: Professor | Date: 2025-11-21
+
+\exercicio{
+Considere as seguintes situações e escolha a que apresenta maior variabilidade:
+}
+
+% \subexercicio{...}  % REMOVED placeholder - preencher a alínea real
+\subexercicio{Temperatura ao longo de um ano (diária) vs temperatura ao longo de um dia (horária).}
+\subexercicio{Número de carros que passam numa rua por hora vs número de carros que passam numa semana na mesma rua.}
+\subexercicio{Peso de recém-nascidos numa maternidade vs peso de adultos numa população.}
+\subexercicio{Nota de um aluno nas várias avaliações ao longo do ano vs nota média da turma em cada avaliação.}
+% \subexercicio{...}  % REMOVED placeholder - preencher a alínea real
+% \subexercicio{...}  % REMOVED placeholder - preencher a alínea real
+
+\FloatBarrier
+
+% Exercise ID: MAT_P2ESTATI_2VAR_MDV_001
+% Module: Módulo P2 - Estatística | Concept: Variabilidade
+% Type: medidas_de_variabilidade | Difficulty: 2/5
+% Tags: amplitude, desvio_absoluto_medio, variabilidade, poupanca
+% Author: Professor | Date: 2025-11-25
+
+\exercicio{
+Uma família registou as suas poupanças mensais (em euros) durante 5 meses:
+
+\begin{center}
+$\{120, 180, 150, 200, 100\}$
+\end{center}
+}
+
+\subexercicio{Calcula a amplitude das poupanças. Identifica o valor máximo e o valor mínimo.}
+
+\subexercicio{Calcula a média das poupanças.}
+
+\subexercicio{Calcula o Desvio Absoluto Médio (DAM) usando a fórmula:
+\[
+\text{DAM} = \frac{\sum_{i=1}^{n} |x_i - \bar{x}|}{n}
+\]
+Para isso:
+\begin{enumerate}
+\item Calcula a diferença de cada valor para a média (em módulo).
+\item Soma todas as diferenças.
+\item Divide pelo número de valores.
+\end{enumerate}}
+
+\subexercicio{O que indica um DAM alto ou baixo sobre a consistência das poupanças da família? Interpreta o valor que obtiveste.}
+
+\FloatBarrier
+
+% Exercise ID: MAT_P2ESTATI_2VAR_MDV_002
+% Module: Módulo P2 - Estatística | Concept: Variabilidade
+% Type: medidas_de_variabilidade | Difficulty: 2/5
+% Tags: amplitude, desvio_absoluto_medio, variabilidade, notas
+% Author: Professor | Date: 2025-11-25
+
+\exercicio{
+Dois alunos, Pedro e Joana, tiveram as seguintes notas (de 0 a 20) em 6 testes:
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+& \textbf{Teste 1} & \textbf{Teste 2} & \textbf{Teste 3} & \textbf{Teste 4} & \textbf{Teste 5} & \textbf{Teste 6} \\
+\hline
+\textbf{Pedro} & 10 & 18 & 8 & 16 & 12 & 14 \\
+\hline
+\textbf{Joana} & 12 & 14 & 13 & 13 & 12 & 14 \\
+\hline
+\end{tabular}
+\end{center}
+}
+
+\subexercicio{Calcula a amplitude das notas de cada aluno.}
+
+\subexercicio{Calcula a média das notas de cada aluno.}
+
+\subexercicio{Calcula o Desvio Absoluto Médio (DAM) das notas de cada aluno.}
+
+\subexercicio{Qual dos alunos teve um desempenho mais consistente? Justifica usando os valores da amplitude e do DAM.}
+
+\FloatBarrier
+
+
+\newpage
+
+
+\end{document}
