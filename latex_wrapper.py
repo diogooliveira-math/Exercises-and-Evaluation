@@ -146,21 +146,75 @@ class LatexCompilationWrapper:
             return 1
         
         print(f"Processing LaTeX file: {tex_file}")
-        
+
         try:
             # Create missing subvariants
             self.create_missing_subvariants(tex_file)
-            
+
+            # If the provided tex file is a fragment (no documentclass or begin{document}),
+            # create a temporary wrapper with a minimal preamble that defines common macros
+            # and includes TikZ so fragments can be compiled standalone.
+            tex_text = tex_file.read_text(encoding='utf-8')
+            is_fragment = ('\\documentclass' not in tex_text) and ('\\begin{document}' not in tex_text)
+
+            pdflatex_args = args.copy()
+
+            wrapper_path = None
+            if is_fragment:
+                # create wrapper in same directory 'temp' or system temp
+                wrapper_dir = tex_file.parent / 'temp_compile_wrappers'
+                wrapper_dir.mkdir(parents=True, exist_ok=True)
+                wrapper_path = wrapper_dir / (tex_file.stem + '_wrapper.tex')
+
+                preamble = r'''% Auto-generated wrapper by latex_wrapper.py
+\\documentclass[12pt]{article}
+\\usepackage[T1]{fontenc}
+\\usepackage[utf8]{inputenc}
+\\usepackage{lmodern}
+\\usepackage{amsmath,amssymb}
+\\usepackage{tikz}
+\\usepackage{geometry}
+\\geometry{paper=a4paper, margin=2.5cm}
+
+% Fallback macro definitions used across exercises
+\\providecommand{\\exercicio}[1]{\\section*{}#1}
+\\providecommand{\\subexercicio}[1]{\\par\\noindent\\textbf{(a)} #1\\par}
+
+\\begin{document}
+\\input{%s}
+\\end{document}
+'''
+
+                # Write wrapper, using a relative path from wrapper to original tex
+                rel_path = os.path.relpath(str(tex_file.resolve()), str(wrapper_path.parent.resolve()))
+                with open(wrapper_path, 'w', encoding='utf-8') as f:
+                    f.write(preamble % rel_path.replace('\\\\', '/'))
+
+                self.created_files.append(str(wrapper_path))
+                print(f"Created wrapper for fragment: {wrapper_path}")
+
+                # Replace the tex file argument for pdflatex with the wrapper
+                # Keep other pdflatex options if present
+                # Find first .tex in pdflatex_args and replace it
+                replaced = False
+                for i, a in enumerate(pdflatex_args):
+                    if a.endswith('.tex'):
+                        pdflatex_args[i] = str(wrapper_path)
+                        replaced = True
+                        break
+                if not replaced:
+                    pdflatex_args.append(str(wrapper_path))
+
             # Run pdflatex
-            return_code = self.run_pdflatex(args)
-            
-            # Clean up if requested and compilation was successful
+            return_code = self.run_pdflatex(pdflatex_args)
+
+            # Clean up created placeholder/wrapper files if requested and compilation was successful
             if cleanup and return_code == 0:
                 self.cleanup_created_files()
             elif self.created_files:
-                print(f"Warning: {len(self.created_files)} placeholder files were created.")
+                print(f"Warning: {len(self.created_files)} placeholder/wrapper files were created.")
                 print("Run with --cleanup-only to remove them, or check the compilation output.")
-            
+
             return return_code
             
         except KeyboardInterrupt:

@@ -10,8 +10,130 @@
 \input{exercises.d/setup-counter}
 \input{exercises.d/include-exercise}
 
-% Example: include the MAT_P4... exercise (keeps original behavior)
-\IncludeExercise{../../../ExerciseDatabase/matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica/MAT_P4FUNCOE_4FX_DAX_003/main}
-\IncludeExercise{../../../ExerciseDatabase/matematica/P4_funcoes/4-funcao_inversa/determinacao_analitica_plus_grafica/MAT_P4FUNCOE_4FIN_ANA_001}
-\IncludeExercise{../../../ExerciseDatabase/matematica/P4_funcoes/4-funcao_inversa/determinacao_grafica/MAT_P4FUNCOE_4FIN_GRA_001}
-\IncludeExercise{../../../ExerciseDatabase/matematica/P4_funcoes/4-funcao_inversa/teste_reta_horizontal/MAT_P4FUNCOE_4FIN_TRH_002}
+% Exercicio 1: Complementa as equações, de forma a que exista igualdade entre os números de diferentes sistemas numéricos, i.e. (10)_10 = (20)_5.
+
+\exercicio{
+    Complementa as equações, de forma a que exista igualdade entre os números de diferentes sistemas numéricos, i.e. $(10)_{10} = (20)_5$, pois $(10)_{10} = 1*10^1 + 0*10^0 = 10$ e $(20)_5 = 2*5^1 + 0*5^0 = 10$.
+\begin{enumerate}[label=(\alph*)]
+    \item $(15)_{10} = (  \hspace{3cm} )_2$
+    \item $(100)_{10} = (  \hspace{3cm} )_8$
+    \item $(255)_{10} = ( \hspace{3cm}  )_{16}$
+    \item $(1111)_2 = ( \hspace{3cm}  )_{10}$
+    \item $(777)_8 = ( \hspace{3cm}  )_{10}$
+    \item $(FF)_{16} = ( \hspace{3cm}  )_{10}$
+\end{enumerate}
+}
+
+\exercicio{
+Considere a sucessão dos números triangulares representados visualmente abaixo
+(os valores $T_1,T_2,T_3,T_4$ estão indicados nas figuras):
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+% T1 = 1
+\foreach \x in {0} {
+    \fill (\x,0) circle (0.15);
+}
+% Valor $T_1 = 1$ representado na figura
+
+% T2 = 3
+\begin{scope}[xshift=3cm]
+\foreach \x in {0,1} {
+    \fill (\x,0) circle (0.15);
+}
+\fill (0.5,0.5) circle (0.15);
+% Valor $T_2 = 3$ representado na figura
+\end{scope}
+
+% T3 = 6
+\begin{scope}[xshift=6cm]
+\foreach \x in {0,1,2} {
+    \fill (\x,0) circle (0.15);
+}
+\foreach \x in {0.5,1.5} {
+    \fill (\x,0.5) circle (0.15);
+}
+\fill (1,1) circle (0.15);
+% Valor $T_3 = 6$ representado na figura
+\end{scope}
+
+% T4 = 10
+\begin{scope}[xshift=10cm]
+\foreach \x in {0,1,2,3} {
+    \fill (\x,0) circle (0.15);
+}
+\foreach \x in {0.5,1.5,2.5} {
+    \fill (\x,0.5) circle (0.15);
+}
+\foreach \x in {1,2} {
+    \fill (\x,1) circle (0.15);
+}
+\fill (1.5,1.5) circle (0.15);
+% Valor $T_4 = 10$ representado na figura
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=(\alph*)]
+    \item Represente os quatro primeiros termos da sucessão $(T_1,T_2,T_3,T_4)$ em sistema binário.
+    \vspace{3cm}
+    \item Escreva o 5.º termo da sucessão $(T_5)$ em notação decimal e hexadecimal.
+    \vspace{3cm}
+    \item Determine o 10.º termo da sucessão $(T_{10})$ e represente-o em sistema binário.
+    \vspace{3cm}
+\end{enumerate}
+}
+
+\exercicio{
+Observe a sucessão dos números quadrados representados visualmente abaixo
+(os valores $Q_1,Q_2,Q_3,Q_4$ estão indicados nas figuras):
+\begin{center}
+\begin{tikzpicture}[scale=0.4]
+% Q1 = 1
+\foreach \x in {0} {
+    \foreach \y in {0} {
+        \fill (\x,\y) circle (0.12);
+    }
+}
+% Valor $Q_1 = 1$ representado na figura
+
+% Q2 = 4
+\begin{scope}[xshift=3cm]
+\foreach \x in {0,1} {
+    \foreach \y in {0,1} {
+        \fill (\x,\y) circle (0.12);
+    }
+}
+% Valor $Q_2 = 4$ representado na figura
+\end{scope}
+
+% Q3 = 9
+\begin{scope}[xshift=7cm]
+\foreach \x in {0,1,2} {
+    \foreach \y in {0,1,2} {
+        \fill (\x,\y) circle (0.12);
+    }
+}
+% Valor $Q_3 = 9$ representado na figura
+\end{scope}
+
+% Q4 = 16
+\begin{scope}[xshift=12cm]
+\foreach \x in {0,1,2,3} {
+    \foreach \y in {0,1,2,3} {
+        \fill (\x,\y) circle (0.12);
+    }
+}
+% Valor $Q_4 = 16$ representado na figura
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=(\alph*)]
+    \item Represente os quatro primeiros termos da sucessão $(Q_1,Q_2,Q_3,Q_4)$ em sistema hexadecimal.
+    \vspace{3cm}
+    \item Escreva o 5.º termo da sucessão $(Q_5)$ em notação decimal e binária.
+    \vspace{3cm}
+    \item Refira a definição recursiva da sucessão dos números quadrados.
+    \vspace{3cm}
+    \item Escreva a expressão geral (forma fechada) para o n-ésimo termo da sucessão dos números quadrados.
+    \vspace{3cm}
+\end{enumerate}
+}

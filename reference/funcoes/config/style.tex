@@ -1,5 +1,5 @@
 % Título e informações do exame
-\title{Questão de aula do MÓDULO A8 - Modelos Discretos}
+\title{Questão de aula do MÓDULO P4 - Funções}
 \author{EPRALIMA - Escola Profissional Alto Lima}
 
 \date{}
@@ -23,18 +23,19 @@
     \newif\ifshowexerciciotitle
     \showexerciciotitletrue
 }{}
+
+% Exercicio counter (numbering)
+\providecommand{\resetExercicioCounter}{\setcounter{exercicio}{0}} % optional reset command
+\@ifundefined{exercicio}{\newcounter{exercicio}}{} % define counter if not present
 \makeatother
 
 % Provide a safe definition for \exercicio if not already defined.
 % The macro respects the \ifshowexerciciotitle flag: when false it prints only the content.
 \providecommand{\exercicio}[1]{%
     \ifshowexerciciotitle
-        \par\noindent\textbf{Exercício: }#1\par
+        \refstepcounter{exercicio}%
+        \par\noindent\textbf{Exercício \theexercicio: }#1\par
     \else
         #1\par
     \fi
 }
-
-% Provide a safe definition for \subexercicio if it's not defined
-% Many exercises use \subexercicio{...} for sub-parts; ensure a fallback.
-\providecommand{\subexercicio}[1]{\par\noindent\textbf{(a)} #1\par}

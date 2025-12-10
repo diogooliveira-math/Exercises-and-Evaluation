@@ -1,0 +1,194 @@
+% Small, maintainable exercise include file.
+% Responsibilities are split into includes under `exercises.d/`:
+% - `input-path.tex`      : sets `\input@path` for subvariant inputs
+% - `setup-counter.tex`   : ensures the `exercise` counter exists
+% - `include-exercise.tex`: defines `\IncludeExercise{<path>}` wrapper
+% The actual exercise inclusions are then simple calls to \IncludeExercise{<path>}. 
+
+% Load path, counter and the include wrapper (keeps this file minimal)
+\input{exercises.d/input-path}
+\input{exercises.d/setup-counter}
+\input{exercises.d/include-exercise}
+
+% 1º exercicio: A quais dos intervalos seguintes pertence o seguint conjunto de valores. 
+% dar valores e ter como resposta três intervalos possíveis.
+
+\exercicio{
+    A quais dos intervalos seguintes pertence o seguint conjunto de valores: $2, 3, 5$?
+    \begin{enumerate}
+        \item[(a)] $[2.0, 5.0]$
+        \item[(b)] $[4.0, 8.0]$
+        \item[(c)] $]2.0, 9.0]$
+    \end{enumerate}
+}
+
+% 2º exercicio: Refere como se lê os intervalos (3 intevalos ) com resposta tipo "lê-se intervalo de valores de 1 a 3, incluindo o 1 e excluindo o 3".
+
+\exercicio{
+    Refere como se lê os seguintes intervalos:
+    \begin{enumerate}
+        \item[(a)] $[1, 3[$
+        
+        \vspace{3cm}
+
+        \item[(b)] $]0, 5]$
+
+        \vspace{3cm}
+
+        \item[(c)] $]2, 7[$
+
+        \vspace{3cm}
+    \end{enumerate}
+}
+
+% 2º exercicio: Qual é o intervalo representado por (representação gráfica do intervalo).
+
+\exercicio{
+    Qual é o intervalo representado pela figura abaixo?
+    \begin{center}
+        \begin{tikzpicture}
+            \draw[->] (0,0) -- (6,0) node[right] {};
+            \draw[thick] (1,1) -- (5,1);
+            \filldraw (1,1) circle (2pt); % ponto fechado em 1
+            \draw (5,1) circle (2pt); % ponto aberto em 5
+            \draw[thick] (1,0) -- (1,1);
+            \node[below] at (1,0) {1};
+            \node[below] at (5,0) {5};
+            \draw[thick] (5,0) -- (5,1);
+        \end{tikzpicture}
+    \end{center}
+}
+
+% 3º exercicio: Dá dois exemplos de variaveis e seus intervalos de variação possíveis.
+
+\exercicio{
+    Dê dois exemplos de variáveis e seus intervalos de variação possíveis.
+    \vspace{3cm}
+    }
+
+% 4º exercicio: Qual é a diferença entre variável independente e dependente? Dê um exemplo de cada.
+
+\exercicio{
+    Qual é a diferença entre variável independente e dependente? Dê um exemplo de cada. 
+    \vspace{3cm}
+}
+
+% 5º exercicio: Três alíneas com referenciais gráficos diferentes para identificar o produto cartesiano.
+
+\exercicio{
+    Refere qual é o produto cartesiano expresso nos seguintes referenciais gráficos:
+    \begin{enumerate}
+        \item[(a)]
+        \begin{center} 
+            \begin{tikzpicture}[scale=0.8]
+            \draw[->] (-1,0) -- (6,0) node[right] {$x$};
+            \draw[->] (0,-1) -- (0,6) node[above] {$y$};
+
+            % Rectangle representing [1,4] x [1,4[ :
+            \draw[thick] (1,1) -- (4,1);            % bottom - closed
+            \draw[thick] (4,1) -- (4,4);            % right - closed (top point will be open)
+            \draw[thick,dashed] (4,4) -- (1,4);     % top - open
+            \draw[thick] (1,4) -- (1,1);            % left - closed (top point will be open)
+
+            % Vertices: filled = included, circle = excluded
+            \fill (1,1) circle (2pt);   % (1,1) included
+            \fill (4,1) circle (2pt);   % (4,1) included
+            \draw (1,4) circle (2pt);   % (1,4) excluded (y=4 open)
+            \draw (4,4) circle (2pt);   % (4,4) excluded (y=4 open)
+
+            % Axes ticks and labels
+            \foreach \x in {1,2,3,4} {
+                \draw (\x,0.07) -- (\x,-0.07);
+                \node[below] at (\x,0) {\x};
+            }
+            \foreach \y in {1,2,3,4} {
+                \draw (0.07,\y) -- (-0.07,\y);
+                \node[left] at (0,\y) {\y};
+            }
+            \end{tikzpicture}
+        \end{center}
+
+        \item[(b)]
+        \begin{center}
+            \begin{tikzpicture}[scale=0.8]
+            \draw[->] (-1,0) -- (5,0) node[right] {$x$};
+            \draw[->] (0,-2) -- (0,2) node[above] {$y$};
+
+            % Rectangle representing [0,2[ x ]-1,1] :
+            \draw[thick] (0,-1) -- (2,-1);        % bottom - closed (y=-1 closed)
+            \draw[thick,dashed] (2,-1) -- (2,1); % right - open at x=2
+            \draw[thick] (2,1) -- (0,1);         % top - closed (y=1 closed)
+            \draw[thick] (0,1) -- (0,-1);        % left - closed (x=0 closed)
+
+            % Vertices: filled = included, circle = excluded
+            \fill (0,-1) circle (2pt);   % (0,-1) included
+            \draw (2,-1) circle (2pt);   % (2,-1) excluded (x=2 open)
+            \fill (0,1) circle (2pt);    % (0,1) included
+            \draw (2,1) circle (2pt);    % (2,1) excluded (x=2 open)
+
+            % Axes ticks and labels
+            \foreach \x in {0,1,2} {
+                \draw (\x,0.07) -- (\x,-0.07);
+                \node[below] at (\x,0) {\x};
+            }
+            \foreach \y in {-1,0,1} {
+                \draw (0.07,\y) -- (-0.07,\y);
+                \node[left] at (0,\y) {\y};
+            }
+            \end{tikzpicture}
+        \end{center}
+
+        \item[(c)]
+        \begin{center}
+            \begin{tikzpicture}[scale=0.8]
+            \draw[->] (1,0) -- (7,0) node[right] {$x$};
+            \draw[->] (0,-1) -- (0,4) node[above] {$y$};
+
+            % Rectangle representing ]2,5] x ]0,3] :
+            \draw[thick,dashed] (2,0) -- (5,0);  % bottom - dashed (x>2 open)
+            \draw[thick] (5,0) -- (5,3);         % right - closed (x=5 included)
+            \draw[thick] (5,3) -- (2,3);         % top - closed (y=3 included)
+            \draw[thick,dashed] (2,3) -- (2,0);  % left - dashed (x=2 open)
+
+            % Vertices: filled = included, circle = excluded
+            \draw (2,0) circle (2pt);   % (2,0) excluded (x=2 open)
+            \fill (5,0) circle (2pt);   % (5,0) included
+            \fill (5,3) circle (2pt);   % (5,3) included
+            \draw (2,3) circle (2pt);   % (2,3) excluded
+
+            % Axes ticks and labels
+            \foreach \x in {2,3,4,5} {
+                \draw (\x,0.07) -- (\x,-0.07);
+                \node[below] at (\x,0) {\x};
+            }
+            \foreach \y in {0,1,2,3} {
+                \draw (0.07,\y) -- (-0.07,\y);
+                \node[left] at (0,\y) {\y};
+            }
+            \end{tikzpicture}
+        \end{center}
+    \end{enumerate}
+}
+
+% 6º exercício: Represemta graficamente o produto cartesiano do intervalo [1,4] com o intervalo ]2,5].
+
+\exercicio{
+    Represente graficamente o produto cartesiano do intervalo $[1,4]$ com o intervalo $]2,5]$.
+    \begin{center} 
+    %simple eixo cartesiano para os alunos responderem aqui
+        \begin{tikzpicture}[scale=0.8]
+        \draw[->] (-1,0) -- (6,0) node[right] {$x$};
+        \draw[->] (0,-1) -- (0,6) node[above] {$y$};
+
+        % Axes ticks and labels
+        \foreach \x in {0,1,2,3,4,5} {
+            \draw (\x,0.07) -- (\x,-0.07);
+            \node[below] at (\x,0) {\x};
+        }
+        \foreach \y in {0,1,2,3,4,5} {
+            \draw (0.07,\y) -- (-0.07,\y);
+            \node[left] at (0,\y) {\y};
+        }
+        \end{tikzpicture}
+    \end{center}
+}
