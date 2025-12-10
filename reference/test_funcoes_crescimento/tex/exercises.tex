@@ -1,0 +1,30 @@
+% Small, maintainable exercise include file.
+% Responsibilities are split into includes under `exercises.d/`:
+% - `input-path.tex`      : sets `\input@path` for subvariant inputs
+% - `setup-counter.tex`   : ensures the `exercise` counter exists
+% - `include-exercise.tex`: defines `\IncludeExercise{<path>}` wrapper
+% The actual exercise inclusions are then simple calls to \IncludeExercise{<path>}.
+
+% Load path, counter and the include wrapper (keeps this file minimal)
+\input{exercises.d/input-path}
+\input{exercises.d/setup-counter}
+\input{exercises.d/include-exercise}
+
+% Example: include the MAT_P4... exercise (keeps original behavior)
+% Include: 
+% 1. MAT_A9FUNCOE_0RX_APX_001.tex
+% 2. MAT_A9FUNCOE_0RX_APX_002.tex
+% 3. C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A9_funcoes_crescimento\0-revisoes\calculo_funcoes\MAT_A9FUNCRE_0REV_CAL_001.tex
+% 4. C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A9_funcoes_crescimento\0-revisoes\calculo_funcoes\MAT_A9FUNCRES_0REV_002.tex
+% 5. C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A9_funcoes_crescimento\0-revisoes\conceito_funcao\MAT_A9FUNCOE_0RX_CFX_001.tex
+% 6. C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A9_funcoes_crescimento\1-exponenciais\crescimento_bacterias\MAT_A9FUNCRE_1EXP_CBA_001.tex
+% 7. C:\Users\diogo\projects\Exercises-and-Evaluation\ExerciseDatabase\matematica\A9_funcoes_crescimento\1-exponenciais\depreciacao_valor\MAT_A9FUNCOE_1EX_DVX_001.tex
+
+
+\IncludeExercise{../../../ExerciseDatabase/matematica/A9_funcoes_crescimento/0-revisoes/aplicacoes_praticas/MAT_A9FUNCOE_0RX_APX_001}
+\IncludeExercise{../../../ExerciseDatabase/matematica/A9_funcoes_crescimento/0-revisoes/aplicacoes_praticas/MAT_A9FUNCOE_0RX_APX_002}
+\IncludeExercise{../../../ExerciseDatabase/matematica/A9_funcoes_crescimento/0-revisoes/calculo_funcoes/MAT_A9FUNCRE_0REV_CAL_001}
+\IncludeExercise{../../../ExerciseDatabase/matematica/A9_funcoes_crescimento/0-revisoes/calculo_funcoes/MAT_A9FUNCRES_0REV_002}
+\IncludeExercise{../../../ExerciseDatabase/matematica/A9_funcoes_crescimento/0-revisoes/conceito_funcao/MAT_A9FUNCOE_0RX_CFX_001}
+\IncludeExercise{../../../ExerciseDatabase/matematica/A9_funcoes_crescimento/1-exponenciais/crescimento_bacterias/MAT_A9FUNCRE_1EXP_CBA_001}
+\IncludeExercise{../../../ExerciseDatabase/matematica/A9_funcoes_crescimento/1-exponenciais/depreciacao_valor/MAT_A9FUNCRE_1EXP_DPR_001}

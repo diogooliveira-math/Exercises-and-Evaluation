@@ -1,0 +1,29 @@
+{
+  "generated": [
+    {
+      "id": "STG_20251202_095502_1E4B3E",
+      "statement": "Indique se o número 4 pertence ao intervalo (4, 6]. Justifique a sua resposta.",
+      "a": 4,
+      "b": 6,
+      "choice_type": "left_border",
+      "staged_path": "C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\ExerciseDatabase\\_staging\\STG_20251202_095502_1E4B3E"
+    },
+    {
+      "id": "STG_20251202_095502_A42816",
+      "statement": "Indique se o número 1 pertence ao intervalo [0, 5). Justifique a sua resposta.",
+      "a": 0,
+      "b": 5,
+      "choice_type": "inside",
+      "staged_path": "C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\ExerciseDatabase\\_staging\\STG_20251202_095502_A42816"
+    },
+    {
+      "id": "STG_20251202_095503_F06DD2",
+      "statement": "Indique se o número 2 pertence ao intervalo [-1, 2). Justifique a sua resposta.",
+      "a": -1,
+      "b": 2,
+      "choice_type": "right_border",
+      "staged_path": "C:\\Users\\diogo\\projects\\Exercises-and-Evaluation\\ExerciseDatabase\\_staging\\STG_20251202_095503_F06DD2"
+    }
+  ],
+  "count": 3
+}

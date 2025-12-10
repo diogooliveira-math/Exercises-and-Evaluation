@@ -1,0 +1,193 @@
+% Minimal sebenta template generated automatically
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tikz}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.17}}{}
+
+\geometry{margin=2.5cm}
+
+% Try to include project-specific style macros (containing \exercicio, \subexercicio, etc.)
+% Try multiple relative locations to be robust across different generated output paths
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - proceed without project macros
+    }%
+  }%
+}
+
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
+
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{MÓDULO P4 - Funções}
+\rhead{0 2 - prod intervalos}
+\cfoot{\thepage}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{0 2 - prod intervalos}
+
+\subsection*{Tipos de Exercícios}
+\begin{itemize}
+  \item \textbf{Aplicacao Contexto Real}
+  \item \textbf{Interpreta Grafico}
+\end{itemize}
+
+\vspace{1em}
+
+% Exercício 1: MAT_P4FUNCOE_0PX_ACR_001.tex
+% Exercise ID: MAT_P4FUNCOE_0PX_ACR_001
+% Created: 2025-11-26
+% Difficulty: 2/5
+
+\exercicio{Numa escola, as salas estão numeradas de 1 a 5 e os andares de 0 a 2. Indique o produto cartesiano de intervalos que representa todas as possíveis localizações de uma sala (número da sala, andar).}
+\FloatBarrier
+
+% Exercício 2: MAT_P4FUNCOE_0PX_ACR_002.tex
+% Exercise ID: MAT_P4FUNCOE_0PX_ACR_002
+% Created: 2025-11-26
+% Difficulty: 2/5
+
+\exercicio{Um parque de estacionamento tem lugares numerados de 10 a 20 e filas identificadas pelas letras A a C. Escreva o produto cartesiano que representa todas as combinações possíveis de lugar e fila.}
+\FloatBarrier
+
+% Exercício 3: MAT_P4FUNCOE_0PX_IGX_001.tex
+% Exercise ID: MAT_P4FUNCOE_0PX_IGX_001
+% Created: 2025-11-26
+% Difficulty: 1/5
+
+\exercicio{
+Observe o retângulo representado no plano cartesiano abaixo, limitado pelos intervalos $[1,4]$ no eixo dos $x$ e $[2,5]$ no eixo dos $y$. Escreva o produto cartesiano de intervalos que representa este conjunto de pontos.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    % Eixos
+    \draw[->] (0,0) -- (6,0) node[right] {$x$};
+    \draw[->] (0,0) -- (0,6) node[above] {$y$};
+    % Retângulo preenchido
+    \filldraw[fill=blue!10,draw=blue] (1,2) rectangle (4,5);
+    % Marcas nos eixos
+    \foreach \x in {1,4}
+        \draw (\x,0.1) -- (\x,-0.1) node[below] {\x};
+    \foreach \y in {2,5}
+        \draw (0.1,\y) -- (-0.1,\y) node[left] {\y};
+    % Pontos dos vértices
+    \foreach \x/\y in {1/2, 1/5, 4/2, 4/5}
+        \filldraw[blue] (\x,\y) circle (1.5pt);
+\end{tikzpicture}
+\end{center}
+}
+\FloatBarrier
+
+% Exercício 4: MAT_P4FUNCOE_0PX_IGX_002.tex
+% Exercise ID: MAT_P4FUNCOE_0PX_IGX_002
+% Created: 2025-11-26
+% Difficulty: 2/5
+
+\exercicio{
+No plano cartesiano está desenhado o seguinte retângulo:
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    % Eixos
+    \draw[->] (-0.5,0) -- (2.5,0) node[right] {$x$};
+    \draw[->] (0,-0.5) -- (0,3.5) node[above] {$y$};
+    % Retângulo
+    \draw[fill=blue!10,draw=blue] (0,0) rectangle (2,3);
+    % Vértices
+    \foreach \x/\y in {0/0, 0/3, 2/0, 2/3}
+        \filldraw[blue] (\x,\y) circle (2pt);
+    % Coordenadas dos vértices
+    
+\node[below left] at (0,0) {$(0,0)$};
+    
+\node[above left] at (0,3) {$(0,3)$};
+    
+\node[below right] at (2,0) {$(2,0)$};
+    
+\node[above right] at (2,3) {$(2,3)$};
+\end{tikzpicture}
+\end{center}
+
+Indique o produto cartesiano de intervalos que corresponde ao conjunto de pontos do retângulo.
+}
+\FloatBarrier
+
+\end{document}

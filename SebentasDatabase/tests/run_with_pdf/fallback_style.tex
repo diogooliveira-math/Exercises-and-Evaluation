@@ -1,0 +1,28 @@
+% Minimal fallback style used when project style.tex is not available
+% This file is safe to \input from the test root (no # tokens inside macro arguments)
+\makeatletter
+\@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+\@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+\@ifundefined{optioncount}{\newcounter{optioncount}}{}
+\@ifundefined{exercise}{\newcounter{exercise}}{}
+
+\newcommand{\exercicio}[1]{%
+  \par\vspace{1.5em}%
+  \refstepcounter{exerciciocount}%
+  \setcounter{subexerciciocount}{0}%
+  \setcounter{optioncount}{0}%
+  \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+}
+
+\newcommand{\subexercicio}[1]{%
+  \par\vspace{0.8em}%
+  \refstepcounter{subexerciciocount}%
+  \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+}
+
+\newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+\newcommand{\option}[1]{%
+  \par\refstepcounter{optioncount}%
+  \noindent(\alph{optioncount}) #1%
+}
+\makeatother

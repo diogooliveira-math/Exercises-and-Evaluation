@@ -1,0 +1,10 @@
+﻿python : Traceback (most recent call last):
+At line:1 char:1
++ python -c 'import runpy,sys; sys.argv=["generate_tests.py","--module" ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], Remo 
+   teException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "<string>", line 1, in <module>
+NameError: name 'generate_tests' is not defined

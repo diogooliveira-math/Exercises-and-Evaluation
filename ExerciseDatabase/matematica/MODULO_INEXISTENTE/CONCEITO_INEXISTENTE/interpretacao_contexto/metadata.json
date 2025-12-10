@@ -61,6 +61,16 @@
       "created": "2025-11-27",
       "difficulty": 2,
       "status": "active"
+    },
+    "MAT_MODULOIN_CXX_ICX_013": {
+      "created": "2025-12-02",
+      "difficulty": 2,
+      "status": "active"
+    },
+    "MAT_MODULOIN_CXX_ICX_014": {
+      "created": "2025-12-02",
+      "difficulty": 2,
+      "status": "active"
     }
   }
 }

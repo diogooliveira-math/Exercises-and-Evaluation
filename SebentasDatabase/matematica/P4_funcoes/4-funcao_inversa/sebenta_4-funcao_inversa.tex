@@ -29,10 +29,65 @@
   }%
 }
 
-% Provide a minimal fallback for macros that might be missing in style.tex
-% This prevents fatal Undefined control sequence errors when templates include
-% \exercicioDesenvolvimento or similar macros.
-\providecommand{\exercicio}[1]{\par\noindent\textbf{Exercício:} #1\par}\providecommand{\subexercicio}[1]{\par\noindent\textbf{Subexercício:} #1\par}\providecommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+% Provide a robust fallback for macros that might be missing in style.tex
+% This attempts to include the project style first (multiple relative paths),
+% and only if none exist defines minimal counters and macros safely.
+\IfFileExists{../../../../Teste_modelo/config/style.tex}{\input{../../../../Teste_modelo/config/style.tex}}{%
+  \IfFileExists{../../../Teste_modelo/config/style.tex}{\input{../../../Teste_modelo/config/style.tex}}{%
+    \IfFileExists{../../Teste_modelo/config/style.tex}{\input{../../Teste_modelo/config/style.tex}}{%
+      % style.tex not found - define minimal counters/macros defensively
+      \makeatletter
+      \@ifundefined{exerciciocount}{\newcounter{exerciciocount}}{}
+      \@ifundefined{subexerciciocount}{\newcounter{subexerciciocount}}{}
+      \@ifundefined{optioncount}{\newcounter{optioncount}}{}
+
+      \newcommand{\exercicio}[1]{%
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+      }
+
+      \newcommand{\subexercicio}[1]{%
+        \par\vspace{0.8em}%
+        \refstepcounter{subexerciciocount}%
+        \noindent\textbf{\theexerciciocount.\thesubexerciciocount.} #1\par\vspace{0.3em}%
+      }
+
+      \newcommand{\exercicioDesenvolvimento}[1]{\par\noindent #1\par}
+      \newcommand{\option}[1]{%
+        \par\refstepcounter{optioncount}%
+        \noindent(\alph{optioncount}) #1%
+      }
+      \makeatother
+    }%
+  }%
+}
+
+% ========== IP-BASED TEST SYSTEM MACROS (v3.5) ==========
+% Support for modular exercise inclusion with numbered headings
+% Provide a boolean flag to control whether the automatic heading is shown
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+    \newif\ifshowexerciciotitle
+    \showexerciciotitletrue
+}{}
+\makeatother
+
+% Override \exercicio to respect the \ifshowexerciciotitle flag
+% When false, it prints only the content without automatic heading
+\renewcommand{\exercicio}[1]{%
+    \ifshowexerciciotitle
+        \par\vspace{1.5em}%
+        \refstepcounter{exerciciocount}%
+        \setcounter{subexerciciocount}{0}%
+        \setcounter{optioncount}{0}%
+        \noindent\textbf{Exercício~\theexerciciocount.} #1\par\vspace{0.5em}%
+    \else
+        #1\par
+    \fi
+}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -186,25 +241,14 @@ $f(x) = 7x - 2$
 % author: Test Agent
 % has_subvariants: true
 
-\section{MÓDULO P4 - Funções - Função Inversa - Determinação Analítica da Função Inversa}
-
 \exercicio{
 Determine analiticamente a função inversa das seguintes funções:
 }
 
 \begin{enumerate}[label=\alph*)]
-\item % Sub-variant 1 for MAT_P4FUNCOE_4FX_DAX_003
-% Content: x + 1
-
-x + 1
-\item % Sub-variant 2 for MAT_P4FUNCOE_4FX_DAX_003
-% Content: 2x - 3
-
-2x - 3
-\item % Sub-variant 3 for MAT_P4FUNCOE_4FX_DAX_003
-% Content: \frac{1}{x-2}
-
-$\frac{1}{x-2}$
+\item {\input{subvariant_1.tex}}
+\item {\input{subvariant_2.tex}}
+\item {\input{subvariant_3.tex}}
 \end{enumerate}
 \FloatBarrier
 
@@ -784,7 +828,7 @@ Determine a função inversa de $f(x) = 2x + 3$.
 % Status: active
 % Description: Determinar expressão analítica e representar graficamente função e inversa
 
-\exercicio
+\exercicio{
 Considere a função $f(x) = 2x - 3$.
 
 \begin{enumerate}[label=\alph*]
@@ -807,6 +851,7 @@ Considere a função $f(x) = 2x - 3$.
     \end{tikzpicture}
     \end{center}
 \end{enumerate}
+}
 \FloatBarrier
 
 % Exercício 29: MAT_P4FUNCOE_4FIN_ANA_001.bak_agent_20251127T121826Z.tex
@@ -854,7 +899,7 @@ Considere a função $f(x) = 2x - 3$.
 % Status: active
 % Description: Determinar expressão analítica e representar graficamente função e inversa
 
-\exercicio
+\exercicio{
 Considere a função $f(x) = 2x - 3$.
 
 \begin{enumerate}[label=\alph*]
@@ -877,6 +922,7 @@ Considere a função $f(x) = 2x - 3$.
     \end{tikzpicture}
     \end{center}
 \end{enumerate}
+}
 \FloatBarrier
 
 % Exercício 31: MAT_P4FUNCOE_4FIN_ANA_002.agentfix.tex
@@ -1417,7 +1463,7 @@ Considere a função $g(x)=2x$.
 % Status: active
 % Description: Dado o gráfico de ramos de funções, desenhar o gráfico da inversa
 
-\exercicio
+\exercicio{
 Na figura está representado o gráfico de uma função $f$ definida em $[0, +\infty[$. Represente, no referencial dado, o gráfico da função inversa $f^{-1}$.
 
 \begin{figure}[ht]
@@ -1445,11 +1491,11 @@ Na figura está representado o gráfico de uma função $f$ definida em $[0, +\i
 \node[anchor=north east] at (axis cs:0.2,0.2) {$(0,0)$};
     \end{axis}
 \end{tikzpicture}
-\end{figure}
+\end{figure}}
 
 \bigskip
 
-\exercicio
+\exercicio{
 Na figura está representado o gráfico de uma função $g$. Represente, no referencial dado, o gráfico da função inversa $g^{-1}$.
 
 \begin{figure}[H]
@@ -1478,8 +1524,7 @@ Na figura está representado o gráfico de uma função $g$. Represente, no refe
     \end{axis}
 \end{tikzpicture}
 \end{figure}
-\vspace{3cm}
-}
+\vspace{3cm}}
 \FloatBarrier
 
 % Exercício 47: MAT_P4FUNCOE_4FIN_GRA_001.bak_agent_20251127T121826Z.tex
@@ -1567,7 +1612,7 @@ Na figura está representado o gráfico de uma função $g$. Represente, no refe
 % Status: active
 % Description: Dado o gráfico de ramos de funções, desenhar o gráfico da inversa
 
-\exercicio
+\exercicio{
 Na figura está representado o gráfico de uma função $f$ definida em $[0, +\infty[$. Represente, no referencial dado, o gráfico da função inversa $f^{-1}$.
 
 \begin{figure}[ht]
@@ -1595,11 +1640,11 @@ Na figura está representado o gráfico de uma função $f$ definida em $[0, +\i
 \node[anchor=north east] at (axis cs:0.2,0.2) {$(0,0)$};
     \end{axis}
 \end{tikzpicture}
-\end{figure}
+\end{figure}}
 
 \bigskip
 
-\exercicio
+\exercicio{
 Na figura está representado o gráfico de uma função $g$. Represente, no referencial dado, o gráfico da função inversa $g^{-1}$.
 
 \begin{figure}[H]
@@ -1627,7 +1672,7 @@ Na figura está representado o gráfico de uma função $g$. Represente, no refe
 \node[anchor=north east] at (axis cs:1.15,1.1) {$(1,1)$};
     \end{axis}
 \end{tikzpicture}
-\end{figure}
+\end{figure}}
 \vspace{3cm}
 \FloatBarrier
 
@@ -2021,7 +2066,7 @@ Na figura está representado o gráfico de uma função $g$ definida em $[-1, 3]
 % Status: active
 % Description: Dado o gráfico de ramos de funções, desenhar o gráfico da inversa
 
-\exercicio
+\exercicio{
 Na figura está representado o gráfico de uma função $f$ definida em $[0, +\infty[$. Represente, no referencial dado, o gráfico da função inversa $f^{-1}$.
 
 \begin{figure}[ht]
@@ -2049,11 +2094,11 @@ Na figura está representado o gráfico de uma função $f$ definida em $[0, +\i
 \node[anchor=north east] at (axis cs:0.2,0.2) {$(0,0)$};
     \end{axis}
 \end{tikzpicture}
-\end{figure}
+\end{figure}}
 
 \bigskip
 
-\exercicio
+\exercicio{
 Na figura está representado o gráfico de uma função $g$ definida em $[-1, 3]$. Represente, no referencial dado, o gráfico da função inversa $g^{-1}$.
 
 \begin{figure}[H]
@@ -2081,7 +2126,8 @@ Na figura está representado o gráfico de uma função $g$ definida em $[-1, 3]
 \node[anchor=north west] at (axis cs:3,0) {$(3,0)$};
     \end{axis}
 \end{tikzpicture}
-\end{figure}
+\end{figure}}
+
 \vspace{3cm}
 \FloatBarrier
 
@@ -2880,7 +2926,7 @@ Quais das duas funções são invertíveis (isto é, cuja inversa também é uma
 % Status: active
 % Description: Determinar quais funções são invertíveis usando teste da reta horizontal
 
-\exercicio
+\exercicio{
 Considere as funções representadas nas figuras seguintes:
 
 \begin{figure}[H]
@@ -2901,7 +2947,7 @@ Considere as funções representadas nas figuras seguintes:
         title = {Função C},
         title style = {font=\bfseries},
     ]
-    \addplot[domain=-2:2, samples=100, thick, red] {x^2-4};
+    \addplot[domain=-2:2, samples=100, thick, red] {x^2-1};
     \end{axis}
 \end{tikzpicture}
 \end{minipage}
@@ -2929,8 +2975,7 @@ Considere as funções representadas nas figuras seguintes:
 \end{minipage}
 \end{figure}
 
-Quais das duas funções são invertíveis (isto é, cuja inversa também é uma função)? Justifique usando o teste da reta horizontal.
-
+Quais das duas funções são invertíveis (isto é, cuja inversa também é uma função)? Justifique usando o teste da reta horizontal.}
 \vspace{3cm}
 \FloatBarrier
 

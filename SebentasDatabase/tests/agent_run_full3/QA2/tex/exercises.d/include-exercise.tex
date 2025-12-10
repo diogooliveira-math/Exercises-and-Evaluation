@@ -1,0 +1,13 @@
+% Define a simple wrapper command to include an exercise file and
+% print a standardized heading. The wrapper toggles the style flag
+% `\showexerciciotitle` (defined in style.tex) so the included
+% exercise does not duplicate its own heading.
+\providecommand{\IncludeExercise}[1]{%
+  \begingroup
+    \refstepcounter{exercise}%
+    \noindent\textbf{Exercício \theexercise.}\par
+    \showexerciciotitlefalse
+    \input{#1}%
+    \showexerciciotitletrue
+  \endgroup
+}
