@@ -1,0 +1,81 @@
+% Small, maintainable exercise include file.
+% Responsibilities are split into includes under `exercises.d/`:
+% - `input-path.tex`      : sets `\input@path` for subvariant inputs
+% - `setup-counter.tex`   : ensures the `exercise` counter exists
+% - `include-exercise.tex`: defines `\IncludeExercise{<path>}` wrapper
+% The actual exercise inclusions are then simple calls to \IncludeExercise{<path>}.
+
+% Load path, counter and the include wrapper (keeps this file minimal)
+\input{exercises.d/input-path}
+\input{exercises.d/setup-counter}
+\input{exercises.d/include-exercise}
+
+% Exercício 1: Escolha múltipla, quais das seguintes opções é a definição de média e qual é a interpretação da média num conjuntos de dados. 
+
+\exercicio{Identifique, entre as opções abaixo, a definição correta de ``média'' e a interpretação adequada desse parâmetro estatístico em um conjunto de dados.
+\begin{enumerate}[label=\Alph*.]
+    \item A média é a soma de todos os valores dividida pelo número total de valores. Ela representa o valor central de um conjunto de dados.
+    \item A média é o valor que ocorre com mais frequência em um conjunto de dados. Ela indica a tendência central dos dados.
+    \item A média é o valor que separa a metade superior da metade inferior dos dados. Ela mostra a posição central dos dados.
+    \item A média é a diferença entre o maior e o menor valor em um conjunto de dados. Ela mede a dispersão dos dados.
+\end{enumerate}}
+
+% Exercício 2: Saber distinguir entre média, variablidade e amplitude, quais são medidas de variabilidade (no caso da médio não é e as outras são), fazer escolha múltipla
+\exercicio{
+Escolhe a opção correta: qual das alternativas abaixo descreve corretamente o conceito de variabilidade?
+\begin{enumerate}[label=\Alph*.]
+    \item A média é uma medida de variabilidade que indica o valor central de um conjunto de dados.
+    \item A variabilidade refere-se à dispersão dos dados em torno de uma medida de tendência central, indicando quão espalhados os valores estão.
+    \item A amplitude é a diferença entre a soma dos valores e o número de observações.
+    \item A mediana é uma medida de variabilidade que mostra o valor que separa a metade superior da metade inferior dos dados.
+    \item O desvio padrão é a média dos desvios absolutos em relação à mediana.
+\end{enumerate}
+}
+
+% Exercício 3: Escolha mútipla, quais das seguintes opções é a definição de Desvio Absoluto Médio e qual é a interpretação do Desvio Absoluto Médio num conjunto de dados.
+
+\exercicio{
+Escolha a opção correta: qual das alternativas abaixo descreve corretamente o conceito de Desvio Absoluto Médio (DAM)?
+\begin{enumerate}[label=\Alph*.]
+    \item O Desvio Absoluto Médio é a média dos valores em um conjunto de dados, representando o valor central.
+    \item O Desvio Absoluto Médio é a diferença entre o maior e o menor valor em um conjunto de dados, indicando a amplitude.
+    \item O Desvio Absoluto Médio é a média das diferenças absolutas entre cada valor e a média do conjunto de dados, medindo a dispersão dos dados.
+    \item O Desvio Absoluto Médio é o valor que ocorre com mais frequência em um conjunto de dados, indicando a tendência central.
+    \item O Desvio Absoluto Médio é a mediana dos valores em um conjunto de dados, representando o valor central.
+\end{enumerate}}
+
+% Exercício 4: Escolhe (dentro dos pares de números e medidas) quais apresentam maio e menor variabilidade. Resposta de forma intuitiva/direta (i.e. "número de passos dados num dia" versus "número de dedos das mãos").
+
+\exercicio{
+Considere os seguintes pares de conjuntos de dados. Para cada par, identifique qual conjunto apresenta
+maior variabilidade e qual apresenta menor variabilidade.
+\begin{enumerate}[label=\Alph*.]
+    \item Conjunto 1: Número de passos dados por diferentes pessoas em um dia. \\
+          Conjunto 2: Número de dedos nas mãos de diferentes pessoas.
+          \vspace{2cm}
+    \item Conjunto 1: Preço de um café em várias cafeterias de uma cidade. \\
+          Conjunto 2: Preço de um carro novo em diferentes concessionárias.
+        \vspace{2cm}
+    \vspace{2cm}
+\end{enumerate}
+}
+
+% Exercício 6: Exercícios smiples onde dado conjunto de dados tem várias alienas para calcular média, amplitude, desvios e DAM.
+
+\exercicio{
+Considere o seguinte conjunto de dados que representa as idades (em anos) de um grupo de 7 pessoas: 22, 25, 30, 28, 35, 40, 27.
+Calcule os seguintes parâmetros estatísticos:
+\begin{enumerate}[label=\Alph*.]
+    \item A média das idades.
+    \vspace{3cm}
+    \item A amplitude das idades.
+        \vspace{3cm}
+    \item O desvio de cada idade em relação à média.
+        \vspace{3cm}
+    \item O Desvio Absoluto Médio (DAM) das idades.
+        \vspace{3cm}
+    % alinea para fazer um intervalo de previsão com MEDIA +/- DAM.
+    \item O intervalo de previsão para as idades usando a média e o Desvio Absoluto Médio (DAM).
+        \vspace{3cm}
+\end{enumerate}
+}

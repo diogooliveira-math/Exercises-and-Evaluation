@@ -1,0 +1,48 @@
+% Título e informações do exame
+\title{Questão de aula do MÓDULO A10 - Otimização}
+\author{EPRALIMA - Escola Profissional Alto Lima}
+
+\date{}
+
+% Cabeçalho completo do teste dentro de uma caixa arredondada
+\newcommand{\espacoAluno}{%
+    \vspace{0.5cm}
+    \begin{tcolorbox}[colback=white,colframe=black,arc=6pt,boxrule=0.8pt]
+        \noindent\textbf{Nome do Aluno:} \rule{9.5cm}{0.4pt} \textbf{Turma:} \rule{1cm}{0.4pt}\\[0.5cm]
+        \noindent\textbf{Assinatura do Professor:} \rule{3cm}{0.4pt} \hfill \textbf{Nota:} \rule{2cm}{0.4pt}\\[0.5cm]
+        \noindent\textbf{Assinatura do Encarregado de Educação:} \rule{3cm}{0.4pt}
+    \end{tcolorbox}
+    \vspace{1cm}
+}
+
+% Minimal macros expected by Exercise fragments
+% Create a boolean flag to control whether the automatic heading is shown.
+% If the flag macros are already defined elsewhere, do not redefine them.
+\makeatletter
+\@ifundefined{showexerciciotitletrue}{%
+        \newif\ifshowexerciciotitle
+        \showexerciciotitletrue
+}{}
+\makeatother
+
+% Provide a safe, robust definition for \exercicio if it is not defined.
+% Add a counter `exercicio` so each call increments and can be referenced.
+% Use \DeclareRobustCommand so it behaves well in moving arguments.
+\makeatletter
+% Define the counter unless already present
+\@ifundefined{c@exercicio}{%
+    \newcounter{exercicio}
+}{}
+
+% Define the macro only if it's not defined already
+\@ifundefined{exercicio}{%
+    \DeclareRobustCommand{\exercicio}[1]{%
+        \refstepcounter{exercicio}% increment the counter and make it ref'able
+        \ifshowexerciciotitle
+            \par\noindent\textbf{Exercício~\theexercicio: }#1\par
+        \else
+            #1\par
+        \fi
+    }%
+}{}
+\makeatother
